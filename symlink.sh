@@ -2,7 +2,10 @@
 
 BASEDIR=$(dirname $0)
 
-ln -s ~/.bashrc $BASEDIR/.bashrc
-ln -s ~/.bash_aliases $BASEDIR/.bash_aliases
-ln -s ~/.gitignore_global $BASEDIR/.gitignore_global
-ln -s ~/.tmux.conf $BASEDIR/.tmux.conf
+for file in $BASEDIR/.*; do
+	if [ -f $file ]; then
+		FN=$(basename $file)
+		echo "ln -s $BASEDIR/$FN ~/$FN"
+		ln -s $BASEDIR/$FN ~/$FN
+	fi
+done
