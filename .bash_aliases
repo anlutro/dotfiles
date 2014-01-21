@@ -13,25 +13,20 @@ alias la='ls -A'
 alias l='ls -lh'
 alias ll='ls -lhA'
 
-alias c='clear'
-
+# file and dir stuff
 function md { mkdir -p "$@" && cd $_; }
-
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
-
 alias rm='rm -I --preserve-root'
-
 alias chown='chown --preserve-root'
 alias chmod='chmod --preserve-root'
 alias chgrp='chgrp --preserve-root'
 
+# server stuff
 alias a2r='sudo service apache2 reload'
 alias a2rs='sudo service apache2 restart'
-#alias a2es='sudo a2ensite'
-#alias a2ds='sudo a2dissite'
 alias a2cs='\ls /etc/apache2/sites-enabled/'
 alias a2em='sudo a2enmod'
 alias a2dm='sudo a2dismod'
@@ -39,6 +34,10 @@ alias a2cfg='cd /etc/apache2 && ls'
 alias a2log='cd /var/log/apache2 && ls -l'
 
 function a2es {
+	if [[ $(whoami) != "vagrant" ]]; then
+		echo "ABORTED:Not running in vagrant!"; return 0;
+	fi
+
 	if [ "$(ls -A /etc/apache2/sites-enabled)" ]; then
 		sudo rm /etc/apache2/sites-enabled/*
 	fi
@@ -53,13 +52,30 @@ function s {
 	# if [ "$(which memcached)" ]; then service memcached status; fi;
 }
 
+# php stuff
+function composer {
+	if [ $(which hhvm) ]; then
+		if [ $(which composer) ]; then
+			$(which hhvm) $(which composer) $@;
+		else
+			$(which hhvm) composer.phar $@;
+		fi;
+	elif [ $(which composer) ]; then
+		$(which composer) $@;
+	else
+		php composer.phar $@;
+	fi;
+}
+
 alias a='php artisan'
+alias art='php artisan'
 alias crlffix='for file in `find . -type f`; do dos2unix $file $file; done'
 alias genpw='< /dev/urandom tr -dc A-Za-z0-9 | head -c${1:-16};echo;'
 
 # python
 alias avenv='source ./virtualenv/bin/activate'
 
+# keyboard layout
 function kb {
 	setxkbmap -v $1 && xset r 66
 }
