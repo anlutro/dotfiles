@@ -7,13 +7,8 @@ for file in $BASEDIR/.*; do
 		filename=$(basename $file)
 		srcpath=$(readlink -m $file)
 		trgpath=~/$filename
-		echo Linking $filename ...
-
-		if [ -f $trgpath ]; then
-			rm $trgpath
-		fi
-
-		ln -s $srcpath $trgpath
+		echo Linking $srcpath -> $trgpath ...
+		ln -fs $srcpath $trgpath
 	fi
 done
 
@@ -22,12 +17,7 @@ for file in $BASEDIR/bin/*; do
 		filename=$(basename $file)
 		srcpath=$(readlink -m $file)
 		trgpath=~/bin/$filename
-		echo Linking $filename ...
-
-		if [ -f $trgpath ]; then
-			rm $trgpath
-		fi
-
-		ln -s $srcpath $trgpath
+		echo Linking $srcpath -> $trgpath ...
+		ln -fs $srcpath $trgpath
 	fi
 done
