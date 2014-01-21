@@ -1,0 +1,19 @@
+#!/usr/bin/env python3.3
+
+from subprocess import call
+import os
+
+def listdirs(path):
+	"""List directories in a path."""
+	return [os.path.realpath(path) for path in os.listdir(path) if os.path.isdir(path)]
+
+def main():
+	"""Do a git pull origin master in all subdirectories of CWD."""
+	dirs = listdirs(os.getcwd())
+	
+	for d in dirs:
+		os.chdir(d)
+		call('git pull origin master', shell=True)
+
+if __name__ == '__main__':
+	main()
