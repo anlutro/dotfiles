@@ -8,3 +8,13 @@
         email = anlutro@gmail.com
 [credential]
         helper = cache --timeout=600
+
+[alias]
+cp = cherry-pick
+st = status
+cl = clone
+ci = commit
+cam = commit -am
+co = checkout
+br = branch
+cb = checkout -b
