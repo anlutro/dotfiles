@@ -14,6 +14,7 @@ cp = cherry-pick
 st = status
 cl = clone
 ci = commit
+cm = commit -m
 cam = commit -am
 co = checkout
 br = branch
