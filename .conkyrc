@@ -1,0 +1,91 @@
+# conky configuration
+#
+# The list of variables has been removed from this file in favour
+# of keeping the documentation more maintainable.
+# Check http://conky.sf.net for an up-to-date-list.
+#
+# For ideas about how to modify conky, please see:
+# http://crunchbanglinux.org/forums/topic/59/my-conky-config/
+#
+# For help with conky, please see:
+# http://crunchbanglinux.org/forums/topic/2047/conky-help/
+#
+# Enjoy! 
+##############################################
+# Settings
+##############################################
+background yes
+    use_xft yes
+    xftfont HandelGotD:size=8
+    xftalpha 0.5
+    update_interval 4.0
+    total_run_times 0
+    own_window yes
+    own_window_type normal
+    own_window_transparent yes
+    own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+    double_buffer yes
+    minimum_size 200 5
+    maximum_width 220
+    draw_shades no
+    draw_outline no
+    draw_borders no
+    draw_graph_borders yes
+    default_color grey
+    default_shade_color red
+    default_outline_color green
+    alignment top_right
+    gap_x 5
+    gap_y 50
+    no_buffers yes
+    uppercase no
+    cpu_avg_samples 2
+    override_utf8_locale no
+
+    TEXT
+    CPU $alignr ${cpu cpu0}%
+    ${cpugraph cpu0}
+
+    MEM $alignc $mem / $memmax $alignr $memperc%
+    $membar
+
+    swap $alignc $swap / $swapmax $alignr $swapperc%
+    ${swapbar}
+
+    / $alignc ${fs_used /} / ${fs_size /} $alignr ${fs_free_perc /}%
+    ${fs_bar /}
+
+    /home $alignc ${fs_used /home} / ${fs_size /home} $alignr ${fs_free_perc /home}%
+    ${fs_bar /home}
+
+    $processes processes ($running_processes running)
+
+    NAME $alignr PID    CPU
+    ${top name 1} $alignr ${top pid 1} ${top cpu 1}
+    ${top name 2} $alignr ${top pid 2} ${top cpu 2}
+    ${top name 3} $alignr ${top pid 3} ${top cpu 3}
+    ${top name 4} $alignr ${top pid 4} ${top cpu 4}
+    ${top name 5} $alignr ${top pid 5} ${top cpu 5}
+    ${top name 6} $alignr ${top pid 6} ${top cpu 6}
+    ${top name 7} $alignr ${top pid 7} ${top cpu 7}
+    ${top name 8} $alignr ${top pid 8} ${top cpu 8}
+    ${top name 9} $alignr ${top pid 8} ${top cpu 9}
+
+    Inbound $alignr ${downspeed wlan0}/s
+    ${downspeedgraph wlan0}
+    Outbound $alignr ${upspeed wlan0}/s
+    ${upspeedgraph wlan0}
+
+    Alt+F2$alignr Run Dialog
+    Alt+F3$alignr Alt Menu
+    Super+space$alignr Main Menu
+    Super+t$alignr Terminal
+    Super+f$alignr File Manager
+    Super+e$alignr Editor
+    Super+m$alignr Media Player
+    Super+w$alignr Web Browser
+    Super+g$alignr Graphics Editor
+    Super+l$alignr Lock Screen
+    Super+v$alignr Volume Control
+    Super+x$alignr Logout
+    PrtSc$alignr Screenshot
