@@ -35,7 +35,11 @@ alias a2log='cd /var/log/apache2 && ls -l'
 
 function a2es {
 	if [[ $(whoami) != "vagrant" ]]; then
-		echo "ABORTED:Not running in vagrant!"; return 0;
+		echo "ABORTED: Not running in vagrant!"; return 1;
+	fi
+
+	if [ ! -f /etc/apache2/sites-available/$1 ]; then
+		echo "ABORTED: No such site available!"; return 2;
 	fi
 
 	if [ "$(ls -A /etc/apache2/sites-enabled)" ]; then
