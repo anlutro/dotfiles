@@ -19,3 +19,5 @@ cam = commit -am
 co = checkout
 br = branch
 cb = checkout -b
+lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+tags = !git tag -n | sort -V | less -FX
