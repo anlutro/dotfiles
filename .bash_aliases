@@ -73,11 +73,13 @@ function composer {
 
 alias a='php artisan'
 alias art='php artisan'
-alias crlffix='for file in `find . -type f`; do dos2unix $file $file; done'
-alias genpw='< /dev/urandom tr -dc A-Za-z0-9 | head -c${1:-16};echo;'
 
 # python
 alias avenv='source ./virtualenv/bin/activate'
+
+# misc
+alias crlffix='for file in `find . -type f`; do dos2unix $file $file; done'
+alias genpw='< /dev/urandom tr -dc A-Za-z0-9 | head -c${1:-16};echo;'
 
 # keyboard layout
 function kb {

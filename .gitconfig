@@ -1,13 +1,16 @@
-[color]
-        ui = true
 [core]
-        autocrlf = input
-        editor = nano
+autocrlf = input
+editor = nano
+
 [user]
-        name = Andreas Lutro
-        email = anlutro@gmail.com
+name = Andreas Lutro
+email = anlutro@gmail.com
+
+[color]
+ui = true
+
 [credential]
-        helper = cache --timeout=600
+helper = cache --timeout=600
 
 [alias]
 cp = cherry-pick
@@ -22,3 +25,4 @@ cb = checkout -b
 lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 tags = !git tag -n | sort -V | less -FX
 up = !git remote update -p; git merge --ff-only @{u}
+mfo = merge --ff-only
