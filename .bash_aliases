@@ -71,6 +71,16 @@ function composer {
 	fi;
 }
 
+function phpunit {
+	if [ -f ./vendor/bin/phpunit ]; then
+		./vendor/bin/phpunit $@
+	elif [ $(which phpunit) ]; then
+		$(which phpunit) $@
+	else
+		echo "No PHPUnit installation found!"; exit 1;
+	fi
+}
+
 alias a='php artisan'
 alias art='php artisan'
 
