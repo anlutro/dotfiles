@@ -1,0 +1,8 @@
+banner=no
+color_patches=no
+# Imitate git diff colours
+plain=normal
+newtext=darkgreen
+oldtext=darkred
+diffstuff=darkcyan
+cvsstuff=darkwhite
