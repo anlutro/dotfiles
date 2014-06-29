@@ -69,23 +69,25 @@ background yes
     ${top name 6} $alignr ${top pid 6} ${top cpu 6}
     ${top name 7} $alignr ${top pid 7} ${top cpu 7}
     ${top name 8} $alignr ${top pid 8} ${top cpu 8}
-    ${top name 9} $alignr ${top pid 8} ${top cpu 9}
+    ${top name 9} $alignr ${top pid 9} ${top cpu 9}
 
     Inbound $alignr ${downspeed wlan0}/s
     ${downspeedgraph wlan0}
     Outbound $alignr ${upspeed wlan0}/s
     ${upspeedgraph wlan0}
 
-    Alt+F2$alignr Run Dialog
-    Alt+F3$alignr Alt Menu
-    Super+space$alignr Main Menu
-    Super+t$alignr Terminal
-    Super+f$alignr File Manager
-    Super+e$alignr Editor
-    Super+m$alignr Media Player
-    Super+w$alignr Web Browser
-    Super+g$alignr Graphics Editor
-    Super+l$alignr Lock Screen
-    Super+v$alignr Volume Control
-    Super+x$alignr Logout
-    PrtSc$alignr Screenshot
+    A+F2$alignr Run Dialog
+    A+F3$alignr Alt Menu
+    M+space$alignr Main Menu
+    M+t$alignr Terminal
+    M+f$alignr File Manager
+    M+w$alignr Web Browser
+    M+l$alignr Lock Screen
+    M+v$alignr Volume Control
+    M+x$alignr Logout
+    M+d$alignr Toggle decoration
+    M+m$alignr Toggle maximization
+    W+arrow$alignr Resize window
+    W+A+arrow$alignr Aero snap
+    C+A+arrow$alignr Switch workspace
+    A+S+arrow$alignr Move to workspace
