@@ -26,3 +26,6 @@ lg = log --graph --pretty=format:'%Cred%h %Cgreen%ci%Creset %s %C(bold blue)<%an
 tags = !git tag -n | sort -V | less -FX +G
 up = !git remote update -p; git merge --ff-only @{u}
 mfo = merge --ff-only
+
+[push]
+default = matching
