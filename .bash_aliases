@@ -25,6 +25,10 @@ alias chown='chown --preserve-root'
 alias chmod='chmod --preserve-root'
 alias chgrp='chgrp --preserve-root'
 
+function psgrep() {
+	ps auxf | grep -v grep | grep "$@";
+}
+
 # server stuff
 alias a2r='sudo service apache2 reload'
 alias a2rs='sudo service apache2 restart'
