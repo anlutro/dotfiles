@@ -12,6 +12,7 @@ alias lc='ls --color=auto'
 alias la='ls -A'
 alias l='ls -lh'
 alias ll='ls -lhA'
+alias lt='ls -lhtr'
 
 # file and dir stuff
 function md { mkdir -p "$@" && cd $_; }
