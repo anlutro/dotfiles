@@ -56,9 +56,6 @@ fi
 ## Start xscreensaver
 xscreensaver -no-splash &
 
-## Start Clipboard manager
-(sleep 3s && clipit) &
-
 ## Keyboard repeat - delay (ms) and characters per second
 xset r rate 150 25 &
 
@@ -68,16 +65,8 @@ xset m 1/1 0 &
 ## Turn on/off system beep
 xset b off &
 
-## The following command runs hacks and fixes for #! LiveCD sessions.
-## Safe to delete after installation.
-cb-cowpowers &
-
-## cb-welcome - post-installation script, will not run in a live session and
-## only runs once. Safe to remove.
-(sleep 10s && cb-welcome --firstrun) &
-
-## cb-fortune - have Waldorf say a little adage
-#(sleep 120s && cb-fortune) &
-
 ## Run the conky
 conky -q &
+
+## Start xflux
+xflux -l 58 -g 5 &
