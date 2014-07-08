@@ -4,9 +4,9 @@ install:
 	ln -sf $(shell pwd)/git/config $$HOME/.gitconfig
 	ln -sf $(shell pwd)/git/ignore_global $$HOME/.gitignore_global
 	ln -sf $(shell pwd)/conkyrc $$HOME/.conkyrc
-	ln -sf $(shell pwd)/openbox $$HOME/.config/openbox
 	ln -sf $(shell pwd)/tmux.conf $$HOME/.tmux.conf
 	ln -sf $(shell pwd)/colordiffrc $$HOME/.colordiffrc
+	ln -sfT $(shell pwd)/openbox $$HOME/.config/openbox
 
 remove:
 	rm -f $$HOME/.bash_aliases
