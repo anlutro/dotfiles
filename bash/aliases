@@ -7,7 +7,7 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # some ls aliases
-alias ls='ls --color=never -F'
+alias ls='ls --group-directories-first --color=never -F'
 alias lc='ls --color=auto'
 alias la='ls -A'
 alias l='ls -lh'
