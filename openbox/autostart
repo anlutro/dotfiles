@@ -69,4 +69,4 @@ xset b off &
 conky -q &
 
 ## Start xflux
-xflux -l 58 -g 5 &
+xflux -l 58 -g 5 -k 2900 &
