@@ -95,6 +95,10 @@ alias avenv='source ./virtualenv/bin/activate'
 alias crlffix='for file in `find . -type f`; do dos2unix $file $file; done'
 alias genpw='< /dev/urandom tr -dc A-Za-z0-9 | head -c${1:-16};echo;'
 
+function cltail {
+	cat /dev/null > "$1" && tail -f "$@"
+}
+
 # keyboard layout
 function kb {
 	setxkbmap -v $1 && xset r 66
