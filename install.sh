@@ -3,8 +3,8 @@
 # script directory
 sd=$(dirname $(readlink -f "$0"))
 
-ln -sf $sd/bash/aliases ~/.bash_aliases
-ln -sf $sd/bash/rc ~/.bashrc
+ln -sf $sd/bash/aliases.sh ~/.bash_aliases
+ln -sf $sd/bash/rc.sh ~/.bashrc
 
 if [[ hash git 2>/dev/null ]]; then
 	ln -sf $sd/git/config ~/.gitconfig
