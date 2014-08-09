@@ -89,7 +89,13 @@ alias a='php artisan'
 alias art='php artisan'
 
 # python
-alias avenv='source ./virtualenv/bin/activate'
+alias avenv='source ./env/bin/activate'
+function pyhelp {
+	python -c 'help('"$@"')'
+}
+function py3help {
+	python3 -c 'help('"$@"')'
+}
 
 # misc
 alias crlffix='for file in `find . -type f`; do dos2unix $file $file; done'
