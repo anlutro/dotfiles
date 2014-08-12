@@ -48,10 +48,16 @@ if [ "$color_prompt" = yes ]; then
     else
         color="32" # green
     fi
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;'$color'm\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$(__git_ps1 " (%s)")\n\$ '
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;'$color'm\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]'
 else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\n\$ '
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w'
 fi
+
+if hash "__git_ps1" 2>/dev/null; then
+    PS1=$PS1'$(__git_ps1 " (%s)")'
+fi
+
+PS1=$PS1'\n$ '
 unset color_prompt force_color_prompt
 
 # If this is an xterm set the title to user@host:dir
