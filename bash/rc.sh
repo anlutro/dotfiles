@@ -43,7 +43,9 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    if [ -n "$SSH_CLIENT" ]; then
+    if [ $(whoami) = "vagrant" ]; then
+        color="33" # yellow
+    elif [ -n "$SSH_CLIENT" ]; then
         color="31" # red
     else
         color="32" # green
