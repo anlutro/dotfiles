@@ -55,7 +55,7 @@ else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w'
 fi
 
-if hash "__git_ps1" 2>/dev/null; then
+if command -v __git_ps1 >/dev/null 2>&1; then
     PS1=$PS1'$(__git_ps1 " (%s)")'
 fi
 
