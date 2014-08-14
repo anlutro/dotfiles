@@ -90,4 +90,4 @@ fi
 LS_COLORS='di=94:fi=37:ln=4:pi=5:so=5:bd=5:cd=5:or=31:mi=32:ex=32:ow=92'
 export LS_COLORS
 
-tabs 4
+tabs 4 > /dev/null
