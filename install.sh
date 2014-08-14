@@ -7,6 +7,11 @@ echo "Linking bash files..."
 ln -sf $sd/bash/aliases.sh ~/.bash_aliases
 ln -sf $sd/bash/rc.sh ~/.bashrc
 
+if command -v nano >/dev/null 2>&1; then
+	echo "Linking nanorc..."
+	ln -sf $sd/nanorc ~/.nanorc
+fi
+
 if command -v git >/dev/null 2>&1; then
 	echo "Linking git files..."
 	ln -sf $sd/git/config ~/.gitconfig

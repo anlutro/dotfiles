@@ -1,0 +1,8 @@
+unset quiet
+set autoindent
+set fill 0
+unset morespace
+unset nowrap
+set smarthome
+set softwrap
+set tabsize 4
