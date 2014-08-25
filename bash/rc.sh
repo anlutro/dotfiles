@@ -75,7 +75,11 @@ if command -v __git_ps1 >/dev/null 2>&1; then
     PS1=$PS1'$(__git_ps1 " (%s)")'
 fi
 
-PS1=$PS1'\n$ '
+if [ $(whoami) = 'root' ]; then
+    PS1=$PS1'\n# '
+else
+    PS1=$PS1'\n$ '
+fi
 unset color_prompt force_color_prompt
 
 # If this is an xterm set the title to user@host:dir
