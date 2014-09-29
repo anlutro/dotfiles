@@ -85,8 +85,15 @@ function phpunit {
 	fi
 }
 
-alias a='php artisan'
-alias art='php artisan'
+function art {
+	if [ -f ./bin/artisan ]; then
+		php ./bin/artisan $@
+	elif [ -f ./artisan ]; then
+		php ./artisan $@
+	else
+		echo "No artisan file found!"; exit 1;
+	fi
+}
 
 # python
 alias avenv='source ./env/bin/activate'
@@ -101,6 +108,7 @@ function py3help {
 alias crlffix='for file in `find . -type f`; do dos2unix $file $file; done'
 alias genpw='< /dev/urandom tr -dc A-Za-z0-9 | head -c${1:-16};echo;'
 
+# clear a file, then tail it
 function cltail {
 	cat /dev/null > "$1" && tail -f "$@"
 }
