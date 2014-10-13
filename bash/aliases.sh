@@ -52,14 +52,6 @@ function a2es {
 	sudo ln -s /etc/apache2/sites-available/$1 /etc/apache2/sites-enabled/$1 && sudo service apache2 reload
 }
 
-function s {
-	if [ "$(which apache2)" ]; then service apache2 status; fi;
-	if [ "$(which nginx)" ]; then service nginx status; fi;
-	if [ "$(which mysql)" ]; then service mysql status; fi;
-	# if [ "$(which redis-server)" ]; then redis-cli info; fi;
-	# if [ "$(which memcached)" ]; then service memcached status; fi;
-}
-
 # php stuff
 function composer {
 	if [ $(which hhvm) ]; then
@@ -107,6 +99,8 @@ function py3help {
 # misc
 alias crlffix='for file in `find . -type f`; do dos2unix $file $file; done'
 alias genpw='< /dev/urandom tr -dc A-Za-z0-9 | head -c${1:-16};echo;'
+alias ss='sudo service'
+alias s='livestreamer'
 
 # clear a file, then tail it
 function cltail {
