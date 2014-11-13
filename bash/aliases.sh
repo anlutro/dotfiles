@@ -97,7 +97,7 @@ function py3help {
 }
 
 # misc
-alias crlffix='for file in `find . -type f`; do dos2unix $file $file; done'
+alias crlffix='for file in `find . -type f`; do dos2unix $file; done'
 alias genpw='< /dev/urandom tr -dc A-Za-z0-9 | head -c${1:-16};echo;'
 alias ss='sudo service'
 alias s='livestreamer'
