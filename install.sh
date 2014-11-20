@@ -37,3 +37,8 @@ if command -v openbox >/dev/null 2>&1; then
 	echo "Linking openbox config dir..."
 	ln -sfT $sd/openbox ~/.config/openbox
 fi
+
+if command -v tint2 >/dev/null 2>&1; then
+	echo "Linking tint2 config dir..."
+	ln -sfT $sd/tint2 ~/.config/tint2
+fi
