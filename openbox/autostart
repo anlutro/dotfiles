@@ -15,7 +15,9 @@ fi
 
 
 # Volume control for systray
-pnmixer &
+if command -v pnmixer >/dev/null 2>&1; then
+	pnmixer &
+fi
 
 
 # Volume keys daemon
