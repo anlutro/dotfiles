@@ -42,3 +42,13 @@ if command -v tint2 >/dev/null 2>&1; then
 	echo "Linking tint2 config dir..."
 	ln -sfT $sd/tint2 ~/.config/tint2
 fi
+
+if command -v x-terminal-emulator >/dev/null 2>&1; then
+	echo "Linking x-terminal-emulator config dir..."
+	ln -sfT $sd/xfce4/terminal ~/.config/xfce4/terminal
+fi
+
+if command -v terminator >/dev/null 2>&1; then
+	echo "Linking terminator config dir..."
+	ln -sfT $sd/terminator ~/.config/terminator
+fi
