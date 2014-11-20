@@ -55,6 +55,7 @@ fi
 
 # Link all files in ./bin to ~/bin
 for f in $sd/bin/*; do
+	if [ ! -d ~/bin ]; then mkdir ~/bin; fi
 	file=$(basename $f)
 	path=$(readlink -f $f)
 	ln -sf $path ~/bin/$file
