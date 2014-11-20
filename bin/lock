@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+
+# Figure out how to lock the screen...
+if command -v dm-tool >/dev/null 2>&1; then
+	dm-tool lock
+elif command -v cb-lock >/dev/null 2>&1; then
+	cb-lock
+elif command -v xscreensaver-command >/dev/null 2>&1; then
+	xscreensaver-command -lock
+else
+	exit 1
+fi
+
+# Force backlight off
+xset dpms force off
