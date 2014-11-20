@@ -85,22 +85,6 @@
 				</action>
 			</item>
 		</menu>
-		<menu id="system" label="System">
-			<item label="GParted">
-				<action name="Execute">
-					<command>
-						gksudo gparted
-					</command>
-				</action>
-			</item>
-			<item label="Synaptic Package Manager">
-				<action name="Execute">
-					<command>
-						gksudo synaptic
-					</command>
-				</action>
-			</item>
-		</menu>
 		<separator/>
 		<item label="Lock Screen">
 			<action name="Execute">
