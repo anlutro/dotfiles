@@ -5,7 +5,7 @@ if command -v qdbus >/dev/null 2>&1; then
 	qdbus --system org.freedesktop.login1 /org/freedesktop/login1 \
 		org.freedesktop.login1.Manager.Suspend true
 elif command -v dbus-send >/dev/null 2>&1; then
-	dbus-send --system --print-reply --desg="org.freedesktop.UPower" \
+	dbus-send --system --print-reply --dest="org.freedesktop.UPower" \
 		/org/freedesktop/UPower org.freedesktop.UPower.Suspend
 else
 	exit 1
