@@ -1,5 +1,8 @@
-unset quiet
+# note that autoindent tends to screw up pasting of code - unset it temporarily
+# if you intend to paste multi-line code blocks.
 set autoindent
+
+unset quiet
 set fill 0
 unset morespace
 unset nowrap

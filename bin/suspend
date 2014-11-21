@@ -10,3 +10,6 @@ elif command -v dbus-send >/dev/null 2>&1; then
 else
 	exit 1
 fi
+
+# lock the screen as well
+exec ~/bin/lock

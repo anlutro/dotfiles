@@ -82,7 +82,7 @@
 		<item label="Lock Screen">
 			<action name="Execute">
 				<command>
-					lock
+					~/bin/lock
 				</command>
 			</action>
 		</item>
@@ -96,21 +96,21 @@
 		<item label="Suspend">
 			<action name="Execute">
 				<command>
-					suspend
+					~/bin/suspend
 				</command>
 			</action>
 		</item>
 		<item label="Reboot">
 			<action name="Execute">
 				<command>
-					dbus-send --system --print-reply --dest=\"org.freedesktop.ConsoleKit\" /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Restart
+					dbus-send --system --print-reply --dest="org.freedesktop.ConsoleKit" /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Restart
 				</command>
 			</action>
 		</item>
 		<item label="Shut down">
 			<action name="Execute">
 				<command>
-					dbus-send --system --print-reply --dest=\"org.freedesktop.ConsoleKit\" /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Stop
+					dbus-send --system --print-reply --dest="org.freedesktop.ConsoleKit" /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Stop
 				</command>
 			</action>
 		</item>
