@@ -1,0 +1,9 @@
+# See `man gsimplecal` for more details.
+show_calendar = 1
+show_timezones = 0
+mark_today = 1
+mainwindow_decorated = 0
+mainwindow_keep_above = 1
+mainwindow_sticky = 0
+mainwindow_skip_taskbar = 1
+force_lang = en_GB.utf8

@@ -53,6 +53,11 @@ if command -v terminator >/dev/null 2>&1; then
 	ln -sfT $sd/dotconfig/terminator ~/.config/terminator
 fi
 
+if command -v gsimplecal >/dev/null 2>&1; then
+	echo "Linking gsimplecal config dir ..."
+	ln -sfT $sd/dotconfig/gsimplecal ~/.config/gsimplecal
+fi
+
 # Link all files in ./bin to ~/bin
 for f in $sd/bin/*; do
 	if [ ! -d ~/bin ]; then mkdir ~/bin; fi
