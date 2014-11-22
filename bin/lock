@@ -2,14 +2,13 @@
 
 # Figure out how to lock the screen...
 if command -v dm-tool >/dev/null 2>&1; then
+	xset dpms force off
 	dm-tool lock
-elif command -v cb-lock >/dev/null 2>&1; then
-	cb-lock
 elif command -v xscreensaver-command >/dev/null 2>&1; then
-	xscreensaver-command -lock
+	if [ "$(pidof xscreensaver)" ]; then
+		xset dpms force off
+		xscreensaver-command -lock
+	fi
 else
 	exit 1
 fi
-
-# Force backlight off
-xset dpms force off
