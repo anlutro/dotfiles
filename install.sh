@@ -35,22 +35,22 @@ fi
 
 if command -v openbox >/dev/null 2>&1; then
 	echo "Linking openbox config dir ..."
-	ln -sfT $sd/openbox ~/.config/openbox
+	ln -sfT $sd/dotconfig/openbox ~/.config/openbox
 fi
 
 if command -v tint2 >/dev/null 2>&1; then
 	echo "Linking tint2 config dir ..."
-	ln -sfT $sd/tint2 ~/.config/tint2
+	ln -sfT $sd/dotconfig/tint2 ~/.config/tint2
 fi
 
 if command -v xfce4-terminal >/dev/null 2>&1; then
 	echo "Linking xfce4-terminal config dir ..."
-	ln -sfT $sd/xfce4/terminal ~/.config/xfce4/terminal
+	ln -sfT $sd/dotconfig/xfce4/terminal ~/.config/xfce4/terminal
 fi
 
 if command -v terminator >/dev/null 2>&1; then
 	echo "Linking terminator config dir ..."
-	ln -sfT $sd/terminator ~/.config/terminator
+	ln -sfT $sd/dotconfig/terminator ~/.config/terminator
 fi
 
 # Link all files in ./bin to ~/bin
