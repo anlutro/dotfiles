@@ -44,54 +44,17 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-# Gimme dem colors
-force_color_prompt=yes
-
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-    # We have color support; assume it's compliant with Ecma-48
-    # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-    # a case would tend to support setf rather than setaf.)
-    color_prompt=yes
-    else
-    color_prompt=
-    fi
+# PS1 config.
+if [ -f ~/.bash_ps1 ]; then
+    . ~/.bash_ps1
 fi
-
-if [ "$color_prompt" = yes ]; then
-    if [ $(whoami) = "vagrant" ]; then
-        color="33" # yellow
-    elif [ -n "$SSH_CLIENT" ]; then
-        color="31" # red
-    else
-        color="32" # green
-    fi
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;'$color'm\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]'
-else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w'
-fi
-
-if command -v __git_ps1 >/dev/null 2>&1; then
-    PS1=$PS1'$(__git_ps1 " (%s)")'
-fi
-
-if [ $(whoami) = 'root' ]; then
-    PS1=$PS1'\n# '
-else
-    PS1=$PS1'\n$ '
-fi
-unset color_prompt force_color_prompt
-
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    ;;
-*)
-    ;;
-esac
 
 LS_COLORS='di=94:fi=37:ln=4:pi=5:so=5:bd=5:cd=5:or=31:mi=32:ex=32:ow=92'
 export LS_COLORS
 
 tabs 4 > /dev/null
+
+# Add $HOME/bin to $PATH if the directory exists and not already added
+if [ -d $HOME/bin ] && [[ ! "$PATH" =~ "$HOME/bin" ]]; then
+    PATH="$HOME/bin:$PATH"
+fi

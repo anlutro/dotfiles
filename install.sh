@@ -4,8 +4,9 @@
 sd=$(dirname $(readlink -f "$0"))
 
 echo "Linking bash files ..."
-ln -sf $sd/bash/aliases.sh ~/.bash_aliases
 ln -sf $sd/bash/rc.sh ~/.bashrc
+ln -sf $sd/bash/aliases.sh ~/.bash_aliases
+ln -sf $sd/bash/ps1.sh ~/.bash_ps1
 
 if command -v nano >/dev/null 2>&1; then
 	echo "Linking nanorc ..."
