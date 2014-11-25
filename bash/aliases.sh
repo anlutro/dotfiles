@@ -53,20 +53,6 @@ function a2es {
 }
 
 # php stuff
-function composer {
-	if [ $(which hhvm) ]; then
-		if [ $(which composer) ]; then
-			$(which hhvm) $(which composer) $@;
-		else
-			$(which hhvm) composer.phar $@;
-		fi;
-	elif [ $(which composer) ]; then
-		$(which composer) $@;
-	else
-		php composer.phar $@;
-	fi;
-}
-
 function art {
 	if [ -f ./bin/artisan ]; then
 		php ./bin/artisan $@
