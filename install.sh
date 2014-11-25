@@ -40,7 +40,7 @@ fi
 
 if command -v tint2 >/dev/null 2>&1; then
 	echo "Linking tint2 config ..."
-	ln -sfT $sd/dotconfig/tint2rc ~/.config/tint2/tint2rc
+	ln -sfT $sd/dotconfig/tint2/tint2rc ~/.config/tint2/tint2rc
 fi
 
 if command -v xfce4-terminal >/dev/null 2>&1; then
