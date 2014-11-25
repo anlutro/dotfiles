@@ -201,36 +201,6 @@
 				<wrap>no</wrap>
 			</action>
 		</keybind>
-		<keybind key="W-A-1">
-			<action name="GoToDesktop">
-				<to>1</to>
-			</action>
-		</keybind>
-		<keybind key="W-A-2">
-			<action name="GoToDesktop">
-				<to>2</to>
-			</action>
-		</keybind>
-		<keybind key="W-A-3">
-			<action name="GoToDesktop">
-				<to>3</to>
-			</action>
-		</keybind>
-		<keybind key="W-A-4">
-			<action name="GoToDesktop">
-				<to>4</to>
-			</action>
-		</keybind>
-		<keybind key="W-A-5">
-			<action name="GoToDesktop">
-				<to>5</to>
-			</action>
-		</keybind>
-		<keybind key="W-A-6">
-			<action name="GoToDesktop">
-				<to>6</to>
-			</action>
-		</keybind>
 		<keybind key="W-F1">
 			<action name="GoToDesktop">
 				<to>1</to>
@@ -267,11 +237,6 @@
 		<!-- Keybindings for windows -->
 		<keybind key="A-F4">
 			<action name="Close"/>
-		</keybind>
-		<keybind key="A-Escape">
-			<action name="Lower"/>
-			<action name="FocusToBottom"/>
-			<action name="Unfocus"/>
 		</keybind>
 		<keybind key="A-space">
 			<action name="ShowMenu">
@@ -403,26 +368,12 @@
 				<command>subl -n</command>
 			</action>
 		</keybind>
-		<keybind key="W-v">
-			<action name="Execute">
-				<startupnotify>
-					<enabled>true</enabled>
-					<name>Volume</name>
-				</startupnotify>
-				<command>pavucontrol</command>
-			</action>
-		</keybind>
 		<keybind key="W-Tab">
 			<action name="ShowMenu">
 				<menu>client-list-combined-menu</menu>
 			</action>
 		</keybind>
 		<keybind key="W-space">
-			<action name="ShowMenu">
-				<menu>root-menu</menu>
-			</action>
-		</keybind>
-		<keybind key="A-C-q">
 			<action name="ShowMenu">
 				<menu>root-menu</menu>
 			</action>
@@ -442,16 +393,6 @@
 		</keybind>
 		<keybind key="W-m">
 			<action name="ToggleMaximize"/>
-		</keybind>
-		<keybind key="W-A-Left">
-			<action name="Execute">
-				<command>cb-aerosnap --left</command>
-			</action>
-		</keybind>
-		<keybind key="W-A-Right">
-			<action name="Execute">
-				<command>cb-aerosnap --right</command>
-			</action>
 		</keybind>
 		<keybind key="W-F8">
 			<action name="ToggleAlwaysOnTop"/>
