@@ -392,8 +392,8 @@
 		<!-- Set this to TRUE to move the mouse pointer across the desktop when
 			 switching due to hitting the edge of the screen -->
 		<context name="Frame">
-			<!-- Show application menu when holding alt and right clicking -->
-			<mousebind button="A-Right" action="Press">
+			<!-- Show application menu when holding shift and right clicking -->
+			<mousebind button="S-Right" action="Press">
 				<action name="ShowMenu">
 					<menu>client-menu</menu>
 				</action>
@@ -403,10 +403,18 @@
 			<mousebind button="A-Left" action="Drag">
 				<action name="Move"/>
 			</mousebind>
+			<mousebind button="A-Left" action="Press">
+				<action name="Focus"/>
+				<action name="Raise"/>
+			</mousebind>
 			<!-- Resize window when holding down alt and dragging with right
 			     mouse button -->
 			<mousebind button="A-Right" action="Drag">
 				<action name="Resize"/>
+			</mousebind>
+			<mousebind button="A-Right" action="Press">
+				<action name="Focus"/>
+				<action name="Raise"/>
 			</mousebind>
 			<!-- Desktop switching -->
 			<mousebind button="C-A-Up" action="Click">
