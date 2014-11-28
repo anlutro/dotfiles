@@ -59,7 +59,7 @@ function art {
 	elif [ -f ./artisan ]; then
 		php ./artisan $@
 	else
-		echo "No artisan file found!"; exit 1;
+		echo "No artisan file found!"; return 1;
 	fi
 }
 
