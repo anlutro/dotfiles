@@ -20,5 +20,5 @@ FontName=Source Code Pro Medium 10
 BackgroundMode=TERMINAL_BACKGROUND_TRANSPARENT
 BackgroundDarkness=0.850000
 ColorForeground=#eeeeeeeeeeee
-ColorBackground=#111111111111
+ColorBackground=#199a199a199a
 ColorCursor=#ffffffffffff
