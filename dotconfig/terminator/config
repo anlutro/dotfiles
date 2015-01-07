@@ -22,7 +22,7 @@
     show_titlebar = False
     color_scheme = custom
     font = Source Code Pro 10
-    background_color = "#292929"
+    background_color = "#191919"
     scrollback_infinite = True
 [layouts]
   [[default]]
