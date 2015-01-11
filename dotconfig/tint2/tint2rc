@@ -34,13 +34,13 @@ border_color = #ED2323 60
 
 # ID 5 - taskbar
 rounded = 0
-border_width = 1
+border_width = 0
 background_color = #000000 0
 border_color = #000000 0
 
 # ID 6 - active taskbar
 rounded = 0
-border_width = 1
+border_width = 0
 background_color = #d8d8d8 8
 border_color = #d8d8d8 0
 
