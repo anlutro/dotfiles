@@ -85,10 +85,9 @@ function genpw {
 		len=8
 	fi
 
+	chars="abcdefghjkmnpqrtuvwxyz2346789"
 	if [ "$2" == "strong" ]; then
-		chars="abcdefghjkmnpqrtuvwxyzABCDEFGHJKMNPQRTUVWXYZ2346789!@#$%&.:,;-"
-	else
-		chars="abcdefghjkmnpqrtuvwxyz2346789"
+		chars=$chars"ABCDEFGHJKMNPQRTUVWXYZ!@#$%&.:,;-"
 	fi
 
 	< /dev/urandom tr -dc $chars | head -c${1:-$len}
