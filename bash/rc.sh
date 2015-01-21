@@ -49,9 +49,12 @@ if [ -f ~/.bash_ps1 ]; then
     . ~/.bash_ps1
 fi
 
-LS_COLORS='di=94:fi=37:ln=4:pi=5:so=5:bd=5:cd=5:or=31:mi=32:ex=32:ow=92'
-export LS_COLORS
+# ls --color config with dircolors
+if [ -x /usr/bin/dircolors ]; then
+	test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+fi
 
+# set tab width
 tabs 4 > /dev/null
 
 # Add $HOME/bin to $PATH if the directory exists and not already added
