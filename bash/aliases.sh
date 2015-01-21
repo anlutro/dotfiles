@@ -74,9 +74,26 @@ function py3help {
 
 # misc
 alias crlffix='for file in `find . -type f`; do dos2unix $file; done'
-alias genpw='< /dev/urandom tr -dc A-Za-z0-9 | head -c${1:-16};echo;'
 alias ss='sudo service'
 alias s='livestreamer'
+
+# generate a password
+function genpw {
+	if [ -n "$1" ]; then
+		len=$1
+	else
+		len=8
+	fi
+
+	if [ "$2" == "strong" ]; then
+		chars="abcdefghjkmnpqrtuvwxyzABCDEFGHJKMNPQRTUVWXYZ2346789!@#$%&.:,;-"
+	else
+		chars="abcdefghjkmnpqrtuvwxyz2346789"
+	fi
+
+	< /dev/urandom tr -dc $chars | head -c${1:-$len}
+	echo # newline
+}
 
 # clear a file, then tail it
 function cltail {
