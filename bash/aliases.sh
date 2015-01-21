@@ -64,7 +64,7 @@ function art {
 }
 
 # python
-alias avenv='source ./env/bin/activate'
+alias avenv='source ./virtualenv/bin/activate'
 function pyhelp {
 	python -c 'help('"$@"')'
 }
