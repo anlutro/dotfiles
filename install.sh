@@ -59,6 +59,11 @@ if command -v gsimplecal >/dev/null 2>&1; then
 	ln -sfT $sd/dotconfig/gsimplecal ~/.config/gsimplecal
 fi
 
+if command -v thunar >/dev/null 2>&1; then
+	echo "Linking thunar config dir ..."
+	ln -sfT $sd/dotconfig/thunar ~/.config/Thunar
+fi
+
 # Link all files in ./bin to ~/bin
 for f in $sd/bin/*; do
 	if [ ! -d ~/bin ]; then mkdir ~/bin; fi
