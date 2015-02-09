@@ -18,6 +18,8 @@ cam = commit -am
 cb = checkout -b
 cm = commit -m
 co = checkout
+dc = diff --cached
+ds = diff --staged
 lg = log --graph --pretty=format:'%Cred%h %Cgreen%ci%Creset %s %C(bold blue)<%an>%C(yellow)%d%Creset' --abbrev-commit
 mfo = merge --ff-only
 mnf = merge --no-ff
