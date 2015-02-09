@@ -14,20 +14,16 @@ ui = true
 helper = cache --timeout=600
 
 [alias]
-cp = cherry-pick
-st = status
-cl = clone
-ci = commit
-cm = commit -m
 cam = commit -am
-co = checkout
-br = branch
 cb = checkout -b
+cm = commit -m
+co = checkout
 lg = log --graph --pretty=format:'%Cred%h %Cgreen%ci%Creset %s %C(bold blue)<%an>%C(yellow)%d%Creset' --abbrev-commit
-tags = !git tag -n | sort -V | less -FX +G
-up = !git remote update -p; git merge --ff-only @{u}
-mnf = merge --no-ff
 mfo = merge --ff-only
+mnf = merge --no-ff
+st = status
+tags = !git tag -n | sort -V | less -FX +G
+up = remote update -p
 
 [push]
 default = current
