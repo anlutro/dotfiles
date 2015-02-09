@@ -22,3 +22,5 @@ BackgroundDarkness=0.850000
 ColorForeground=#eeeeeeeeeeee
 ColorBackground=#199a199a199a
 ColorCursor=#ffffffffffff
+ColorPalette=#000000000000;#f4f443433636;#38388e8e3c3c;#a1a188887f7f;#47485ba6cccc;#7e7e5757c2c2;#2626a6a69a9a;#9a5ea5cdab84;#555555555555;#efef9a9a9a9a;#8181c7c78484;#fffff1f17676;#8181d4d4fafa;#b3b39d9ddbdb;#b2b2dfdfdbdb;#ffffffffffff
+
