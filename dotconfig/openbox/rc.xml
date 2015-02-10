@@ -264,6 +264,11 @@
 				</finalactions>
 			</action>
 		</keybind>
+		<keybind key="W-Tab">
+			<action name="ShowMenu">
+				<menu>client-list-combined-menu</menu>
+			</action>
+		</keybind>
 		<!-- Keybindings for window switching with the arrow keys -->
 		<keybind key="W-S-Right">
 			<action name="DirectionalCycleWindows">
