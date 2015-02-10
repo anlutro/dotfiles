@@ -6,7 +6,7 @@ elif [ -n "$SSH_CLIENT" ]; then
 	if [ $whoami = 'root' ]; then
 	    color='31' # red
 	else
-	    color='34' # yellow
+	    color='33' # yellow
 	fi
 else
     color='32' # green
