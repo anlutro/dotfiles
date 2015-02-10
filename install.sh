@@ -46,7 +46,7 @@ fi
 
 if command -v xfce4-terminal >/dev/null 2>&1; then
 	echo "Linking xfce4-terminal config dir"
-	ln -sfT $sd/xfce4/terminal ~/.config/xfce4/terminal
+	ln -sfT $sd/xfce4-terminal ~/.config/xfce4/terminal
 fi
 
 if command -v terminator >/dev/null 2>&1; then
