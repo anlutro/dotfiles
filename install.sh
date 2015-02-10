@@ -36,32 +36,32 @@ fi
 
 if command -v openbox >/dev/null 2>&1; then
 	echo "Linking openbox config dir"
-	ln -sfT $sd/dotconfig/openbox ~/.config/openbox
+	ln -sfT $sd/openbox ~/.config/openbox
 fi
 
 if command -v tint2 >/dev/null 2>&1; then
 	echo "Linking tint2 config"
-	ln -sf $sd/dotconfig/tint2/tint2rc ~/.config/tint2/tint2rc
+	ln -sf $sd/tint2/tint2rc ~/.config/tint2/tint2rc
 fi
 
 if command -v xfce4-terminal >/dev/null 2>&1; then
 	echo "Linking xfce4-terminal config dir"
-	ln -sfT $sd/dotconfig/xfce4/terminal ~/.config/xfce4/terminal
+	ln -sfT $sd/xfce4/terminal ~/.config/xfce4/terminal
 fi
 
 if command -v terminator >/dev/null 2>&1; then
 	echo "Linking terminator config dir"
-	ln -sfT $sd/dotconfig/terminator ~/.config/terminator
+	ln -sfT $sd/terminator ~/.config/terminator
 fi
 
 if command -v gsimplecal >/dev/null 2>&1; then
 	echo "Linking gsimplecal config dir"
-	ln -sfT $sd/dotconfig/gsimplecal ~/.config/gsimplecal
+	ln -sfT $sd/gsimplecal ~/.config/gsimplecal
 fi
 
 if command -v thunar >/dev/null 2>&1; then
 	echo "Linking thunar config dir"
-	ln -sfT $sd/dotconfig/thunar ~/.config/Thunar
+	ln -sfT $sd/thunar ~/.config/Thunar
 fi
 
 # Link ~/bin files
