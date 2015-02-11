@@ -26,7 +26,7 @@ fi
 
 if command -v compton >/dev/null 2>&1; then
 	echo "Linking compton.conf"
-	ln -sf $sd/compton.conf ~/.compton.conf
+	ln -sf $sd/compton.conf ~/.config/compton.conf
 fi
 
 if command -v tmux >/dev/null 2>&1; then
