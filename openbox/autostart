@@ -70,7 +70,7 @@ fi
 
 # Start compton - X11 compositor
 if command -v compton >/dev/null 2>&1; then
-	compton_flags='-b --sw-opti'
+	compton_flags='-b --sw-opti --unredir-if-possible'
 
 	if glxinfo | egrep -iq 'direct rendering: yes'; then
 		compton_flags+=' --vsync opengl'
