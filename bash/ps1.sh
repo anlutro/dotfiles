@@ -19,7 +19,7 @@ if command -v __git_ps1 >/dev/null 2>&1; then
 	# GIT_PS1_SHOWUNTRACKEDFILES=true
 	GIT_PS1_SHOWUPSTREAM="auto"
 	# GIT_PS1_SHOWCOLORHINTS=true
-    PS1=$PS1'$(__git_ps1 " (%s)")'
+    PS1=$PS1'$(__git_ps1 "  \[\033[01;37m\]%s\[\033[00m\]")'
 fi
 
 if [ $whoami = 'root' ]; then
