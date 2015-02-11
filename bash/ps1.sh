@@ -17,7 +17,7 @@ PS1='${debian_chroot:+($debian_chroot)}\[\033[01;'$color'm\]\u@\h\[\033[00m\] \w
 if command -v __git_ps1 >/dev/null 2>&1; then
 	# GIT_PS1_SHOWDIRTYSTATE=true
 	# GIT_PS1_SHOWUNTRACKEDFILES=true
-	# GIT_PS1_SHOWUPSTREAM="auto"
+	GIT_PS1_SHOWUPSTREAM="auto"
 	# GIT_PS1_SHOWCOLORHINTS=true
     PS1=$PS1'$(__git_ps1 " (%s)")'
 fi
