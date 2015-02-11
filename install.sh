@@ -24,6 +24,11 @@ if command -v conky >/dev/null 2>&1; then
 	ln -sf $sd/conkyrc ~/.conkyrc
 fi
 
+if command -v compton >/dev/null 2>&1; then
+	echo "Linking compton.conf"
+	ln -sf $sd/compton.conf ~/.compton.conf
+fi
+
 if command -v tmux >/dev/null 2>&1; then
 	echo "Linking tmux.conf"
 	ln -sf $sd/tmux.conf ~/.tmux.conf
