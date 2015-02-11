@@ -270,22 +270,22 @@
 			</action>
 		</keybind>
 		<!-- Keybindings for window switching with the arrow keys -->
-		<keybind key="W-S-Right">
+		<keybind key="W-A-Right">
 			<action name="DirectionalCycleWindows">
 				<direction>right</direction>
 			</action>
 		</keybind>
-		<keybind key="W-S-Left">
+		<keybind key="W-A-Left">
 			<action name="DirectionalCycleWindows">
 				<direction>left</direction>
 			</action>
 		</keybind>
-		<keybind key="W-S-Up">
+		<keybind key="W-A-Up">
 			<action name="DirectionalCycleWindows">
 				<direction>up</direction>
 			</action>
 		</keybind>
-		<keybind key="W-S-Down">
+		<keybind key="W-A-Down">
 			<action name="DirectionalCycleWindows">
 				<direction>down</direction>
 			</action>
