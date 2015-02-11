@@ -70,12 +70,13 @@ fi
 
 # Start compton - X11 compositor
 if command -v compton >/dev/null 2>&1; then
+	compton_flags='-b --sw-opti'
+
 	if glxinfo | egrep -iq 'direct rendering: yes'; then
-		EXECXCOMP='compton --vsync opengl'
-	else
-		EXECXCOMP='compton'
+		compton_flags+=' --vsync opengl'
 	fi
+
 	if [ ! "$(pidof compton)" ]; then
-		$EXECXCOMP &
+		compton $compton_flags &
 	fi
 fi
