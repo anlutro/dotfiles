@@ -73,9 +73,10 @@ fi
 if [ ! -d ~/bin ]; then mkdir ~/bin; fi
 echo "Linking ~/bin files"
 
-ln -sf $sd/bin/genpw ~/bin/genpw
-ln -sf $sd/bin/art ~/bin/art
 ln -sf $sd/bin/a2es ~/bin/a2es
+ln -sf $sd/bin/art ~/bin/art
+ln -sf $sd/bin/genpw ~/bin/genpw
+ln -sf $sd/bin/templ ~/bin/templ
 
 if command -v X >/dev/null 2>&1; then
 	ln -sf $sd/bin/lock ~/bin/lock
