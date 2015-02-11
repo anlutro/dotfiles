@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/sh
 
 # Figure out how to lock the screen...
 if command -v dm-tool >/dev/null 2>&1; then

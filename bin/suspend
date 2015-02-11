@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/sh
 
 # Figure out how to suspend...
 if command -v qdbus >/dev/null 2>&1; then
