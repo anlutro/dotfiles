@@ -1,5 +1,10 @@
-# Set root window colour
-hsetroot -solid "#2E3436" &
+# Set root window (desktop) colour - hsetroot works with compton
+bg='"#2E3436"'
+if command -v hsetroot >/dev/null 2>&1; then
+	hsetroot -solid $bg &
+elif command -v xsetroot >/dev/null 2>&1; then
+	xsetroot -solid $bg &
+fi
 
 
 # Start nitrogen wallpaper manager
