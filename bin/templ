@@ -13,7 +13,7 @@ def get_var_dict(var_list):
 
 	for item in var_list:
 		try:
-			k,v = item.split('=')
+			k,v = item.split('=', 1)
 			var_dict[k] = v
 		except ValueError as e:
 			msg = 'Invalid argument: {}\n'.format(item) \
