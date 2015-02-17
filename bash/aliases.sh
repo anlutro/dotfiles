@@ -3,6 +3,9 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
+# ag doesn't have config files
+alias ag="ag --color-path='0;37' --color-line-number='0;33' --color-match='1;34'"
+
 # some ls aliases
 alias ls='ls --group-directories-first --color=never -F'
 alias l='ls -lh'
