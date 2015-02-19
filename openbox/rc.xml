@@ -270,22 +270,22 @@
 			</action>
 		</keybind>
 		<!-- Keybindings for window switching with the arrow keys -->
-		<keybind key="W-A-Right">
+		<keybind key="W-Right">
 			<action name="DirectionalCycleWindows">
 				<direction>right</direction>
 			</action>
 		</keybind>
-		<keybind key="W-A-Left">
+		<keybind key="W-Left">
 			<action name="DirectionalCycleWindows">
 				<direction>left</direction>
 			</action>
 		</keybind>
-		<keybind key="W-A-Up">
+		<keybind key="W-Up">
 			<action name="DirectionalCycleWindows">
 				<direction>up</direction>
 			</action>
 		</keybind>
-		<keybind key="W-A-Down">
+		<keybind key="W-Down">
 			<action name="DirectionalCycleWindows">
 				<direction>down</direction>
 			</action>
@@ -356,16 +356,16 @@
 			</action>
 		</keybind>
 		<!-- A bit of tiling -->
-		<keybind key="W-Right">
+		<keybind key="W-S-Right">
 			<action name="GrowToEdgeEast"/>
 		</keybind>
-		<keybind key="W-Left">
+		<keybind key="W-S-Left">
 			<action name="GrowToEdgeWest"/>
 		</keybind>
-		<keybind key="W-Down">
+		<keybind key="W-S-Down">
 			<action name="GrowToEdgeSouth"/>
 		</keybind>
-		<keybind key="W-Up">
+		<keybind key="W-S-Up">
 			<action name="GrowToEdgeNorth"/>
 		</keybind>
 		<keybind key="W-m">
