@@ -52,7 +52,11 @@ function py3help {
 # misc
 alias crlffix='for file in `find . -type f`; do dos2unix $file; done'
 alias ss='sudo service'
-alias s='livestreamer'
+
+# livestreamer
+function s {
+	echo "livestreamer $1 ${2-high,best}"
+}
 
 # clear a file, then tail it
 function cltail {
