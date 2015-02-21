@@ -55,7 +55,7 @@ alias ss='sudo service'
 
 # livestreamer
 function s {
-	echo "livestreamer $1 ${2-high,best}"
+	livestreamer $1 ${2-high,best}
 }
 
 # clear a file, then tail it
