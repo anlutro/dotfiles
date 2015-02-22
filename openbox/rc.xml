@@ -356,16 +356,16 @@
 			</action>
 		</keybind>
 		<!-- A bit of tiling -->
-		<keybind key="W-S-Right">
+		<keybind key="W-A-Right">
 			<action name="GrowToEdgeEast"/>
 		</keybind>
-		<keybind key="W-S-Left">
+		<keybind key="W-A-Left">
 			<action name="GrowToEdgeWest"/>
 		</keybind>
-		<keybind key="W-S-Down">
+		<keybind key="W-A-Down">
 			<action name="GrowToEdgeSouth"/>
 		</keybind>
-		<keybind key="W-S-Up">
+		<keybind key="W-A-Up">
 			<action name="GrowToEdgeNorth"/>
 		</keybind>
 		<keybind key="W-m">
