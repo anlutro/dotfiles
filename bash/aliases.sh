@@ -40,6 +40,11 @@ alias a2dm='sudo a2dismod'
 alias a2cfg='cd /etc/apache2 && ls'
 alias a2log='cd /var/log/apache2 && ls -l'
 
+# php
+function ccp {
+	composer create-project "$1" -s dev --prefer-dist "${*:2}";
+}
+
 # python
 alias avenv='source ./virtualenv/bin/activate'
 function pyhelp {
