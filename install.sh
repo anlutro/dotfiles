@@ -69,6 +69,11 @@ if command -v thunar >/dev/null 2>&1; then
 	ln -sfT $sd/thunar ~/.config/Thunar
 fi
 
+if command -v i3 >/dev/null 2>&1; then
+	echo "Linking i3 config dir"
+	ln -sfT $sd/i3 ~/.config/i3
+fi
+
 # Link ~/bin files
 if [ ! -d ~/bin ]; then mkdir ~/bin; fi
 echo "Linking ~/bin files"
@@ -81,4 +86,5 @@ ln -sf $sd/bin/templ ~/bin/templ
 if command -v X >/dev/null 2>&1; then
 	ln -sf $sd/bin/lock ~/bin/lock
 	ln -sf $sd/bin/suspend ~/bin/suspend
+	ln -sf $sd/xsessionrc ~/.xsessionrc
 fi
