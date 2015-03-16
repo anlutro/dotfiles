@@ -1,0 +1,8 @@
+# Keyboard repeat - delay (ms) and characters per second
+xset r rate 175 35 &
+
+# Mouse acceleration - accel ratio and threshold
+xset m 1/1 0 &
+
+# Turn on/off system beep
+xset b off &
