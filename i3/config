@@ -152,10 +152,16 @@ bar {
         status_command i3status
 }
 
-bindcode 233 exec xbacklight +1 -time 0 -steps 1
-bindcode 232 exec xbacklight -1 -time 0 -steps 1
+bindsym XF86MonBrightnessUp exec xbacklight +1 -time 0 -steps 1
+bindsym XF86MonBrightnessDown exec xbacklight -1 -time 0 -steps 1
 
-for_window [class="sublime_text"] border none
+bindsym XF86AudioRaiseVolume exec amixer -q set Master 5%+ unmute
+bindsym XF86AudioLowerVolume exec amixer -q set Master 5%- unmute
+bindsym XF86AudioMute exec amixer -q set Master toggle
+
 new_window 1pixel
 hide_edge_borders both
 focus_follows_mouse no
+
+for_window [class="sublime_text"] new_window 1pixel
+for_window [class="Chromium"] new_window 1pixel
