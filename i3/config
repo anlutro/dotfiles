@@ -158,3 +158,4 @@ bindcode 232 exec xbacklight -1 -time 0 -steps 1
 for_window [class="sublime_text"] border none
 new_window 1pixel
 hide_edge_borders both
+focus_follows_mouse no

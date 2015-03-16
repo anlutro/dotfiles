@@ -74,6 +74,11 @@ if command -v i3 >/dev/null 2>&1; then
 	ln -sfT $sd/i3 ~/.config/i3
 fi
 
+if command -v i3status >/dev/null 2>&1; then
+	echo "Linking i3status config dir"
+	ln -sfT $sd/i3status ~/.config/i3status
+fi
+
 # Link ~/bin files
 if [ ! -d ~/bin ]; then mkdir ~/bin; fi
 echo "Linking ~/bin files"
