@@ -6,3 +6,16 @@ xset m 1/1 0 &
 
 # Turn on/off system beep
 xset b off &
+
+# Touchpad settings
+if egrep -iq 'synap|alps|etps' /proc/bus/input/devices; then
+	synclient AccelFactor=0.05
+	synclient MaxSpeed=2.5
+	# Tapping the touchpad sends a mouse button 1 event
+	synclient TapButton1=1
+fi
+
+# Start xflux
+if command -v xflux >/dev/null 2>&1; then
+	xflux -l 58 -g 5 -k 2900 &
+fi
