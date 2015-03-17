@@ -38,11 +38,6 @@ if command -v tmux >/dev/null 2>&1; then
 	ln -sf $sd/tmux.conf ~/.tmux.conf
 fi
 
-if command -v colordiff >/dev/null 2>&1; then
-	echo "Linking colordiffrc"
-	ln -sf $sd/colordiffrc ~/.colordiffrc
-fi
-
 if command -v openbox >/dev/null 2>&1; then
 	echo "Linking openbox config dir"
 	ln -sfT $sd/openbox ~/.config/openbox
