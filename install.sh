@@ -88,7 +88,5 @@ ln -sf $sd/bin/genpw ~/bin/genpw
 ln -sf $sd/bin/templ ~/bin/templ
 
 if command -v X >/dev/null 2>&1; then
-	ln -sf $sd/bin/lock ~/bin/lock
-	ln -sf $sd/bin/suspend ~/bin/suspend
 	ln -sf $sd/xsessionrc ~/.xsessionrc
 fi
