@@ -57,6 +57,7 @@ function py3help {
 # misc
 alias crlffix='for file in `find . -type f`; do dos2unix $file; done'
 alias ss='sudo service'
+alias i3lock='i3lock -c 000000'
 
 # livestreamer
 function s {
