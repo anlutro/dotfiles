@@ -8,6 +8,10 @@ ln -sf $sd/bash/rc.sh ~/.bashrc
 ln -sf $sd/bash/aliases.sh ~/.bash_aliases
 ln -sf $sd/bash/ps1.sh ~/.bash_ps1
 
+echo "Linking fonts.conf"
+ln -sf $sd/fonts.conf ~/.config/fontconfig/fonts.conf
+rm -f ~/.fonts.conf
+
 if command -v nano >/dev/null 2>&1; then
 	echo "Linking nanorc"
 	ln -sf $sd/nanorc ~/.nanorc
