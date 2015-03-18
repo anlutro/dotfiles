@@ -63,11 +63,6 @@ if command -v gsimplecal >/dev/null 2>&1; then
 	ln -sfT $sd/gsimplecal ~/.config/gsimplecal
 fi
 
-if command -v thunar >/dev/null 2>&1; then
-	echo "Linking thunar config dir"
-	ln -sfT $sd/thunar ~/.config/Thunar
-fi
-
 if command -v i3 >/dev/null 2>&1; then
 	echo "Linking i3 config dir"
 	ln -sfT $sd/i3 ~/.config/i3
