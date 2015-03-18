@@ -40,7 +40,7 @@ bindsym $mod+d exec dmenu_run
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # lock screen
-bindsym $mod+l exec i3lock
+bindsym $mod+l exec i3lock -c 000000
 
 # change focus
 bindsym $mod+Left focus left
