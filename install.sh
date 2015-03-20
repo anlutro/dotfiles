@@ -8,9 +8,14 @@ ln -sf $sd/bash/rc.sh ~/.bashrc
 ln -sf $sd/bash/aliases.sh ~/.bash_aliases
 ln -sf $sd/bash/ps1.sh ~/.bash_ps1
 
-echo "Linking fonts.conf"
-ln -sf $sd/fonts.conf ~/.config/fontconfig/fonts.conf
-rm -f ~/.fonts.conf
+if command -v X >/dev/null 2>&1; then
+	echo "Linking xsessionrc"
+	ln -sf $sd/xsessionrc ~/.xsessionrc
+
+	echo "Linking fonts.conf"
+	ln -sf $sd/fonts.conf ~/.config/fontconfig/fonts.conf
+	rm -f ~/.fonts.conf
+fi
 
 if command -v nano >/dev/null 2>&1; then
 	echo "Linking nanorc"
@@ -73,15 +78,11 @@ if command -v i3status >/dev/null 2>&1; then
 	ln -sfT $sd/i3status ~/.config/i3status
 fi
 
-# Link ~/bin files
+
 if [ ! -d ~/bin ]; then mkdir ~/bin; fi
 echo "Linking ~/bin files"
-
 ln -sf $sd/bin/a2es ~/bin/a2es
 ln -sf $sd/bin/art ~/bin/art
 ln -sf $sd/bin/genpw ~/bin/genpw
 ln -sf $sd/bin/templ ~/bin/templ
 
-if command -v X >/dev/null 2>&1; then
-	ln -sf $sd/xsessionrc ~/.xsessionrc
-fi
