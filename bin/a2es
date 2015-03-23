@@ -5,12 +5,12 @@ edir=/etc/apache2/sites-enabled
 
 if [[ $(whoami) != "vagrant" ]]; then
 	echo "ABORTED: Not running in vagrant!"
-	return 1
+	exit 1
 fi
 
 if [ ! -f $adir/$1 ]; then
 	echo "ABORTED: No such site available!"
-	return 2
+	exit 2
 fi
 
 if [ "$(ls -A $edir)" ]; then
