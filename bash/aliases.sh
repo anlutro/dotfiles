@@ -27,9 +27,8 @@ function md {
 	mkdir -p "$@" && cd $_;
 }
 
-function psgrep() {
-	ps auxf | grep -v grep | grep "$@";
-}
+# i3
+alias i3-rename='i3-msg rename workspace to'
 
 # server stuff
 alias a2r='sudo service apache2 reload'
@@ -72,4 +71,9 @@ function cltail {
 # keyboard layout
 function kb {
 	setxkbmap -v $1 && xset r 66
+}
+
+# improved ps | grep alias
+function psgrep() {
+	ps auxf | grep -v grep | grep "$@";
 }
