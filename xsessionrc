@@ -10,7 +10,7 @@ xset b off &
 # Touchpad settings
 if egrep -iq 'synap|alps|etps' /proc/bus/input/devices; then
 	synclient AccelFactor=0
-	synclient MinSpeed=1.5
+	synclient MinSpeed=1.25
 	synclient MaxSpeed=3
 	# Tapping the touchpad sends a mouse button 1 event
 	synclient TapButton1=1
