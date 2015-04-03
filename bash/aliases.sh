@@ -60,7 +60,7 @@ alias i3lock='i3lock -c 000000'
 
 # livestreamer
 function s {
-	livestreamer $1 ${2-high,best}
+	livestreamer $1 ${2-high,720p,best}
 }
 
 # clear a file, then tail it
