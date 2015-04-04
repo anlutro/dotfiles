@@ -45,7 +45,7 @@ function ccp {
 }
 
 # python
-alias avenv='source ./virtualenv/bin/activate'
+alias avenv='source ./.virtualenv/bin/activate'
 function pyhelp {
 	python -c 'help('"$@"')'
 }
