@@ -9,9 +9,9 @@ function n {
 		nls $1
 		return
 	elif [[ $count == 0 ]]; then
-		nano $1.md
+		vim $1.md
 	else
-		nano $(nls $1)
+		vim $(nls $1)
 	fi
 }
 function nls {
