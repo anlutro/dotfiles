@@ -1,3 +1,23 @@
+# note taking
+function n {
+	if [[ ! $1 ]]; then
+		echo "Missing argument - usage: n <name>"
+		return
+	fi
+	count=$(nls $1 | wc -l)
+	if [[ $count > 1 ]]; then
+		nls $1
+		return
+	elif [[ $count == 0 ]]; then
+		nano $1.md
+	else
+		nano $(nls $1)
+	fi
+}
+function nls {
+	ls -1 ~/Dropbox/notes/*.md | grep $@
+}
+
 # enable colors for grep
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
