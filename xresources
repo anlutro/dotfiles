@@ -21,11 +21,12 @@ URxvt*.lineSpace:            3
 
 ! Colors for bold/underlined/italic text
 URxvt*.colorIT:              #87af5f
-URxvt*.colorBD:              #d7d7d7
+URxvt*.colorBD:              #ffffff
 URxvt*.colorUL:              #87afd7
 
 ! Fonts
 URxvt*.allow_bold:           true
+URxvt*.intensityStyles:      false
 
 URxvt*font:                 xft:Source Code Pro:pixelsize=14
 URxvt*boldFont:             xft:Source Code Pro:bold:pixelsize=14
@@ -43,7 +44,6 @@ URxvt.url-select.underline: true
 
 ! Cursor
 URxvt*.cursorBlink:          true
-URxvt*.cursorColor:          #657b83
 URxvt*.cursorUnderline:      false
 
 ! Pointer
@@ -52,8 +52,8 @@ URxvt*.pointerBlank:         true
 ! Colors
 
 *background: #1a1a1a
-*foreground: #eeeeee
-*cursorColor: #eeeeee
+*foreground: #dddddd
+*cursorColor: #657b83
 
 !! black dark/light
 *color0: #111111
