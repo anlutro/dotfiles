@@ -87,10 +87,16 @@ if command -v urxvt >/dev/null 2>&1; then
 	fi
 
 	[ -d ~/.urxvt/ext ] || mkdir -p ~/.urxvt/ext
-	echo "Linking urxvt scripts..."
+	echo "Linking urxvt scripts"
 	ln -sf $sd/urxvt-perls/url-select ~/.urxvt/ext/url-select
 	ln -sf $sd/urxvt-perls/clipboard ~/.urxvt/ext/clipboard
 	ln -sf $sd/urxvt-perls/keyboard-select ~/.urxvt/ext/keyboard-select
+fi
+
+if command -v irssi >/dev/null 2>&1; then
+	[ -d ~/.irssi ] || mkdir -p ~/.irssi
+	echo "Linking irssi files"
+	ln -sf $sd/irssi/default.theme ~/.irssi/default.theme
 fi
 
 [ -d ~/bin ] || mkdir ~/bin
