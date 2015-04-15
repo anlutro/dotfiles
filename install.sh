@@ -12,6 +12,9 @@ if command -v X >/dev/null 2>&1; then
 	echo "Linking xsessionrc"
 	ln -sf $sd/xsessionrc ~/.xsessionrc
 
+	echo "Linking xresources"
+	ln -sf $sd/xresources ~/.Xresources
+
 	echo "Linking fonts.conf"
 	ln -sf $sd/fonts.conf ~/.config/fontconfig/fonts.conf
 	rm -f ~/.fonts.conf
@@ -78,10 +81,23 @@ if command -v i3status >/dev/null 2>&1; then
 	ln -sfT $sd/i3status ~/.config/i3status
 fi
 
+if command -v urxvt >/dev/null 2>&1; then
+	if [ ! -d $sd/urxvt-perls ]; then
+		git clone https://github.com/muennich/urxvt-perls $sd/urxvt-perls
+	fi
 
-if [ ! -d ~/bin ]; then mkdir ~/bin; fi
+	[ -d ~/.urxvt/ext ] || mkdir -p ~/.urxvt/ext
+	echo "Linking urxvt scripts..."
+	ln -sf $sd/urxvt-perls/url-select ~/.urxvt/ext/url-select
+	ln -sf $sd/urxvt-perls/clipboard ~/.urxvt/ext/clipboard
+	ln -sf $sd/urxvt-perls/keyboard-select ~/.urxvt/ext/keyboard-select
+fi
+
+[ -d ~/bin ] || mkdir ~/bin
 echo "Linking ~/bin files"
-ln -sf $sd/bin/a2es ~/bin/a2es
+if command -v apache2 >/dev/null 2>&1; then
+	ln -sf $sd/bin/a2es ~/bin/a2es
+fi
 ln -sf $sd/bin/art ~/bin/art
 ln -sf $sd/bin/genpw ~/bin/genpw
 ln -sf $sd/bin/templ ~/bin/templ
