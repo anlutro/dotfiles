@@ -69,10 +69,12 @@ URxvt*.scrollStyle:          rxvt
 URxvt*.scrollBar:            false
 
 ! perl extensions
-URxvt.perl-ext:              default,url-select
+URxvt.perl-ext:              default,url-select,clipboard
 URxvt.keysym.M-u:            perl:url-select:select_next
 URxvt.url-select.launcher:   /usr/bin/xdg-open
 URxvt.url-select.underline:  true
+URxvt.keysym.M-c:            perl:clipboard:copy
+URxvt.keysym.M-v:            perl:clipboard:paste
 
 ! cursor
 URxvt*.cursorBlink:          true
