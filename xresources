@@ -11,7 +11,7 @@ Xft.lcdfilter: lcddefault
 
 !! colors
 
-*background:  #1a1a1a
+*background:  #000000
 *foreground:  #dddddd
 *cursorColor: #657b83
 
@@ -58,10 +58,10 @@ URxvt*.colorUL:              #87afd7
 
 ! fonts
 URxvt*.allow_bold:           true
-URxvt*.intensityStyles:      false
+URxvt*.intensityStyles:      true
 
 URxvt*.font:                 xft:Source Code Pro:size=10
-URxvt*.boldFont:             xft:Source Code Pro:bold:size=10
+URxvt*.boldFont:             xft:Source Code Pro:semibold:size=10
 URxvt*.letterSpace:          -1
 
 ! scrollbar
