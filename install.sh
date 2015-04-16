@@ -12,9 +12,11 @@ if command -v X >/dev/null 2>&1; then
 	echo "Linking X11 files"
 	ln -sf $sd/x11/xsessionrc ~/.xsessionrc
 	ln -sf $sd/x11/xresources ~/.Xresources
+	ln -sf $sd/x11/xresources.local ~/.Xresources.local
 
 	echo "Linking fonts.conf"
-	ln -sf $sd/fonts.conf ~/.config/fontconfig/fonts.conf
+	ln -sf $sd/fontconfig/fonts.conf ~/.config/fontconfig/fonts.conf
+	ln -sf $sd/fontconfig/local.conf ~/.config/fontconfig/local.conf
 	rm -f ~/.fonts.conf
 fi
 
@@ -85,7 +87,6 @@ if command -v urxvt >/dev/null 2>&1; then
 	fi
 
 	[ -d ~/.urxvt/ext ] || mkdir -p ~/.urxvt/ext
-	[ -f ~/.Xresources.local ] || touch ~/.Xresources.local
 	echo "Linking urxvt scripts"
 	ln -sf $sd/urxvt-perls/url-select ~/.urxvt/ext/url-select
 	ln -sf $sd/urxvt-perls/clipboard ~/.urxvt/ext/clipboard
