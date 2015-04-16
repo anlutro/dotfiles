@@ -85,6 +85,7 @@ if command -v urxvt >/dev/null 2>&1; then
 	fi
 
 	[ -d ~/.urxvt/ext ] || mkdir -p ~/.urxvt/ext
+	[ -f ~/.Xresources.local ] || touch ~/.Xresources.local
 	echo "Linking urxvt scripts"
 	ln -sf $sd/urxvt-perls/url-select ~/.urxvt/ext/url-select
 	ln -sf $sd/urxvt-perls/clipboard ~/.urxvt/ext/clipboard

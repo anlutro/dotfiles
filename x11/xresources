@@ -80,3 +80,5 @@ URxvt*.cursorUnderline:      false
 
 ! pointer
 URxvt*.pointerBlank:         true
+
+#include ".Xresources.local"
