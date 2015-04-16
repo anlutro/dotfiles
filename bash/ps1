@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 whoami=$(whoami)
 
 if [ $whoami = 'vagrant' ]; then

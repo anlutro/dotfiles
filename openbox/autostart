@@ -1,3 +1,5 @@
+#!/bin/sh
+
 # Set root window (desktop) colour - hsetroot works with compton
 bg='"#2E3436"'
 if command -v hsetroot >/dev/null 2>&1; then

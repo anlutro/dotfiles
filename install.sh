@@ -1,19 +1,17 @@
-#!/usr/bin/env sh
+#!/bin/sh
 
 # script directory
 sd=$(dirname $(readlink -f "$0"))
 
 echo "Linking bash files"
-ln -sf $sd/bash/rc.sh ~/.bashrc
-ln -sf $sd/bash/aliases.sh ~/.bash_aliases
-ln -sf $sd/bash/ps1.sh ~/.bash_ps1
+ln -sf $sd/bash/bashrc ~/.bashrc
+ln -sf $sd/bash/aliases ~/.bash_aliases
+ln -sf $sd/bash/ps1 ~/.bash_ps1
 
 if command -v X >/dev/null 2>&1; then
-	echo "Linking xsessionrc"
-	ln -sf $sd/xsessionrc ~/.xsessionrc
-
-	echo "Linking xresources"
-	ln -sf $sd/xresources ~/.Xresources
+	echo "Linking X11 files"
+	ln -sf $sd/x11/xsessionrc ~/.xsessionrc
+	ln -sf $sd/x11/xresources ~/.Xresources
 
 	echo "Linking fonts.conf"
 	ln -sf $sd/fonts.conf ~/.config/fontconfig/fonts.conf

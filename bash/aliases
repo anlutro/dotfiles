@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # note taking
 function n {
 	if [[ ! $1 ]]; then

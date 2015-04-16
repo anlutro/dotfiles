@@ -1,3 +1,8 @@
+#!/bin/sh
+
+## read Xresources - not sure if this is necessary but whatever
+[ -f ~/.Xresources ] && xrdb -merge ~/.Xresources
+
 ## system settings
 # turn on/off system beep
 xset b off &
