@@ -33,5 +33,5 @@ fi
 
 # start dropbox
 if command -v dropbox >/dev/null 2>&1; then
-	dropbox start
+	dropbox start &
 fi
