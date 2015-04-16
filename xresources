@@ -1,15 +1,47 @@
-! font settings
+!! font settings
 
-Xft.autohint: false
+Xft.autohint:  false
 Xft.antialias: true
-Xft.hinting: true
+Xft.hinting:   true
 Xft.hintstyle: hintmedium
-!Xft.dpi: 96
-Xft.rgba: rgb
+Xft.rgba:      rgb
 Xft.lcdfilter: lcddefault
+!Xft.dpi:       96
 
 
-! rxvt settings
+!! colors
+
+*background:  #1a1a1a
+*foreground:  #dddddd
+*cursorColor: #657b83
+
+! black dark/light
+*color0:  #111111
+*color8:  #555555
+! red dark/light
+*color1:  #ef5350
+*color9:  #ef9a9a
+! green dark/light
+*color2:  #43a047
+*color10: #81c784
+! yellow dark/light
+*color3:  #ffd54f
+*color11: #fff176
+! blue dark/light
+*color4:  #039be5
+*color12: #81d4fa
+! magenta dark/light
+*color5:  #9575cd
+*color13: #b39ddb
+! cyan dark/light
+*color6:  #26a69a
+*color14: #80cbc4
+! white dark/light
+*color7:  #9aa5ab
+*color15: #ffffff
+
+
+!! rxvt/urxvt settings
 
 URxvt*.depth:                32
 !URxvt*.geometry:             90x30
@@ -19,70 +51,32 @@ URxvt*.saveLines:            500
 URxvt*.internalBorder:       3
 URxvt*.lineSpace:            3
 
-! Colors for bold/underlined/italic text
+! colors for bold/underlined/italic text
 URxvt*.colorIT:              #87af5f
 URxvt*.colorBD:              #ffffff
 URxvt*.colorUL:              #87afd7
 
-! Fonts
+! fonts
 URxvt*.allow_bold:           true
 URxvt*.intensityStyles:      false
 
-URxvt*font:                 xft:Source Code Pro:size=10
-URxvt*boldFont:             xft:Source Code Pro:bold:size=10
-URxvt*letterSpace:          -1
+URxvt*.font:                 xft:Source Code Pro:size=10
+URxvt*.boldFont:             xft:Source Code Pro:bold:size=10
+URxvt*.letterSpace:          -1
 
-! Scrollbar
+! scrollbar
 URxvt*.scrollStyle:          rxvt
 URxvt*.scrollBar:            false
 
-! Perl extensions
-URxvt.perl-ext: default,url-select
-URxvt.keysym.M-u: perl:url-select:select_next
-URxvt.url-select.launcher: /usr/bin/xdg-open
-URxvt.url-select.underline: true
+! perl extensions
+URxvt.perl-ext:              default,url-select
+URxvt.keysym.M-u:            perl:url-select:select_next
+URxvt.url-select.launcher:   /usr/bin/xdg-open
+URxvt.url-select.underline:  true
 
-! Cursor
+! cursor
 URxvt*.cursorBlink:          true
 URxvt*.cursorUnderline:      false
 
-! Pointer
+! pointer
 URxvt*.pointerBlank:         true
-
-! Colors
-
-*background: #1a1a1a
-*foreground: #dddddd
-*cursorColor: #657b83
-
-!! black dark/light
-*color0: #111111
-*color8: #555555
-
-!! red dark/light
-*color1: #ef5350
-*color9: #ef9a9a
-
-!! green dark/light
-*color2: #43a047
-*color10: #81c784
-
-!! yellow dark/light
-*color3: #ffd54f
-*color11: #fff176
-
-!! blue dark/light
-*color4: #039be5
-*color12: #81d4fa
-
-!! magenta dark/light
-*color5: #9575cd
-*color13: #b39ddb
-
-!! cyan dark/light
-*color6: #26a69a
-*color14: #80cbc4
-
-!! white dark/light
-*color7: #9aa5ab
-color15: #ffffff
