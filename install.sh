@@ -12,10 +12,16 @@ if command -v X >/dev/null 2>&1; then
 	echo "Linking X11 files"
 	ln -sf $sd/x11/xsessionrc ~/.xsessionrc
 	ln -sf $sd/x11/xresources ~/.Xresources
+	if [ ! -f $sd/x11/xresources.local ]; then
+		cp $sd/x11/xresources.local.default $sd/x11/xresources.local
+	fi
 	ln -sf $sd/x11/xresources.local ~/.Xresources.local
 
 	echo "Linking fonts.conf"
 	ln -sf $sd/fontconfig/fonts.conf ~/.config/fontconfig/fonts.conf
+	if [ ! -f $sd/fontconfig/local.conf ]; then
+		cp $sd/fontconfig/local.conf.default $sd/fontconfig/local.conf
+	fi
 	ln -sf $sd/fontconfig/local.conf ~/.config/fontconfig/local.conf
 	rm -f ~/.fonts.conf
 fi
