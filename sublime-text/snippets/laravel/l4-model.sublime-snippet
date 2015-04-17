@@ -1,0 +1,19 @@
+<snippet>
+	<content><![CDATA[
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletingTrait;
+
+class $1Model extends Model
+{
+	use SoftDeletingTrait;
+
+	protected \$table = '$2';
+	protected \$fillable = [];
+	protected \$dates = [];
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>l4-model</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.php</scope>
+</snippet>

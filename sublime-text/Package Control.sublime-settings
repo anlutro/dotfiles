@@ -1,0 +1,26 @@
+{
+	"auto_upgrade_last_run": null,
+	"in_process_packages":
+	[
+	],
+	"installed_packages":
+	[
+		"Alignment",
+		"ColorPicker",
+		"DocBlockr",
+		"Elixir",
+		"Emmet",
+		"Jinja2",
+		"Laravel Blade Highlighter",
+		"LESS",
+		"Package Control",
+		"PHP-Twig",
+		"Rust",
+		"SaltStack-related syntax highlighting and snippets",
+		"SublimeLinter",
+		"SublimeLinter-jshint",
+		"SublimeLinter-php",
+		"Syntax Highlighting for Sass",
+		"Theme - Soda"
+	]
+}

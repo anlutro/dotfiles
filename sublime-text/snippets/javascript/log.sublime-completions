@@ -1,0 +1,7 @@
+{
+    "scope": "source.js",
+    "completions":
+    [
+       { "trigger": "cl|log", "contents": "window.console.log($0);" }
+    ]
+}

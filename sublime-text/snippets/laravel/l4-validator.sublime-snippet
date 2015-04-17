@@ -1,0 +1,19 @@
+<snippet>
+	<content><![CDATA[
+use anlutro\LaravelValidation\Validator;
+
+class $1Validator extends Validator
+{
+	protected function getCommonRules()
+	{
+		return [
+			$0
+		];
+	}
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>l4-validator</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.php</scope>
+</snippet>

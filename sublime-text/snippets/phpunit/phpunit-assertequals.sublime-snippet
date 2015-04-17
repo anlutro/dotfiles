@@ -1,0 +1,11 @@
+<snippet>
+	<content><![CDATA[
+\$this->assertEquals($1, $2);
+]]></content>
+	<!-- Optional: Tab trigger to activate the snippet -->
+	<tabTrigger>aseq</tabTrigger>
+	<!-- Optional: Scope the tab trigger will be active in -->
+	<scope>source.php</scope>
+	<!-- Optional: Description to show in the menu -->
+	<description>PHPUnit assertEquals</description>
+</snippet>

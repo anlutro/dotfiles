@@ -105,6 +105,11 @@ if command -v irssi >/dev/null 2>&1; then
 	ln -sf $sd/irssi/default.theme ~/.irssi/default.theme
 fi
 
+if command -v subl >/dev/null 2>&1; then
+	echo "Linking Sublime Text 3 directory Packages/User"
+	ln -sfT $sd/sublime-text ~/.config/sublime-text-3/Packages/User
+fi
+
 [ -d ~/bin ] || mkdir ~/bin
 echo "Linking ~/bin files"
 if command -v apache2 >/dev/null 2>&1; then

@@ -1,0 +1,119 @@
+<snippet>
+	<content><![CDATA[
+class $1Controller extends AbstractController
+{
+	protected \$$2s;
+	protected \$form;
+
+	public function __construct($1Manager \$$2s, $1Form \$form)
+	{
+		\$this->$2s = \$$2s;
+		\$this->form = \$form;
+	}
+
+	public function index()
+	{
+		\$this->$2s->paginate(20);
+
+		\$$2s = \$this->$2s->getAll();
+
+		return \$this->view('$2.index', [
+			'$2s' => \$$2s,
+			'editAction' => \$this->action('@edit'),
+		]);
+	}
+
+	public function create()
+	{
+		\$this->form->setModel(\$this->$2s->getNew());
+		\$this->form->setAction(\$this->url('@store'));
+
+		return \$this->view('$2.form', [
+			'title' => 'New $2',
+			'form' => \$this->form,
+		]);
+	}
+
+	public function store()
+	{
+		if (!\$this->form->isValid()) {
+			return \$this->redirect('@create')->withInput()
+				->withErrors(\$this->form->getErrors());
+		}
+
+		\$input = \$this->form->getInput();
+
+		if (!\$$2 = \$this->$2s->create(\$input)) {
+			return \$this->redirect('@create')->withInput()
+				->withErrors(\$this->$2s->getErrors());
+		}
+
+		return \$this->redirect('@edit', [\$$2->getKey()])
+			->with('success', 'Stored!');
+	}
+
+	public function edit(\$id)
+	{
+		\$$2 = \$this->$2s->getByKey(\$id);
+
+		if (!\$$2) return \$this->notFound();
+
+		\$this->form->setModel(\$$2);
+		\$this->form->setAction(\$this->url('@update', [\$$2->getKey()]));
+
+		return \$this->view('$2.form', [
+			'title' => 'Edit $2',
+			'form' => \$this->form,
+			'deleteUrl' => \$this->url('@delete', [\$$2->getKey()]),
+		]);
+	}
+
+	public function update(\$id)
+	{
+		\$$2 = \$this->$2s->getByKey(\$id);
+
+		if (!\$$2) return \$this->notFound();
+
+		if (!\$this->form->isValid()) {
+			return \$this->redirect('@create')->withInput()
+				->withErrors(\$this->form->getErrors());
+		}
+
+		\$input = \$this->form->getInput();
+
+		if (!\$this->$2s->update(\$$2, \$input)) {
+			return \$this->redirect('@edit', [\$$2->getKey()])
+				->withInput()->withErrors(\$this->$2s->getErrors());
+		}
+
+		return \$this->redirect('@edit', [\$$2->getKey()])
+			->with('success', 'Updated!');
+	}
+
+	public function delete(\$id)
+	{
+		\$$2 = \$this->$2s->getByKey(\$id);
+
+		if (!\$$2) return \$this->notFound();
+
+		if (!\$this->$2s->delete(\$$2)) {
+			return \$this->redirect('@edit', [\$$2->getKey()])
+				->withErrors(\$this->$2s->getErrors());
+		}
+
+		return \$this->redirect('@index')->with('success', 'Deleted!');
+	}
+
+	protected function notFound()
+	{
+		return \$this->redirect('@index')
+			->withErrors('Not found!');
+	}
+}
+
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>l4-controller</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.php</scope>
+</snippet>

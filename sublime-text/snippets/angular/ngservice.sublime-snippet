@@ -1,0 +1,13 @@
+<snippet>
+	<content><![CDATA[
+angular.module('$1')
+.service('$2', function($3) {
+	$0
+});
+
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>ngservice</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.js</scope>
+</snippet>

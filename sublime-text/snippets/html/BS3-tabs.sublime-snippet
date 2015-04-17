@@ -1,0 +1,18 @@
+<snippet>
+	<content><![CDATA[
+<ul class="nav nav-tabs">
+	<li class="active"><a href="#$1" data-toggle="tab">$1</a></li>
+	<li><a href="#$2" data-toggle="tab">$2</a></li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+	<div class="tab-pane active" id="$1"></div>
+	<div class="tab-pane" id="$2"></div>
+</div>
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>bs3-tabs</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>text.html</scope>
+</snippet>

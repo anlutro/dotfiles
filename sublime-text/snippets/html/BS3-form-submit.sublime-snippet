@@ -1,0 +1,20 @@
+<snippet>
+	<content><![CDATA[
+<div class="form-group">
+	<div class="col-sm-offset-2 col-sm-10">
+		<button type="submit" class="btn btn-primary">
+			<span class="glyphicon glyphicon-save"></span> Lagre
+		</button>
+		@if (isset(\$deleteUrl))
+		<button type="button" class="btn btn-primary delete-resource-button" data-deleteUrl="{{ \$deleteUrl }}">
+			<span class="glyphicon glyphicon-trash"></span> Slett
+		</button>
+		@endif
+	</div>
+</div>
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>form-submit</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>text.html</scope>
+</snippet>

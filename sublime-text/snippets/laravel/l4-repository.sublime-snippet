@@ -1,0 +1,17 @@
+<snippet>
+	<content><![CDATA[
+use anlutro\LaravelRepository\EloquentRepository;
+
+class $1Repository extends EloquentRepository
+{
+	public function __construct($1Model \$model, $1Validator \$validator)
+	{
+		parent::__construct(\$model, \$validator);
+	}
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>l4-repository</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.php</scope>
+</snippet>

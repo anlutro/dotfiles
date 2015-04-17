@@ -1,0 +1,11 @@
+<snippet>
+	<content><![CDATA[
+\$this->assertInstanceOf($1, $2);
+]]></content>
+	<!-- Optional: Tab trigger to activate the snippet -->
+	<tabTrigger>asinstof</tabTrigger>
+	<!-- Optional: Scope the tab trigger will be active in -->
+	<scope>source.php</scope>
+	<!-- Optional: Description to show in the menu -->
+	<description>PHPUnit assertInstanceOf</description>
+</snippet>

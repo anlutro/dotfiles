@@ -1,0 +1,42 @@
+<!--
+${1/([a-zA-Z])(.*)/\l\1\2/}
+This expression will take $1 and turn the first character, if it is an
+alphabetical character, into lowercase.
+
+${1/([A-Z])([a-z])|([a-z])([A-Z])/\L\3 \1\2\4/g}
+This expression will take $1 and replace camelCasing with spaces. This will add
+a space in front.
+
+${1/([A-Z])([A-Z])([a-z])|([a-z])([A-Z])/\L\1\4 \2\3\5/g}
+This expression will take $1 and replace camelCasing with spaces, except for the
+first word which will remain capitalised. This will **not** add a space in
+front.
+-->
+<snippet>
+	<content><![CDATA[/**
+ * Get the${1/([A-Z])([a-z])|([a-z])([A-Z])/\L\3 \1\2\4/g}.
+ *
+ * @return ${2:mixed}
+ */
+public function get${1:Property}()
+{
+	return \$this->${1/([a-zA-Z])(.*)/\l\1\2/};
+}
+
+/**
+ * Set the${1/([A-Z])([a-z])|([a-z])([A-Z])/\L\3 \1\2\4/g}.
+ *
+ * @param \$${1/([a-zA-Z])(.*)/\l\1\2/} ${2:mixed}
+ */
+public function set${1:Property}(\$${1/([a-zA-Z])(.*)/\l\1\2/})
+{
+	\$this->${1/([a-zA-Z])(.*)/\l\1\2/} = \$${1/([a-zA-Z])(.*)/\l\1\2/};
+}
+]]></content>
+	<!-- Optional: Tab trigger to activate the snippet -->
+	<tabTrigger>getset</tabTrigger>
+	<!-- Optional: Scope the tab trigger will be active in -->
+	<scope>source.php</scope>
+	<!-- Optional: Description to show in the menu -->
+	<description>Get/Set</description>
+</snippet>

@@ -1,0 +1,15 @@
+<snippet>
+	<content><![CDATA[
+/** @test */
+public function $1()
+{
+	$0
+}
+]]></content>
+	<!-- Optional: Tab trigger to activate the snippet -->
+	<tabTrigger>test</tabTrigger>
+	<!-- Optional: Scope the tab trigger will be active in -->
+	<scope>source.php</scope>
+	<!-- Optional: Description to show in the menu -->
+	<description>PHPUnit</description>
+</snippet>

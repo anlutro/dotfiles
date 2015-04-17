@@ -1,0 +1,30 @@
+<snippet>
+	<content><![CDATA[
+<div class="table-responsive">
+<table class="table table-striped table-hover">
+	<thead>
+		<tr>
+			<th></th>
+			<th></th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (\$$1 as \$$2)
+		<tr>
+			<td>#{{ \$$2->getKey() }}</td>
+			<td>{{ \$$2->name }}</td>
+			<td class="text-right">
+				<a href="{{ URL::action(\$editAction, [\$$2->getKey()]) }}" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-edit"></span> Rediger</a>
+			</td>
+		</tr>
+		@endforeach
+	</tbody>
+</table>
+</div>
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>bs3-table</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>text.html</scope>
+</snippet>

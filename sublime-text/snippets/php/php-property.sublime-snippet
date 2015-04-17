@@ -1,0 +1,10 @@
+<snippet>
+	<content><![CDATA[${1:protected} \$$2;
+]]></content>
+	<!-- Optional: Tab trigger to activate the snippet -->
+	<tabTrigger>pp</tabTrigger>
+	<!-- Optional: Scope the tab trigger will be active in -->
+	<scope>source.php</scope>
+	<!-- Optional: Description to show in the menu -->
+	<description>Class Property</description>
+</snippet>

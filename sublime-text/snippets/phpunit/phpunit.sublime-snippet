@@ -1,0 +1,26 @@
+<snippet>
+	<content><![CDATA[
+
+use Mockery as m;
+
+class $1Test extends PHPUnit_Framework_TestCase
+{
+	public function setUp()
+	{
+		// ...
+	}
+
+	public function tearDown()
+	{
+		// ...
+	}
+}
+
+]]></content>
+	<!-- Optional: Tab trigger to activate the snippet -->
+	<tabTrigger>phpunit</tabTrigger>
+	<!-- Optional: Scope the tab trigger will be active in -->
+	<scope>source.php</scope>
+	<!-- Optional: Description to show in the menu -->
+	<description>PHPUnit</description>
+</snippet>

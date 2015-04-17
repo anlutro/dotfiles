@@ -1,0 +1,66 @@
+<snippet>
+	<content><![CDATA[
+class $1Controller extends AbstractApiController
+{
+	protected \$$2s;
+
+	public function __construct($1Manager \$$2s)
+	{
+		\$this->$2s = \$$2s;
+	}
+
+	public function index()
+	{
+		\$this->$2s->paginate(20);
+
+		\$$2s = \$this->$2s->getAll();
+
+		return \$this->jsonResponse(['$2s' => \$$2s]);
+	}
+
+	public function store()
+	{
+		\$input = \$this->input();
+
+		if (!\$$2 = \$this->$2s->create(\$input)) {
+			return \$this->error(\$this->$2s->getErrors());
+		}
+
+		return \$this->jsonResponse(['$2' => \$$2]);
+	}
+
+	public function update(\$id)
+	{
+		\$$2 = \$this->$2s->getByKey(\$id);
+
+		if (!\$$2) return \$this->notFound();
+
+		\$input = \$this->input();
+
+		if (!\$$2 = \$this->$2s->update(\$$2, \$input)) {
+			return \$this->error(\$this->$2s->getErrors());
+		}
+
+		return \$this->jsonResponse(['$2' => \$$2]);
+	}
+
+	public function delete(\$id)
+	{
+		\$$2 = \$this->$2s->getByKey(\$id);
+
+		if (!\$$2) return \$this->notFound();
+
+		if (!\$this->$2s->delete(\$$2)) {
+			return \$this->error(\$this->$2s->getErrors());
+		}
+
+		return \$this->success();
+	}
+}
+
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>l4-api-controller</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.php</scope>
+</snippet>

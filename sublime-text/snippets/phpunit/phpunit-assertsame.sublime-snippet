@@ -1,0 +1,11 @@
+<snippet>
+	<content><![CDATA[
+\$this->assertSame($1, $2);
+]]></content>
+	<!-- Optional: Tab trigger to activate the snippet -->
+	<tabTrigger>assame</tabTrigger>
+	<!-- Optional: Scope the tab trigger will be active in -->
+	<scope>source.php</scope>
+	<!-- Optional: Description to show in the menu -->
+	<description>PHPUnit assertSame</description>
+</snippet>

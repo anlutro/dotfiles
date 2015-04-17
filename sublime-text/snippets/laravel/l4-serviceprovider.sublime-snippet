@@ -1,0 +1,22 @@
+<snippet>
+	<content><![CDATA[
+class ServiceProvider extends \Illuminate\Support\ServiceProvider
+{
+	protected $defer = false;
+
+	public function register()
+	{
+		// ...
+	}
+
+	public function boot()
+	{
+		// ...
+	}
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>l4-serviceprovider</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.php</scope>
+</snippet>

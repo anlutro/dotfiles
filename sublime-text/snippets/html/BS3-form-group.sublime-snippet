@@ -1,0 +1,14 @@
+<snippet>
+	<content><![CDATA[
+<div class="form-group">
+	{{ \$form->label('$1', '$2', ['class' => 'control-label col-sm-3 col-md-2']) }}
+	<div class="col-sm-9 col-md-8 col-lg-6">
+		{{ \$form->input('$1', ['class' => 'form-control']) }}
+	</div>
+</div>
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>form-group</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>text.html</scope>
+</snippet>
