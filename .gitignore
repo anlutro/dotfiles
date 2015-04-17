@@ -1,3 +1,5 @@
 /urxvt-perls
 /x11/xresources.local
 /fontconfig/local.conf
+/sublime-text/*.cache
+/sublime-text/*.last-run
