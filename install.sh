@@ -17,6 +17,7 @@ if command -v X >/dev/null 2>&1; then
 	fi
 	ln -sf $sd/x11/xresources.local ~/.Xresources.local
 
+	[ -d ~/.config/fontconfig ] || mkdir -p ~/.config/fontconfig
 	echo "Linking fonts.conf"
 	ln -sf $sd/fontconfig/fonts.conf ~/.config/fontconfig/fonts.conf
 	if [ ! -f $sd/fontconfig/local.conf ]; then
