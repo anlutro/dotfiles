@@ -1,5 +1,9 @@
 /urxvt-perls
 /x11/xresources.local
 /fontconfig/local.conf
+
+# package control stuff
 /sublime-text/*.cache
 /sublime-text/*.last-run
+/sublime-text/Package Control.merged-ca-bundle
+/sublime-text/Package Control.user-ca-bundle
