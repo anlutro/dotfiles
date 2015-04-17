@@ -6,20 +6,4 @@
 			<double>96</double>
 		</edit>
 	</match>
-	<match target="font">
-		<test qual="any" name="family">
-			<string>Source Code Pro</string>
-		</test>
-		<edit mode="assign" name="hintstyle">
-			<const>hintmedium</const>
-		</edit>
-	</match>
-	<match target="font">
-		<test qual="any" name="family">
-			<string>Office Code Pro</string>
-		</test>
-		<edit mode="assign" name="hintstyle">
-			<const>hintmedium</const>
-		</edit>
-	</match>
 </fontconfig>
