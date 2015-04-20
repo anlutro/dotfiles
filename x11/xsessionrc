@@ -40,3 +40,8 @@ fi
 if command -v dropbox >/dev/null 2>&1; then
 	dropbox start &
 fi
+
+# start xautolock
+if command -v xautolock >/dev/null 2>&1; then
+	xautolock -time 60 -locker 'systemctl suspend' &
+fi
