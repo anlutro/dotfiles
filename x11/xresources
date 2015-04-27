@@ -1,8 +1,8 @@
 !! colors
 
-*background:  #000000
-*foreground:  #dddddd
-*cursorColor: #657b83
+URxvt*background:  #000000
+URxvt*foreground:  #dddddd
+URxvt*cursorColor: #657b83
 
 ! black dark/light
 *color0:  #111111
