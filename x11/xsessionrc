@@ -40,7 +40,7 @@ if command -v dropbox >/dev/null 2>&1; then
 fi
 
 if command -v xautolock >/dev/null 2>&1; then
-	xautolock -time 60 -locker 'systemctl suspend' &
+	xautolock -time 60 -locker 'systemctl suspend' -detectsleep &
 fi
 
 if command -v nm-applet >/dev/null 2>&1; then
