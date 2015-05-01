@@ -31,17 +31,18 @@ setxkbmap -option compose:ralt
 
 
 ## start applications
-# start xflux
 if command -v xflux >/dev/null 2>&1; then
 	xflux -l 58 -g 5 -k 2900 &
 fi
 
-# start dropbox
 if command -v dropbox >/dev/null 2>&1; then
 	dropbox start &
 fi
 
-# start xautolock
 if command -v xautolock >/dev/null 2>&1; then
 	xautolock -time 60 -locker 'systemctl suspend' &
+fi
+
+if command -v nm-applet >/dev/null 2>&1; then
+	nm-applet &
 fi
