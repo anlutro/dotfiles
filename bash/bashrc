@@ -14,6 +14,9 @@ shopt -s histappend
 HISTSIZE=100
 HISTFILESIZE=1000
 
+# always limit man to 80 characters wide
+MANWIDTH=80
+
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
