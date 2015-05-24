@@ -27,7 +27,7 @@ fi
 xset r rate 175 35 &
 
 # set the compose key
-setxkbmap -option compose:ralt
+setxkbmap -option compose:ralt &
 
 
 ## start applications
