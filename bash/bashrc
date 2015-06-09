@@ -11,11 +11,11 @@ HISTCONTROL=ignoredups:ignorespace
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=100
-HISTFILESIZE=1000
+HISTSIZE=200
+HISTFILESIZE=2000
 
 # always limit man to 80 characters wide
-MANWIDTH=80
+export MANWIDTH=80
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
