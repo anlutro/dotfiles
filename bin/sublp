@@ -1,4 +1,9 @@
 #!/bin/sh
 
 sp=$(find . -maxdepth 1 -name '*.sublime-project')
-subl -n ${sp-.}
+
+if [ -z "$sp" ]; then
+	sp="."
+fi
+
+subl -n $sp
