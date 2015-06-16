@@ -1,6 +1,7 @@
 {
 	"extensions":
 	[
-		"Vagrantfile"
+    "Vagrantfile",
+		"Vagrantfile.example"
 	]
 }
