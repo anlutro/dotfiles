@@ -1,0 +1,4 @@
+#!/bin/sh
+
+sp=$(find . -maxdepth 1 -name '*.sublime-project')
+subl ${sp-.}

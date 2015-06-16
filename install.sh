@@ -116,7 +116,9 @@ echo "Linking ~/bin files"
 if command -v apache2 >/dev/null 2>&1; then
 	ln -sf $sd/bin/a2es ~/bin/a2es
 fi
+if command -v subl >/dev/null 2>&1; then
+	ln -sf $sd/bin/sublp ~/bin/sublp
+fi
 ln -sf $sd/bin/art ~/bin/art
 ln -sf $sd/bin/genpw ~/bin/genpw
 ln -sf $sd/bin/templ ~/bin/templ
-
