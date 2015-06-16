@@ -113,7 +113,7 @@ fi
 
 [ -d ~/bin ] || mkdir ~/bin
 echo "Linking ~/bin files"
-if [ -f /etc/apache2 ]; then
+if [ -d /etc/apache2 ]; then
 	ln -sf $sd/bin/a2es ~/bin/a2es
 fi
 if command -v subl >/dev/null 2>&1; then
