@@ -50,6 +50,7 @@ function md {
 }
 
 # i3
+alias i3rename='i3-msg rename workspace to'
 alias i3-rename='i3-msg rename workspace to'
 
 # server stuff
