@@ -108,6 +108,6 @@
 	"tree_animation_enabled": false,
 	"update_check": false,
 	"vintage_start_in_command_mode": true,
-	"word_separators": "./\\()\"'-:,.;<>~!@#$%^&*|+=[]{}`~?",
+	"word_separators": "./\\()\"'-_:,.;<>~`!?@#$%^&*|+=[]{}",
 	"word_wrap": true
 }
