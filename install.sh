@@ -111,6 +111,11 @@ if command -v subl >/dev/null 2>&1; then
 	ln -sfT $sd/sublime-text ~/.config/sublime-text-3/Packages/User
 fi
 
+if command -v mutt >/dev/null 2>&1; then
+	echo "Linking muttrc"
+	ln -sfT $sd/muttrc ~/.muttrc
+fi
+
 [ -d ~/bin ] || mkdir ~/bin
 echo "Linking ~/bin files"
 if [ -d /etc/apache2 ]; then
