@@ -151,6 +151,7 @@ bindsym XF86MonBrightnessDown exec xbacklight -1 -time 0 -steps 1
 bindsym XF86AudioRaiseVolume exec amixer -q set Master 5%+ unmute
 bindsym XF86AudioLowerVolume exec amixer -q set Master 5%- unmute
 bindsym XF86AudioMute exec amixer -q set Master toggle
+bindsym XF86Calculator exec xcalc
 
 new_window 1pixel
 hide_edge_borders both
@@ -158,3 +159,4 @@ focus_follows_mouse no
 
 for_window [class="sublime_text"] new_window 1pixel
 for_window [class="Chromium"] new_window 1pixel
+for_window [class="XCalc"] floating enable
