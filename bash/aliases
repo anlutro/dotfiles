@@ -93,7 +93,7 @@ function cltail {
 
 # keyboard layout
 function kb {
-	setxkbmap -v $1 && xset r rate 175 35 && setxkbmap -option compose:ralt
+	setxkbmap -v -option compose:ralt -option caps:super $1 && xset r rate 175 35
 }
 
 # improved ps | grep alias

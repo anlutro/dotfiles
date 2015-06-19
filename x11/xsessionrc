@@ -26,8 +26,8 @@ fi
 # keyboard repeat - delay (ms) and characters per second
 xset r rate 175 35 &
 
-# set the compose key
-setxkbmap -option compose:ralt &
+# set xkbmap options
+setxkbmap -option compose:ralt -option caps:super &
 
 
 ## start applications
