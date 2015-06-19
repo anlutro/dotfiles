@@ -1,3 +1,5 @@
-set wrap=78
+set folder = "~/.mail"
+set wrap = 78
 
-color status default black
+color normal default black
+color status white black
