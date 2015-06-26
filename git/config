@@ -29,3 +29,6 @@ up = remote update -p
 
 [push]
 default = current
+
+[url "git@github.com"]
+pushInsteadOf = https://github.com
