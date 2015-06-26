@@ -81,6 +81,10 @@
 		]
 	} },
 
+	// scroll without moving cursor
+	{ "keys": ["ctrl+alt+up"],   "command": "scroll_lines", "args": {"amount":  1 } },
+	{ "keys": ["ctrl+alt+down"], "command": "scroll_lines", "args": {"amount": -1 } },
+
 	//==========================================================================//
 	//        misc fixes for sublime's auto-quote and -bracket matching         //
 	//==========================================================================//
