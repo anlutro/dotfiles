@@ -12,14 +12,11 @@ git_update() {
 	# clone the repo if it doesn't exist
 	if [ ! -d $dir ]; then
 		git clone $repo $dir
-		cloned=true
+		cd $dir
 		update=true
-	fi
-
-	cd $dir
-
-	# unless the repository was cloned, do a remote update
-	if [ "$clone" != true ]; then
+	# otherwise, do a remote update
+	else
+		cd $dir
 		git remote update
 		local_rev=$(git rev-list --max-count=1 master)
 		remote_rev=$(git rev-list --max-count=1 origin/master)
