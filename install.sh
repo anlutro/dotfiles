@@ -25,6 +25,9 @@ if command -v X >/dev/null 2>&1; then
 	fi
 	ln -sf $sd/fontconfig/local.conf ~/.config/fontconfig/local.conf
 	rm -f ~/.fonts.conf
+
+	echo "Linking gtkrc"
+	ln -sf $sd/gtkrc-2.0 ~/.gtkrc-2.0
 fi
 
 if command -v nano >/dev/null 2>&1; then
