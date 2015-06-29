@@ -1,4 +1,5 @@
 [
+	{ "keys": ["ctrl+k", "ctrl+c"], "command": "insert_php_constructor" },
 	{ "keys": ["ctrl+alt+shift+m"], "command": "toggle_minimal_environment" },
 	{ "keys": ["ctrl+alt+m"], "command": "toggle_menu" },
 	{ "keys": ["ctrl+k", "ctrl+n"], "command": "new_window_for_project" },
