@@ -1,18 +1,11 @@
 import sublime, sublime_plugin
 
 
-def find_class_opening_bracket(view):
-	'Find the position of the opening bracket of the class block.'
-	pos = view.find(r'class\s+[0-9A-Za-z_]+', 0).end()
-	pos = view.find(r'\{', pos).end()
-
-	return pos
-
-
 class InsertPHPConstructorArg(sublime_plugin.TextCommand):
 	'Inserts a constructor argument.'
 
 	placeholder = 'PROPERTY'
+	visibility = 'private'
 
 	def name(self):
 		'The name of the command, as used in key bindings.'
@@ -41,17 +34,17 @@ class InsertPHPConstructorArg(sublime_plugin.TextCommand):
 	def add_property(self, prop_name):
 		'Add a property to the class we are editing.'
 		text = prop_name + ";"
-		properties = self.view.find_all(r'(public|protected|private)\s+\$[A-Za-z_]+;')
+		properties = self.find_properties()
 
 		# check if the class has existing properties. if not, we need an extra
 		# newline to separate the property from any existing methods
 		if properties:
 			pos = properties[-1].end()
 		else:
-			pos = find_class_opening_bracket(self.view)
+			pos = self.find_class_opening_bracket()
 			text += "\n"
 
-		pos += self.view_insert(pos, "\n\tprivate $")
+		pos += self.view_insert(pos, "\n\t"+self.visibility+" $")
 		self.view_insert(pos, text)
 
 		cursor_start = pos
@@ -68,7 +61,7 @@ class InsertPHPConstructorArg(sublime_plugin.TextCommand):
 		# create the constructor if it does not exist
 		else:
 			text = "\n\tpublic function __construct()\n\t{\n\t}"
-			properties = self.view.find_all(r'(public|protected|private)\s+\$[A-Za-z_]+;')
+			properties = self.find_properties()
 
 			# if the class has any properties, insert an extra newline and put
 			# the constructor right after the last property
@@ -77,7 +70,7 @@ class InsertPHPConstructorArg(sublime_plugin.TextCommand):
 				text = "\n" + text
 			# otherwise, find the opening { of the class and put it there
 			else:
-				pos = find_class_opening_bracket(self.view)
+				pos = self.find_class_opening_bracket()
 
 			self.view_insert(pos, text)
 
@@ -89,9 +82,13 @@ class InsertPHPConstructorArg(sublime_plugin.TextCommand):
 		arg_pos = constructor_end
 		text = "$" + prop_name
 
-		# rudimentary check for multiline constructor args
-		if "\n" in constructor_args:
-			arg_pos = self.view.find_by_class(constructor_end, False, sublime.CLASS_LINE_END)
+		# figure out if the constructor is multiline
+		last_newline = self.view.find_by_class(constructor_end, False, sublime.CLASS_LINE_END)
+		last_word = self.view.find_by_class(constructor_end, False, sublime.CLASS_SUB_WORD_START)
+		is_multiline_constructor = last_newline > last_word
+
+		if is_multiline_constructor:
+			arg_pos = last_newline
 
 			# append a comma if there are any other arguments
 			if constructor_args.strip() != '':
@@ -129,6 +126,15 @@ class InsertPHPConstructorArg(sublime_plugin.TextCommand):
 		cursor_start = cursor_end + 4
 		cursor_end = cursor_start + len(prop_name)
 		self.add_region(cursor_start, cursor_end)
+
+	def find_class_opening_bracket(self):
+		'Find the position of the opening bracket of the class block.'
+		pos = self.view.find(r'class\s+[0-9A-Za-z_]+', 0).end()
+		return self.view.find(r'\{', pos).end()
+
+	def find_properties(self):
+		'Find all the class properties defined in the current view.'
+		return self.view.find_all(r'(public|protected|private)\s+\$[A-Za-z_]+;')
 
 	def add_region(self, start, end):
 		'Add a region to be edited later.'
