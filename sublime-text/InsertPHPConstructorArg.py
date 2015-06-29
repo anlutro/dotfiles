@@ -2,6 +2,7 @@ import sublime, sublime_plugin
 
 
 def find_class_opening_bracket(view):
+	'Find the position of the opening bracket of the class block.'
 	pos = view.find(r'class\s+[0-9A-Za-z_]+', 0)
 	pos = view.find(r'\{', pos.b).b
 
@@ -9,19 +10,24 @@ def find_class_opening_bracket(view):
 
 
 class InsertPHPConstructorArg(sublime_plugin.TextCommand):
-	'''
-	Inserts a constructor argument.
-	'''
+	'Inserts a constructor argument.'
 
 	placeholder = 'PROPERTY'
 
 	def name(self):
+		'The name of the command, as used in key bindings.'
 		return 'insert_php_constructor_arg'
 
 	def description(self):
+		'The description of the command.'
 		return 'Insert a constructor argument.'
 
+	def is_enabled(self):
+		'Whether the command is available or not.'
+		return 'php' in self.view.settings().get('syntax').lower()
+
 	def run(self, edit):
+		'Run the command.'
 		self.edit = edit
 		self.regions = []
 
@@ -33,7 +39,7 @@ class InsertPHPConstructorArg(sublime_plugin.TextCommand):
 		self.view.sel().add_all(self.regions)
 
 	def add_property(self, prop_name):
-		# add the property first
+		'Add a property to the class we are editing.'
 		text = prop_name + ";"
 		properties = self.view.find_all(r'(public|protected|private)\s+\$[A-Za-z_]+;')
 
@@ -53,6 +59,7 @@ class InsertPHPConstructorArg(sublime_plugin.TextCommand):
 		self.add_region(cursor_start, cursor_end)
 
 	def add_constructor(self, prop_name):
+		'Add constructor argument and setter.'
 		constructor = self.view.find(r'__construct\s*\(', 0)
 
 		if constructor:
@@ -100,7 +107,6 @@ class InsertPHPConstructorArg(sublime_plugin.TextCommand):
 
 			# prepend a comma if there are any other arguments
 			if constructor_args.strip() != '':
-				print(repr(constructor_args))
 				text = ", " + text
 				cursor_start += 2
 
@@ -125,7 +131,9 @@ class InsertPHPConstructorArg(sublime_plugin.TextCommand):
 		self.add_region(cursor_start, cursor_end)
 
 	def add_region(self, start, end):
+		'Add a region to be edited later.'
 		self.regions.append(sublime.Region(start, end))
 
 	def view_insert(self, pos, text):
+		'Insert a string into the view.'
 		return self.view.insert(self.edit, pos, text)
