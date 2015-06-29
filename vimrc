@@ -3,3 +3,6 @@
 set tabstop=4 softtabstop=0 shiftwidth=4 noexpandtab
 " to use spaces:
 "set tabstop=4 softtabstop=0 shiftwidth=4 expandtab smarttab
+
+" allow cursor to go to the end of the line when not in insert mode
+set virtualedit=onemore
