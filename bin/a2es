@@ -1,9 +1,9 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
-adir=/etc/apache2/sites-available
-edir=/etc/apache2/sites-enabled
+adir='/etc/apache2/sites-available'
+edir='/etc/apache2/sites-enabled'
 
-if [[ $(whoami) != "vagrant" ]]; then
+if [ $(whoami) != "vagrant" ]; then
 	echo "ABORTED: Not running in vagrant!"
 	exit 1
 fi
