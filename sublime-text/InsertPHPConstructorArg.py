@@ -3,8 +3,8 @@ import sublime, sublime_plugin
 
 def find_class_opening_bracket(view):
 	'Find the position of the opening bracket of the class block.'
-	pos = view.find(r'class\s+[0-9A-Za-z_]+', 0)
-	pos = view.find(r'\{', pos.b).b
+	pos = view.find(r'class\s+[0-9A-Za-z_]+', 0).end()
+	pos = view.find(r'\{', pos).end()
 
 	return pos
 
@@ -46,7 +46,7 @@ class InsertPHPConstructorArg(sublime_plugin.TextCommand):
 		# check if the class has existing properties. if not, we need an extra
 		# newline to separate the property from any existing methods
 		if properties:
-			pos = properties[-1].b
+			pos = properties[-1].end()
 		else:
 			pos = find_class_opening_bracket(self.view)
 			text += "\n"
@@ -63,8 +63,8 @@ class InsertPHPConstructorArg(sublime_plugin.TextCommand):
 		constructor = self.view.find(r'__construct\s*\(', 0)
 
 		if constructor:
-			constructor_start = constructor.b
-			constructor_end = self.view.find(r'\)', constructor_start).a
+			constructor_start = constructor.end()
+			constructor_end = self.view.find(r'\)', constructor_start).begin()
 		# create the constructor if it does not exist
 		else:
 			text = "\n\tpublic function __construct()\n\t{\n\t}"
@@ -73,7 +73,7 @@ class InsertPHPConstructorArg(sublime_plugin.TextCommand):
 			# if the class has any properties, insert an extra newline and put
 			# the constructor right after the last property
 			if properties:
-				pos = properties[-1].b
+				pos = properties[-1].end()
 				text = "\n" + text
 			# otherwise, find the opening { of the class and put it there
 			else:
@@ -83,7 +83,7 @@ class InsertPHPConstructorArg(sublime_plugin.TextCommand):
 
 			# easier than calculating the positions
 			constructor = self.view.find(r'__construct\s*\(\)', 0)
-			constructor_start = constructor_end = constructor.b - 1
+			constructor_start = constructor_end = constructor.end() - 1
 
 		constructor_args = self.view.substr(sublime.Region(constructor_start, constructor_end))
 		arg_pos = constructor_end
@@ -116,7 +116,7 @@ class InsertPHPConstructorArg(sublime_plugin.TextCommand):
 		self.add_region(cursor_start, cursor_end)
 
 		# add the line of code that sets the property
-		constructor_close = self.view.find(r'\}', constructor_end).a
+		constructor_close = self.view.find(r'\}', constructor_end).begin()
 		last_newline = self.view.find_by_class(constructor_close, False, sublime.CLASS_LINE_START)
 		cursor_start = last_newline + self.view_insert(last_newline, "\t\t$this->")
 		self.view_insert(cursor_start, prop_name+' = $'+prop_name+";\n")
