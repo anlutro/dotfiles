@@ -119,6 +119,11 @@ if command -v mutt >/dev/null 2>&1; then
 	ln -sfT $sd/muttrc ~/.muttrc
 fi
 
+if command -v vim >/dev/null 2>&1; then
+	echo "Linking vimrc"
+	ln -sfT $sd/vimrc ~/.vimrc
+fi
+
 [ -d ~/bin ] || mkdir ~/bin
 echo "Linking ~/bin files"
 if [ -d /etc/apache2 ]; then
