@@ -7,12 +7,12 @@ def find_class_opening_bracket(view):
 	return pos
 
 
-class InsertPHPConstructor(sublime_plugin.TextCommand):
+class InsertPHPConstructorArg(sublime_plugin.TextCommand):
 	'''
 	Inserts a constructor argument.
 	'''
 	def name(self):
-		return 'insert_php_constructor'
+		return 'insert_php_constructor_arg'
 
 	def run(self, edit):
 		regions = []

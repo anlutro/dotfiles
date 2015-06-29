@@ -1,12 +1,12 @@
 [
-	{ "keys": ["ctrl+k", "ctrl+c"], "command": "insert_php_constructor" },
+	{ "keys": ["ctrl+k", "ctrl+c"], "command": "insert_php_constructor_arg" },
 	{ "keys": ["ctrl+alt+shift+m"], "command": "toggle_minimal_environment" },
 	{ "keys": ["ctrl+alt+m"], "command": "toggle_menu" },
 	{ "keys": ["ctrl+k", "ctrl+n"], "command": "new_window_for_project" },
 
 	// C+a and C+e move to start/end of line, as in a unix shell
-	{ "keys": ["ctrl+a"], "command": "move_to", "args": {"to": "bol", "extend": false} },
-	{ "keys": ["ctrl+e"], "command": "move_to", "args": {"to": "eol", "extend": false} },
+	{ "keys": ["ctrl+a"], "command": "move_to", "args": {"to": "bol", "extend": false } },
+	{ "keys": ["ctrl+e"], "command": "move_to", "args": {"to": "eol", "extend": false } },
 
 	// re-bind S+A+a to select all since C+a is gone
 	{ "keys": ["shift+alt+a"], "command": "select_all" },
