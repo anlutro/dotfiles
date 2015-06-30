@@ -3,13 +3,94 @@
 # script directory
 sd=$(dirname $(readlink -f "$0"))
 
-echo "Linking bash files"
-ln -sf $sd/bash/bashrc ~/.bashrc
-ln -sf $sd/bash/aliases ~/.bash_aliases
-ln -sf $sd/bash/ps1 ~/.bash_ps1
+install() {
+	if command -v $1 >/dev/null 2>&1; then
+		echo "Installing $1 files"
+		"install_$(echo $1 | tr -s '-' '_')"
+	fi
+}
 
-if command -v X >/dev/null 2>&1; then
-	echo "Linking X11 files"
+install_bash() {
+	ln -sf $sd/bash/bashrc ~/.bashrc
+	ln -sf $sd/bash/aliases ~/.bash_aliases
+	ln -sf $sd/bash/ps1 ~/.bash_ps1
+}
+
+install_compton() {
+	ln -sf $sd/compton.conf ~/.config/compton.conf
+}
+
+install_conky() {
+	ln -sf $sd/conkyrc ~/.conkyrc
+}
+
+install_git() {
+	ln -sf $sd/git/config ~/.gitconfig
+	ln -sf $sd/git/ignore_global ~/.gitignore_global
+}
+
+install_gsimplecal() {
+	ln -sfT $sd/gsimplecal ~/.config/gsimplecal
+}
+
+install_i3() {
+	ln -sfT $sd/i3 ~/.config/i3
+}
+
+install_i3status() {
+	ln -sfT $sd/i3status ~/.config/i3status
+}
+
+install_irssi() {
+	[ -d ~/.irssi ] || mkdir -p ~/.irssi
+	ln -sf $sd/irssi/default.theme ~/.irssi/default.theme
+}
+
+install_mutt() {
+	ln -sfT $sd/muttrc ~/.muttrc
+}
+
+install_nano() {
+	ln -sf $sd/nanorc ~/.nanorc
+}
+
+install_openbox() {
+	ln -sfT $sd/openbox ~/.config/openbox
+}
+
+install_subl() {
+	ln -sfT $sd/sublime-text ~/.config/sublime-text-3/Packages/User
+	ln -sf $sd/bin/sublp ~/bin/sublp
+}
+
+install_terminator() {
+	ln -sfT $sd/terminator ~/.config/terminator
+}
+
+install_tint2() {
+	ln -sf $sd/tint2/tint2rc ~/.config/tint2/tint2rc
+}
+
+install_tmux() {
+	ln -sf $sd/tmux.conf ~/.tmux.conf
+}
+
+install_urxvt() {
+	if [ ! -d $sd/urxvt-perls ]; then
+		git clone https://github.com/muennich/urxvt-perls $sd/urxvt-perls
+	fi
+
+	[ -d ~/.urxvt/ext ] || mkdir -p ~/.urxvt/ext
+	ln -sf $sd/urxvt-perls/url-select ~/.urxvt/ext/url-select
+	ln -sf $sd/urxvt-perls/clipboard ~/.urxvt/ext/clipboard
+	ln -sf $sd/urxvt-perls/keyboard-select ~/.urxvt/ext/keyboard-select
+}
+
+install_vim() {
+	ln -sfT $sd/vimrc ~/.vimrc
+}
+
+install_X() {
 	ln -sf $sd/x11/xsessionrc ~/.xsessionrc
 	ln -sf $sd/x11/xresources ~/.Xresources
 	if [ ! -f $sd/x11/xresources.local ]; then
@@ -18,7 +99,6 @@ if command -v X >/dev/null 2>&1; then
 	ln -sf $sd/x11/xresources.local ~/.Xresources.local
 
 	[ -d ~/.config/fontconfig ] || mkdir -p ~/.config/fontconfig
-	echo "Linking fonts.conf"
 	ln -sf $sd/fontconfig/fonts.conf ~/.config/fontconfig/fonts.conf
 	if [ ! -f $sd/fontconfig/local.conf ]; then
 		cp $sd/fontconfig/local.conf.default $sd/fontconfig/local.conf
@@ -26,111 +106,39 @@ if command -v X >/dev/null 2>&1; then
 	ln -sf $sd/fontconfig/local.conf ~/.config/fontconfig/local.conf
 	rm -f ~/.fonts.conf
 
-	echo "Linking gtkrc"
 	ln -sf $sd/gtkrc-2.0 ~/.gtkrc-2.0
-fi
+}
 
-if command -v nano >/dev/null 2>&1; then
-	echo "Linking nanorc"
-	ln -sf $sd/nanorc ~/.nanorc
-fi
-
-if command -v git >/dev/null 2>&1; then
-	echo "Linking git files"
-	ln -sf $sd/git/config ~/.gitconfig
-	ln -sf $sd/git/ignore_global ~/.gitignore_global
-fi
-
-if command -v conky >/dev/null 2>&1; then
-	echo "Linking conkyrc"
-	ln -sf $sd/conkyrc ~/.conkyrc
-fi
-
-if command -v compton >/dev/null 2>&1; then
-	echo "Linking compton.conf"
-	ln -sf $sd/compton.conf ~/.config/compton.conf
-fi
-
-if command -v tmux >/dev/null 2>&1; then
-	echo "Linking tmux.conf"
-	ln -sf $sd/tmux.conf ~/.tmux.conf
-fi
-
-if command -v openbox >/dev/null 2>&1; then
-	echo "Linking openbox config dir"
-	ln -sfT $sd/openbox ~/.config/openbox
-fi
-
-if command -v tint2 >/dev/null 2>&1; then
-	echo "Linking tint2 config"
-	ln -sf $sd/tint2/tint2rc ~/.config/tint2/tint2rc
-fi
-
-if command -v xfce4-terminal >/dev/null 2>&1; then
-	echo "Linking xfce4-terminal config dir"
+install_xfce4_terminal() {
 	ln -sfT $sd/xfce4-terminal ~/.config/xfce4/terminal
-fi
+}
 
-if command -v terminator >/dev/null 2>&1; then
-	echo "Linking terminator config dir"
-	ln -sfT $sd/terminator ~/.config/terminator
-fi
 
-if command -v gsimplecal >/dev/null 2>&1; then
-	echo "Linking gsimplecal config dir"
-	ln -sfT $sd/gsimplecal ~/.config/gsimplecal
-fi
+install bash
+install compton
+install conky
+install git
+install gsimplecal
+install i3
+install i3status
+install irssi
+install mutt
+install nano
+install openbox
+install subl
+install terminator
+install tint2
+install tmux
+install urxvt
+install vim
+install X
+install xfce4-terminal
 
-if command -v i3 >/dev/null 2>&1; then
-	echo "Linking i3 config dir"
-	ln -sfT $sd/i3 ~/.config/i3
-fi
 
-if command -v i3status >/dev/null 2>&1; then
-	echo "Linking i3status config dir"
-	ln -sfT $sd/i3status ~/.config/i3status
-fi
-
-if command -v urxvt >/dev/null 2>&1; then
-	if [ ! -d $sd/urxvt-perls ]; then
-		git clone https://github.com/muennich/urxvt-perls $sd/urxvt-perls
-	fi
-
-	[ -d ~/.urxvt/ext ] || mkdir -p ~/.urxvt/ext
-	echo "Linking urxvt scripts"
-	ln -sf $sd/urxvt-perls/url-select ~/.urxvt/ext/url-select
-	ln -sf $sd/urxvt-perls/clipboard ~/.urxvt/ext/clipboard
-	ln -sf $sd/urxvt-perls/keyboard-select ~/.urxvt/ext/keyboard-select
-fi
-
-if command -v irssi >/dev/null 2>&1; then
-	[ -d ~/.irssi ] || mkdir -p ~/.irssi
-	echo "Linking irssi files"
-	ln -sf $sd/irssi/default.theme ~/.irssi/default.theme
-fi
-
-if command -v subl >/dev/null 2>&1; then
-	echo "Linking Sublime Text 3 directory Packages/User"
-	ln -sfT $sd/sublime-text ~/.config/sublime-text-3/Packages/User
-fi
-
-if command -v mutt >/dev/null 2>&1; then
-	echo "Linking muttrc"
-	ln -sfT $sd/muttrc ~/.muttrc
-fi
-
-if command -v vim >/dev/null 2>&1; then
-	echo "Linking vimrc"
-	ln -sfT $sd/vimrc ~/.vimrc
-fi
-
+echo "Installing ~/bin files"
 [ -d ~/bin ] || mkdir ~/bin
-echo "Linking ~/bin files"
 if [ -d /etc/apache2 ]; then
 	ln -sf $sd/bin/a2es ~/bin/a2es
-fi
-if command -v subl >/dev/null 2>&1; then
-	ln -sf $sd/bin/sublp ~/bin/sublp
 fi
 ln -sf $sd/bin/art ~/bin/art
 ln -sf $sd/bin/genpw ~/bin/genpw
