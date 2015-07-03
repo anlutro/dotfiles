@@ -88,7 +88,9 @@
 	"hot_exit": false,
 	"ignored_packages":
 	[
-		"Vintage"
+		"PHP",
+		"Vintage",
+		"Makefile"
 	],
 	"line_padding_bottom": 4,
 	"line_padding_top": 4,
