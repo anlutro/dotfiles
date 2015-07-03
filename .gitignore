@@ -1,4 +1,10 @@
+# backup files
+*.bak
+
+# urxvt scripts are `git clone`d
 /urxvt-perls
+
+# local override configs
 /x11/xresources.local
 /fontconfig/local.conf
 
