@@ -28,8 +28,10 @@ class InsertPHPConstructorArg(sublime_plugin.TextCommand):
 		self.add_constructor(self.placeholder)
 
 		# make a multiselect for all the variable names
-		self.view.sel().clear()
-		self.view.sel().add_all(self.regions)
+		sel = self.view.sel()
+		sel.clear()
+		sel.add_all(self.regions)
+		self.view.show(sel)
 
 	def add_property(self, prop_name):
 		'Add a property to the class we are editing.'
