@@ -1,5 +1,5 @@
 [
-	{ "keys": ["ctrl+k", "ctrl+c"], "command": "insert_php_constructor_arg" },
+	// various UI controls
 	{ "keys": ["ctrl+alt+shift+m"], "command": "toggle_minimal_environment" },
 	{ "keys": ["ctrl+alt+m"], "command": "toggle_menu" },
 	{ "keys": ["ctrl+k", "ctrl+n"], "command": "new_window_for_project" },
@@ -32,6 +32,10 @@
 
 	// insert => '', at EOL
 	{ "keys": ["ctrl+shift+."], "command": "run_macro_file", "args": {"file": "res://Packages/User/macros/eol arraypointer.sublime-macro"} },
+
+	// php operations
+	{ "keys": ["ctrl+k", "ctrl+c"], "command": "insert_php_constructor_arg" },
+	{ "keys": ["ctrl+k", "ctrl+i"], "command": "find_use" },
 
 	// select word
 	{ "keys": ["alt+w"], "command": "expand_selection", "args": {"to": "word"} },
