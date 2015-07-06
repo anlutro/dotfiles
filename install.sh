@@ -62,6 +62,10 @@ install_openbox() {
 	ln -sfT $sd/openbox ~/.config/openbox
 }
 
+install_rtorrent() {
+	ln -sf $sd/rtorrent.rc ~/.rtorrent.rc
+}
+
 install_subl() {
 	ln -sfT $sd/sublime-text ~/.config/sublime-text-3/Packages/User
 	ln -sf $sd/bin/sublp ~/bin/sublp
@@ -130,6 +134,7 @@ install irssi
 install mutt
 install nano
 install openbox
+install rtorrent
 install subl
 install terminator
 install tint2
