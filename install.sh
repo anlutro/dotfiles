@@ -24,6 +24,10 @@ install_conky() {
 	ln -sf $sd/conkyrc ~/.conkyrc
 }
 
+install_dunst() {
+	ln -sfT $sd/dunst ~/.config/dunst
+}
+
 install_git() {
 	ln -sf $sd/git/config ~/.gitconfig
 	ln -sf $sd/git/ignore_global ~/.gitignore_global
@@ -117,6 +121,7 @@ install_xfce4_terminal() {
 install bash
 install compton
 install conky
+install dunst
 install git
 install gsimplecal
 install i3
