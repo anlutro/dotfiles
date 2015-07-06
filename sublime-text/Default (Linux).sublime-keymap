@@ -34,7 +34,7 @@
 	{ "keys": ["ctrl+shift+."], "command": "run_macro_file", "args": {"file": "res://Packages/User/macros/eol arraypointer.sublime-macro"} },
 
 	// php operations
-	{ "keys": ["ctrl+k", "ctrl+c"], "command": "insert_php_constructor_arg" },
+	{ "keys": ["ctrl+k", "ctrl+c"], "command": "insert_php_constructor_property" },
 	{ "keys": ["ctrl+k", "ctrl+i"], "command": "find_use" },
 
 	// select word
