@@ -103,7 +103,7 @@
 			<key>name</key>
 			<string>String</string>
 			<key>scope</key>
-			<string>string</string>
+			<string>string, meta.embedded string</string>
 			<key>settings</key>
 			<dict>
 				<key>fontStyle</key>
@@ -201,19 +201,6 @@
 			<dict>
 				<key>foreground</key>
 				<string>#B097B3</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>name</key>
-			<string>♦ String embedded-source</string>
-			<key>scope</key>
-			<string>string source</string>
-			<key>settings</key>
-			<dict>
-				<key>fontStyle</key>
-				<string />
-				<key>foreground</key>
-				<string>#DAEFA3</string>
 			</dict>
 		</dict>
 		<dict>
