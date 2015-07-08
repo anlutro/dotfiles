@@ -76,11 +76,6 @@ function py3help {
 	python3 -c 'help('"$@"')'
 }
 
-# misc
-alias crlffix='for file in `find . -type f`; do dos2unix $file; done'
-alias ss='sudo service'
-alias tree='tree --dirsfirst'
-
 # livestreamer
 function s {
 	livestreamer $1 ${2-high,720p,best}
@@ -105,3 +100,9 @@ function psgrep {
 function termname {
 	echo -ne "\033]0;$1\007"
 }
+
+# misc
+alias crlffix='for file in `find . -type f`; do dos2unix $file; done'
+alias ss='sudo service'
+alias tree='tree --dirsfirst'
+alias cal='ncal -Mb3'
