@@ -159,6 +159,7 @@ bindsym XF86Calculator exec xcalc
 new_window 1pixel
 hide_edge_borders both
 focus_follows_mouse no
+mouse_warping none
 
 for_window [class="sublime_text"] new_window 1pixel
 for_window [class="Chromium"] new_window 1pixel
