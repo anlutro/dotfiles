@@ -75,6 +75,19 @@
 		</dict>
 		<dict>
 			<key>name</key>
+			<string>Separators</string>
+			<key>scope</key>
+			<string>punctuation.separator</string>
+			<key>settings</key>
+			<dict>
+				<key>fontStyle</key>
+				<string />
+				<key>foreground</key>
+				<string>#FFFFFF99</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
 			<string>Storage</string>
 			<key>scope</key>
 			<string>storage</string>
