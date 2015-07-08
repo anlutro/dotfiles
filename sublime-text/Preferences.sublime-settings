@@ -89,8 +89,7 @@
 	"ignored_packages":
 	[
 		"Vintage",
-		"Makefile",
-		"PHP"
+		"Makefile"
 	],
 	"line_padding_bottom": 4,
 	"line_padding_top": 4,
