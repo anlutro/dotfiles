@@ -49,9 +49,10 @@ function md {
 	mkdir -p "$@" && cd $_;
 }
 
-# i3
+# i3 shortcuts
 alias i3lock='i3lock -c 000000'
 alias i3rename='i3-msg rename workspace to'
+alias i3mv='i3-msg move workspace to output'
 
 # server stuff
 alias a2r='sudo service apache2 reload'
