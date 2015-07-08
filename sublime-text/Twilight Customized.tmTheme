@@ -242,7 +242,7 @@
 			<key>name</key>
 			<string>♦ Function calls</string>
 			<key>scope</key>
-			<string>source.php meta.function-call</string>
+			<string>meta.function-call, meta.function-call entity.name.function</string>
 			<key>settings</key>
 			<dict>
 				<key>fontStyle</key>
@@ -266,7 +266,7 @@
 			<key>name</key>
 			<string>♦ Function arguments</string>
 			<key>scope</key>
-			<string>meta.function-call.arguments, punctuation.definition.arguments</string>
+			<string>meta.function-call.arguments, meta.function-call.without-arguments, punctuation.definition.arguments</string>
 			<key>settings</key>
 			<dict>
 				<key>fontStyle</key>
@@ -277,9 +277,9 @@
 		</dict>
 		<dict>
 			<key>name</key>
-			<string>♦ Support.method</string>
+			<string>♦ Method calls</string>
 			<key>scope</key>
-			<string>meta.function-call.object, meta.function-call.static</string>
+			<string>meta.function-call.object, meta.function-call.static, meta.function-call.method, meta.function-call.object entity.name.function, meta.function-call.static entity.name.function, meta.function-call.method entity.name.function, source.python meta.function-call</string>
 			<key>settings</key>
 			<dict>
 				<key>fontStyle</key>
