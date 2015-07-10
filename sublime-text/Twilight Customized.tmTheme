@@ -116,7 +116,7 @@
 			<key>name</key>
 			<string>Variable</string>
 			<key>scope</key>
-			<string>variable</string>
+			<string>variable, source variable</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
@@ -242,7 +242,7 @@
 			<key>name</key>
 			<string>♦ String variable</string>
 			<key>scope</key>
-			<string>string variable, string punctuation.definition.variable</string>
+			<string>string variable, string punctuation.definition.variable, meta.string-contents variable</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
