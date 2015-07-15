@@ -28,6 +28,7 @@
 		"*.zip",
 		"bower_components/*",
 		"build/*",
+		"dist/*",
 		"composer.lock",
 		"node_modules/*",
 		"vendor/*"
