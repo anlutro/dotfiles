@@ -6,4 +6,4 @@ if [ -z "$sp" ]; then
 	sp="."
 fi
 
-subl -n $sp
+subl -n "$sp"
