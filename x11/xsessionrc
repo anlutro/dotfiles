@@ -46,3 +46,7 @@ fi
 if command -v nm-applet >/dev/null 2>&1; then
 	nm-applet &
 fi
+
+if command -v xfce4-power-manager >/dev/null 2>&1; then
+	xfce4-power-manager &
+fi
