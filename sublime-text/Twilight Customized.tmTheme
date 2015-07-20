@@ -277,6 +277,19 @@
 		</dict>
 		<dict>
 			<key>name</key>
+			<string>♦ Object properties</string>
+			<key>scope</key>
+			<string>meta.property.object</string>
+			<key>settings</key>
+			<dict>
+				<key>fontStyle</key>
+				<string />
+				<key>foreground</key>
+				<string>#FFFFFF</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
 			<string>♦ Support.constant</string>
 			<key>scope</key>
 			<string>support.constant</string>
