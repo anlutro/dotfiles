@@ -56,3 +56,5 @@ tabs 4 > /dev/null
 if [ -d $HOME/bin ] && [[ ! "$PATH" =~ "$HOME/bin" ]]; then
 	PATH="$HOME/bin:$PATH"
 fi
+
+export EDITOR=vim
