@@ -1,6 +1,5 @@
 [core]
 autocrlf = input
-editor = nano
 excludesfile = ~/.gitignore_global
 
 [user]
