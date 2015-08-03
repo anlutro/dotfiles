@@ -70,6 +70,9 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus scratchpad show
+
 # next workspace
 bindsym $mod+Tab workspace next_on_output
 bindsym $mod+Shift+Tab workspace prev_on_output
@@ -149,3 +152,4 @@ hide_edge_borders both
 # application-specific settings
 for_window [class="Keepassx"] floating enable
 for_window [class="XCalc"] floating enable
+for_window [class="vlc"] move scratchpad
