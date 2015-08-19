@@ -152,4 +152,3 @@ hide_edge_borders both
 # application-specific settings
 for_window [class="Keepassx"] floating enable
 for_window [class="XCalc"] floating enable
-for_window [class="vlc"] move scratchpad
