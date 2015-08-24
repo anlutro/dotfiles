@@ -34,6 +34,7 @@ alias l='ls -l'
 alias lc='l --color=auto'
 alias la='l -A'
 alias lt='l -tr'
+alias l1='ls -1'
 
 # file and dir stuff
 alias ..='cd ..'
