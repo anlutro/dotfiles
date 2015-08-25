@@ -36,7 +36,7 @@ if command -v __git_ps1 >/dev/null 2>&1; then
 fi
 
 if [ $whoami = 'root' ]; then
-	PS1=$PS1'\n# '
+	PS1=$PS1'\n\[\033[0;37m\]#\[\033[00m\] '
 else
-	PS1=$PS1'\n$ '
+	PS1=$PS1'\n\[\033[0;37m\]$\[\033[00m\] '
 fi
