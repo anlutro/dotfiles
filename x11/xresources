@@ -16,7 +16,7 @@ URxvt*termName:    rxvt-unicode
 *color10: #81c784
 ! yellow dark/light
 *color3:  #ffd54f
-*color11: #fff176
+*color11: #ffe2a7
 ! blue dark/light
 *color4:  #039be5
 *color12: #81d4fa
