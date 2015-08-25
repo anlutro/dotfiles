@@ -2,34 +2,39 @@
 
 whoami=$(whoami)
 
+user_color='32' # green
+host_color='32' # green
+
 if [ $whoami = 'vagrant' ]; then
-    color='34' # blue
-elif [ -n "$SSH_CLIENT" ]; then
-	if [ $whoami = 'root' ]; then
-	    color='31' # red
+	user_color='34' # blue
+elif [ $whoami = 'root' ]; then
+	user_color='31' # red
+fi
+
+if [ -n "$SSH_CLIENT" ]; then
+	if [ $whoami = 'vagrant' ]; then
+		host_color='34' # blue
 	else
-	    color='33' # yellow
+		host_color='33' # yellow
 	fi
-else
-    color='32' # green
 fi
 
 if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
 	debian_chroot=$(cat /etc/debian_chroot)
 fi
 
-PS1='${debian_chroot:+($debian_chroot)}\[\033[01;'$color'm\]\u@\h\[\033[00m\] \w'
+PS1='${debian_chroot:+($debian_chroot)}\[\033[01;'$user_color'm\]\u\[\033[0;37m\]@\[\033[01;'$host_color'm\]\h\[\033[00m\] \w'
 
 if command -v __git_ps1 >/dev/null 2>&1; then
 	# GIT_PS1_SHOWDIRTYSTATE=true
 	# GIT_PS1_SHOWUNTRACKEDFILES=true
 	GIT_PS1_SHOWUPSTREAM="auto"
 	# GIT_PS1_SHOWCOLORHINTS=true
-    PS1=$PS1'$(__git_ps1 "  \[\033[01;37m\]%s\[\033[00m\]")'
+	PS1=$PS1'$(__git_ps1 "  \[\033[01;37m\]%s\[\033[00m\]")'
 fi
 
 if [ $whoami = 'root' ]; then
-    PS1=$PS1'\n# '
+	PS1=$PS1'\n# '
 else
-    PS1=$PS1'\n$ '
+	PS1=$PS1'\n$ '
 fi
