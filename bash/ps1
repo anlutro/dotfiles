@@ -9,6 +9,8 @@ if [ $whoami = 'vagrant' ]; then
 	user_color='34' # blue
 elif [ $whoami = 'root' ]; then
 	user_color='31' # red
+elif [ $whoami != 'andreas' ]; then
+	user_color='33' # yellow
 fi
 
 if [ -n "$SSH_CLIENT" ]; then
