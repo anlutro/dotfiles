@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 
-whoami=$(whoami)
-
 user_color='32' # green
 host_color='32' # green
 
+whoami=$(whoami)
 if [ $whoami = 'vagrant' ]; then
 	user_color='34' # blue
 elif [ $whoami = 'root' ]; then
@@ -14,7 +13,8 @@ elif [ $whoami != 'andreas' ]; then
 fi
 
 if [ -n "$SSH_CLIENT" ]; then
-	if [ $whoami = 'vagrant' ]; then
+	hostname=$(hostname)
+	if [[ $hostname == vagrant* ]]; then
 		host_color='34' # blue
 	else
 		host_color='33' # yellow
