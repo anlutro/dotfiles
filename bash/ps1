@@ -1,42 +1,50 @@
 #!/usr/bin/env bash
 
-user_color='32' # green
-host_color='32' # green
+# wrap in a function to allow local variables
+set_ps1() {
+	local user_color='32' # green
+	local host_color='32' # green
 
-whoami=$(whoami)
-if [ $whoami = 'vagrant' ]; then
-	user_color='34' # blue
-elif [ $whoami = 'root' ]; then
-	user_color='31' # red
-elif [ $whoami != 'andreas' ]; then
-	user_color='33' # yellow
-fi
-
-if [ -n "$SSH_CLIENT" ]; then
-	hostname=$(hostname)
-	if [[ $hostname == vagrant* ]]; then
-		host_color='34' # blue
-	else
-		host_color='33' # yellow
+	local user=$(whoami)
+	if [ $user = 'vagrant' ]; then
+		user_color='34' # blue
+	elif [ $user = 'root' ]; then
+		user_color='31' # red
+	elif [ $user != 'andreas' ]; then
+		user_color='33' # yellow
 	fi
-fi
 
-if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
-	debian_chroot=$(cat /etc/debian_chroot)
-fi
+	if [ -n "$SSH_CLIENT" ]; then
+		host=$(hostname)
+		if [[ $host == vagrant* ]]; then
+			host_color='34' # blue
+		else
+			host_color='33' # yellow
+		fi
+	fi
 
-PS1='${debian_chroot:+($debian_chroot)}\[\033[01;'$user_color'm\]\u\[\033[0;37m\]@\[\033[01;'$host_color'm\]\h\[\033[00m\] \w'
+	PS1='\[\033[01;'$user_color'm\]\u\[\033[0;37m\]@\[\033[01;'$host_color'm\]\h\[\033[00m\] \w'
 
-if command -v __git_ps1 >/dev/null 2>&1; then
-	# GIT_PS1_SHOWDIRTYSTATE=true
-	# GIT_PS1_SHOWUNTRACKEDFILES=true
-	GIT_PS1_SHOWUPSTREAM="auto"
-	# GIT_PS1_SHOWCOLORHINTS=true
-	PS1=$PS1'$(__git_ps1 "  \[\033[01;37m\]%s\[\033[00m\]")'
-fi
+	if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
+		debian_chroot=$(cat /etc/debian_chroot)
+	fi
+	if [ ! -z "$debian_chroot" ]; then
+		PS1="${debian_chroot:+($debian_chroot)} $PS1"
+	fi
 
-if [ $whoami = 'root' ]; then
-	PS1=$PS1'\n\[\033[0;37m\]#\[\033[00m\] '
-else
-	PS1=$PS1'\n\[\033[0;37m\]$\[\033[00m\] '
-fi
+	if command -v __git_ps1 >/dev/null 2>&1; then
+		# GIT_PS1_SHOWDIRTYSTATE=true
+		# GIT_PS1_SHOWUNTRACKEDFILES=true
+		GIT_PS1_SHOWUPSTREAM="auto"
+		# GIT_PS1_SHOWCOLORHINTS=true
+		PS1=$PS1'$(__git_ps1 "  \[\033[01;37m\]%s\[\033[00m\]")'
+	fi
+
+	if [ $user = 'root' ]; then
+		PS1=$PS1'\n\[\033[0;37m\]#\[\033[00m\] '
+	else
+		PS1=$PS1'\n\[\033[0;37m\]$\[\033[00m\] '
+	fi
+}
+
+set_ps1
