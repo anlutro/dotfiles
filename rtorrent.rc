@@ -1,4 +1,4 @@
-upload_rate = 200
+upload_rate = 100
 download_rate = 2000
 
 # send a notification when torrents finish
