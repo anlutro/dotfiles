@@ -103,6 +103,11 @@ function termname {
 	echo -ne "\033]0;$1\007"
 }
 
+# fetch a github pull request
+function gh-fetch-pr {
+	git fetch upstream "pull/$1/head:pr-$1"
+}
+
 # misc
 alias cal='ncal -Mb3'
 alias crlffix='for file in `find . -type f`; do dos2unix $file; done'
