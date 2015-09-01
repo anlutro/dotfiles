@@ -150,5 +150,4 @@ new_window 1pixel
 hide_edge_borders both
 
 # application-specific settings
-for_window [class="Keepassx"] floating enable
 for_window [class="XCalc"] floating enable
