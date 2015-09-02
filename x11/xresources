@@ -3,7 +3,7 @@
 URxvt*background:  #000000
 URxvt*foreground:  #dddddd
 URxvt*cursorColor: #657b83
-URxvt*termName:    rxvt-unicode
+URxvt*termName:    rxvt-256color
 
 ! black dark/light
 *color0:  #111111
@@ -73,5 +73,9 @@ URxvt*.cursorUnderline:      false
 
 ! pointer
 URxvt*.pointerBlank:         true
+
+! disable stupid image keycap thingy
+URxvt*iso14755: False
+URxvt*iso14755_52: False
 
 #include ".Xresources.local"
