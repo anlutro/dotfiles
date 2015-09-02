@@ -2,6 +2,8 @@
 
 # script directory
 sd=$(dirname $(readlink -f "$0"))
+# vendor directory
+vd=$sd/vendor
 
 install() {
 	if command -v $1 >/dev/null 2>&1; then
@@ -84,14 +86,14 @@ install_tmux() {
 }
 
 install_urxvt() {
-	if [ ! -d $sd/urxvt-perls ]; then
-		git clone https://github.com/muennich/urxvt-perls $sd/urxvt-perls
+	if [ ! -d $vd/urxvt-perls ]; then
+		git clone https://github.com/muennich/urxvt-perls $vd/urxvt-perls
 	fi
 
 	[ -d ~/.urxvt/ext ] || mkdir -p ~/.urxvt/ext
-	ln -sf $sd/urxvt-perls/url-select ~/.urxvt/ext/url-select
-	ln -sf $sd/urxvt-perls/clipboard ~/.urxvt/ext/clipboard
-	ln -sf $sd/urxvt-perls/keyboard-select ~/.urxvt/ext/keyboard-select
+	ln -sf $vd/urxvt-perls/url-select ~/.urxvt/ext/url-select
+	ln -sf $vd/urxvt-perls/clipboard ~/.urxvt/ext/clipboard
+	ln -sf $vd/urxvt-perls/keyboard-select ~/.urxvt/ext/keyboard-select
 }
 
 install_vim() {
