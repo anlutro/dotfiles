@@ -22,5 +22,5 @@ set ruler
 " show a 1-line status bar (2 is default in neovim)
 set laststatus=1
 
-# make line numbers yellow (brown is default in neovim)
+" make line numbers yellow (brown is default in neovim)
 highlight LineNr ctermfg=11 guifg=Yellow
