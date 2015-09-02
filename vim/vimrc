@@ -24,3 +24,9 @@ set laststatus=1
 
 " make line numbers yellow (brown is default in neovim)
 highlight LineNr ctermfg=11 guifg=Yellow
+
+" enable syntax highlighting
+syntax on
+
+" use the default color scheme
+color default

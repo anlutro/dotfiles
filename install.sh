@@ -95,10 +95,10 @@ install_urxvt() {
 }
 
 install_vim() {
-	ln -sfT $sd/vimrc ~/.vimrc
+	ln -sfT $sd/vim/vimrc ~/.vimrc
 }
 install_nvim() {
-	ln -sfT $sd/vimrc ~/.nvimrc
+	ln -sfT $sd/vim/vimrc ~/.nvimrc
 }
 
 install_X() {
