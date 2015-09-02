@@ -10,9 +10,6 @@ set virtualedit=onemore
 " allow configs based on filetype I guess?
 filetype on
 
-" add a column marker at 70 columns in git commit messages
-au FileType gitcommit set colorcolumn=70
-
 " always show the ruler (current line number/column)
 set ruler
 
@@ -34,3 +31,6 @@ set list
 set listchars=tab:→\ 
 highlight NonText ctermfg=240
 highlight SpecialKey ctermfg=240
+
+" add a column marker at 70 columns in git commit messages
+au FileType gitcommit set colorcolumn=70
