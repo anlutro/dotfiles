@@ -13,9 +13,6 @@ filetype on
 " add a column marker at 70 columns in git commit messages
 au FileType gitcommit set colorcolumn=70
 
-" always show line numbers
-set number
-
 " always show the ruler (current line number/column)
 set ruler
 
@@ -28,5 +25,12 @@ syntax on
 " which color scheme to use
 color peachpuff
 
-" overwrite the line number color
-highlight LineNr ctermfg=245 guifg=Grey
+" show line numbers
+set number
+highlight LineNr ctermfg=245
+
+" show whitespace characters
+set list
+set listchars=tab:→\ ,eol:¬
+highlight NonText ctermfg=240
+highlight SpecialKey ctermfg=240
