@@ -12,3 +12,15 @@ filetype on
 
 " add a column marker at 70 columns in git commit messages
 au FileType gitcommit set colorcolumn=70
+
+" always show line numbers
+set number
+
+" always show the ruler (current line number/column)
+set ruler
+
+" show a 1-line status bar (2 is default in neovim)
+set laststatus=1
+
+# make line numbers yellow (brown is default in neovim)
+highlight LineNr ctermfg=11 guifg=Yellow

@@ -97,6 +97,9 @@ install_urxvt() {
 install_vim() {
 	ln -sfT $sd/vimrc ~/.vimrc
 }
+install_nvim() {
+	ln -sfT $sd/vimrc ~/.nvimrc
+}
 
 install_X() {
 	ln -sf $sd/x11/xsessionrc ~/.xsessionrc
@@ -141,6 +144,7 @@ install tint2
 install tmux
 install urxvt
 install vim
+install nvim
 install X
 install xfce4-terminal
 
