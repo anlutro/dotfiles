@@ -96,11 +96,20 @@ install_urxvt() {
 	ln -sf $vd/urxvt-perls/keyboard-select ~/.urxvt/ext/keyboard-select
 }
 
+vim_common() {
+	if [ ! -d $vd/jellybeans.vim ]; then
+		git clone https://github.com/nanotech/jellybeans.vim $vd/jellybeans.vim
+	fi
+
+	ln -sf $vd/jellybeans.vim/colors/jellybeans.vim $sd/vim/colors/jellybeans.vim
+}
 install_vim() {
+	vim_common
 	ln -sfT $sd/vimrc ~/.vimrc
 	ln -sfT $sd/vim ~/.vim
 }
 install_nvim() {
+	vim_common
 	ln -sfT $sd/vimrc ~/.nvimrc
 	ln -sfT $sd/vim ~/.nvim
 }

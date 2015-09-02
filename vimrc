@@ -23,18 +23,21 @@ set mouse=
 set wrap
 set linebreak
 
-" enable syntax highlighting
-syntax on
-
-" which color scheme to use
-color peachpuff
-
 " show line numbers
 set number
-highlight LineNr ctermfg=245
 
 " show whitespace characters
 set list
 set listchars=tab:→\ 
-highlight NonText ctermfg=240
-highlight SpecialKey ctermfg=240
+
+" enable syntax highlighting
+syntax on
+
+" which color scheme to use
+set background=dark
+color jellybeans
+" color scheme overrides
+highlight Normal ctermbg=none
+highlight LineNr ctermbg=none
+highlight NonText ctermfg=238 ctermbg=NONE
+highlight SpecialKey ctermfg=238 ctermbg=NONE
