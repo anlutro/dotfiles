@@ -16,6 +16,9 @@ set ruler
 " show a 1-line status bar (2 is default in neovim)
 set laststatus=1
 
+" disable all mouse interaction
+set mouse=
+
 " enable syntax highlighting
 syntax on
 
