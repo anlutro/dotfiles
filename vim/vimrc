@@ -31,6 +31,6 @@ highlight LineNr ctermfg=245
 
 " show whitespace characters
 set list
-set listchars=tab:→\ ,eol:¬
+set listchars=tab:→\ 
 highlight NonText ctermfg=240
 highlight SpecialKey ctermfg=240
