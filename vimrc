@@ -19,6 +19,10 @@ set laststatus=1
 " disable all mouse interaction
 set mouse=
 
+" enable line wrapping, don't split words when wrapping
+set wrap
+set linebreak
+
 " enable syntax highlighting
 syntax on
 
