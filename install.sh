@@ -101,7 +101,7 @@ vim_common() {
 		git clone https://github.com/nanotech/jellybeans.vim $vd/jellybeans.vim
 	fi
 
-	ln -sf $vd/jellybeans.vim/colors/jellybeans.vim $sd/vim/colors/jellybeans.vim
+	ln -sf ../../vendor/jellybeans.vim/colors/jellybeans.vim $sd/vim/colors/jellybeans.vim
 }
 install_vim() {
 	vim_common
