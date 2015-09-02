@@ -22,11 +22,11 @@ set ruler
 " show a 1-line status bar (2 is default in neovim)
 set laststatus=1
 
-" make line numbers yellow (brown is default in neovim)
-highlight LineNr ctermfg=11 guifg=Yellow
-
 " enable syntax highlighting
 syntax on
 
-" use the default color scheme
-color default
+" which color scheme to use
+color peachpuff
+
+" overwrite the line number color
+highlight LineNr ctermfg=245 guifg=Grey
