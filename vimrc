@@ -31,6 +31,3 @@ set list
 set listchars=tab:→\ 
 highlight NonText ctermfg=240
 highlight SpecialKey ctermfg=240
-
-" add a column marker at 70 columns in git commit messages
-au FileType gitcommit set colorcolumn=70
