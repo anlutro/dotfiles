@@ -38,6 +38,6 @@ set background=dark
 color jellybeans
 " color scheme overrides
 highlight Normal ctermbg=none
-highlight LineNr ctermbg=none
+highlight LineNr ctermfg=240 ctermbg=none
 highlight NonText ctermfg=238 ctermbg=none
 highlight SpecialKey ctermfg=238 ctermbg=none
