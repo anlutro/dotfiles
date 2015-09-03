@@ -39,5 +39,5 @@ color jellybeans
 " color scheme overrides
 highlight Normal ctermbg=none
 highlight LineNr ctermbg=none
-highlight NonText ctermfg=238 ctermbg=NONE
-highlight SpecialKey ctermfg=238 ctermbg=NONE
+highlight NonText ctermfg=238 ctermbg=none
+highlight SpecialKey ctermfg=238 ctermbg=none
