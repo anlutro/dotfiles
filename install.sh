@@ -141,7 +141,23 @@ install_X() {
 	ln -sf $sd/fontconfig/local.conf $HOME/.config/fontconfig/local.conf
 	rm -f $HOME/.fonts.conf
 
-	ln -sf $sd/gtkrc-2.0 $HOME/.gtkrc-2.0
+
+	echo "Installing GTK themes"
+	if command -v gtk-launch >/dev/null 2>&1; then
+		ln -sf $sd/gtkrc-2.0 $HOME/.gtkrc-2.0
+
+		if [ ! -d $vd/paper-gtk-theme ]; then
+			git clone https://github.com/snwh/paper-gtk-theme $vd/paper-gtk-theme
+		fi
+		ln -sfT $vd/paper-gtk-theme/Paper $HOME/.themes/Paper
+
+		if [ ! -d $vd/zuki-themes ]; then
+			git clone https://github.com/lassekongo83/zuki-themes $vd/zuki-themes
+		fi
+		ln -sfT $vd/zuki-themes/Zukiwi $HOME/.themes/Zukiwi
+		ln -sfT $vd/zuki-themes/Zukitwo $HOME/.themes/Zukitwo
+		ln -sfT $vd/zuki-themes/Zukitre $HOME/.themes/Zukitre
+	fi
 }
 
 install_xfce4_terminal() {
@@ -171,22 +187,6 @@ install vim
 install nvim
 install X
 install xfce4-terminal
-
-
-echo "Installing GTK themes"
-if command -v gtk-launch >/dev/null 2>&1; then
-	if [ ! -d $vd/paper-gtk-theme ]; then
-		git clone https://github.com/snwh/paper-gtk-theme $vd/paper-gtk-theme
-	fi
-	ln -sfT $vd/paper-gtk-theme/Paper $HOME/.themes/Paper
-
-	if [ ! -d $vd/zuki-themes ]; then
-		git clone https://github.com/lassekongo83/zuki-themes $vd/zuki-themes
-	fi
-	ln -sfT $vd/zuki-themes/Zukiwi $HOME/.themes/Zukiwi
-	ln -sfT $vd/zuki-themes/Zukitwo $HOME/.themes/Zukitwo
-	ln -sfT $vd/zuki-themes/Zukitre $HOME/.themes/Zukitre
-fi
 
 
 echo "Installing ~/bin files"
