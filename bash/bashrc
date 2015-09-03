@@ -58,5 +58,3 @@ if [ -d $HOME/bin ] && [[ ! "$PATH" =~ "$HOME/bin" ]]; then
 fi
 
 export EDITOR=vim
-
-export TERM=rxvt-256color
