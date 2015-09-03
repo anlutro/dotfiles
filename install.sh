@@ -105,8 +105,14 @@ vim_common() {
 	if [ ! -d $vd/jellybeans.vim ]; then
 		git clone https://github.com/nanotech/jellybeans.vim $vd/jellybeans.vim
 	fi
-
 	ln -sf ../../vendor/jellybeans.vim/colors/jellybeans.vim $sd/vim/colors/jellybeans.vim
+
+	if [ ! -d $vd/salt-vim ]; then
+		git clone https://github.com/saltstack/salt-vim $vd/salt-vim
+	fi
+	ln -sf ../../vendor/salt-vim/ftdetect/sls.vim $sd/vim/ftdetect/sls.vim
+	ln -sf ../../vendor/salt-vim/ftplugin/sls.vim $sd/vim/ftplugin/sls.vim
+	ln -sf ../../vendor/salt-vim/syntax/sls.vim $sd/vim/syntax/sls.vim
 }
 install_vim() {
 	vim_common
@@ -167,7 +173,7 @@ install X
 install xfce4-terminal
 
 
-# GTK themes
+echo "Installing GTK themes"
 if command -v gtk-launch >/dev/null 2>&1; then
 	if [ ! -d $vd/paper-gtk-theme ]; then
 		git clone https://github.com/snwh/paper-gtk-theme $vd/paper-gtk-theme
@@ -177,9 +183,9 @@ if command -v gtk-launch >/dev/null 2>&1; then
 	if [ ! -d $vd/zuki-themes ]; then
 		git clone https://github.com/lassekongo83/zuki-themes $vd/zuki-themes
 	fi
-	ln -sfT $vd/paper-gtk-theme/zuki-themes/Zukiwi $HOME/.themes/Zukiwi
-	ln -sfT $vd/paper-gtk-theme/zuki-themes/Zukitwo $HOME/.themes/Zukitwo
-	ln -sfT $vd/paper-gtk-theme/zuki-themes/Zukitre $HOME/.themes/Zukitre
+	ln -sfT $vd/zuki-themes/Zukiwi $HOME/.themes/Zukiwi
+	ln -sfT $vd/zuki-themes/Zukitwo $HOME/.themes/Zukitwo
+	ln -sfT $vd/zuki-themes/Zukitre $HOME/.themes/Zukitre
 fi
 
 
