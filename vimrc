@@ -13,9 +13,6 @@ set tabstop=4
 set softtabstop=0
 set shiftwidth=4
 
-" override for certain file types
-autocmd FileType yaml setlocal shiftwidth=2 tabstop=2 expandtab
-
 "" APPEARANCE AND BEHAVIOUR
 " allow cursor to go to the end of the line when not in insert mode
 set virtualedit=onemore
