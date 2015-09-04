@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# open a new terminal window in a subshell. this usually opens a new terminal in
+# the current working directory, and by putting it in a subshell and forking it,
+# we suppress all output.
+alias t='( x-terminal-emulator & )'
+
 # note taking
 function n {
 	if [[ ! $1 ]]; then
