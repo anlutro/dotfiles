@@ -4,16 +4,17 @@ filetype plugin indent on
 
 "" INDENTATION
 " to use tabs:
-set tabstop=4 softtabstop=0 shiftwidth=4 noexpandtab
+set noexpandtab
 " to use spaces:
-"set tabstop=4 softtabstop=0 shiftwidth=4 expandtab smarttab
+"set expandtab
+
+set autoindent
+set tabstop=4
+set softtabstop=0
+set shiftwidth=4
 
 " override for certain file types
 autocmd FileType yaml setlocal shiftwidth=2 tabstop=2 expandtab
-
-" enable auto and smartindent
-set autoindent
-set smartindent
 
 "" APPEARANCE AND BEHAVIOUR
 " allow cursor to go to the end of the line when not in insert mode
