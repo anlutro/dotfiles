@@ -33,7 +33,7 @@ URxvt*termName:    rxvt-256color
 
 !! rxvt/urxvt settings
 
-URxvt*.depth:                32
+!URxvt*.depth:                32
 !URxvt*.geometry:             90x30
 URxvt*.fading:               0
 URxvt*.loginShell:           false
