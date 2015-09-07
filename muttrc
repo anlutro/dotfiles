@@ -1,5 +1,5 @@
 set folder = "~/.mail"
 set wrap = 78
 
-color normal default black
+color normal default default
 color status white black
