@@ -107,12 +107,14 @@ vim_common() {
 	fi
 	ln -sf ../../vendor/jellybeans.vim/colors/jellybeans.vim $sd/vim/colors/jellybeans.vim
 
-	if [ ! -d $vd/salt-vim ]; then
-		git clone https://github.com/saltstack/salt-vim $vd/salt-vim
+	if command -v salt >/dev/null 2>&1; then
+		if [ ! -d $vd/salt-vim ]; then
+			git clone https://github.com/saltstack/salt-vim $vd/salt-vim
+		fi
+		ln -sf ../../vendor/salt-vim/ftdetect/sls.vim $sd/vim/ftdetect/sls.vim
+		ln -sf ../../vendor/salt-vim/ftplugin/sls.vim $sd/vim/ftplugin/sls.vim
+		ln -sf ../../vendor/salt-vim/syntax/sls.vim $sd/vim/syntax/sls.vim
 	fi
-	ln -sf ../../vendor/salt-vim/ftdetect/sls.vim $sd/vim/ftdetect/sls.vim
-	ln -sf ../../vendor/salt-vim/ftplugin/sls.vim $sd/vim/ftplugin/sls.vim
-	ln -sf ../../vendor/salt-vim/syntax/sls.vim $sd/vim/syntax/sls.vim
 }
 install_vim() {
 	vim_common
