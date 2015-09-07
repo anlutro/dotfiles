@@ -1,3 +1,5 @@
+set from = "Andreas Lutro <andreas@lutro.me>"
+
 set folder = "~/.mail"
 set wrap = 72
 
