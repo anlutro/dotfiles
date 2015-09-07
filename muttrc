@@ -2,4 +2,7 @@ set folder = "~/.mail"
 set wrap = 78
 
 color normal default default
+color message default default
+color signature default default
+color tilde default default
 color status white black
