@@ -6,8 +6,9 @@
 alias t='( x-terminal-emulator & )'
 
 # note taking
+_NOTES_DIR=~/Dropbox/notes
 function n {
-	if [[ ! $1 ]]; then
+	if [[ ! "$1" ]]; then
 		echo "Missing argument - usage: n <name>"
 		return
 	fi
@@ -16,13 +17,19 @@ function n {
 		nls $1
 		return
 	elif [[ $count == 0 ]]; then
-		$EDITOR $1.md
+		$EDITOR "$_NOTES_DIR/$1.md"
 	else
-		$EDITOR $(nls $1)
+		$EDITOR "$_NOTES_DIR/$(nls $1)"
 	fi
 }
 function nls {
-	ls -1 ~/Dropbox/notes/*.md | grep $@
+	pushd $_NOTES_DIR > /dev/null
+	if [[ ! "$@" ]]; then
+		ls *.md
+	else
+		ls -1 *.md | grep $@
+	fi
+	popd > /dev/null
 }
 
 # enable colors for grep
