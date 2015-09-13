@@ -16,9 +16,9 @@ function n {
 		nls $1
 		return
 	elif [[ $count == 0 ]]; then
-		vim $1.md
+		$EDITOR $1.md
 	else
-		vim $(nls $1)
+		$EDITOR $(nls $1)
 	fi
 }
 function nls {
