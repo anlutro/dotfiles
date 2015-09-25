@@ -1,15 +1,5 @@
 upload_rate = 100
 download_rate = 2000
 
-min_peers = 1
-max_peers = 50
-min_peers_seed = 1
-max_peers_seed = 20
-
-max_downloads = 5
-max_downloads_global = 10
-max_uploads = 5
-max_uploads_global = 10
-
 # send a notification when torrents finish
 system.method.set_key = event.download.finished,notify_finished,"execute=notify-send,rtorrent,$d.get_name="
