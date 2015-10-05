@@ -82,7 +82,15 @@ function ccp {
 }
 
 # python
-alias avenv='source ./.virtualenv/bin/activate'
+function avenv {
+	if [ -f $PWD/.virtualenv/bin/activate ]; then
+		source $PWD/.virtualenv/bin/activate
+	elif [ -f $PWD/bin/activate ]; then
+		source $PWD/bin/activate
+	else
+		echo "Couldn't find a virtualenv in cwd!"
+	fi
+}
 function pyhelp {
 	python -c 'help('"$@"')'
 }
