@@ -45,7 +45,7 @@ if [ -f ~/.bash_ps1 ]; then
 fi
 
 # ls --color config with dircolors
-export LS_COLORS='fi=0:di=1;34:ln=33:ex=1;32'
+export LS_COLORS='fi=0:di=1;34:ln=33:ex=1;32:mi=0;31:ow=0;30;42'
 
 # set tab width
 tabs 4 > /dev/null
