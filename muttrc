@@ -1,6 +1,8 @@
 set from = "Andreas Lutro <andreas@lutro.me>"
 
 set folder = "~/.mail"
+set record = "~/.sentmail"
+
 set wrap = 72
 
 color normal default default
