@@ -1,7 +1,9 @@
-set from = "Andreas Lutro <andreas@lutro.me>"
+set realname = 'Andreas Lutro'
+set from = 'andreas@lutro.me'
+set hostname = 'lutro.me'
 
-set folder = "~/.mail"
-set record = "~/.sentmail"
+set folder = '~/.mail'
+set record = '~/.sentmail'
 
 set wrap = 72
 
@@ -10,3 +12,16 @@ color message default default
 color signature default default
 color tilde default default
 color status white black
+
+set pager_stop = yes
+set smart_wrap = yes
+alternative_order text/plain
+auto_view text/html
+set reverse_name = yes
+set reverse_realname = yes
+
+set sort = 'threads'
+set sort_browser = 'reverse-date'
+set sort_aux = 'last-date-received'
+unset collapse_unread
+set index_format = ' %?M?   ↳&%4C?   %Z      %D     %-15.15n    %s'
