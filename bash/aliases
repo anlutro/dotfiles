@@ -17,9 +17,9 @@ function n {
 		nls $1
 		return
 	elif [[ $count == 0 ]]; then
-		$EDITOR "$_NOTES_DIR/$1.md"
+		$EDITOR "${_NOTES_DIR}/$1.md"
 	else
-		$EDITOR "$_NOTES_DIR/$(nls $1)"
+		$EDITOR "${_NOTES_DIR}/$(nls $1)"
 	fi
 }
 function nls {
@@ -30,6 +30,13 @@ function nls {
 		ls -1 *.md | grep $@
 	fi
 	popd > /dev/null
+}
+function ns {
+	if [[ $(which ag) ]]; then
+		ag "$@" ${_NOTES_DIR}
+	else
+		grep -r "$@" ${_NOTES_DIR}
+	fi
 }
 
 # enable colors for grep
