@@ -23,6 +23,9 @@ set mouse=
 " show line numbers
 set number
 
+" highlight the current line
+set cursorline
+
 " always show the ruler (current line number/column)
 set ruler
 
