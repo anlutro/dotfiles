@@ -55,3 +55,9 @@ highlight Normal ctermbg=none
 highlight LineNr ctermfg=240 ctermbg=none
 highlight NonText ctermfg=238 ctermbg=none
 highlight SpecialKey ctermfg=238 ctermbg=none
+
+" prevents up/down from skipping characters in long lines
+nnoremap <Up> gk
+nnoremap k gk
+nnoremap <Down> gj
+nnoremap j gj
