@@ -23,6 +23,7 @@ ds = diff --staged
 lg = log --graph --pretty=format:'%Cred%h %Cgreen%ai%Creset %s %C(bold blue)<%an>%C(yellow)%d%Creset' --abbrev-commit
 mfo = merge --ff-only
 mnf = merge --no-ff
+push-all = !git remote | xargs -L1 git push
 st = status
 tags = !git tag -n | sort -V | less -FX +G
 up = remote update -p
