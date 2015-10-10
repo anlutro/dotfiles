@@ -26,6 +26,9 @@ set number
 " highlight the current line
 set cursorline
 
+" highlight matching parens/braces/brackets
+set showmatch
+
 " always show the ruler (current line number/column)
 set ruler
 
