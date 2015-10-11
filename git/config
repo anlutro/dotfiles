@@ -20,7 +20,8 @@ cm = commit -m
 co = checkout
 dc = diff --cached
 ds = diff --staged
-lg = log --graph --abbrev-commit --pretty=format:'%C(red)%h%C(reset) %s%C(yellow)%d%C(reset) %C(bold blue)<%an>%C(reset) %C(green)%ai%C(reset)'
+lg = log --graph --abbrev-commit --pretty=format:'%C(red)%h%C(reset) \
+%s%C(yellow)%d%C(reset) %C(bold blue)<%an>%C(reset) %C(green)%ai%C(reset)'
 mfo = merge --ff-only
 mnf = merge --no-ff
 push-all = !git remote | xargs -L1 git push
