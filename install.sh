@@ -119,12 +119,22 @@ vim_common() {
 install_vim() {
 	vim_common
 	ln -sfT $sd/vimrc $HOME/.vimrc
-	ln -sfT $sd/vim $HOME/.vim
+	if [ ! -d $HOME/.vim ]; then
+		mkdir $HOME/.vim
+	fi
+	for dir in $sd/vim/*/; do
+		ln -sfT $dir $HOME/.vim/$(basename $dir)
+	done
 }
 install_nvim() {
 	vim_common
 	ln -sfT $sd/vimrc $HOME/.nvimrc
-	ln -sfT $sd/vim $HOME/.nvim
+	if [ ! -d $HOME/.nvim ]; then
+		mkdir $HOME/.nvim
+	fi
+	for dir in $sd/vim/*/; do
+		ln -sfT $dir $HOME/.nvim/$(basename $dir)
+	done
 }
 
 install_X() {
