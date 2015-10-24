@@ -3,7 +3,12 @@
 # open a new terminal window in a subshell. this usually opens a new terminal in
 # the current working directory, and by putting it in a subshell and forking it,
 # we suppress all output.
-alias t='( x-terminal-emulator & )'
+function t {
+	if [[ "$@" != "" ]]; then
+		args="-e $@"
+	fi
+	( x-terminal-emulator $args & )
+}
 
 # note taking
 _NOTES_DIR=~/Dropbox/notes
