@@ -101,7 +101,7 @@ install_urxvt() {
 	ln -sf "$vd/urxvt-perls/keyboard-select" $HOME/.urxvt/ext/keyboard-select
 }
 
-vim_common() {
+really_install_vim() {
 	if [ ! -d $vd/jellybeans.vim ]; then
 		git clone https://github.com/nanotech/jellybeans.vim $vd/jellybeans.vim
 	fi
@@ -115,26 +115,20 @@ vim_common() {
 		ln -sf ../../vendor/salt-vim/ftplugin/sls.vim $sd/vim/ftplugin/sls.vim
 		ln -sf ../../vendor/salt-vim/syntax/sls.vim $sd/vim/syntax/sls.vim
 	fi
+
+	ln -sfT $sd/vimrc $HOME/.${1}rc
+
+	confdir="$HOME/.$1"
+	[ -d $confdir ] || mkdir $confdir
+	for file in $sd/vim/*; do
+		ln -sfT $file $confdir/$(basename $file)
+	done
 }
 install_vim() {
-	vim_common
-	ln -sfT $sd/vimrc $HOME/.vimrc
-	if [ ! -d $HOME/.vim ]; then
-		mkdir $HOME/.vim
-	fi
-	for dir in $sd/vim/*/; do
-		ln -sfT $dir $HOME/.vim/$(basename $dir)
-	done
+	really_install_vim vim
 }
 install_nvim() {
-	vim_common
-	ln -sfT $sd/vimrc $HOME/.nvimrc
-	if [ ! -d $HOME/.nvim ]; then
-		mkdir $HOME/.nvim
-	fi
-	for dir in $sd/vim/*/; do
-		ln -sfT $dir $HOME/.nvim/$(basename $dir)
-	done
+	really_install_vim nvim
 }
 
 install_X() {
