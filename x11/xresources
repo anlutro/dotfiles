@@ -40,6 +40,8 @@ URxvt*.loginShell:           false
 URxvt*.saveLines:            500
 URxvt*.internalBorder:       3
 URxvt*.lineSpace:            3
+URxvt*.urgentOnBell:         true
+URxvt*.visualBell:           false
 
 ! colors for bold/underlined/italic text
 URxvt*.colorIT:              #87af5f
