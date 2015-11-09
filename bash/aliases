@@ -10,7 +10,7 @@ function t {
 
 	if [[ "$(which i3-msg)" ]]; then
 		args="-cd $PWD $args"
-		i3-msg "exec x-terminal-emulator $args &> /dev/null"
+		i3-msg "exec x-terminal-emulator $args" &> /dev/null
 	else
 		( x-terminal-emulator $args & )
 	fi
