@@ -1,17 +1,19 @@
 #!/usr/bin/env bash
 
-# open a new terminal window in a subshell. this usually opens a new terminal in
-# the current working directory, and by putting it in a subshell and forking it,
-# we suppress all output.
+# by default, most WMs opening a new terminal will make it start in ~ instead of
+# the current terminal's PWD. this alias lets you open a new terminal in the PWD
 function t {
 	if [[ "$@" != "" ]]; then
 		args="-e $@"
 	fi
 
 	if [[ "$(which i3-msg)" ]]; then
+		# opening through i3-exec prevents weird/inconsistent ps trees
 		args="-cd $PWD $args"
 		i3-msg "exec x-terminal-emulator $args" &> /dev/null
 	else
+		# fork in a subshell to make the commands indepentent, and to suppress
+		# all output
 		( x-terminal-emulator $args & )
 	fi
 }
@@ -75,6 +77,7 @@ alias chown='chown --preserve-root'
 alias chmod='chmod --preserve-root'
 alias chgrp='chgrp --preserve-root'
 
+# make a directory and cd into it
 function md {
 	mkdir -p "$@" && cd $_;
 }
