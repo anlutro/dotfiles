@@ -1,7 +1,7 @@
 #!/bin/sh
 
 ## read Xresources - not sure if this is necessary but whatever
-[ -f ~/.Xresources ] && xrdb -merge ~/.Xresources
+[ -f ~/.Xresources ] && xrdb -merge ~/.Xresources &
 
 ## system settings
 # turn on/off system beep
@@ -14,11 +14,11 @@ xset m 1/1 0 &
 
 # touchpad settings
 if egrep -iq 'synap|alps|etps' /proc/bus/input/devices; then
-	synclient AccelFactor=0
-	synclient MinSpeed=1.25
-	synclient MaxSpeed=3
+	synclient AccelFactor=0 &
+	synclient MinSpeed=1.25 &
+	synclient MaxSpeed=3 &
 	# tapping the touchpad sends a mouse button 1 event
-	synclient TapButton1=1
+	synclient TapButton1=1 &
 fi
 
 
