@@ -37,7 +37,7 @@ URxvt*termName:    rxvt-256color
 !URxvt*.geometry:             90x30
 URxvt*.fading:               0
 URxvt*.loginShell:           false
-URxvt*.saveLines:            500
+URxvt*.saveLines:            5000
 URxvt*.internalBorder:       3
 URxvt*.lineSpace:            3
 URxvt*.urgentOnBell:         true
