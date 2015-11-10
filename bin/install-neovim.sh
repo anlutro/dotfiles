@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cd ${1-neovim}
+cd ${1-neovim} || exit 1
 git pull
 make
 sudo rm /usr/local/share/nvim/runtime/doc/*.awk
