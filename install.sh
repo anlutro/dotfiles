@@ -159,10 +159,6 @@ install_X() {
 	fi
 }
 
-install_xfce4_terminal() {
-	ln -sfT $sd/xfce4-terminal $HOME/.config/xfce4/terminal
-}
-
 
 install bash
 install compton
@@ -181,7 +177,6 @@ install urxvt
 install vim
 install nvim
 install X
-install xfce4-terminal
 
 
 echo "Installing ~/bin files"
