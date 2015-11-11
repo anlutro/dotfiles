@@ -49,6 +49,11 @@ install_irssi() {
 	ln -sf $sd/irssi/default.theme $HOME/.irssi/default.theme
 }
 
+install_moc() {
+	[ -d $HOME/.moc ] || mkdir -p $HOME/.moc
+	ln -sfT $sd/moc/config $HOME/.moc/config
+}
+
 install_mutt() {
 	ln -sfT $sd/muttrc $HOME/.muttrc
 }
@@ -167,6 +172,7 @@ install git
 install i3
 install i3status
 install irssi
+install moc
 install mutt
 install nano
 install rtorrent
