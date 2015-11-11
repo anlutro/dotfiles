@@ -1,8 +1,9 @@
 {
-	"extensions":
-	[
-		"sublime-completions"
-	],
-	"tab_size": 2,
-	"translate_tabs_to_spaces": true,
+  "extensions":
+  [
+    "sublime-completions",
+    "sublime-macro",
+  ],
+  "tab_size": 2,
+  "translate_tabs_to_spaces": true,
 }

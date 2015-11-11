@@ -1,7 +1,7 @@
 {
-	"extensions":
-	[
-		"less"
-	],
-	"tab_size": 2
+  "extensions":
+  [
+    "less"
+  ],
+  "tab_size": 2
 }

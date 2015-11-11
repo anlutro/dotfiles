@@ -1,6 +1,6 @@
 {
-	"cmd" : ["gcc", "$file_name", "-o", "${file_base_name}.out", "-lm", "-Wall"],
-	"selector" : "source.c",
-	"shell": false,
-	"working_dir" : "$file_path"
+  "cmd" : ["gcc", "$file_name", "-o", "${file_base_name}.out", "-lm", "-Wall"],
+  "selector" : "source.c",
+  "shell": false,
+  "working_dir" : "$file_path"
 }
