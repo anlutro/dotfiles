@@ -12,8 +12,9 @@ vd=$sd/vendor
 
 install() {
 	if command -v $1 >/dev/null 2>&1; then
-		echo "Installing $1 files"
+		echo -n "$1... "
 		"install_$(echo $1 | tr -s '-' '_')"
+		echo "done"
 	fi
 }
 
@@ -101,7 +102,7 @@ vim_common() {
 	ln -sf ../../vendor/jellybeans.vim/colors/jellybeans.vim $sd/vim/colors/jellybeans.vim
 
 	if command -v salt >/dev/null 2>&1; then
-		echo "Installing salt-vim"
+		echo -n "salt-vim... "
 		if [ ! -d $vd/salt-vim ]; then
 			git clone https://github.com/saltstack/salt-vim $vd/salt-vim
 		fi
@@ -110,6 +111,7 @@ vim_common() {
 		ln -sf ../../vendor/salt-vim/syntax/sls.vim $sd/vim/syntax/sls.vim
 	fi
 }
+
 install_vim() {
 	vim_common
 
@@ -120,6 +122,7 @@ install_vim() {
 		ln -sfT $file $HOME/.vim/$(basename $file)
 	done
 }
+
 install_nvim() {
 	vim_common
 
@@ -130,7 +133,7 @@ install_nvim() {
 	done
 }
 
-install_X() {
+install_Xorg() {
 	ln -sf $sd/x11/xsessionrc $HOME/.xsessionrc
 	ln -sf $sd/x11/xresources $HOME/.Xresources
 	if [ ! -f $sd/x11/xresources.local ]; then
@@ -147,7 +150,7 @@ install_X() {
 	rm -f $HOME/.fonts.conf
 
 	if command -v gtk-launch >/dev/null 2>&1; then
-		echo "Installing GTK themes"
+		echo -n "GTK themes... "
 		ln -sf $sd/gtkrc-2.0 $HOME/.gtkrc-2.0
 
 		if [ ! -d $vd/paper-gtk-theme ]; then
@@ -181,10 +184,10 @@ install tmux
 install urxvt
 install vim
 install nvim
-install X
+install Xorg
 
 
-echo "Installing ~/bin files"
+echo -n "~/bin files... "
 [ -d $HOME/bin ] || mkdir $HOME/bin
 if [ -d /etc/apache2 ]; then
 	ln -sf $sd/bin/a2es $HOME/bin/a2es
@@ -192,3 +195,4 @@ fi
 ln -sf $sd/bin/art $HOME/bin/art
 ln -sf $sd/bin/genpw $HOME/bin/genpw
 ln -sf $sd/bin/templ $HOME/bin/templ
+echo "done"
