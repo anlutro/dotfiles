@@ -74,10 +74,6 @@ install_subl() {
 	ln -sf $sd/bin/sublp $HOME/bin/sublp
 }
 
-install_tint2() {
-	ln -sf $sd/tint2/tint2rc $HOME/.config/tint2/tint2rc
-}
-
 install_tmux() {
 	ln -sf $sd/tmux.conf $HOME/.tmux.conf
 }
@@ -185,7 +181,6 @@ install mutt
 install nano
 install rtorrent
 install subl
-install tint2
 install tmux
 install urxvt
 install vim
