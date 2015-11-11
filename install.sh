@@ -90,12 +90,17 @@ install_urxvt() {
 }
 
 vim_common() {
+	# make sure this function is only called once
+	[ $vim_common_installed ] && return;
+	vim_common_installed=1
+
 	if [ ! -d $vd/jellybeans.vim ]; then
 		git clone https://github.com/nanotech/jellybeans.vim $vd/jellybeans.vim
 	fi
 	ln -sf ../../vendor/jellybeans.vim/colors/jellybeans.vim $sd/vim/colors/jellybeans.vim
 
 	if command -v salt >/dev/null 2>&1; then
+		echo "Installing salt-vim"
 		if [ ! -d $vd/salt-vim ]; then
 			git clone https://github.com/saltstack/salt-vim $vd/salt-vim
 		fi
