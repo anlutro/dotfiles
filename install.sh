@@ -74,10 +74,6 @@ install_subl() {
 	ln -sf $sd/bin/sublp $HOME/bin/sublp
 }
 
-install_terminator() {
-	ln -sfT $sd/terminator $HOME/.config/terminator
-}
-
 install_tint2() {
 	ln -sf $sd/tint2/tint2rc $HOME/.config/tint2/tint2rc
 }
@@ -189,7 +185,6 @@ install mutt
 install nano
 install rtorrent
 install subl
-install terminator
 install tint2
 install tmux
 install urxvt
