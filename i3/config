@@ -161,5 +161,4 @@ client.focused          #4c7899 #285577 #ffffff #2e9ef4
 client.focused_inactive #214866 #304251 #ffffff #484e50
 client.unfocused        #393939 #292929 #888888 #292d2e
 client.urgent           #2f343a #900000 #ffffff #900000
-client.placeholder      #000000 #0c0c0c #ffffff #000000
 client.background       #ffffff
