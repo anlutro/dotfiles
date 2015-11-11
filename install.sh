@@ -27,10 +27,6 @@ install_compton() {
 	ln -sf $sd/compton.conf $HOME/.config/compton.conf
 }
 
-install_conky() {
-	ln -sf $sd/conkyrc $HOME/.conkyrc
-}
-
 install_dunst() {
 	ln -sfT $sd/dunst $HOME/.config/dunst
 }
@@ -170,7 +166,6 @@ install_xfce4_terminal() {
 
 install bash
 install compton
-install conky
 install dunst
 install git
 install gsimplecal
