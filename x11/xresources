@@ -61,13 +61,15 @@ URxvt*.scrollStyle:          rxvt
 URxvt*.scrollBar:            false
 
 ! perl extensions
-URxvt.perl-ext:              default,url-select,clipboard,keyboard-select
+URxvt.perl-ext:              default,url-select,clipboard,keyboard-select,font-size
 URxvt.keysym.M-u:            perl:url-select:select_next
 URxvt.url-select.launcher:   /usr/bin/xdg-open
 URxvt.url-select.underline:  false
 URxvt.keysym.M-c:            perl:clipboard:copy
 URxvt.keysym.M-v:            perl:clipboard:paste
 URxvt.keysym.M-Escape:       perl:keyboard-select:activate
+URxvt.keysym.C-A-Up:         perl:font-size:increase
+URxvt.keysym.C-A-Down:       perl:font-size:decrease
 
 ! cursor
 URxvt*.cursorBlink:          true

@@ -94,11 +94,15 @@ install_urxvt() {
 	if [ ! -d $vd/urxvt-perls ]; then
 		git clone https://github.com/muennich/urxvt-perls $vd/urxvt-perls
 	fi
+	if [ ! -d $vd/urxvt-font-size ]; then
+		git clone https://github.com/majutsushi/urxvt-font-size $vd/urxvt-font-size
+	fi
 
 	[ -d $HOME/.urxvt/ext ] || mkdir -p $HOME/.urxvt/ext
 	ln -sf "$vd/urxvt-perls/url-select" $HOME/.urxvt/ext/url-select
 	ln -sf "$vd/urxvt-perls/clipboard" $HOME/.urxvt/ext/clipboard
 	ln -sf "$vd/urxvt-perls/keyboard-select" $HOME/.urxvt/ext/keyboard-select
+	ln -sf "$vd/urxvt-font-size/font-size" $HOME/.urxvt/ext/font-size
 }
 
 vim_common() {
