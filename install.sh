@@ -65,10 +65,6 @@ install_nano() {
 	ln -sf $sd/nanorc $HOME/.nanorc
 }
 
-install_openbox() {
-	ln -sfT $sd/openbox $HOME/.config/openbox
-}
-
 install_rtorrent() {
 	ln -sf $sd/rtorrent.rc $HOME/.rtorrent.rc
 }
@@ -191,7 +187,6 @@ install i3status
 install irssi
 install mutt
 install nano
-install openbox
 install rtorrent
 install subl
 install terminator
