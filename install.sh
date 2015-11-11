@@ -140,9 +140,8 @@ install_X() {
 	ln -sf $sd/fontconfig/local.conf $HOME/.config/fontconfig/local.conf
 	rm -f $HOME/.fonts.conf
 
-
-	echo "Installing GTK themes"
 	if command -v gtk-launch >/dev/null 2>&1; then
+		echo "Installing GTK themes"
 		ln -sf $sd/gtkrc-2.0 $HOME/.gtkrc-2.0
 
 		if [ ! -d $vd/paper-gtk-theme ]; then
