@@ -36,10 +36,6 @@ install_git() {
 	ln -sf $sd/git/ignore_global $HOME/.gitignore_global
 }
 
-install_gsimplecal() {
-	ln -sfT $sd/gsimplecal $HOME/.config/gsimplecal
-}
-
 install_i3() {
 	ln -sfT $sd/i3 $HOME/.config/i3
 }
@@ -168,7 +164,6 @@ install bash
 install compton
 install dunst
 install git
-install gsimplecal
 install i3
 install i3status
 install irssi
