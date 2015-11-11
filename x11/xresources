@@ -1,9 +1,7 @@
 !! colors
-
-URxvt*background:  #000000
-URxvt*foreground:  #dddddd
-URxvt*cursorColor: #657b83
-URxvt*termName:    rxvt-256color
+*background:  #000000
+*foreground:  #dddddd
+*cursorColor: #657b83
 
 ! black dark/light
 *color0:  #111111
@@ -29,57 +27,56 @@ URxvt*termName:    rxvt-256color
 ! white dark/light
 *color7:  #9aa5ab
 *color15: #ffffff
+! bold/underlined/italic
+*colorBD: #ffffff
+*colorIT: #87af5f
+*colorUL: #87afd7
 
 
 !! rxvt/urxvt settings
-
-!URxvt*.depth:                32
-!URxvt*.geometry:             90x30
-URxvt*.fading:               0
-URxvt*.loginShell:           false
-URxvt*.saveLines:            5000
-URxvt*.internalBorder:       3
-URxvt*.lineSpace:            3
-URxvt*.urgentOnBell:         true
-URxvt*.visualBell:           false
-
-! colors for bold/underlined/italic text
-URxvt*.colorIT:              #87af5f
-URxvt*.colorBD:              #ffffff
-URxvt*.colorUL:              #87afd7
+URxvt*.termName:       rxvt-256color
+URxvt*.fading:         0
+URxvt*.loginShell:     false
+URxvt*.saveLines:      5000
+URxvt*.internalBorder: 3
+URxvt*.lineSpace:      3
+URxvt*.urgentOnBell:   true
+URxvt*.visualBell:     false
 
 ! fonts
-URxvt*.allow_bold:           true
-URxvt*.intensityStyles:      true
-
-URxvt*.font:                 xft:Source Code Pro:size=10
-URxvt*.boldFont:             xft:Source Code Pro:semibold:size=10
-URxvt*.letterSpace:          -1
+URxvt*.allow_bold:      true
+URxvt*.intensityStyles: true
+URxvt*.font:            xft:Source Code Pro:size=10
+URxvt*.boldFont:        xft:Source Code Pro:semibold:size=10
+URxvt*.letterSpace:     -1
 
 ! scrollbar
-URxvt*.scrollStyle:          rxvt
-URxvt*.scrollBar:            false
-
-! perl extensions
-URxvt.perl-ext:              default,url-select,clipboard,keyboard-select,font-size
-URxvt.keysym.M-u:            perl:url-select:select_next
-URxvt.url-select.launcher:   /usr/bin/xdg-open
-URxvt.url-select.underline:  false
-URxvt.keysym.M-c:            perl:clipboard:copy
-URxvt.keysym.M-v:            perl:clipboard:paste
-URxvt.keysym.M-Escape:       perl:keyboard-select:activate
-URxvt.keysym.C-A-Up:         perl:font-size:increase
-URxvt.keysym.C-A-Down:       perl:font-size:decrease
+URxvt*.scrollStyle:     rxvt
+URxvt*.scrollBar:       false
 
 ! cursor
-URxvt*.cursorBlink:          true
-URxvt*.cursorUnderline:      false
+URxvt*.cursorBlink:     true
+URxvt*.cursorUnderline: false
 
-! pointer
-URxvt*.pointerBlank:         true
+! no idea what this is
+URxvt*.pointerBlank:    true
 
 ! disable stupid image keycap thingy
-URxvt*iso14755: False
-URxvt*iso14755_52: False
+URxvt*.iso14755:        false
+URxvt*.iso14755_52:     false
 
+
+!! urxvt perl extensions
+URxvt*.perl-ext:             default,url-select,clipboard,keyboard-select,font-size
+URxvt*.keysym.M-u:           perl:url-select:select_next
+URxvt*.url-select.launcher:  /usr/bin/xdg-open
+URxvt*.url-select.underline: false
+URxvt*.keysym.M-c:           perl:clipboard:copy
+URxvt*.keysym.M-v:           perl:clipboard:paste
+URxvt*.keysym.M-Escape:      perl:keyboard-select:activate
+URxvt*.keysym.C-A-Up:        perl:font-size:increase
+URxvt*.keysym.C-A-Down:      perl:font-size:decrease
+
+
+!! local overrides file
 #include ".Xresources.local"
