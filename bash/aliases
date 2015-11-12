@@ -3,6 +3,7 @@
 # by default, most WMs opening a new terminal will make it start in ~ instead of
 # the current terminal's PWD. this alias lets you open a new terminal in the PWD
 function t {
+	local args="";
 	if [[ "$@" != "" ]]; then
 		args="-e $@"
 	fi
@@ -25,7 +26,7 @@ function n {
 		echo "Missing argument - usage: n <name>"
 		return
 	fi
-	count=$(nls $1 | wc -l)
+	local count=$(nls $1 | wc -l)
 	if [[ $count > 1 ]]; then
 		nls $1
 		return
