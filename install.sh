@@ -38,11 +38,20 @@ install_git() {
 }
 
 install_i3() {
-	ln -sfT $sd/i3 $HOME/.config/i3
+	[ -d $HOME/.config/i3 ] || mkdir $HOME/.config/i3
+	ln -sf $sd/i3/i3.conf $HOME/.config/i3/config
+}
+
+install_i3blocks() {
+	[ -d $vd/i3blocks ] || git clone https://github.com/vivien/i3blocks $vd/i3blocks
+	[ -d $HOME/.config/i3blocks ] || mkdir $HOME/.config/i3blocks
+	ln -sf $sd/i3/i3blocks.conf $HOME/.config/i3blocks/config
+	ln -sfT $vd/i3blocks/scripts $HOME/.config/i3blocks/scripts
 }
 
 install_i3status() {
-	ln -sfT $sd/i3status $HOME/.config/i3status
+	[ -d $HOME/.config/i3status ] || mkdir $HOME/.config/i3status
+	ln -sf $sd/i3/i3status.conf $HOME/.config/i3status/config
 }
 
 install_irssi() {
@@ -173,6 +182,7 @@ install compton
 install dunst
 install git
 install i3
+install i3blocks
 install i3status
 install irssi
 install moc
