@@ -48,7 +48,7 @@ URxvt*.font: xft:Source Code Pro:size=10
 URxvt*.boldFont: xft:Source Code Pro:semibold:size=10
 URxvt*.intensityStyles: true
 URxvt*.letterSpace: -1
-URxvt*.skipBuiltinGlyphs: true
+URxvt*.skipBuiltinGlyphs: false
 
 ! scrollbar
 URxvt*.scrollStyle: rxvt
