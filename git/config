@@ -20,10 +20,10 @@ cm = commit -m
 co = checkout
 dc = diff --cached
 ds = diff --staged
-l = log --graph --abbrev-commit --pretty=format:'%C(red)%h%C(reset) \
-%s%C(yellow)%d%C(reset)'
-ll = log --graph --abbrev-commit --pretty=format:'%C(red)%h%C(reset) \
-%C(green)%ai%C(reset) %s %C(bold blue)<%an>%C(reset) %C(yellow)%d%C(reset)'
+l = log --graph --abbrev-commit --find-renames --date-order \
+--pretty=format:'%C(red)%h%C(reset) %s%C(yellow)%d%C(reset)'
+ll = log --graph --abbrev-commit --find-renames --date-order \
+--pretty=format:'%C(red)%h%C(reset) %C(green)%ai%C(reset) %s %C(bold blue)<%an>%C(reset) %C(yellow)%d%C(reset)'
 mfo = merge --ff-only
 mnf = merge --no-ff
 push-all = !git remote | xargs -L1 git push
