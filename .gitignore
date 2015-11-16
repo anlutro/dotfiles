@@ -10,6 +10,7 @@
 /sublime-text/*.last-run
 /sublime-text/Package Control.merged-ca-bundle
 /sublime-text/Package Control.user-ca-bundle
+/sublime-text/TextPastryHistory.sublime-settings
 
 # vim files
 vim/.netrwhist
