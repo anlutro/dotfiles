@@ -3,6 +3,11 @@
 ## read Xresources - not sure if this is necessary but whatever
 [ -f ~/.Xresources ] && xrdb -merge ~/.Xresources &
 
+
+## feh sets the desktop background
+[ -f ~/.fehbg ] && sh ~/.fehbg &
+
+
 ## system settings
 # turn on/off system beep
 xset b off &
@@ -48,6 +53,3 @@ if command -v xfce4-power-manager >/dev/null 2>&1; then
 elif command -v xautolock >/dev/null 2>&1; then
 	xautolock -time 60 -locker 'systemctl suspend' -detectsleep &
 fi
-
-## feh sets the desktop background
-[ -f ~/.fehbg ] && sh ~/.fehbg &
