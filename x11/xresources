@@ -1,7 +1,8 @@
 !! colors
-URxvt*.background:  #000000
-URxvt*.foreground:  #dddddd
+URxvt*.background: #000000
+URxvt*.foreground: #dddddd
 URxvt*.cursorColor: #657b83
+URxvt*.highlightColor: #333333
 
 ! black dark/light
 *color0:  #111111
