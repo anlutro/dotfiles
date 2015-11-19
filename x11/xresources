@@ -2,7 +2,7 @@
 URxvt*.background: #000000
 URxvt*.foreground: #dddddd
 URxvt*.cursorColor: #657b83
-URxvt*.highlightColor: #333333
+URxvt*.highlightColor: #444444
 
 ! black dark/light
 *color0:  #111111
