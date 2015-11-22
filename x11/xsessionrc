@@ -12,6 +12,9 @@
 # turn on/off system beep
 xset b off &
 
+# DPMS - turn monitors off after 20 minutes
+xset s 1200 1200 &
+
 
 ## pointer settings
 # mouse acceleration - accel ratio and threshold
