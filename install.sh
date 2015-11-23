@@ -29,7 +29,8 @@ install_compton() {
 }
 
 install_dunst() {
-	ln -sfT $configs/dunst $HOME/.config/dunst
+	[ -d $HOME/.config/dunst ] || mkdir $HOME/.config/dunst
+	ln -sf $configs/dunstrc $HOME/.config/dunst/dunstrc
 }
 
 install_git() {
@@ -61,7 +62,7 @@ install_irssi() {
 
 install_moc() {
 	[ -d $HOME/.moc ] || mkdir -p $HOME/.moc
-	ln -sfT $configs/moc/config $HOME/.moc/config
+	ln -sfT $configs/moc.conf $HOME/.moc/config
 }
 
 install_mutt() {
@@ -124,11 +125,13 @@ vim_common() {
 install_vim() {
 	vim_common
 
-	ln -sfT $configs/vimrc $HOME/.vimrc
+	ln -sfT $configs/vim/init.vim $HOME/.vimrc
 
 	[ -d $HOME/.vim ] || mkdir $HOME/.vim
 	for file in $configs/vim/*; do
-		ln -sfT $file $HOME/.vim/$(basename $file)
+		if [ $file != $configs/vim/init.vim ]; then
+			ln -sfT $file $HOME/.vim/$(basename $file)
+		fi
 	done
 }
 
@@ -136,7 +139,6 @@ install_nvim() {
 	vim_common
 
 	[ -d $HOME/.config/nvim ] || mkdir $HOME/.config/nvim
-	ln -sfT $configs/vimrc $HOME/.config/nvim/init.vim
 	for file in $configs/vim/*; do
 		ln -sfT $file $HOME/.config/nvim/$(basename $file)
 	done
