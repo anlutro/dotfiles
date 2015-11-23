@@ -13,4 +13,4 @@
 /configs/sublime-text/TextPastryHistory.sublime-settings
 
 # vim files
-/configsvim/.netrwhist
+/configs/vim/.netrwhist
