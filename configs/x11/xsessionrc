@@ -43,6 +43,10 @@ if command -v xflux >/dev/null 2>&1; then
 	xflux -l 58 -g 5 -k 2900 &
 fi
 
+if command -v compton >/dev/null 2>&1; then
+	compton -b &
+fi
+
 if command -v dropbox >/dev/null 2>&1; then
 	dropbox start &
 fi
