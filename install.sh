@@ -5,10 +5,10 @@ if [ -z "$HOME" ]; then
 	exit 1
 fi
 
-# script directory
-sd=$(dirname $(readlink -f "$0"))
-# vendor directory
-vd=$sd/vendor
+root=$(dirname $(readlink -f "$0"))
+configs=$root/configs
+scripts=$root/scripts
+vendor=$root/vendor
 
 install() {
 	if command -v $1 >/dev/null 2>&1; then
@@ -19,85 +19,85 @@ install() {
 }
 
 install_bash() {
-	ln -sf $sd/bash/bashrc $HOME/.bashrc
-	ln -sf $sd/bash/aliases $HOME/.bash_aliases
-	ln -sf $sd/bash/ps1 $HOME/.bash_ps1
+	ln -sf $configs/bash/bashrc $HOME/.bashrc
+	ln -sf $configs/bash/aliases $HOME/.bash_aliases
+	ln -sf $configs/bash/ps1 $HOME/.bash_ps1
 }
 
 install_compton() {
-	ln -sf $sd/compton.conf $HOME/.config/compton.conf
+	ln -sf $configs/compton.conf $HOME/.config/compton.conf
 }
 
 install_dunst() {
-	ln -sfT $sd/dunst $HOME/.config/dunst
+	ln -sfT $configs/dunst $HOME/.config/dunst
 }
 
 install_git() {
-	ln -sf $sd/git/config $HOME/.gitconfig
-	ln -sf $sd/git/ignore_global $HOME/.gitignore_global
+	ln -sf $configs/git/config $HOME/.gitconfig
+	ln -sf $configs/git/ignore_global $HOME/.gitignore_global
 }
 
 install_i3() {
 	[ -d $HOME/.config/i3 ] || mkdir $HOME/.config/i3
-	ln -sf $sd/i3/i3.conf $HOME/.config/i3/config
+	ln -sf $configs/i3/i3.conf $HOME/.config/i3/config
 }
 
 install_i3blocks() {
-	[ -d $vd/i3blocks ] || git clone https://github.com/vivien/i3blocks $vd/i3blocks
+	[ -d $vendor/i3blocks ] || git clone https://github.com/vivien/i3blocks $vendor/i3blocks
 	[ -d $HOME/.config/i3blocks ] || mkdir $HOME/.config/i3blocks
-	ln -sf $sd/i3/i3blocks.conf $HOME/.config/i3blocks/config
-	ln -sfT $vd/i3blocks/scripts $HOME/.config/i3blocks/scripts
+	ln -sf $configs/i3/i3blocks.conf $HOME/.config/i3blocks/config
+	ln -sfT $vendor/i3blocks/scripts $HOME/.config/i3blocks/scripts
 }
 
 install_i3status() {
 	[ -d $HOME/.config/i3status ] || mkdir $HOME/.config/i3status
-	ln -sf $sd/i3/i3status.conf $HOME/.config/i3status/config
+	ln -sf $configs/i3/i3status.conf $HOME/.config/i3status/config
 }
 
 install_irssi() {
 	[ -d $HOME/.irssi ] || mkdir -p $HOME/.irssi
-	ln -sf $sd/irssi/default.theme $HOME/.irssi/default.theme
+	ln -sf $configs/irssi/default.theme $HOME/.irssi/default.theme
 }
 
 install_moc() {
 	[ -d $HOME/.moc ] || mkdir -p $HOME/.moc
-	ln -sfT $sd/moc/config $HOME/.moc/config
+	ln -sfT $configs/moc/config $HOME/.moc/config
 }
 
 install_mutt() {
-	ln -sfT $sd/muttrc $HOME/.muttrc
+	ln -sfT $configs/muttrc $HOME/.muttrc
 }
 
 install_nano() {
-	ln -sf $sd/nanorc $HOME/.nanorc
+	ln -sf $configs/nanorc $HOME/.nanorc
 }
 
 install_rtorrent() {
-	ln -sf $sd/rtorrent.rc $HOME/.rtorrent.rc
+	ln -sf $configs/rtorrent.rc $HOME/.rtorrent.rc
 }
 
 install_subl() {
-	ln -sfT $sd/sublime-text $HOME/.config/sublime-text-3/Packages/User
-	ln -sf $sd/bin/sublp $HOME/bin/sublp
+	ln -sfT $configs/sublime-text $HOME/.config/sublime-text-3/Packages/User
+	ln -sf $scripts/sublp $HOME/bin/sublp
 }
 
 install_tmux() {
-	ln -sf $sd/tmux.conf $HOME/.tmux.conf
+	ln -sf $configs/tmux.conf $HOME/.tmux.conf
 }
 
 install_urxvt() {
-	if [ ! -d $vd/urxvt-perls ]; then
-		git clone https://github.com/muennich/urxvt-perls $vd/urxvt-perls
+	if [ ! -d $vendor/urxvt-perls ]; then
+		git clone https://github.com/muennich/urxvt-perls $vendor/urxvt-perls
 	fi
-	if [ ! -d $vd/urxvt-font-size ]; then
-		git clone https://github.com/majutsushi/urxvt-font-size $vd/urxvt-font-size
+	if [ ! -d $vendor/urxvt-font-size ]; then
+		git clone https://github.com/majutsushi/urxvt-font-size $vendor/urxvt-font-size
 	fi
 
 	[ -d $HOME/.urxvt/ext ] || mkdir -p $HOME/.urxvt/ext
-	ln -sf "$vd/urxvt-perls/url-select" $HOME/.urxvt/ext/url-select
-	ln -sf "$vd/urxvt-perls/clipboard" $HOME/.urxvt/ext/clipboard
-	ln -sf "$vd/urxvt-perls/keyboard-select" $HOME/.urxvt/ext/keyboard-select
-	ln -sf "$vd/urxvt-font-size/font-size" $HOME/.urxvt/ext/font-size
+	ln -sf "$vendor/urxvt-perls/url-select" $HOME/.urxvt/ext/url-select
+	ln -sf "$vendor/urxvt-perls/clipboard" $HOME/.urxvt/ext/clipboard
+	ln -sf "$vendor/urxvt-perls/keyboard-select" $HOME/.urxvt/ext/keyboard-select
+	ln -sf "$vendor/urxvt-font-size/font-size" $HOME/.urxvt/ext/font-size
 }
 
 vim_common() {
@@ -105,29 +105,29 @@ vim_common() {
 	[ $vim_common_installed ] && return;
 	vim_common_installed=1
 
-	if [ ! -d $vd/jellybeans.vim ]; then
-		git clone https://github.com/nanotech/jellybeans.vim $vd/jellybeans.vim
+	if [ ! -d $vendor/jellybeans.vim ]; then
+		git clone https://github.com/nanotech/jellybeans.vim $vendor/jellybeans.vim
 	fi
-	ln -sf ../../vendor/jellybeans.vim/colors/jellybeans.vim $sd/vim/colors/jellybeans.vim
+	ln -sf ../../../vendor/jellybeans.vim/colors/jellybeans.vim $configs/vim/colors/jellybeans.vim
 
 	if command -v salt >/dev/null 2>&1; then
 		echo -n "salt-vim... "
-		if [ ! -d $vd/salt-vim ]; then
-			git clone https://github.com/saltstack/salt-vim $vd/salt-vim
+		if [ ! -d $vendor/salt-vim ]; then
+			git clone https://github.com/saltstack/salt-vim $vendor/salt-vim
 		fi
-		ln -sf ../../vendor/salt-vim/ftdetect/sls.vim $sd/vim/ftdetect/sls.vim
-		ln -sf ../../vendor/salt-vim/ftplugin/sls.vim $sd/vim/ftplugin/sls.vim
-		ln -sf ../../vendor/salt-vim/syntax/sls.vim $sd/vim/syntax/sls.vim
+		ln -sf ../../../vendor/salt-vim/ftdetect/sls.vim $configs/vim/ftdetect/sls.vim
+		ln -sf ../../../vendor/salt-vim/ftplugin/sls.vim $configs/vim/ftplugin/sls.vim
+		ln -sf ../../../vendor/salt-vim/syntax/sls.vim $configs/vim/syntax/sls.vim
 	fi
 }
 
 install_vim() {
 	vim_common
 
-	ln -sfT $sd/vimrc $HOME/.vimrc
+	ln -sfT $configs/vimrc $HOME/.vimrc
 
 	[ -d $HOME/.vim ] || mkdir $HOME/.vim
-	for file in $sd/vim/*; do
+	for file in $configs/vim/*; do
 		ln -sfT $file $HOME/.vim/$(basename $file)
 	done
 }
@@ -136,43 +136,43 @@ install_nvim() {
 	vim_common
 
 	[ -d $HOME/.config/nvim ] || mkdir $HOME/.config/nvim
-	ln -sfT $sd/vimrc $HOME/.config/nvim/init.vim
-	for file in $sd/vim/*; do
+	ln -sfT $configs/vimrc $HOME/.config/nvim/init.vim
+	for file in $configs/vim/*; do
 		ln -sfT $file $HOME/.config/nvim/$(basename $file)
 	done
 }
 
 install_Xorg() {
-	ln -sf $sd/x11/xsessionrc $HOME/.xsessionrc
-	ln -sf $sd/x11/xresources $HOME/.Xresources
-	if [ ! -f $sd/x11/xresources.local ]; then
-		cp $sd/x11/xresources.local.default $sd/x11/xresources.local
+	ln -sf $configs/x11/xsessionrc $HOME/.xsessionrc
+	ln -sf $configs/x11/xresources $HOME/.Xresources
+	if [ ! -f $configs/x11/xresources.local ]; then
+		cp $configs/x11/xresources.local.default $configs/x11/xresources.local
 	fi
-	ln -sf $sd/x11/xresources.local $HOME/.Xresources.local
+	ln -sf $configs/x11/xresources.local $HOME/.Xresources.local
 
 	[ -d $HOME/.config/fontconfig ] || mkdir -p $HOME/.config/fontconfig
-	ln -sf $sd/fontconfig/fonts.conf $HOME/.config/fontconfig/fonts.conf
-	if [ ! -f $sd/fontconfig/local.conf ]; then
-		cp $sd/fontconfig/local.conf.default $sd/fontconfig/local.conf
+	ln -sf $configs/fontconfig/fonts.conf $HOME/.config/fontconfig/fonts.conf
+	if [ ! -f $configs/fontconfig/local.conf ]; then
+		cp $configs/fontconfig/local.conf.default $configs/fontconfig/local.conf
 	fi
-	ln -sf $sd/fontconfig/local.conf $HOME/.config/fontconfig/local.conf
+	ln -sf $configs/fontconfig/local.conf $HOME/.config/fontconfig/local.conf
 	rm -f $HOME/.fonts.conf
 
 	if command -v gtk-launch >/dev/null 2>&1; then
 		echo -n "GTK themes... "
-		ln -sf $sd/gtkrc-2.0 $HOME/.gtkrc-2.0
+		ln -sf $configs/gtkrc-2.0 $HOME/.gtkrc-2.0
 
-		if [ ! -d $vd/paper-gtk-theme ]; then
-			git clone https://github.com/snwh/paper-gtk-theme $vd/paper-gtk-theme
+		if [ ! -d $vendor/paper-gtk-theme ]; then
+			git clone https://github.com/snwh/paper-gtk-theme $vendor/paper-gtk-theme
 		fi
-		ln -sfT $vd/paper-gtk-theme/Paper $HOME/.themes/Paper
+		ln -sfT $vendor/paper-gtk-theme/Paper $HOME/.themes/Paper
 
-		if [ ! -d $vd/zuki-themes ]; then
-			git clone https://github.com/lassekongo83/zuki-themes $vd/zuki-themes
+		if [ ! -d $vendor/zuki-themes ]; then
+			git clone https://github.com/lassekongo83/zuki-themes $vendor/zuki-themes
 		fi
-		ln -sfT $vd/zuki-themes/Zukiwi $HOME/.themes/Zukiwi
-		ln -sfT $vd/zuki-themes/Zukitwo $HOME/.themes/Zukitwo
-		ln -sfT $vd/zuki-themes/Zukitre $HOME/.themes/Zukitre
+		ln -sfT $vendor/zuki-themes/Zukiwi $HOME/.themes/Zukiwi
+		ln -sfT $vendor/zuki-themes/Zukitwo $HOME/.themes/Zukitwo
+		ln -sfT $vendor/zuki-themes/Zukitre $HOME/.themes/Zukitre
 	fi
 }
 
@@ -200,9 +200,9 @@ install Xorg
 echo -n "~/bin files... "
 [ -d $HOME/bin ] || mkdir $HOME/bin
 if [ -d /etc/apache2 ]; then
-	ln -sf $sd/bin/a2es $HOME/bin/a2es
+	ln -sf $scripts/a2es $HOME/bin/a2es
 fi
-ln -sf $sd/bin/art $HOME/bin/art
-ln -sf $sd/bin/genpw $HOME/bin/genpw
-ln -sf $sd/bin/templ $HOME/bin/templ
+ln -sf $scripts/art $HOME/bin/art
+ln -sf $scripts/genpw $HOME/bin/genpw
+ln -sf $scripts/templ $HOME/bin/templ
 echo "done"

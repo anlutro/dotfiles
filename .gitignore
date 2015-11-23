@@ -2,15 +2,15 @@
 *.bak
 
 # local override configs
-/x11/xresources.local
-/fontconfig/local.conf
+/configs/x11/xresources.local
+/configs/fontconfig/local.conf
 
 # package control stuff
-/sublime-text/*.cache
-/sublime-text/*.last-run
-/sublime-text/Package Control.merged-ca-bundle
-/sublime-text/Package Control.user-ca-bundle
-/sublime-text/TextPastryHistory.sublime-settings
+/configs/sublime-text/*.cache
+/configs/sublime-text/*.last-run
+/configs/sublime-text/Package Control.merged-ca-bundle
+/configs/sublime-text/Package Control.user-ca-bundle
+/configs/sublime-text/TextPastryHistory.sublime-settings
 
 # vim files
-vim/.netrwhist
+/configsvim/.netrwhist

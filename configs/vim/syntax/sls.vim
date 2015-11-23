@@ -1,0 +1,1 @@
+../../../vendor/salt-vim/syntax/sls.vim
