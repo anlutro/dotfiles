@@ -1,5 +1,5 @@
 !! colors
-URxvt*.background: #000000
+URxvt*.background: rgba:0000/0000/0000/e800
 URxvt*.foreground: #dddddd
 URxvt*.cursorColor: #657b83
 URxvt*.highlightColor: #444444
@@ -36,6 +36,7 @@ URxvt*.highlightColor: #444444
 
 !! rxvt/urxvt settings
 URxvt*.termName: rxvt-256color
+URxvt*.depth: 32
 URxvt*.fading: 0
 URxvt*.loginShell: false
 URxvt*.saveLines: 5000
