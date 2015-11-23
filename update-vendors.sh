@@ -1,7 +1,7 @@
 #!/bin/sh
 
 root=$(dirname $(readlink -f "$0"))
-cd $root
+cd $root/vendor
 
 for dir in *; do
 	if [ -d $dir ]; then
