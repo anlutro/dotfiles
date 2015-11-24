@@ -1,5 +1,5 @@
 !! colors
-URxvt*.background: rgba:0000/0000/0000/e800
+URxvt*.background: rgba:0000/0000/0000/e000
 URxvt*.foreground: #dddddd
 URxvt*.cursorColor: #657b83
 URxvt*.highlightColor: #444444
