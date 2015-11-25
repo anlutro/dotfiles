@@ -9,7 +9,7 @@ function t {
 	fi
 
 	if [[ "$(which i3-msg)" ]]; then
-		# opening through i3-exec prevents weird/inconsistent ps trees
+		# opening through i3 exec prevents weird/inconsistent ps trees
 		args="-cd $PWD $args"
 		i3-msg "exec x-terminal-emulator $args" &> /dev/null
 	else
@@ -84,6 +84,7 @@ function md {
 }
 
 # i3 shortcuts
+alias i3exec='i3-msg exec'
 alias i3lock='i3lock -c 000000'
 alias i3rename='i3-msg rename workspace to'
 alias i3mv='i3-msg move workspace to output'
