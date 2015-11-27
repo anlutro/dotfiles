@@ -1,5 +1,0 @@
-upload_rate = 100
-download_rate = 2000
-
-# send a notification when torrents finish
-system.method.set_key = event.download.finished,notify_finished,"execute=notify-send,rtorrent,$d.get_name="
