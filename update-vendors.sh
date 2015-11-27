@@ -7,6 +7,7 @@ for dir in *; do
 	if [ -d $dir ]; then
 		echo "Updating $dir ..."
 		cd $dir
+		git checkout .
 		git pull
 		cd ..
 		echo
