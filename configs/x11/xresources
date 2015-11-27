@@ -40,7 +40,7 @@ URxvt*.depth: 32
 URxvt*.fading: 0
 URxvt*.loginShell: false
 URxvt*.saveLines: 5000
-URxvt*.internalBorder: 3
+URxvt*.internalBorder: 7
 URxvt*.lineSpace: 3
 URxvt*.urgentOnBell: true
 URxvt*.visualBell: false
