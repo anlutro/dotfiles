@@ -19,7 +19,7 @@ GOPMIN="15"
 # max 6
 THREADS="2"
 # constant bitrate (should be between 1000k - 3000k)
-CBR="1500k"
+CBR="${2-1500k}"
 # one of the many FFMPEG presets
 QUALITY="ultrafast" 
 AUDIO_RATE="44100"
