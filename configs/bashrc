@@ -1,5 +1,113 @@
 #!/usr/bin/env bash
 
+# If not running interactively, don't do anything
+[ -z "$PS1" ] && return
+
+# don't put duplicate lines in the history
+HISTCONTROL=ignoredups:ignorespace
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=10000
+
+# always limit man to 80 characters wide
+export MANWIDTH=80
+
+# set tab width
+tabs 4 > /dev/null
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
+	. /etc/bash_completion
+fi
+
+# ls --color config with dircolors
+export LS_COLORS='fi=0:di=1;34:ow=1;34:ln=33:ex=1;32:mi=0;31'
+
+# self-explanatory
+export EDITOR=vim
+
+# Add $HOME/bin to $PATH if the directory exists and not already added
+if [ -d $HOME/bin ] && [[ ! "$PATH" =~ "$HOME/bin" ]]; then
+	PATH="$HOME/bin:$PATH"
+fi
+
+
+
+#	 /$$$$$$$   /$$$$$$    /$$  
+#	| $$__  $$ /$$__  $$ /$$$$  
+#	| $$  \ $$| $$  \__/|_  $$  
+#	| $$$$$$$/|  $$$$$$   | $$  
+#	| $$____/  \____  $$  | $$  
+#	| $$       /$$  \ $$  | $$  
+#	| $$      |  $$$$$$/ /$$$$$$
+#	|__/       \______/ |______/
+
+# wrap in a function to allow local variables
+_set_ps1() {
+	local user_color='32' # green
+	local host_color='32' # green
+
+	local user=$(whoami)
+	if [ $user = 'vagrant' ]; then
+		user_color='34' # blue
+	elif [ $user = 'root' ]; then
+		user_color='31' # red
+	elif [ $user != 'andreas' ]; then
+		user_color='33' # yellow
+	fi
+
+	if [ -n "$SSH_CLIENT" ]; then
+		host=$(hostname)
+		if [[ $host == vagrant* ]]; then
+			host_color='34' # blue
+		else
+			host_color='33' # yellow
+		fi
+	fi
+
+	PS1='\[\033[01;'$user_color'm\]\u\[\033[0;37m\]@\[\033[01;'$host_color'm\]\h\[\033[00m\] \w'
+
+	if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
+		debian_chroot=$(cat /etc/debian_chroot)
+	fi
+	if [ ! -z "$debian_chroot" ]; then
+		PS1="${debian_chroot:+($debian_chroot)} $PS1"
+	fi
+
+	if command -v __git_ps1 >/dev/null 2>&1; then
+		# GIT_PS1_SHOWDIRTYSTATE=true
+		# GIT_PS1_SHOWUNTRACKEDFILES=true
+		GIT_PS1_SHOWUPSTREAM="auto"
+		# GIT_PS1_SHOWCOLORHINTS=true
+		PS1=$PS1'$(__git_ps1 "  \[\033[01;37m\]%s\[\033[00m\]")'
+	fi
+
+	PS1=$PS1'\n\[\033[0;37m\]\$\[\033[00m\] '
+}
+
+_set_ps1
+
+
+
+#	  /$$$$$$  /$$ /$$                                        
+#	 /$$__  $$| $$|__/                                        
+#	| $$  \ $$| $$ /$$  /$$$$$$   /$$$$$$$  /$$$$$$   /$$$$$$$
+#	| $$$$$$$$| $$| $$ |____  $$ /$$_____/ /$$__  $$ /$$_____/
+#	| $$__  $$| $$| $$  /$$$$$$$|  $$$$$$ | $$$$$$$$|  $$$$$$ 
+#	| $$  | $$| $$| $$ /$$__  $$ \____  $$| $$_____/ \____  $$
+#	| $$  | $$| $$| $$|  $$$$$$$ /$$$$$$$/|  $$$$$$$ /$$$$$$$/
+#	|__/  |__/|__/|__/ \_______/|_______/  \_______/|_______/ 
+
 # by default, most WMs opening a new terminal will make it start in ~ instead of
 # the current terminal's PWD. this alias lets you open a new terminal in the PWD
 function t {
@@ -89,7 +197,7 @@ alias i3lock='i3lock -c 000000'
 alias i3rename='i3-msg rename workspace to'
 alias i3mv='i3-msg move workspace to output'
 
-# server stuff
+# apache
 alias a2r='sudo service apache2 reload'
 alias a2rs='sudo service apache2 restart'
 alias a2cs='\ls /etc/apache2/sites-enabled/'
@@ -132,7 +240,8 @@ function cltail {
 
 # keyboard layout
 function kb {
-	setxkbmap -v -option compose:ralt -option caps:super $1 && xset r rate 175 35
+	setxkbmap -v -option compose:ralt -option caps:super $1 \
+		&& xset r rate 175 35
 }
 
 # improved ps | grep alias

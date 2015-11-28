@@ -19,9 +19,9 @@ install() {
 }
 
 install_bash() {
-	ln -sf $configs/bash/bashrc $HOME/.bashrc
-	ln -sf $configs/bash/aliases $HOME/.bash_aliases
-	ln -sf $configs/bash/ps1 $HOME/.bash_ps1
+	ln -sf $configs/bashrc $HOME/.bashrc
+	rm -f $HOME/.bash_aliases
+	rm -f $HOME/.bash_ps1
 }
 
 install_compton() {
