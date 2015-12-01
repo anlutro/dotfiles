@@ -68,13 +68,12 @@ _set_ps1() {
 	fi
 
 	if [ -n "$SSH_CLIENT" ]; then
-		local host=$(hostname)
-		if [[ $host == vagrant* ]]; then
+		host_str=$(hostname -f)
+		if [[ $host_str == vagrant* ]]; then
 			host_color='34' # blue
 		else
 			host_color='33' # yellow
 		fi
-		host_str='\H'
 	fi
 
 	PS1='\[\033[01;'$user_color'm\]\u\[\033[0;37m\]@\[\033[01;'$host_color'm\]'$host_str'\[\033[00m\] \w'
