@@ -263,6 +263,7 @@ function gh-fetch-pr {
 # misc
 alias cal='ncal -Mb3'
 alias crlffix='for file in `find . -type f`; do dos2unix $file; done'
+alias diff='git diff --no-index'
 alias most-common='sort | uniq -c | sort -nr | head'
 alias open='xdg-open'
 alias pwgen-strong='pwgen -Bs'
