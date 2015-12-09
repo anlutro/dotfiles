@@ -208,3 +208,9 @@ ln -sf $scripts/art $HOME/bin/art
 ln -sf $scripts/genpw $HOME/bin/genpw
 ln -sf $scripts/templ $HOME/bin/templ
 echo "done"
+
+
+# look for broken symlinks
+echo "looking for broken symlinks..."
+find $configs -xtype l
+find $scripts -xtype l
