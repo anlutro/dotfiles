@@ -15,6 +15,7 @@ color status white black
 
 set pager_stop = yes
 set smart_wrap = yes
+unset markers
 alternative_order text/plain
 auto_view text/html
 set reverse_name = yes
