@@ -73,10 +73,6 @@ install_nano() {
 	ln -sf $configs/nanorc $HOME/.nanorc
 }
 
-install_rtorrent() {
-	ln -sf $configs/rtorrent.rc $HOME/.rtorrent.rc
-}
-
 install_subl() {
 	ln -sfT $configs/sublime-text $HOME/.config/sublime-text-3/Packages/User
 	ln -sf $scripts/sublp $HOME/bin/sublp
@@ -190,7 +186,6 @@ install irssi
 install mocp
 install mutt
 install nano
-install rtorrent
 install subl
 install tmux
 install urxvt
