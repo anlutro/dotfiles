@@ -61,3 +61,6 @@ nnoremap <Up> gk
 nnoremap k gk
 nnoremap <Down> gj
 nnoremap j gj
+
+nnoremap <C-a> <Home>
+nnoremap <C-e> <End>
