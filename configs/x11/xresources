@@ -37,7 +37,7 @@ URxvt*.highlightColor: #444444
 !! rxvt/urxvt settings
 URxvt*.termName: xterm-256color
 URxvt*.depth: 32
-URxvt*.fading: 0
+URxvt*.fading: 20
 URxvt*.loginShell: false
 URxvt*.saveLines: 5000
 URxvt*.internalBorder: 7
