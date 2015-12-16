@@ -1,10 +1,31 @@
 #!/usr/bin/env python3
+'''
+Get the window ID of the next or previous window in the current workspace.
 
-# TODO: only toggle between applications in current workspace
+	$ i3-get.py next
+	41943050
+	$ i3-get.py prev
+	39845898
+
+Add --all or -a to find the next/previous window in all workspaces, not just the
+active one.
+'''
 
 import json
 import sys
 import subprocess
+
+
+def find_active_workspace(tree_dict, current_workspace=None):
+	if tree_dict.get('focused'):
+		return current_workspace
+	if tree_dict.get('type') == 'workspace':
+		current_workspace = tree_dict
+	if 'nodes' in tree_dict and len(tree_dict['nodes']) > 0:
+		for node in tree_dict['nodes']:
+			workspace = find_active_workspace(node, current_workspace)
+			if workspace is not None:
+				return workspace
 
 
 def find_windows(tree_dict, window_list):
@@ -20,7 +41,7 @@ def find_windows(tree_dict, window_list):
 	return window_list        
 
 
-def get_window(next=None, prev=None):
+def get_window(next=None, prev=None, all_workspaces=False):
 	if next == prev:
 		raise Exception('next and prev cannot be same value')
 
@@ -31,6 +52,8 @@ def get_window(next=None, prev=None):
 		stderr=subprocess.STDOUT
 	)
 	tree = json.loads(p.stdout.read().decode())
+	if not all_workspaces:
+		tree = find_active_workspace(tree)
 	window_list = find_windows(tree, [])
 
 	if next is True:
@@ -53,6 +76,7 @@ def get_window(next=None, prev=None):
 		next_id = window_list[0]['window']
 	else:
 		next_id = window_list[next_index]['window']
+
 	return next_id
 
 
@@ -65,10 +89,12 @@ def main():
 		print_help()
 		sys.exit(1)
 
+	all_workspaces = '-a' in sys.argv or '--all' in sys.argv
+
 	if sys.argv[1] == 'next':
-		print(get_window(next=True))
+		print(get_window(next=True, all_workspaces=all_workspaces))
 	elif sys.argv[1] == 'prev':
-		print(get_window(prev=True))
+		print(get_window(prev=True, all_workspaces=all_workspaces))
 	else:
 		print_help()
 		sys.exit(1)
