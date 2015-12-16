@@ -2,9 +2,9 @@
 '''
 Get the window ID of the next or previous window in the current workspace.
 
-	$ i3-get.py next
+	$ i3-msg -t get_tree | i3-get.py next
 	41943050
-	$ i3-get.py prev
+	$ i3-msg -t get_tree | i3-get.py prev
 	39845898
 
 Add --all or -a to find the next/previous window in all workspaces, not just the
@@ -13,7 +13,6 @@ active one.
 
 import json
 import sys
-import subprocess
 
 
 def find_active_workspace(tree_dict, current_workspace=None):
@@ -45,13 +44,7 @@ def get_window(next=None, prev=None, all_workspaces=False):
 	if next == prev:
 		raise Exception('next and prev cannot be same value')
 
-	p = subprocess.Popen(
-		'i3-msg -t get_tree',
-		shell=True,
-		stdout=subprocess.PIPE,
-		stderr=subprocess.STDOUT
-	)
-	tree = json.loads(p.stdout.read().decode())
+	tree = json.load(sys.stdin)
 	if not all_workspaces:
 		tree = find_active_workspace(tree)
 	window_list = find_windows(tree, [])
