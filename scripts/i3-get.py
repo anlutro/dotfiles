@@ -40,28 +40,23 @@ def find_windows(tree_dict, window_list):
 	return window_list        
 
 
-def get_window(next=None, prev=None, all_workspaces=False):
-	if next == prev:
-		raise Exception('next and prev cannot be same value')
-
+def get_window(find='next', all_workspaces=False):
 	tree = json.load(sys.stdin)
 	if not all_workspaces:
 		tree = find_active_workspace(tree)
 	window_list = find_windows(tree, [])
 
 	window_count = len(window_list)
-	if window_count == 0:
+	if window_count < 2:
 		return ''
-	if window_count == 1:
-		return window_list[0]['window']
 
-	if next is True:
+	if find == 'next':
 		next_index = -1
 		for i in range(window_count):
 			if window_list[i]['focused'] == True:
 				next_index = i + 1
 				break
-	elif prev is True:
+	elif find == 'prev':
 		next_index = window_count
 		for i in range(window_count - 1, -1, -1):
 			if window_list[i]['focused'] == True:
@@ -71,7 +66,7 @@ def get_window(next=None, prev=None, all_workspaces=False):
 					next_index = i - 1
 				break
 	else:
-		raise Exception('either next or prev must be True')
+		exit_help()
 
 	next_id = 0
 	if next_index == -1 or next_index == window_count:
@@ -82,24 +77,17 @@ def get_window(next=None, prev=None, all_workspaces=False):
 	return next_id
 
 
-def print_help():
+def exit_help():
 	print('Usage: i3-switch (next|prev)'.format(sys.argv[0]))
+	sys.exit(1)
 
 
 def main():
 	if len(sys.argv) < 2:
-		print_help()
-		sys.exit(1)
+		exit_help()
 
 	all_workspaces = '-a' in sys.argv or '--all' in sys.argv
-
-	if sys.argv[1] == 'next':
-		print(get_window(next=True, all_workspaces=all_workspaces))
-	elif sys.argv[1] == 'prev':
-		print(get_window(prev=True, all_workspaces=all_workspaces))
-	else:
-		print_help()
-		sys.exit(1)
+	print(get_window(sys.argv[1], all_workspaces=all_workspaces))
 
 if __name__ == '__main__':
 	main()
