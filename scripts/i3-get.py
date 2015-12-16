@@ -56,18 +56,20 @@ def get_window(next=None, prev=None, all_workspaces=False):
 		tree = find_active_workspace(tree)
 	window_list = find_windows(tree, [])
 
+	window_count = len(window_list)
+
 	if next is True:
 		next_index = -1
-		for i in range(len(window_list)):
+		for i in range(window_count):
 			if window_list[i]['focused'] == True:
 				next_index = i + 1
 				break
 	elif prev is True:
-		next_index = len(window_list)
-		for i in range(len(window_list) - 1, -1, -1):
+		next_index = window_count
+		for i in range(window_count - 1, -1, -1):
 			if window_list[i]['focused'] == True:
 				if i == 0:
-					next_index = len(window_list) - 1
+					next_index = window_count - 1
 				else:
 					next_index = i - 1
 				break
@@ -75,7 +77,7 @@ def get_window(next=None, prev=None, all_workspaces=False):
 		raise Exception('either next or prev must be True')
 
 	next_id = 0
-	if next_index == -1 or next_index == len(window_list):
+	if next_index == -1 or next_index == window_count:
 		next_id = window_list[0]['window']
 	else:
 		next_id = window_list[next_index]['window']
