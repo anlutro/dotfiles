@@ -50,6 +50,10 @@ def get_window(next=None, prev=None, all_workspaces=False):
 	window_list = find_windows(tree, [])
 
 	window_count = len(window_list)
+	if window_count == 0:
+		return ''
+	if window_count == 1:
+		return window_list[0]['window']
 
 	if next is True:
 		next_index = -1
