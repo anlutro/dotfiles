@@ -64,9 +64,12 @@ def get_window(next=None, prev=None, all_workspaces=False):
 				break
 	elif prev is True:
 		next_index = len(window_list)
-		for i in range(len(window_list)-1, -1, -1):
+		for i in range(len(window_list) - 1, -1, -1):
 			if window_list[i]['focused'] == True:
-				next_index = i - 1
+				if i == 0:
+					next_index = len(window_list) - 1
+				else:
+					next_index = i - 1
 				break
 	else:
 		raise Exception('either next or prev must be True')
