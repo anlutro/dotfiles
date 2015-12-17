@@ -1,0 +1,53 @@
+%YAML 1.2
+---
+name: TICKscript
+file_extensions: [tick]
+scope: source.tick
+
+contexts:
+  main:
+    - match: '\.([A-Za-z_]+)\('
+      captures:
+        1: meta.function-call.object.tick
+
+    - match: '\b(\d+(\.\d+)?)\b'
+      scope: constant.numeric.tick
+
+    - match: '\b(\d+)(s|m|h|d)\b'
+      scope: constant.numeric.tick
+
+    - match: '\b(stream|batch|influxql)\b'
+      scope: constant.language.tick
+
+    - match: '\b(lambda)\b'
+      scope: meta.function.inline.tick storage.function.inline.tick
+
+    - match: "'"
+      push: string
+
+    - match: '"'
+      push: column
+
+  column:
+    - meta_scope: meta.function.parameters.tick variable.parameter.function.tick
+    - match: '"'
+      pop: true
+
+  string:
+    - meta_scope: string.quoted.tick
+    - match: '\{\{'
+      scope: entity.other.tick
+      push: template
+    - match: "'"
+      pop: true
+
+  template:
+    - match: '"'
+      push: column
+    - match: '\b(index)\b'
+      scope: constant.language.tick
+    - match: '\.[A-z_]+'
+      scope: variable.tick
+    - match: '\}\}'
+      scope: entity.other.tick
+      pop: true
