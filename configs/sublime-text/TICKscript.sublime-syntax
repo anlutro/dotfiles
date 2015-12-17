@@ -22,6 +22,9 @@ contexts:
     - match: '\b(lambda)\b'
       scope: meta.function.inline.tick storage.function.inline.tick
 
+    - match: '\b(var)\b'
+      scope: keyword.control.tick
+
     - match: "'"
       push: string
 
