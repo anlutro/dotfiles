@@ -160,6 +160,8 @@ install_Xorg() {
 		echo -n "GTK themes... "
 		ln -sf $configs/gtkrc-2.0 $HOME/.gtkrc-2.0
 
+		[ -d $HOME/.themes ] || mkdir $HOME/.themes
+
 		if [ ! -d $vendor/paper-gtk-theme ]; then
 			git clone https://github.com/snwh/paper-gtk-theme $vendor/paper-gtk-theme
 		fi
