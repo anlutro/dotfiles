@@ -43,63 +43,6 @@ fi
 
 
 
-#	 /$$$$$$$   /$$$$$$    /$$  
-#	| $$__  $$ /$$__  $$ /$$$$  
-#	| $$  \ $$| $$  \__/|_  $$  
-#	| $$$$$$$/|  $$$$$$   | $$  
-#	| $$____/  \____  $$  | $$  
-#	| $$       /$$  \ $$  | $$  
-#	| $$      |  $$$$$$/ /$$$$$$
-#	|__/       \______/ |______/
-
-# wrap in a function to allow local variables
-_set_ps1() {
-	local user_color='32' # green
-	local host_color='32' # green
-	local host_str='\h'
-
-	local user=$(whoami)
-	if [ $user = 'vagrant' ]; then
-		user_color='34' # blue
-	elif [ $user = 'root' ]; then
-		user_color='31' # red
-	elif [ $user != 'andreas' ]; then
-		user_color='33' # yellow
-	fi
-
-	if [ -n "$SSH_CLIENT" ]; then
-		host_str=$(hostname -f)
-		if [[ $host_str == vagrant* ]]; then
-			host_color='34' # blue
-		else
-			host_color='33' # yellow
-		fi
-	fi
-
-	PS1='\[\033[01;'$user_color'm\]\u\[\033[0;37m\]@\[\033[01;'$host_color'm\]'$host_str'\[\033[00m\] \w'
-
-	if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
-		debian_chroot=$(cat /etc/debian_chroot)
-	fi
-	if [ ! -z "$debian_chroot" ]; then
-		PS1="${debian_chroot:+($debian_chroot)} $PS1"
-	fi
-
-	if command -v __git_ps1 >/dev/null 2>&1; then
-		# GIT_PS1_SHOWDIRTYSTATE=true
-		# GIT_PS1_SHOWUNTRACKEDFILES=true
-		GIT_PS1_SHOWUPSTREAM="auto"
-		# GIT_PS1_SHOWCOLORHINTS=true
-		PS1=$PS1'$(__git_ps1 "  \[\033[01;37m\]%s\[\033[00m\]")'
-	fi
-
-	PS1=$PS1'\n\[\033[0;37m\]\$\[\033[00m\] '
-}
-
-_set_ps1
-
-
-
 #	  /$$$$$$  /$$ /$$                                        
 #	 /$$__  $$| $$|__/                                        
 #	| $$  \ $$| $$ /$$  /$$$$$$   /$$$$$$$  /$$$$$$   /$$$$$$$
@@ -269,3 +212,60 @@ alias open='xdg-open'
 alias pwgen-strong='pwgen -Bs'
 alias pwgen-weak='pwgen -ABn'
 alias tree='tree --dirsfirst'
+
+
+
+#	 /$$$$$$$   /$$$$$$    /$$  
+#	| $$__  $$ /$$__  $$ /$$$$  
+#	| $$  \ $$| $$  \__/|_  $$  
+#	| $$$$$$$/|  $$$$$$   | $$  
+#	| $$____/  \____  $$  | $$  
+#	| $$       /$$  \ $$  | $$  
+#	| $$      |  $$$$$$/ /$$$$$$
+#	|__/       \______/ |______/
+
+# wrap in a function to allow local variables
+_set_ps1() {
+	local user_color='32' # green
+	local host_color='32' # green
+	local host_str='\h'
+
+	local user=$(whoami)
+	if [ $user = 'vagrant' ]; then
+		user_color='34' # blue
+	elif [ $user = 'root' ]; then
+		user_color='31' # red
+	elif [ $user != 'andreas' ]; then
+		user_color='33' # yellow
+	fi
+
+	if [ -n "$SSH_CLIENT" ]; then
+		host_str=$(hostname -f)
+		if [[ $host_str == vagrant* ]]; then
+			host_color='34' # blue
+		else
+			host_color='33' # yellow
+		fi
+	fi
+
+	PS1='\[\033[01;'$user_color'm\]\u\[\033[0;37m\]@\[\033[01;'$host_color'm\]'$host_str'\[\033[00m\] \w'
+
+	if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
+		debian_chroot=$(cat /etc/debian_chroot)
+	fi
+	if [ ! -z "$debian_chroot" ]; then
+		PS1="${debian_chroot:+($debian_chroot)} $PS1"
+	fi
+
+	if command -v __git_ps1 >/dev/null 2>&1; then
+		# GIT_PS1_SHOWDIRTYSTATE=true
+		# GIT_PS1_SHOWUNTRACKEDFILES=true
+		GIT_PS1_SHOWUPSTREAM="auto"
+		# GIT_PS1_SHOWCOLORHINTS=true
+		PS1=$PS1'$(__git_ps1 "  \[\033[01;37m\]%s\[\033[00m\]")'
+	fi
+
+	PS1=$PS1'\n\[\033[0;37m\]\$\[\033[00m\] '
+}
+
+_set_ps1
