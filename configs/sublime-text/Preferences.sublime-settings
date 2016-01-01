@@ -40,6 +40,7 @@
 	"caret_style": "phase",
 	"color_scheme": "Packages/User/Twilight Customized.tmTheme",
 	"default_line_ending": "unix",
+	"detect_indentation": true,
 	"drag_text": false,
 	"enable_tab_scrolling": false,
 	"file_exclude_patterns":
@@ -83,7 +84,7 @@
 		"CVS"
 	],
 	"font_face": "Source Code Pro",
-	"font_size": 12,
+	"font_size": 11,
 	"highlight_line": true,
 	"highlight_modified_tabs": true,
 	"hot_exit": false,
@@ -108,8 +109,9 @@
 	"show_full_path": false,
 	"show_line_endings": true,
 	"show_tab_close_buttons": false,
-	"tab_size": 4,
+	"tab_size": 3,
 	"theme": "Soda Dark 3.sublime-theme",
+	"translate_tabs_to_spaces": false,
 	"tree_animation_enabled": false,
 	"update_check": false,
 	"vintage_start_in_command_mode": true,
