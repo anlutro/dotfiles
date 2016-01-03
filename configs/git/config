@@ -14,10 +14,12 @@ ui = true
 helper = cache --timeout=600
 
 [alias]
+c = commit
 cam = commit -am
 cb = checkout -b
 cm = commit -m
 co = checkout
+d = diff
 dc = diff --cached
 ds = diff --staged
 l = log --graph --abbrev-commit --find-renames --date-order \
@@ -27,6 +29,10 @@ ll = log --graph --abbrev-commit --find-renames --date-order \
 mfo = merge --ff-only
 mnf = merge --no-ff
 push-all = !git remote | xargs -L1 git push
+r = remote -v
+ra = remote add
+rrm = remote rm
+s = status
 st = status
 tags = !git tag -n | sort -V | less -FX +G
 up = remote update -p
