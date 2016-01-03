@@ -58,6 +58,7 @@ install_i3status() {
 install_irssi() {
 	[ -d $HOME/.irssi ] || mkdir -p $HOME/.irssi
 	ln -sf $configs/irssi/default.theme $HOME/.irssi/default.theme
+	ln -sfT $configs/irssi/scripts $HOME/.irssi/scripts
 }
 
 install_mocp() {
