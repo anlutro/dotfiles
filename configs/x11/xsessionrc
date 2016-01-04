@@ -1,37 +1,29 @@
 #!/bin/sh
 
-## feh sets the desktop background
-[ -f ~/.fehbg ] && sh ~/.fehbg &
-
-
-## system settings
 # turn on/off system beep
-xset b off &
+xset b off
 
-
-## pointer settings
 # mouse acceleration - accel ratio and threshold
-xset m 1/1 0 &
+xset m 1/1 0
 
 # touchpad settings
 if egrep -iq 'synap|alps|etps' /proc/bus/input/devices; then
-	synclient AccelFactor=0 &
-	synclient MinSpeed=1.25 &
-	synclient MaxSpeed=3 &
+	synclient AccelFactor=0
+	synclient MinSpeed=1.25
+	synclient MaxSpeed=3
 	# tapping the touchpad sends a mouse button 1 event
-	synclient TapButton1=1 &
+	synclient TapButton1=1
 fi
 
-
-## keyboard settings
 # keyboard repeat - delay (ms) and characters per second
-xset r rate 175 35 &
+xset r rate 175 35
 
 # set xkbmap options
-setxkbmap -option compose:ralt -option caps:super &
+setxkbmap -option compose:ralt -option caps:super
 
+# feh sets the desktop background
+[ -f ~/.fehbg ] && sh ~/.fehbg &
 
-## start applications
 if command -v xflux >/dev/null 2>&1; then
 	xflux -l 58 -g 5 -k 2900 &
 fi
