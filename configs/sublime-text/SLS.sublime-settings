@@ -1,5 +1,10 @@
 {
-  "tab_size": 2,
-  "translate_tabs_to_spaces": true,
-  "detect_indentation": false,
+	"detect_indentation": false,
+	"extensions":
+	[
+		"sls",
+		"roster"
+	],
+	"tab_size": 2,
+	"translate_tabs_to_spaces": true,
 }
