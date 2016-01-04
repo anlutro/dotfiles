@@ -19,9 +19,6 @@ HISTFILESIZE=10000
 # always limit man to 80 characters wide
 export MANWIDTH=80
 
-# set tab width
-tabs 4 > /dev/null
-
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
@@ -49,14 +46,6 @@ export LS_COLORS='fi=0:di=1;34:ow=1;34:ln=33:ex=1;32:mi=0;31'
 
 # self-explanatory
 export EDITOR=vim
-
-# Add paths to $PATH if the directories exists and not already added
-if [ -d $HOME/bin ] && [[ ! "$PATH" =~ "$HOME/bin" ]]; then
-	PATH="$HOME/bin:$PATH"
-fi
-if [ -d $HOME/.local/bin ] && [[ ! "$PATH" =~ "$HOME/.local/bin" ]]; then
-	PATH="$HOME/.local/bin:$PATH"
-fi
 
 
 

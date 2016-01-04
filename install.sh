@@ -178,6 +178,9 @@ install_Xorg() {
 }
 
 
+ln -sf $configs/profile $HOME/.profile
+
+
 install bash
 install compton
 install dunst
