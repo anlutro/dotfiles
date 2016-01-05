@@ -47,6 +47,9 @@ export LS_COLORS='fi=0:di=1;34:ow=1;34:ln=33:ex=1;32:mi=0;31'
 # self-explanatory
 export EDITOR=vim
 
+# fix journalctl
+export SYSTEMD_LESS='FKMR +G'
+
 
 
 #	  /$$$$$$  /$$ /$$                                        
