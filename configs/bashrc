@@ -249,7 +249,7 @@ _set_ps1() {
 	fi
 
 	if [ -n "$SSH_CLIENT" ]; then
-		host_str=$(hostname -f)
+		host_str=$(hostname -f 2>/dev/null || hostname)
 		if [[ $host_str == vagrant* ]]; then
 			host_color='34' # blue
 		else
