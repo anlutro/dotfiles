@@ -26,3 +26,6 @@ fi
 if [ -d $HOME/.local/bin ]; then
 	PATH="$HOME/.local/bin:$PATH"
 fi
+
+# print active tmux sessions, if any
+tmux ls 2>/dev/null
