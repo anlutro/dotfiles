@@ -19,9 +19,9 @@ install() {
 }
 
 install_bash() {
-	ln -sf $configs/bashrc $HOME/.bashrc
-	rm -f $HOME/.bash_aliases
-	rm -f $HOME/.bash_ps1
+	ln -sf $configs/shell/bashrc $HOME/.bashrc
+	[ -f $HOME/.bash_aliases ] && rm $HOME/.bash_aliases
+	[ -f $HOME/.bash_ps1 ] && rm $HOME/.bash_ps1
 }
 
 install_compton() {
@@ -177,8 +177,13 @@ install_Xorg() {
 	fi
 }
 
+install_zsh() {
+	ln -sf $configs/shell/zshrc $HOME/.zshrc
+}
 
-ln -sf $configs/profile $HOME/.profile
+
+ln -sf $configs/shell/profile $HOME/.profile
+ln -sf $configs/shell/aliases $HOME/.aliases
 
 
 install bash
@@ -198,6 +203,7 @@ install urxvt
 install vim
 install nvim
 install Xorg
+install zsh
 
 
 echo -n "~/bin files... "

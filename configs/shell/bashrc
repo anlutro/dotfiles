@@ -1,0 +1,78 @@
+#!/usr/bin/env bash
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# If set, the pattern "**" used in a pathname expansion context will
+# match all files and zero or more directories and subdirectories.
+shopt -s globstar
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if ! shopt -oq posix; then
+	if [ -f /usr/share/bash-completion/bash_completion ]; then
+		. /usr/share/bash-completion/bash_completion
+	elif [ -f /etc/bash_completion ]; then
+		. /etc/bash_completion
+	fi
+fi
+
+
+#	 /$$$$$$$   /$$$$$$    /$$  
+#	| $$__  $$ /$$__  $$ /$$$$  
+#	| $$  \ $$| $$  \__/|_  $$  
+#	| $$$$$$$/|  $$$$$$   | $$  
+#	| $$____/  \____  $$  | $$  
+#	| $$       /$$  \ $$  | $$  
+#	| $$      |  $$$$$$/ /$$$$$$
+#	|__/       \______/ |______/
+
+# wrap in a function to allow local variables
+_set_ps1() {
+	local user_color='32' # green
+	local host_color='32' # green
+	local host_str='\h'
+
+	if [ $USER = 'vagrant' ]; then
+		user_color='34' # blue
+	elif [ $USER = 'root' ]; then
+		user_color='31' # red
+	elif [ $USER != 'andreas' ]; then
+		user_color='33' # yellow
+	fi
+
+	if [ -n "$SSH_CLIENT" ]; then
+		host_str=$(hostname -f 2>/dev/null || hostname)
+		if [[ $host_str == vagrant* ]]; then
+			host_color='34' # blue
+		else
+			host_color='33' # yellow
+		fi
+	fi
+
+	PS1='\[\033[01;'$user_color'm\]\u\[\033[0;37m\]@\[\033[01;'$host_color'm\]'$host_str'\[\033[00m\] \w'
+
+	if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
+		debian_chroot=$(cat /etc/debian_chroot)
+	fi
+	if [ ! -z "$debian_chroot" ]; then
+		PS1="${debian_chroot:+($debian_chroot)} $PS1"
+	fi
+
+	if command -v __git_ps1 >/dev/null 2>&1; then
+		# GIT_PS1_SHOWDIRTYSTATE=true
+		# GIT_PS1_SHOWUNTRACKEDFILES=true
+		GIT_PS1_SHOWUPSTREAM="auto"
+		# GIT_PS1_SHOWCOLORHINTS=true
+		PS1=$PS1'$(__git_ps1 "  \[\033[01;37m\]%s\[\033[00m\]")'
+	fi
+
+	PS1=$PS1'\n\[\033[0;37m\]\$\[\033[00m\] '
+}
+
+_set_ps1
