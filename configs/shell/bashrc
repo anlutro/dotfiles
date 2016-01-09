@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# aliases and functions
+if [ -f "$HOME/.aliases" ]; then
+	. "$HOME/.aliases"
+fi
+
 # append to the history file, don't overwrite it
 shopt -s histappend
 

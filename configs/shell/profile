@@ -62,10 +62,5 @@ if [ -n "$ZSH_VERSION" ]; then
 	fi
 fi
 
-# aliases and functions
-if [ -f "$HOME/.aliases" ]; then
-	. "$HOME/.aliases"
-fi
-
 # print active tmux sessions, if any
 tmux ls 2>/dev/null

@@ -1,5 +1,10 @@
 #!/bin/zsh
 
+# aliases and functions
+if [ -f "$HOME/.aliases" ]; then
+	. "$HOME/.aliases"
+fi
+
 setopt histignorealldups sharehistory
 
 # Use modern completion system
