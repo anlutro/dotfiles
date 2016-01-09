@@ -179,6 +179,7 @@ install_Xorg() {
 
 install_zsh() {
 	ln -sf $configs/shell/zshrc $HOME/.zshrc
+	ln -sf $configs/shell/profile $HOME/.zprofile
 }
 
 
