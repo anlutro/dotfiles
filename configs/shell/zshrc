@@ -10,13 +10,17 @@ fi
 
 setopt histignorealldups sharehistory
 
-# Use modern completion system
+# use modern completion system
 autoload -Uz compinit
 compinit
 
-# Use modern completion system
+# enable color variables
 autoload -Uz colors
 colors
+
+# make alt-backspace / ctrl+W behave like bash
+autoload -Uz select-word-style
+select-word-style bash
 
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' completer _expand _complete _correct _approximate
