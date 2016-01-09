@@ -1,5 +1,8 @@
 #!/bin/zsh
 
+# emacs mode
+bindkey -e
+
 # aliases and functions
 if [ -f "$HOME/.aliases" ]; then
 	. "$HOME/.aliases"
