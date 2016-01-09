@@ -1,7 +1,12 @@
 {
-  "extensions":
-  [
-    ".bash_aliases",
-    ".bashrc"
-  ]
+	"extensions":
+	[
+		".aliases",
+		".bash_aliases",
+		".bashrc",
+		"aliases",
+		"bashrc",
+		"profile",
+		"zshrc",
+	]
 }
