@@ -1,14 +1,6 @@
 #!/bin/zsh
-# Set up the prompt
-
-# autoload -Uz promptinit
-# promptinit
-# prompt adam1
 
 setopt histignorealldups sharehistory
-
-# Use emacs keybindings even if our EDITOR is set to vi
-bindkey -e
 
 # Use modern completion system
 autoload -Uz compinit
