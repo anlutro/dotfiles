@@ -73,7 +73,7 @@ _set_ps1() {
 		fi
 	fi
 
-	PS1="%{$fg_bold[$user_color]%}%n%{$fg_no_bold[white]%}@%{$fg_bold[$host_color]%}$host_str %{$reset_color%}%(4~|...|)%3~"
+	PS1="%{$fg_bold[$user_color]%}%n%{$fg_no_bold[white]%}@%{$fg_bold[$host_color]%}$host_str %{$reset_color%}%~"
 
 	if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
 		debian_chroot=$(cat /etc/debian_chroot)
