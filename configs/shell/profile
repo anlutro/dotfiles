@@ -5,14 +5,14 @@
 umask 022
 
 # don't put duplicate lines or lines starting with space in the history.
-HISTCONTROL=ignoreboth
+export HISTCONTROL=ignoreboth
 
 # history size in memory
-HISTSIZE=1000
+export HISTSIZE=1000
 # history size in history file
-SAVEHIST=10000
-HISTFILESIZE=10000
-HISTFILE=~/.history
+export SAVEHIST=10000
+export HISTFILESIZE=10000
+export HISTFILE=~/.history
 
 # always limit man to 80 characters wide
 export MANWIDTH=80
