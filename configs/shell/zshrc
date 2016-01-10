@@ -82,7 +82,7 @@ _set_ps1() {
 		PS1="${debian_chroot:+($debian_chroot)} $PS1"
 	fi
 
-	PS1=$PS1$'\n'"%{$fg_no_bold[white]%}%%%{$reset_color%} "
+	PS1+=$'\n'"%{$fg_no_bold[white]%}%%%{$reset_color%} "
 	export PS1
 }
 

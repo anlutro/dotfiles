@@ -74,10 +74,10 @@ _set_ps1() {
 		# GIT_PS1_SHOWUNTRACKEDFILES=true
 		GIT_PS1_SHOWUPSTREAM="auto"
 		# GIT_PS1_SHOWCOLORHINTS=true
-		PS1=$PS1'$(__git_ps1 "  \[\033[01;37m\]%s\[\033[00m\]")'
+		PS1+='$(__git_ps1 "  \[\033[01;37m\]%s\[\033[00m\]")'
 	fi
 
-	PS1=$PS1'\n\[\033[0;37m\]\$\[\033[00m\] '
+	PS1+='\n\[\033[0;37m\]\$\[\033[00m\] '
 }
 
 _set_ps1
