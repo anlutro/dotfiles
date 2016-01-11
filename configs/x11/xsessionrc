@@ -43,5 +43,5 @@ fi
 if command -v xfce4-power-manager >/dev/null 2>&1; then
 	xfce4-power-manager &
 elif command -v xautolock >/dev/null 2>&1; then
-	xautolock -time 60 -locker 'ssh-add -D && i3lock -c 000000 && systemctl suspend' -detectsleep &
+	xautolock -time 60 -locker '~/bin/lockscreen --suspend' -detectsleep &
 fi
