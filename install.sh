@@ -175,6 +175,8 @@ install_Xorg() {
 		ln -sfT $vendor/zuki-themes/Zukitwo $HOME/.themes/Zukitwo
 		ln -sfT $vendor/zuki-themes/Zukitre $HOME/.themes/Zukitre
 	fi
+
+	ln -sf $scripts/lockscreen.py $HOME/bin/lockscreen
 }
 
 install_zsh() {
@@ -217,7 +219,6 @@ ln -sf $scripts/genpw $HOME/bin/genpw
 ln -sf $scripts/templ $HOME/bin/templ
 ln -sf $scripts/i3-get.py $HOME/bin/i3-get
 ln -sf $scripts/i3-switch.sh $HOME/bin/i3-switch
-ln -sf $scripts/lockscreen.py $HOME/bin/lockscreen
 echo "done"
 
 
