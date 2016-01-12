@@ -7,6 +7,11 @@ Get the window ID of the next or previous window in the current workspace.
 	$ i3-msg -t get_tree | i3-get.py prev
 	39845898
 
+Complete shell script to focus the next window:
+
+	id=$(i3-msg -t get_tree | i3-get.py next)
+	[ $? = 0 ] && [ "$id" ] && i3-msg [id="$id"] focus
+
 Add --all or -a to find the next/previous window in all workspaces, not just the
 active one.
 '''
@@ -78,7 +83,7 @@ def get_window(find='next', all_workspaces=False):
 
 
 def exit_help():
-	print('Usage: i3-switch (next|prev)'.format(sys.argv[0]))
+	print('Usage: i3-get.py (next|prev)')
 	sys.exit(1)
 
 
