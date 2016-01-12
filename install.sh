@@ -143,14 +143,14 @@ install_nvim() {
 
 install_Xorg() {
 	# attempt to fix previous symlink setup
-	if [ -L $HOME/.Xresources ]; then
-		rm -f $HOME/.Xresources
-		if [ -f $HOME/.Xresources.local ]; then
-			mv $HOME/.Xresources.local $HOME/.Xresources
-		fi
-	fi
 	if [ -L $HOME/.Xresources.local ]; then
 		rm -f $HOME/.Xresources.local
+	fi
+	if [ -L $HOME/.Xresources ]; then
+		rm -f $HOME/.Xresources
+		if [ -f $configs/x11/xresources.local ]; then
+			mv $configs/x11/xresources.local $HOME/.Xresources
+		fi
 	fi
 
 	ln -sf $configs/x11/xsessionrc $HOME/.xsessionrc
