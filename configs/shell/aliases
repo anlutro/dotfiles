@@ -37,7 +37,7 @@ function n {
 	fi
 }
 function nls {
-	pushd $_NOTES_DIR > /dev/null
+	pushd ${_NOTES_DIR} > /dev/null
 	if [ ! "$@" ]; then
 		ls *.md
 	else
