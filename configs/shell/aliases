@@ -4,11 +4,11 @@
 # the current terminal's PWD. this alias lets you open a new terminal in the PWD
 function t {
 	local args="";
-	if [ "$@" != "" ]; then
+	if [ "$*" != "" ]; then
 		args="-e $@"
 	fi
 
-	if [[ "$(which i3-msg)" ]]; then
+	if command -v i3-msg >/dev/null 2>&1; then
 		# opening through i3 exec prevents weird/inconsistent ps trees
 		args="-cd $PWD $args"
 		i3-msg "exec x-terminal-emulator $args" &> /dev/null
@@ -22,15 +22,15 @@ function t {
 # note taking
 _NOTES_DIR=~/Dropbox/notes
 function n {
-	if [[ ! "$1" ]]; then
+	if [ ! "$1" ]; then
 		echo "Missing argument - usage: n <name>"
 		return
 	fi
 	local count=$(nls $1 | wc -l)
-	if [[ $count > 1 ]]; then
+	if [ $count -gt 1 ]; then
 		nls $1
 		return
-	elif [[ $count == 0 ]]; then
+	elif [ $count -eq 0 ]; then
 		$EDITOR "${_NOTES_DIR}/$1.md"
 	else
 		$EDITOR "${_NOTES_DIR}/$(nls $1)"
@@ -38,7 +38,7 @@ function n {
 }
 function nls {
 	pushd $_NOTES_DIR > /dev/null
-	if [[ ! "$@" ]]; then
+	if [ ! "$@" ]; then
 		ls *.md
 	else
 		ls -1 *.md | grep $@
@@ -46,7 +46,7 @@ function nls {
 	popd > /dev/null
 }
 function ns {
-	if [[ $(which ag) ]]; then
+	if command -v ag >/dev/null 2>&1; then
 		ag "$@" ${_NOTES_DIR}
 	else
 		grep -r "$@" ${_NOTES_DIR}
