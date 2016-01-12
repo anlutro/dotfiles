@@ -52,9 +52,12 @@ URxvt*.intensityStyles: true
 URxvt*.letterSpace: -1
 URxvt*.skipBuiltinGlyphs: false
 
-! scrollbar
+! scrolling
 URxvt*.scrollStyle: rxvt
 URxvt*.scrollBar: false
+URxvt*.scrollTtyOutput: false
+URxvt*.scrollTtyKeypress: true
+URxvt*.scrollWithBuffer: true
 
 ! cursor
 URxvt*.cursorBlink: true
@@ -70,6 +73,7 @@ URxvt*.iso14755_52: false
 
 !! urxvt perl extensions
 URxvt*.perl-ext: default,url-select,clipboard,keyboard-select,font-size
+
 URxvt*.keysym.M-u: perl:url-select:select_next
 URxvt*.url-select.launcher: /usr/bin/xdg-open
 URxvt*.url-select.underline: false
@@ -79,9 +83,6 @@ URxvt*.keysym.M-v: perl:clipboard:paste
 
 URxvt*.keysym.M-Escape: perl:keyboard-select:activate
 
-URxvt*.keysym.C-A-Up: perl:font-size:increase
-URxvt*.keysym.C-A-Down: perl:font-size:decrease
-
-
-!! local overrides file
-#include ".Xresources.local"
+URxvt*.keysym.M-equal: perl:font-size:increase
+URxvt*.keysym.M-minus: perl:font-size:decrease
+URxvt*.keysym.M-0: perl:font-size:reset

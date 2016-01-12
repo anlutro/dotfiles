@@ -142,12 +142,19 @@ install_nvim() {
 }
 
 install_Xorg() {
-	ln -sf $configs/x11/xsessionrc $HOME/.xsessionrc
-	ln -sf $configs/x11/xresources $HOME/.Xresources
-	if [ ! -f $configs/x11/xresources.local ]; then
-		cp $configs/x11/xresources.local.default $configs/x11/xresources.local
+	# attempt to fix previous symlink setup
+	if [ -L $HOME/.Xresources ]; then
+		rm -f $HOME/.Xresources
+		if [ -f $HOME/.Xresources.local ]; then
+			mv $HOME/.Xresources.local $HOME/.Xresources
+		fi
 	fi
-	ln -sf $configs/x11/xresources.local $HOME/.Xresources.local
+	if [ -L $HOME/.Xresources.local ]; then
+		rm -f $HOME/.Xresources.local
+	fi
+
+	ln -sf $configs/x11/xsessionrc $HOME/.xsessionrc
+	ln -sf $configs/x11/xdefaults $HOME/.Xdefaults
 
 	[ -d $HOME/.config/fontconfig ] || mkdir -p $HOME/.config/fontconfig
 	ln -sf $configs/fontconfig/fonts.conf $HOME/.config/fontconfig/fonts.conf
