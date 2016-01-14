@@ -8,7 +8,7 @@ if [ -f "$HOME/.aliases" ]; then
 	. "$HOME/.aliases"
 fi
 
-setopt histignorealldups sharehistory
+setopt hist_ignore_all_dups no_share_history
 
 # use modern completion system
 autoload -Uz compinit
