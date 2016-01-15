@@ -47,6 +47,7 @@
 	[
 		"*.a",
 		"*.class",
+		"*.coverage",
 		"*.db",
 		"*.dll",
 		"*.dylib",
@@ -68,7 +69,8 @@
 		"*.suo",
 		".DS_Store",
 		".tags",
-		".tags_sorted_by_file"
+		".tags_sorted_by_file",
+		"pip-selfcheck.json"
 	],
 	"folder_exclude_patterns":
 	[
