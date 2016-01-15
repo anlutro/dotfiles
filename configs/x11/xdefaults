@@ -85,4 +85,4 @@ URxvt*.keysym.M-Escape: perl:keyboard-select:activate
 
 URxvt*.keysym.M-equal: perl:font-size:increase
 URxvt*.keysym.M-minus: perl:font-size:decrease
-URxvt*.keysym.M-0: perl:font-size:reset
+URxvt*.keysym.C-A-0: perl:font-size:reset
