@@ -19,6 +19,12 @@ contexts:
     - match: '\b(stream|batch|influxql)\b'
       scope: constant.language.tick
 
+    - match: '\b(TRUE|FALSE)\b'
+      scope: constant.boolean.tick
+
+    - match: '\b(AND|OR)\b'
+      scope: keyword.operator.logical.tick
+
     - match: '\b(lambda)\b'
       scope: meta.function.inline.tick storage.function.inline.tick
 
