@@ -45,3 +45,7 @@ if command -v xfce4-power-manager >/dev/null 2>&1; then
 elif command -v xautolock >/dev/null 2>&1; then
 	xautolock -time 60 -detectsleep -locker '~/bin/lockscreen --suspend' &
 fi
+
+if command -v unclutter >/dev/null 2>&1; then
+	unclutter -idle 3 -root &
+fi

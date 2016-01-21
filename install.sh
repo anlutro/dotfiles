@@ -153,6 +153,7 @@ install_Xorg() {
 		fi
 	fi
 
+	ln -sf $configs/x11/xinitrc $HOME/.xinitrc
 	ln -sf $configs/x11/xsessionrc $HOME/.xsessionrc
 	ln -sf $configs/x11/xdefaults $HOME/.Xdefaults
 
