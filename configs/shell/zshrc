@@ -1,13 +1,8 @@
 #!/bin/zsh
 
-# environment variables
-if [ -f "$HOME/.shell_vars" ]; then
-	. "$HOME/.shell_vars"
-fi
-
-# aliases and functions
-if [ -f "$HOME/.shell_aliases" ]; then
-	. "$HOME/.shell_aliases"
+# environment variables, aliases and functions
+if [ -f "$HOME/.shrc" ]; then
+	. "$HOME/.shrc"
 fi
 
 # emacs mode
