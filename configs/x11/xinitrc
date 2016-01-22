@@ -55,6 +55,9 @@ fi
 # source .xsessionrc if it exists
 [ -e $HOME/.xsessionrc ] && . $HOME/.xsessionrc
 
+# look for a script that sets up xrandr
+[ -x $HOME/.xrandrinit ] && $HOME/.xrandrinit
+
 # start the window manager. this is a blocking command (I think?)
 exec $X_START_CMD
 
