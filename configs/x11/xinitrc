@@ -52,11 +52,11 @@ if command -v 'ssh-agent' >/dev/null 2>&1; then
 	eval $(ssh-agent -s)
 fi
 
-# source .xsessionrc if it exists
-[ -e $HOME/.xsessionrc ] && . $HOME/.xsessionrc
-
 # look for a script that sets up xrandr
 [ -x $HOME/.xrandrinit ] && $HOME/.xrandrinit
+
+# source .xsessionrc if it exists
+[ -e $HOME/.xsessionrc ] && . $HOME/.xsessionrc
 
 # start the window manager. this is a blocking command (I think?)
 exec $X_START_CMD
