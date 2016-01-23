@@ -59,7 +59,7 @@ fi
 [ -e $HOME/.xsessionrc ] && . $HOME/.xsessionrc
 
 # start the window manager. this is a blocking command (I think?)
-exec $X_START_CMD
+$X_START_CMD
 
 # when the window manager command quits, we can also kill the ssh-agent
 if command -v 'ssh-agent' >/dev/null 2>&1; then
