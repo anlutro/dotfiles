@@ -1,6 +1,18 @@
 #!/bin/sh
 
-cd ${1-neovim} || exit 1
+NVIM_PATH=${1:-neovim}
+
+if [ ! -d $NVIM_PATH ]; then
+	echo "[ERROR] Directory not found: $NVIM_PATH"
+	echo "git clone https://github.com/neovim/neovim $NVIM_PATH"
+	exit 1
+elif [ ! -d $NVIM_PATH/.git ]; then
+	echo "[ERROR] Not a git repository: $NVIM_PATH"
+	echo "rm -rf $NVIM_PATH && git clone https://github.com/neovim/neovim $NVIM_PATH"
+	exit 1
+fi
+
+cd $NVIM_PATH || exit 1
 git pull
 make
 sudo rm /usr/local/share/nvim/runtime/doc/*.awk
