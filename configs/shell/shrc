@@ -29,59 +29,6 @@ export LESS='M x4'
 export SYSTEMD_LESS='KMR +G'
 # export SYSTEMD_LESS='FKMRX +G'
 
-# by default, most WMs opening a new terminal will make it start in ~ instead of
-# the current terminal's PWD. this alias lets you open a new terminal in the PWD
-function t {
-	local args="";
-	if [ "$*" != "" ]; then
-		args="-e $@"
-	fi
-
-	if command -v i3-msg >/dev/null 2>&1; then
-		# opening through i3 exec prevents weird/inconsistent ps trees
-		args="-cd $PWD $args"
-		i3-msg "exec x-terminal-emulator $args" &> /dev/null
-	else
-		# fork in a subshell to make the commands indepentent, and to suppress
-		# all output
-		( x-terminal-emulator $args & )
-	fi
-}
-
-# note taking
-_NOTES_DIR=~/Dropbox/notes
-function n {
-	if [ ! "$1" ]; then
-		echo "Missing argument - usage: n <name>"
-		return
-	fi
-	local count=$(nls $1 | wc -l)
-	if [ $count -gt 1 ]; then
-		nls $1
-		return
-	elif [ $count -eq 0 ]; then
-		$EDITOR "${_NOTES_DIR}/$1.md"
-	else
-		$EDITOR "${_NOTES_DIR}/$(nls $1)"
-	fi
-}
-function nls {
-	pushd ${_NOTES_DIR} > /dev/null
-	if [ ! "$@" ]; then
-		ls *.md
-	else
-		ls -1 *.md | grep $@
-	fi
-	popd > /dev/null
-}
-function ns {
-	if command -v ag >/dev/null 2>&1; then
-		ag "$@" ${_NOTES_DIR}
-	else
-		grep -r "$@" ${_NOTES_DIR}
-	fi
-}
-
 # enable colors for grep
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
@@ -127,63 +74,6 @@ alias a2dm='sudo a2dismod'
 alias a2cfg='cd /etc/apache2 && ls'
 alias a2log='cd /var/log/apache2 && ls -l'
 
-# php
-function ccp {
-	composer create-project "$1" -s dev --prefer-dist "${*:2}";
-}
-
-# python
-function avenv {
-	if [ -f $PWD/.virtualenv/bin/activate ]; then
-		source $PWD/.virtualenv/bin/activate
-	elif [ -f $PWD/bin/activate ]; then
-		source $PWD/bin/activate
-	else
-		echo "Couldn't find a virtualenv in cwd!"
-	fi
-}
-function pyhelp {
-	python -c 'help('"$@"')'
-}
-function py3help {
-	python3 -c 'help('"$@"')'
-}
-function clear-pycache {
-	find . -type f -name '*.pyc' -print0 | xargs -0 rm
-	find . -type d -name '__pycache__' -print0 | xargs -0 rm -rf
-}
-
-# livestreamer
-function s {
-	livestreamer $1 ${2-high,720p,best}
-}
-
-# clear a file, then tail it
-function cltail {
-	cat /dev/null > "$1" && tail -f "$@"
-}
-
-# keyboard layout
-function kb {
-	setxkbmap -v -option compose:ralt -option caps:super $1 \
-		&& xset r rate 175 35
-}
-
-# improved ps | grep alias
-function psgrep {
-	ps auxf | grep "$@" | grep -v grep;
-}
-
-# set a terminal's title
-function termname {
-	echo -ne "\033]0;$1\007"
-}
-
-# fetch a github pull request
-function gh-fetch-pr {
-	git fetch upstream "pull/$1/head:pr-$1"
-}
-
 # misc
 alias apt-everything='sudo apt-get update && sudo apt-get dist-upgrade && \
 	sudo apt-get autoremove && sudo apt-get clean && sudo apt-get autoclean'
@@ -194,3 +84,105 @@ alias most-common='sort | uniq -c | sort -nr | head'
 alias pwgen-strong='pwgen -Bs'
 alias pwgen-weak='pwgen -ABn'
 alias tree='tree --dirsfirst'
+
+# by default, most WMs opening a new terminal will make it start in ~ instead of
+# the current terminal's PWD. this alias lets you open a new terminal in the PWD
+function t {
+	local args="";
+	if [ "$*" != "" ]; then
+		args="-e $@"
+	fi
+
+	args="-cd $PWD $args"
+
+	if command -v i3-msg >/dev/null 2>&1; then
+		# opening through i3 exec prevents weird/inconsistent ps trees
+		i3-msg "exec x-terminal-emulator $args" &> /dev/null
+	else
+		# fork in a subshell to make the commands indepentent, and to suppress
+		# all output
+		( x-terminal-emulator $args & )
+	fi
+}
+
+# set a terminal's title
+function termname {
+	echo -ne "\033]0;$1\007"
+}
+
+# note taking
+_NOTES_DIR=~/Dropbox/notes
+function n {
+	if [ ! "$1" ]; then
+		echo "Missing argument - usage: n <name>"
+		return
+	fi
+	local count=$(nls $1 | wc -l)
+	if [ $count -gt 1 ]; then
+		nls $1
+		return
+	elif [ $count -eq 0 ]; then
+		$EDITOR "${_NOTES_DIR}/$1.md"
+	else
+		$EDITOR "${_NOTES_DIR}/$(nls $1)"
+	fi
+}
+function nls {
+	pushd ${_NOTES_DIR} > /dev/null
+	if [ ! "$@" ]; then
+		ls *.md
+	else
+		ls -1 *.md | grep $@
+	fi
+	popd > /dev/null
+}
+function ns {
+	if command -v ag >/dev/null 2>&1; then
+		ag "$@" ${_NOTES_DIR}
+	else
+		grep -r "$@" ${_NOTES_DIR}
+	fi
+}
+
+# improved ps | grep alias
+function psgrep {
+	ps auxf | grep "$@" | grep -v grep;
+}
+
+# set the keyboard map
+function kb {
+	setxkbmap -v -option compose:ralt -option caps:super $1 \
+		&& xset r rate 175 35
+}
+
+# livestreamer
+function s {
+	livestreamer $1 ${2-high,720p,best}
+}
+
+# composer create-project
+function ccp {
+	composer create-project "$1" -s dev --prefer-dist "${*:2}";
+}
+
+# find and activate a virtualenv
+function avenv {
+	if [ -f $PWD/.virtualenv/bin/activate ]; then
+		source $PWD/.virtualenv/bin/activate
+	elif [ -f $PWD/bin/activate ]; then
+		source $PWD/bin/activate
+	else
+		echo "Couldn't find a virtualenv in cwd!"
+	fi
+}
+
+# find and remove pycache files
+function clear-pycache {
+	find . -type f -name '*.pyc' -print0 | xargs -0 rm
+	find . -type d -name '__pycache__' -print0 | xargs -0 rm -rf
+}
+
+# fetch a github pull request
+function gh-fetch-pr {
+	git fetch upstream "pull/$1/head:pr-$1"
+}
