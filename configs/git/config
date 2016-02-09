@@ -10,6 +10,9 @@ email = anlutro@gmail.com
 [color]
 ui = true
 
+[diff]
+algorithm = patience
+
 [credential]
 helper = cache --timeout=600
 
