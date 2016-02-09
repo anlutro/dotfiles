@@ -36,6 +36,11 @@ install_dunst() {
 install_git() {
 	ln -sf $configs/git/config $HOME/.gitconfig
 	ln -sf $configs/git/ignore_global $HOME/.gitignore_global
+	if [ ! -f $HOME/.gitconfig.local ]; then
+		echo '[user]' >> $HOME/.gitconfig.local
+		echo 'name = Andreas Lutro' >> $HOME/.gitconfig.local
+		echo 'email = andreas@lutro.me' >> $HOME/.gitconfig.local
+	fi
 }
 
 install_i3() {

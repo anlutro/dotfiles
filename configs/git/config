@@ -1,21 +1,3 @@
-[core]
-autocrlf = input
-excludesfile = ~/.gitignore_global
-pager = less -FRX -x5,9
-
-[user]
-name = Andreas Lutro
-email = anlutro@gmail.com
-
-[color]
-ui = true
-
-[diff]
-algorithm = patience
-
-[credential]
-helper = cache --timeout=600
-
 [alias]
 c = commit
 cam = commit -am
@@ -40,6 +22,19 @@ st = status
 tags = !git tag -n | sort -V | less -FX +G
 up = remote update -p
 
+[color]
+ui = true
+
+[core]
+autocrlf = input
+excludesfile = ~/.gitignore_global
+pager = less -FRX -x5,9
+
+[credential]
+helper = cache --timeout=600
+
+[diff]
+algorithm = patience
 [push]
 default = current
 
@@ -48,3 +43,7 @@ ff = only
 
 [url "git@github.com:"]
 pushInsteadOf = https://github.com/
+
+# use this for name/email, auth tokens etc
+[include]
+path = ~/.gitconfig.local
