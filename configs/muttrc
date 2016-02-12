@@ -6,6 +6,7 @@ set folder = '~/.mail'
 set record = '~/.sentmail'
 
 set wrap = 72
+set smart_wrap = yes
 
 color normal default default
 color message default default
