@@ -144,6 +144,26 @@ function ns {
 	fi
 }
 
+# journal/diary
+_JOURNAL_FILE=~/Dropbox/diary
+function j {
+	local tmpfile=$(mktemp)
+
+	vim -c 'setlocal tw=79' $tmpfile
+
+	if [ -s $tmpfile ]; then
+		echo "===== $(date) =====" >> ${_JOURNAL_FILE}
+		cat $tmpfile >> ${_JOURNAL_FILE}
+		echo "\n" >> ${_JOURNAL_FILE}
+		echo "Appended entry to ${_JOURNAL_FILE}"
+	else
+		echo "Entry file empty, not doing anything"
+	fi
+
+	rm $tmpfile
+}
+
+
 # improved ps | grep alias
 function psgrep {
 	ps auxf | grep "$@" | grep -v grep;
