@@ -8,6 +8,9 @@ fi
 # append to the history file, don't overwrite it
 shopt -s histappend
 
+# save multi-line commands as one command
+shopt -s cmdhist
+
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
@@ -26,6 +29,15 @@ if ! shopt -oq posix; then
 		. /etc/bash_completion
 	fi
 fi
+
+# perform file completion in a case insensitive fashion
+bind "set completion-ignore-case on"
+
+# treat hyphens and underscores as equivalent
+bind "set completion-map-case on"
+
+# correct spelling errors during tab-completion
+shopt -s dirspell
 
 
 #	 /$$$$$$$   /$$$$$$    /$$  
