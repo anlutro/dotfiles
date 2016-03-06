@@ -28,7 +28,7 @@ echo "$text"
 
 # color - green/yellow/red based on percentage
 if [ "$ip_addr" = 'down' ]; then
-	echo "#CC0000"
+	echo "#ff0000"
 elif [ -n "$quality" ]; then
 	if [ $quality -gt 50 ]; then
 		hexint=$(echo "255 - ($quality - 50) / 50 * 255" | bc -l)
@@ -40,5 +40,5 @@ elif [ -n "$quality" ]; then
 		echo "#ff${hexchar}00"
 	fi
 else
-	echo "#00CC00"
+	echo "#00ff00"
 fi
