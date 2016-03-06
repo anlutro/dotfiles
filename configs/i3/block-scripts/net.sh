@@ -32,11 +32,11 @@ if [ "$ip_addr" = 'down' ]; then
 elif [ -n "$quality" ]; then
 	if [ $quality -gt 50 ]; then
 		hexint=$(echo "255 - ($quality - 50) / 50 * 255" | bc -l)
-		hexchar=$(printf '%x' $hexint 2> /dev/null)
+		hexchar=$(printf '%02x' $hexint 2> /dev/null)
 		echo "#${hexchar}ff00"
 	else
 		hexint=$(echo "$quality / 50 * 255" | bc -l)
-		hexchar=$(printf '%x' $hexint 2> /dev/null)
+		hexchar=$(printf '%02x' $hexint 2> /dev/null)
 		echo "#ff${hexchar}00"
 	fi
 else
