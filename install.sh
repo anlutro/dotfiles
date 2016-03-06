@@ -49,23 +49,25 @@ install_i3() {
 }
 
 install_i3blocks() {
-	[ -d $vendor/i3blocks ] || git clone https://github.com/vivien/i3blocks $vendor/i3blocks
-	[ -d $HOME/.config/i3blocks ] || mkdir $HOME/.config/i3blocks
-	ln -sf $configs/i3/i3blocks.conf $HOME/.config/i3blocks/config
+	local conf_path=$HOME/.config/i3blocks
 
-	[ -L $HOME/.config/i3blocks/scripts ] && rm $HOME/.config/i3blocks/scripts
-	[ ! -d $HOME/.config/i3blocks/scripts ] && mkdir $HOME/.config/i3blocks/scripts
+	[ -d $vendor/i3blocks ] || git clone https://github.com/vivien/i3blocks $vendor/i3blocks
+	[ -d $conf_path ] || mkdir $conf_path
+	ln -sf $configs/i3/i3blocks.conf $conf_path/config
+
+	[ -L $conf_path/scripts ] && rm $conf_path/scripts
+	[ ! -d $conf_path/scripts ] && mkdir $conf_path/scripts
 
 	for f in $vendor/i3blocks/scripts/*; do
 		filepath=$(readlink -f $f)
 		filename=$(basename $f)
-		ln -sf $filepath $HOME/.config/i3blocks/scripts/$filename
+		ln -sf $filepath $conf_path/scripts/$filename
 	done
 
 	for f in $configs/i3/block-scripts/*; do
 		filepath=$(readlink -f $f)
 		filename=$(basename $f)
-		ln -sf $filepath $HOME/.config/i3blocks/scripts/$filename
+		ln -sf $filepath $conf_path/scripts/$filename
 	done
 }
 
