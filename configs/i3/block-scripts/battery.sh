@@ -1,10 +1,10 @@
 #!/bin/sh
 
 search='Battery 0: '
-text=$(acpi -b | grep "$search" | cut -d ' ' -f 3-5 | \
-	sed -e "s/$search//" -e "s/, discharging//" -e "s/, charging//")
-status=$(echo $text | cut -d ',' -f 1)
-pct=$(echo $text | cut -d ',' -f 2 | sed s/%//)
+text=$(acpi -b | grep "$search" | cut -d ' ' -f 3-5 | sed -e "s/$search//" \
+	-e 's/, discharging//' -e 's/, charging//' -e 's/,//g')
+status=$(echo $text | cut -d ' ' -f 1)
+pct=$(echo $text | cut -d ' ' -f 2 | sed s/%//)
 
 if [ "$status" = 'Unknown' ]; then
 	text="Fully charged,${pct}%"
