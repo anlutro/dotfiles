@@ -12,7 +12,7 @@ else
 	addr_name='inet '
 fi
 
-ip_addr=$(ip addr show $iface_name | grep 'inet ' | cut -d ' ' -f 8)
+ip_addr=$(ip addr show $iface_name | grep "$addr_name" | cut -d ' ' -f 8)
 
 if echo $iface_name | grep wlan > /dev/null; then
 	is_wifi=1
@@ -27,7 +27,7 @@ echo "$text"
 echo "$text"
 
 # color
-if [ $ip_addr = 'down' ]; then
+if [ "$ip_addr" = 'down' ]; then
 	echo "#CC0000"
 elif [ $is_wifi = 1 ]; then
 	if [ $quality -ge 80 ]; then
