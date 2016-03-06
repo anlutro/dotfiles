@@ -26,18 +26,18 @@ fi
 echo "$text"
 echo "$text"
 
-# color
+# color - green/yellow/red based on percentage
 if [ "$ip_addr" = 'down' ]; then
 	echo "#CC0000"
-elif [ $is_wifi = 1 ]; then
-	if [ $quality -ge 80 ]; then
-	    echo "#00FF00"
-	elif [ $quality -lt 80 ]; then
-	    echo "#FFF600"
-	elif [ $quality -lt 60 ]; then
-	    echo "#FFAE00"
-	elif [ $quality -lt 40 ]; then
-	    echo "#FF0000"
+elif [ -n "$quality" ]; then
+	if [ $quality -gt 50 ]; then
+		hexint=$(echo "255 - ($quality - 50) / 50 * 255" | bc -l)
+		hexchar=$(printf '%x' $hexint 2> /dev/null)
+		echo "#${hexchar}ff00"
+	else
+		hexint=$(echo "$quality / 50 * 255" | bc -l)
+		hexchar=$(printf '%x' $hexint 2> /dev/null)
+		echo "#ff${hexchar}00"
 	fi
 else
 	echo "#00CC00"
