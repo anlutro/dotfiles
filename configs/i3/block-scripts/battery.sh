@@ -1,7 +1,9 @@
 #!/bin/sh
 
 search='Battery 0: '
-text=$(acpi -b | grep "$search" | sed -e "s/$search//" -e "s/, discharging at zero rate - will never fully discharge.//")
+text=$(acpi -b | grep "$search" | sed -e "s/$search//" \
+	-e "s/, discharging at zero rate - will never fully discharge.//" \
+	-e "s/, charging at zero rate - will never fully charge.//")
 status=$(echo $text | cut -d ',' -f 1)
 
 # long/short text
