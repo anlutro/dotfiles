@@ -5,15 +5,19 @@ text=$(acpi -b | grep "$search" | sed -e "s/$search//" \
 	-e "s/, discharging at zero rate - will never fully discharge.//" \
 	-e "s/, charging at zero rate - will never fully charge.//")
 status=$(echo $text | cut -d ',' -f 1)
+pct=$(echo $text | cut -d ',' -f 2 | sed s/%//)
+
+if [ "$status" = 'Unknown' ]; then
+	text="Fully charged,${pct}%"
+fi
 
 # long/short text
 echo $text
 echo $text
 
 # color
-if [ "$status" = 'Discharging' ]; then
+if [ "$status" != 'Charging' ]; then
 	# percentage-based coloring
-	pct=$(echo $text | cut -d ',' -f 2 | sed s/%//)
 	if [ $pct -gt 66 ]; then
 		# green -> white -- 00ff00 -> ffffff
 		hexint=$(echo "255 - ($pct - 67) / 33 * 255" | bc -l)
