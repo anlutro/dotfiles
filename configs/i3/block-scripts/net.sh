@@ -4,6 +4,12 @@ if [ -n "$1" ]; then
 	iface_name=$1
 else
 	iface_name=$(ip route | grep default | cut -d ' ' -f 5)
+	if [ -z "$iface_name" ]; then
+		echo "All networks DOWN"
+		echo "All networks DOWN"
+		echo "#ff3333"
+		exit
+	fi
 fi
 
 if [ -n "$2" ]; then
@@ -28,7 +34,7 @@ echo "$text"
 
 # color - green/yellow/red based on percentage
 if [ "$ip_addr" = 'down' ]; then
-	echo "#ff0000"
+	echo "#ff3333"
 elif [ -n "$quality" ]; then
 	if [ $quality -gt 50 ]; then
 		hexint=$(echo "255 - ($quality - 50) / 50 * 255" | bc -l)
