@@ -15,7 +15,14 @@ echo $text
 echo $text
 
 # color
-if [ "$status" != 'Charging' ]; then
+if [ "$status" = 'Charging' ]; then
+	if [ $pct -gt 90 ]; then
+		# green -> white -- 00ff00 -> ffffff
+		hexint=$(echo "255 - ($pct - 90) / 10 * 255" | bc -l)
+		hexchar=$(printf '%02x' $hexint 2> /dev/null)
+		echo "#${hexchar}ff${hexchar}"
+	fi
+else
 	# percentage-based coloring
 	if [ $pct -gt 66 ]; then
 		# green -> white -- 00ff00 -> ffffff
