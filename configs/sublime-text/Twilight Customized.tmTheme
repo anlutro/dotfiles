@@ -231,7 +231,7 @@
 			<key>name</key>
 			<string>♦ Function calls</string>
 			<key>scope</key>
-			<string>meta.function-call, meta.function-call entity.name.function, meta.function-call variable.function</string>
+			<string>meta.function-call entity.name.function, meta.function-call variable.function</string>
 			<key>settings</key>
 			<dict>
 				<key>fontStyle</key>
