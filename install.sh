@@ -100,6 +100,10 @@ install_subl() {
 	ln -sf $scripts/sublp $HOME/bin/sublp
 }
 
+install_task() {
+	ln -sf $configs/taskrc $HOME/.taskrc
+}
+
 install_tmux() {
 	ln -sf $configs/tmux.conf $HOME/.tmux.conf
 }
@@ -235,6 +239,7 @@ install mocp
 install mutt
 install nano
 install subl
+install task
 install tmux
 install urxvt
 install vim
