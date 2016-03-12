@@ -7,7 +7,7 @@ status=$(echo $text | cut -d ' ' -f 1)
 pct=$(echo $text | cut -d ' ' -f 2 | sed s/%//)
 
 if [ "$status" = 'Unknown' ]; then
-	text="Fully charged,${pct}%"
+	text="Fully charged ${pct}%"
 fi
 
 # long/short text
