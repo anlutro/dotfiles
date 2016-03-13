@@ -80,6 +80,7 @@
 		".hg",
 		".idea",
 		".svn",
+		".task",
 		".vagrant",
 		".virtualenv",
 		"__pycache__",
