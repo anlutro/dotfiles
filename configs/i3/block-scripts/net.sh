@@ -18,7 +18,7 @@ else
 	addr_name='inet '
 fi
 
-ip_addr=$(ip addr show $iface_name | grep "$addr_name" | cut -d ' ' -f 8)
+ip_addr=$(ip addr show $iface_name | grep "$addr_name" | cut -d ' ' -f 6 | cut -d '/' -f 1)
 
 if echo $iface_name | grep wlan > /dev/null; then
 	is_wifi=1
