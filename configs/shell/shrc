@@ -204,5 +204,10 @@ function clear-pycache {
 
 # fetch a github pull request
 function gh-fetch-pr {
-	git fetch upstream "pull/$1/head:pr-$1"
+	local remote=$(git remote -v | grep '(fetch)' | grep 'github.com' | cut -f 1)
+	if [ -n "$remote" ]; then
+		git fetch $remote "pull/$1/head:pr-$1"
+	else
+		echo "No github remote found!"
+	fi
 }
