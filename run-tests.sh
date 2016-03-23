@@ -30,3 +30,7 @@ done
 echo "***** Done running tests!"
 echo "Tests passed: $tests_passed"
 echo "Tests failed: $tests_failed"
+
+if [ $tests_failed -gt 0 ]; then
+	exit 1
+done
