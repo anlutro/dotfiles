@@ -33,4 +33,4 @@ echo "Tests failed: $tests_failed"
 
 if [ $tests_failed -gt 0 ]; then
 	exit 1
-done
+fi
