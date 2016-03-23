@@ -1,0 +1,4 @@
+language: shell
+sudo: false
+
+script: ./run-tests.sh

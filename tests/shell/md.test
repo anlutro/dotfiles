@@ -1,0 +1,12 @@
+#!/bin/bash
+set -euo pipefail
+source $TESTS_DIR/common.sh
+
+source $CONFIG_DIR/shell/shrc
+tmpdir=$(mktemp -d)
+cd $tmpdir
+
+md -v foo
+assert_equals $tmpdir/foo $PWD
+
+rm -rf $tmpdir
