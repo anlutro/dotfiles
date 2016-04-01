@@ -1,0 +1,136 @@
+%YAML 1.2
+---
+name: YAML + Mako
+file_extensions:
+  - yml.mako
+  - yaml.mako
+
+scope: source.yaml_mako
+
+contexts:
+
+  mako_inline:
+  - match: '\$\{'
+    scope: keyword.section.embedded.begin.python
+    push:
+      - meta_scope: meta.embedded.line.python
+      - meta_content_scope: source.python
+      - match: '}'
+        scope: keyword.section.embedded.end.python
+        pop: true
+      - include: 'scope:source.python'
+
+  mako_block:
+  - match: '<%'
+    scope: keyword.section.embedded.begin.python
+    push:
+      - meta_scope: meta.embedded.block.python
+      - meta_content_scope: source.python
+      - match: '%>'
+        scope: keyword.section.embedded.end.python
+        pop: true
+      - include: 'scope:source.python'
+
+  mako_line:
+  - match: '^%'
+    push:
+      - meta_scope: meta.embedded.block.python
+      - meta_content_scope: source.python
+      - match: '(endfor|endif)'
+        scope: keyword.control.flow.python
+      - include: 'scope:source.python'
+      - match: '\n'
+        pop: true
+
+  yaml_values:
+    - include: yaml_line_list_entry
+    - include: yaml_explicit_list
+    - include: yaml_explicit_map
+    - include: yaml_map_key
+    - include: yaml_inline_values
+
+  yaml_inline_values:
+    - include: yaml_comment
+    - include: mako_inline
+    - include: yaml_quoted_strings
+    - include: yaml_unquoted_string
+
+  yaml_line_list_entry:
+  - match: '^\s*((-)\s+)?'
+    captures:
+      1: punctuation.definition.list.entry.yaml
+
+  yaml_explicit_list:
+  - match: '(\[)\s*'
+    captures:
+      0: punctuation.definition.list.begin.yaml
+    push:
+      - match: '\s*\]'
+        scope: push.definition.list.end.yaml
+        pop: true
+      - meta_scope: meta.structure.list.yaml
+      - include: yaml_inline_values
+        with_prototype:
+        - match: '\s*\]'
+          scope: push.definition.list.end.yaml
+          pop: true
+
+  yaml_explicit_map:
+  - match: '\{\s*'
+    scope: punctuation.definition.map.begin.yaml
+    push:
+      - match: '\s*\}'
+        scope: push.definition.map.end.yaml
+        pop: true
+      - meta_scope: meta.structure.map.yaml
+      - include: yaml_inline_values
+        with_prototype:
+        - match: '\s*\}'
+          scope: push.definition.map.end.yaml
+          pop: true
+
+  yaml_quoted_strings:
+  - match: "'"
+    push:
+      - meta_scope: string.quoted.yaml
+      - include: mako_inline
+      - match: "'"
+        pop: true
+  - match: '"'
+    push:
+      - meta_scope: string.quoted.yaml
+      - include: mako_inline
+      - match: '"'
+        pop: true
+
+  yaml_map_key:
+  - match: '(?=([^:]+:)\s+)'
+    push:
+      - meta_scope: source.yaml entity.name.tag.yaml
+      - include: mako_inline
+      - match: ':'
+        scope: punctuation.separator.key-value.yaml
+        pop: true
+
+  yaml_unquoted_string:
+  - match: "[a-zA-Z0-9\\\\/_.][a-zA-Z0-9\\\\/_.<>()&-'\"| ]*"
+    scope: string.unquoted.yaml
+  # - match: "[a-zA-Z0-9\\\\/_.]"
+  #   scope: string.unquoted.yaml
+  #   push:
+  #     - match: "\n"
+  #       pop: true
+  #     - match: "[a-zA-Z0-9\\\\/_.<>()&-'\"| ]*"
+  #       scope: string.unquoted.yaml
+
+  yaml_comment:
+  - match: '#.*'
+    scope: comment.line
+
+  main:
+  - include: mako_inline
+  - include: mako_block
+  - include: mako_line
+  - include: yaml_values
+
+foo: [ foo: bar, bar: baz ]
