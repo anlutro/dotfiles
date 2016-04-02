@@ -41,6 +41,8 @@ install_git() {
 		echo 'name = Andreas Lutro' >> $HOME/.gitconfig.local
 		echo 'email = andreas@lutro.me' >> $HOME/.gitconfig.local
 	fi
+
+	ln -sf $scripts/git-abort $HOME/bin/git-abort
 }
 
 install_i3() {
