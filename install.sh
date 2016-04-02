@@ -11,9 +11,12 @@ scripts=$root/scripts
 vendor=$root/vendor
 
 install() {
-	if command -v $1 >/dev/null 2>&1; then
-		echo -n "$1... "
-		"install_$(echo $1 | tr -s '-' '_')"
+	name="$1"
+	func="install_$(echo $1 | tr -s '-' '_')"
+	cmd=${2:-$1}
+	if command -v $cmd >/dev/null 2>&1; then
+		echo -n "Setting up $name... "
+		$func
 		echo "done"
 	fi
 }
@@ -43,6 +46,24 @@ install_git() {
 	fi
 
 	ln -sf $scripts/git-abort $HOME/bin/git-abort
+}
+
+install_gtk() {
+	ln -sf $configs/gtkrc-2.0 $HOME/.gtkrc-2.0
+
+	[ -d $HOME/.themes ] || mkdir $HOME/.themes
+
+	if [ ! -d $vendor/paper-gtk-theme ]; then
+		git clone https://github.com/snwh/paper-gtk-theme $vendor/paper-gtk-theme
+	fi
+	ln -sfT $vendor/paper-gtk-theme/Paper $HOME/.themes/Paper
+
+	if [ ! -d $vendor/zuki-themes ]; then
+		git clone https://github.com/lassekongo83/zuki-themes $vendor/zuki-themes
+	fi
+	ln -sfT $vendor/zuki-themes/Zukiwi $HOME/.themes/Zukiwi
+	ln -sfT $vendor/zuki-themes/Zukitwo $HOME/.themes/Zukitwo
+	ln -sfT $vendor/zuki-themes/Zukitre $HOME/.themes/Zukitre
 }
 
 install_i3() {
@@ -84,7 +105,7 @@ install_irssi() {
 	ln -sfT $configs/irssi/scripts $HOME/.irssi/scripts
 }
 
-install_mocp() {
+install_moc() {
 	[ -d $HOME/.moc ] || mkdir -p $HOME/.moc
 	ln -sfT $configs/moc.conf $HOME/.moc/config
 }
@@ -102,7 +123,7 @@ install_subl() {
 	ln -sf $scripts/sublp $HOME/bin/sublp
 }
 
-install_task() {
+install_taskwarrior() {
 	ln -sf $configs/taskrc $HOME/.taskrc
 }
 
@@ -168,7 +189,7 @@ install_nvim() {
 	done
 }
 
-install_Xorg() {
+install_xorg() {
 	# attempt to fix previous symlink setup
 	if [ -L $HOME/.Xresources.local ]; then
 		rm -f $HOME/.Xresources.local
@@ -192,25 +213,6 @@ install_Xorg() {
 	ln -sf $configs/fontconfig/local.conf $HOME/.config/fontconfig/local.conf
 	rm -f $HOME/.fonts.conf
 
-	if command -v gtk-launch >/dev/null 2>&1; then
-		echo -n "GTK themes... "
-		ln -sf $configs/gtkrc-2.0 $HOME/.gtkrc-2.0
-
-		[ -d $HOME/.themes ] || mkdir $HOME/.themes
-
-		if [ ! -d $vendor/paper-gtk-theme ]; then
-			git clone https://github.com/snwh/paper-gtk-theme $vendor/paper-gtk-theme
-		fi
-		ln -sfT $vendor/paper-gtk-theme/Paper $HOME/.themes/Paper
-
-		if [ ! -d $vendor/zuki-themes ]; then
-			git clone https://github.com/lassekongo83/zuki-themes $vendor/zuki-themes
-		fi
-		ln -sfT $vendor/zuki-themes/Zukiwi $HOME/.themes/Zukiwi
-		ln -sfT $vendor/zuki-themes/Zukitwo $HOME/.themes/Zukitwo
-		ln -sfT $vendor/zuki-themes/Zukitre $HOME/.themes/Zukitre
-	fi
-
 	ln -sf $scripts/lockscreen.py $HOME/bin/lockscreen
 }
 
@@ -229,28 +231,7 @@ ln -sf $configs/shell/shrc $HOME/.shrc
 echo "done"
 
 
-install bash
-install compton
-install dunst
-install git
-install i3
-install i3blocks
-install i3status
-install irssi
-install mocp
-install mutt
-install nano
-install subl
-install task
-install tmux
-install urxvt
-install vim
-install nvim
-install Xorg
-install zsh
-
-
-echo -n "~/bin files... "
+echo -n "Linking ~/bin files... "
 [ -d $HOME/bin ] || mkdir $HOME/bin
 if [ -d /etc/apache2 ]; then
 	ln -sf $scripts/a2es $HOME/bin/a2es
@@ -263,7 +244,29 @@ ln -sf $scripts/i3-switch.sh $HOME/bin/i3-switch
 echo "done"
 
 
+install bash
+install compton
+install dunst
+install git
+install gtk gtk-launch
+install i3
+install i3blocks
+install i3status
+install irssi
+install moc mocp
+install mutt
+install nano
+install subl
+install taskwarrior task
+install tmux
+install urxvt
+install vim
+install nvim
+install xorg Xorg
+install zsh
+
+
 # look for broken symlinks
-echo "looking for broken symlinks..."
+echo "Looking for broken symlinks..."
 find $configs -xtype l
 find $scripts -xtype l
