@@ -55,7 +55,7 @@ alias chmod='chmod --preserve-root'
 alias chgrp='chgrp --preserve-root'
 
 # make a directory and cd into it
-function md {
+md() {
 	mkdir -p "$@" && cd $_;
 }
 
@@ -87,7 +87,7 @@ alias tree='tree --dirsfirst'
 
 # by default, most WMs opening a new terminal will make it start in ~ instead of
 # the current terminal's PWD. this alias lets you open a new terminal in the PWD
-function t {
+t() {
 	local args="";
 	if [ "$*" != "" ]; then
 		args="-e $@"
@@ -106,13 +106,13 @@ function t {
 }
 
 # set a terminal's title
-function termname {
+termname() {
 	echo -ne "\033]0;$1\007"
 }
 
 # note taking
 _NOTES_DIR=~/Dropbox/notes
-function n {
+n() {
 	if [ ! "$1" ]; then
 		echo "Missing argument - usage: n <name>"
 		return
@@ -127,16 +127,16 @@ function n {
 		$EDITOR "${_NOTES_DIR}/$(nls $1)"
 	fi
 }
-function nls {
+nls() {
 	pushd ${_NOTES_DIR} > /dev/null
-	if [ ! "$@" ]; then
+	if [ $# = 0 ]; then
 		ls *.md
 	else
 		ls -1 *.md | grep $@
 	fi
 	popd > /dev/null
 }
-function ns {
+ns() {
 	if command -v ag >/dev/null 2>&1; then
 		ag "$@" ${_NOTES_DIR}
 	else
@@ -146,7 +146,7 @@ function ns {
 
 # journal/diary
 _JOURNAL_FILE=~/Dropbox/diary
-function j {
+j() {
 	local tmpfile=/tmp/journal
 
 	vim -c 'setlocal tw=79' $tmpfile
@@ -165,45 +165,45 @@ function j {
 
 
 # improved ps | grep alias
-function psgrep {
+psgrep() {
 	ps auxf | grep "$@" | grep -v grep;
 }
 
 # set the keyboard map
-function kb {
+kb() {
 	setxkbmap -v -option compose:ralt -option caps:super $1 \
 		&& xset r rate 175 35
 }
 
 # livestreamer
-function s {
-	livestreamer $1 ${2-high,720p,best}
+s() {
+	livestreamer $1 ${2:-high,720p,best}
 }
 
 # composer create-project
-function ccp {
+ccp() {
 	composer create-project "$1" -s dev --prefer-dist "${*:2}";
 }
 
 # find and activate a virtualenv
-function avenv {
+avenv() {
 	if [ -f $PWD/.virtualenv/bin/activate ]; then
-		source $PWD/.virtualenv/bin/activate
+		. $PWD/.virtualenv/bin/activate
 	elif [ -f $PWD/bin/activate ]; then
-		source $PWD/bin/activate
+		. $PWD/bin/activate
 	else
 		echo "Couldn't find a virtualenv in cwd!"
 	fi
 }
 
 # find and remove pycache files
-function clear-pycache {
+clear_pycache() {
 	find . -type f -name '*.pyc' -print0 | xargs -0 rm
 	find . -type d -name '__pycache__' -print0 | xargs -0 rm -rf
 }
 
 # fetch a github pull request
-function gh-fetch-pr {
+gh_fetch_pr() {
 	local remote=$(git remote -v | grep '(fetch)' | grep 'github.com' | cut -f 1)
 	if [ -n "$remote" ]; then
 		git fetch $remote "pull/$1/head:pr-$1"
