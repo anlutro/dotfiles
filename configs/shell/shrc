@@ -147,11 +147,11 @@ function ns {
 # journal/diary
 _JOURNAL_FILE=~/Dropbox/diary
 function j {
-	local tmpfile=$(mktemp)
+	local tmpfile=/tmp/journal
 
 	vim -c 'setlocal tw=79' $tmpfile
 
-	if [ -s $tmpfile ]; then
+	if [ -e $tmpfile ] && [ -s $tmpfile ]; then
 		echo "===== $(date) =====" >> ${_JOURNAL_FILE}
 		cat $tmpfile >> ${_JOURNAL_FILE}
 		echo "\n" >> ${_JOURNAL_FILE}
@@ -160,7 +160,7 @@ function j {
 		echo "Entry file empty, not doing anything"
 	fi
 
-	rm $tmpfile
+	rm -f $tmpfile
 }
 
 
