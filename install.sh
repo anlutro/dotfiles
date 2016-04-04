@@ -42,7 +42,7 @@ install_git() {
 	if [ ! -f $HOME/.gitconfig.local ]; then
 		echo '[user]' >> $HOME/.gitconfig.local
 		echo 'name = Andreas Lutro' >> $HOME/.gitconfig.local
-		echo 'email = andreas@lutro.me' >> $HOME/.gitconfig.local
+		echo 'email = anlutro@gmail.com' >> $HOME/.gitconfig.local
 	fi
 
 	ln -sf $scripts/git-abort $HOME/bin/git-abort
