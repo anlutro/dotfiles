@@ -64,7 +64,7 @@ install_gtk() {
 
 	cd $vendor/zuki-themes
 	git_branch=$(git branch | grep '^*' | cut -d ' ' -f 2)
-	if [ "$git_branch" != "v.3.14-1" ];
+	if [ "$git_branch" != "v.3.14-1" ]; then
 		git checkout v.3.14-1
 	fi
 
