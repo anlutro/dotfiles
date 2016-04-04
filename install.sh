@@ -61,6 +61,8 @@ install_gtk() {
 	if [ ! -d $vendor/zuki-themes ]; then
 		git clone https://github.com/lassekongo83/zuki-themes $vendor/zuki-themes
 	fi
+	cd $vendor/zuki-themes && git checkout v3.14-1
+
 	ln -sfT $vendor/zuki-themes/Zukiwi $HOME/.themes/Zukiwi
 	ln -sfT $vendor/zuki-themes/Zukitwo $HOME/.themes/Zukitwo
 	ln -sfT $vendor/zuki-themes/Zukitre $HOME/.themes/Zukitre
