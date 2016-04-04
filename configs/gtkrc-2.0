@@ -1,6 +1,6 @@
-include "/home/andreas/.themes/Zukitwo/gtk-2.0/gtkrc"
+include "/home/andreas/.themes/Paper/gtk-2.0/gtkrc"
 
-gtk-theme-name = "Zukitwo"
+gtk-theme-name = "Paper"
 gtk-cursor-theme-name = "DMZ-White"
 gtk-icon-theme-name = "gnome"
 gtk-font-name = "Droid Sans 9"
