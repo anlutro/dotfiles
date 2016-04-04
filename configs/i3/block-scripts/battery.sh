@@ -40,12 +40,6 @@ else
 		hexchar=$(printf '%02x' $hexint 2> /dev/null)
 		echo "#ff${hexchar}00"
 	fi
-	if [ $pct -lt 5 ]; then
-		notify-send --urgency=critical 'Battery warning' 'Battery levels are below 5%!'
-		exit 33
-	elif [ $pct -lt 10 ]; then
-		notify-send --urgency=normal 'Battery warning' 'Battery levels are below 10%!'
-	fi
 
 	# # time-based coloring
 	# secs=$(echo $text | cut -d ' ' -f 3 | awk -F: '{ print ($1 * 3600) + ($2 * 60) + $3 }')
