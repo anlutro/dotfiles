@@ -62,12 +62,6 @@ install_gtk() {
 		git clone https://github.com/lassekongo83/zuki-themes $vendor/zuki-themes
 	fi
 
-	cd $vendor/zuki-themes
-	git_branch=$(git branch | grep '^*' | cut -d ' ' -f 2)
-	if [ "$git_branch" != "v.3.14-1" ]; then
-		git checkout v.3.14-1
-	fi
-
 	ln -sfT $vendor/zuki-themes/Zukiwi $HOME/.themes/Zukiwi
 	ln -sfT $vendor/zuki-themes/Zukitwo $HOME/.themes/Zukitwo
 	ln -sfT $vendor/zuki-themes/Zukitre $HOME/.themes/Zukitre
