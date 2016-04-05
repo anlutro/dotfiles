@@ -80,6 +80,8 @@ URxvt*.url-select.underline: false
 
 URxvt*.keysym.M-c: perl:clipboard:copy
 URxvt*.keysym.M-v: perl:clipboard:paste
+URxvt.clipboard.copycmd:  xclip -i -selection clipboard
+URxvt.clipboard.pastecmd: xclip -o -selection clipboard
 
 URxvt*.keysym.M-Escape: perl:keyboard-select:activate
 
