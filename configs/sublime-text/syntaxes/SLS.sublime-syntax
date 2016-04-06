@@ -1,12 +1,12 @@
 %YAML 1.2
 ---
-name: YAML + Jinja2
+name: SLS (YAML + Jinja2)
 file_extensions:
   - sls
   - yaml.jinja
   - yml.jinja
 
-scope: source.yaml_jinja
+scope: source.sls
 
 contexts:
   main:
