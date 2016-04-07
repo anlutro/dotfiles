@@ -2,7 +2,7 @@
 
 cmd='i3lock -c 000000'
 
-while test $# -gt 0; do
+while [ $# -gt 0 ]; do
 	case $1 in
 		-- )
 			break 2
