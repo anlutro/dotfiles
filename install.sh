@@ -214,7 +214,7 @@ install_xorg() {
 	ln -sf $configs/fontconfig/local.conf $HOME/.config/fontconfig/local.conf
 	rm -f $HOME/.fonts.conf
 
-	ln -sf $scripts/lockscreen.py $HOME/bin/lockscreen
+	ln -sf $scripts/lockscreen.sh $HOME/bin/lockscreen
 }
 
 install_zsh() {
@@ -238,7 +238,6 @@ if [ -d /etc/apache2 ]; then
 	ln -sf $scripts/a2es $HOME/bin/a2es
 fi
 ln -sf $scripts/art $HOME/bin/art
-ln -sf $scripts/genpw $HOME/bin/genpw
 ln -sf $scripts/templ $HOME/bin/templ
 ln -sf $scripts/i3-get.py $HOME/bin/i3-get
 ln -sf $scripts/i3-switch.sh $HOME/bin/i3-switch
