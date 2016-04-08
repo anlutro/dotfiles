@@ -65,18 +65,27 @@ contexts:
   string:
     - match: "'"
       push:
-      - meta_scope: string.quoted.tick
-      - match: '\{\{'
-        scope: entity.template.begin.tick
-        push:
-          - include: template
-          - match: '\}\}'
-            scope: entity.template.end.tick
-            pop: true
-      - match: "'"
-        pop: true
+        - meta_scope: string.quoted.tick
+        - include: template
+        - match: "'"
+          pop: true
+    - match: "'''"
+      push:
+        - meta_scope: string.quoted.tick
+        - include: template
+        - match: "'''"
+          pop: true
 
   template:
+    - match: '\{\{'
+      scope: entity.template.begin.tick
+      push:
+        - include: inside_template
+        - match: '\}\}'
+          scope: entity.template.end.tick
+          pop: true
+
+  inside_template:
     - match: '(\.[A-z]+)'
       scope: variable.tick
     - match: '\|'
