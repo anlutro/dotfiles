@@ -42,6 +42,7 @@
 	"default_line_ending": "unix",
 	"detect_indentation": true,
 	"drag_text": false,
+	"indent_guide_options": ["draw_normal", "draw_active"],
 	"enable_tab_scrolling": false,
 	"file_exclude_patterns":
 	[
