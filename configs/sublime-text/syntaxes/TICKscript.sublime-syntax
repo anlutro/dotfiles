@@ -6,7 +6,7 @@ scope: source.tick
 
 contexts:
   main:
-    - match: '((\.)|(\|)|(\@))([A-Za-z_]+)\('
+    - match: '((\.)|(\|)|(\@))([A-z_]+)\('
       captures:
         2: keyword.property.tick
         3: keyword.operator.chain.tick
@@ -25,8 +25,13 @@ contexts:
 
   func_call:
     - include: string
-    - include: column
     - include: nested_parens
+
+    - match: '"'
+      push:
+        - meta_scope: variable.column.tick
+        - match: '"'
+          pop: true
 
     - match: '\b(\d+(\.\d+)?)\b'
       scope: constant.numeric.tick
@@ -72,15 +77,14 @@ contexts:
         pop: true
 
   template:
-    - include: column
-    - match: '\b(index)\b'
-      scope: constant.language.tick
-    - match: '\.[A-z_]+'
-      scope: variable.tick
-
-  column:
-    - match: '"'
-      push:
-        - meta_scope: meta.function.parameters.tick variable.parameter.function.tick
-        - match: '"'
-          pop: true
+    - match: '\|'
+      scope: keyword.operator.pipe.tick
+    - match: '(index)\s+(\.[A-z]+)\s+(\"[^\"]+\")'
+      captures:
+        1: constant.language.tick
+        2: variable.type.tick
+        3: variable.column.tick
+    - match: '\b(printf)\s+(\"[^\"]*\")'
+      captures:
+        1: constant.language.tick
+        2: string.quoted.tick
