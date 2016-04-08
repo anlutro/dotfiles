@@ -6,9 +6,10 @@ scope: source.tick
 
 contexts:
   main:
-    - match: '\.([A-Za-z_]+)\('
+    - match: '(\.)([A-Za-z_]+)\('
       captures:
-        1: meta.function-call.object.tick
+        1: keyword.property.tick
+        2: meta.function-call.object.tick
 
     - match: '\b(\d+(\.\d+)?)\b'
       scope: constant.numeric.tick
@@ -25,17 +26,44 @@ contexts:
     - match: '\b(AND|OR)\b'
       scope: keyword.operator.logical.tick
 
-    - match: '\b(lambda)\b'
-      scope: meta.function.inline.tick storage.function.inline.tick
+    - match: '\b(lambda)(\:)'
+      captures:
+        1: meta.function.inline.tick storage.function.inline.tick
+        2: punctuation.separator.tick
 
     - match: '\b(var)\b'
       scope: keyword.control.tick
+
+    - match: '\|'
+      scope: keyword.operator.chain.tick
 
     - match: "'"
       push: string
 
     - match: '"'
       push: column
+
+    - match: '/'
+      scope: keyword.operator.division.tick
+    - match: '\*'
+      scope: keyword.operator.multiplication.tick
+    - match: '-'
+      scope: keyword.operator.subtraction.tick
+    - match: '\+'
+      scope: keyword.operator.addition.tick
+
+    - match: '=='
+      scope: keyword.comparator.equals.tick
+    - match: '!='
+      scope: keyword.comparator.not-equals.tick
+    - match: '>'
+      scope: keyword.comparator.gt.tick
+    - match: '>='
+      scope: keyword.comparator.gte.tick
+    - match: '<'
+      scope: keyword.comparator.lt.tick
+    - match: '<='
+      scope: keyword.comparator.lte.tick
 
   column:
     - meta_scope: meta.function.parameters.tick variable.parameter.function.tick
