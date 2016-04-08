@@ -11,6 +11,16 @@ contexts:
         1: keyword.property.tick
         2: meta.function-call.object.tick
 
+    - match: '(\|)([A-Za-z_]+)\('
+      captures:
+        1: keyword.operator.chain.tick
+        2: meta.function-call.object.tick
+
+    - match: '(\@)([A-Za-z_]+)\('
+      captures:
+        1: keyword.operator.udf.tick
+        2: meta.function-call.object.tick
+
     - match: '\b(\d+(\.\d+)?)\b'
       scope: constant.numeric.tick
 
@@ -33,9 +43,6 @@ contexts:
 
     - match: '\b(var)\b'
       scope: keyword.control.tick
-
-    - match: '\|'
-      scope: keyword.operator.chain.tick
 
     - match: "'"
       push: string
