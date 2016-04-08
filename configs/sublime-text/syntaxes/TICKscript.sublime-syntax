@@ -6,20 +6,27 @@ scope: source.tick
 
 contexts:
   main:
-    - match: '(\.)([A-Za-z_]+)\('
+    - match: '((\.)|(\|)|(\@))([A-Za-z_]+)\('
       captures:
-        1: keyword.property.tick
-        2: meta.function-call.object.tick
+        2: keyword.property.tick
+        3: keyword.operator.chain.tick
+        4: keyword.operator.udf.tick
+        5: meta.function-call.object.tick
+      push:
+        - include: func_call
+        - match: '\)'
+          pop: true
 
-    - match: '(\|)([A-Za-z_]+)\('
-      captures:
-        1: keyword.operator.chain.tick
-        2: meta.function-call.object.tick
+    - match: '\b(var)\b'
+      scope: keyword.control.tick
 
-    - match: '(\@)([A-Za-z_]+)\('
-      captures:
-        1: keyword.operator.udf.tick
-        2: meta.function-call.object.tick
+    - match: '\b(stream|batch|influxql)\b'
+      scope: constant.language.tick
+
+  func_call:
+    - include: string
+    - include: column
+    - include: nested_parens
 
     - match: '\b(\d+(\.\d+)?)\b'
       scope: constant.numeric.tick
@@ -27,71 +34,53 @@ contexts:
     - match: '\b(\d+)(s|m|h|d)\b'
       scope: constant.numeric.tick
 
-    - match: '\b(stream|batch|influxql)\b'
-      scope: constant.language.tick
-
     - match: '\b(TRUE|FALSE)\b'
       scope: constant.boolean.tick
-
-    - match: '\b(AND|OR)\b'
-      scope: keyword.operator.logical.tick
 
     - match: '\b(lambda)(\:)'
       captures:
         1: meta.function.inline.tick storage.function.inline.tick
         2: punctuation.separator.tick
 
-    - match: '\b(var)\b'
-      scope: keyword.control.tick
+    - match: '[/*+-]'
+      scope: keyword.operator.math.tick
+    - match: '(==|!=|\b(AND|OR)\b)'
+      scope: keyword.operator.logical.tick
+    - match: '[><]=?'
+      scope: keyword.operator.compare.tick
 
-    - match: "'"
-      push: string
-
-    - match: '"'
-      push: column
-
-    - match: '/'
-      scope: keyword.operator.division.tick
-    - match: '\*'
-      scope: keyword.operator.multiplication.tick
-    - match: '-'
-      scope: keyword.operator.subtraction.tick
-    - match: '\+'
-      scope: keyword.operator.addition.tick
-
-    - match: '=='
-      scope: keyword.comparator.equals.tick
-    - match: '!='
-      scope: keyword.comparator.not-equals.tick
-    - match: '>'
-      scope: keyword.comparator.gt.tick
-    - match: '>='
-      scope: keyword.comparator.gte.tick
-    - match: '<'
-      scope: keyword.comparator.lt.tick
-    - match: '<='
-      scope: keyword.comparator.lte.tick
-
-  column:
-    - meta_scope: meta.function.parameters.tick variable.parameter.function.tick
-    - match: '"'
+  nested_parens:
+    - match: '\('
+      push:
+        - include: nested_parens
+        - include: func_call
+    - match: '\)'
       pop: true
 
   string:
-    - meta_scope: string.quoted.tick
-    - match: '\{\{'
-      scope: entity.other.tick
-      push: template
     - match: "'"
-      pop: true
+      push:
+      - meta_scope: string.quoted.tick
+      - match: '\{\{'
+        scope: entity.template.begin.tick
+        push:
+          - include: template
+          - match: '\}\}'
+            scope: entity.template.end.tick
+            pop: true
+      - match: "'"
+        pop: true
 
   template:
-    - match: '"'
-      push: column
+    - include: column
     - match: '\b(index)\b'
       scope: constant.language.tick
     - match: '\.[A-z_]+'
       scope: variable.tick
-    - match: '\}\}'
-      scope: entity.other.tick
-      pop: true
+
+  column:
+    - match: '"'
+      push:
+        - meta_scope: meta.function.parameters.tick variable.parameter.function.tick
+        - match: '"'
+          pop: true
