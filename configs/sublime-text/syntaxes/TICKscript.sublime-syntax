@@ -11,6 +11,7 @@ contexts:
         - meta_scope: comment.line.tick
         - match: "\n"
           pop: true
+
     - match: '((\.)|(\|)|(\@))([A-z_]+)\('
       captures:
         2: keyword.property.tick
@@ -54,8 +55,10 @@ contexts:
 
     - match: '[/*+-]'
       scope: keyword.operator.math.tick
+
     - match: '(==|!=|\b(AND|OR)\b)'
       scope: keyword.operator.logical.tick
+
     - match: '[><]=?'
       scope: keyword.operator.compare.tick
 
@@ -84,6 +87,7 @@ contexts:
   inside_string:
     - match: "\\\\'"
       scope: constant.character.escaped.double-quote.tick
+
     - match: '\{\{'
       scope: entity.template.begin.tick
       push:
@@ -95,13 +99,16 @@ contexts:
   inside_template:
     - match: '(\.[A-z]+)'
       scope: variable.tick
+
     - match: '\|'
       scope: keyword.operator.pipe.tick
+
     - match: '(index)\s+(\.[A-z]+)\s+(\"[^\"]+\")'
       captures:
         1: constant.language.tick
         2: variable.column-type.tick
         3: variable.column.tick
+
     - match: '\b(printf)\s+(\"[^\"]*\")'
       captures:
         1: constant.language.tick
