@@ -6,6 +6,11 @@ scope: source.tick
 
 contexts:
   main:
+    - match: '//'
+      push:
+        - meta_scope: comment.line.tick
+        - match: "\n"
+          pop: true
     - match: '((\.)|(\|)|(\@))([A-z_]+)\('
       captures:
         2: keyword.property.tick
