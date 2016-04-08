@@ -36,7 +36,7 @@ contexts:
     - match: '\b(\d+(\.\d+)?)\b'
       scope: constant.numeric.tick
 
-    - match: '\b(\d+)(s|m|h|d)\b'
+    - match: '\b(\d+)([uµmshdw]|ms)\b'
       scope: constant.numeric.tick
 
     - match: '\b(TRUE|FALSE)\b'
