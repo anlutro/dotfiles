@@ -77,12 +77,14 @@ contexts:
         pop: true
 
   template:
+    - match: '(\.[A-z]+)'
+      scope: variable.tick
     - match: '\|'
       scope: keyword.operator.pipe.tick
     - match: '(index)\s+(\.[A-z]+)\s+(\"[^\"]+\")'
       captures:
         1: constant.language.tick
-        2: variable.type.tick
+        2: variable.column-type.tick
         3: variable.column.tick
     - match: '\b(printf)\s+(\"[^\"]*\")'
       captures:
