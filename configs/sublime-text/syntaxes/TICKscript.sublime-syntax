@@ -66,17 +66,19 @@ contexts:
     - match: "'"
       push:
         - meta_scope: string.quoted.tick
-        - include: template
+        - include: inside_string
         - match: "'"
           pop: true
     - match: "'''"
       push:
         - meta_scope: string.quoted.tick
-        - include: template
+        - include: inside_string
         - match: "'''"
           pop: true
 
-  template:
+  inside_string:
+    - match: "\\\\'"
+      scope: constant.character.escaped.double-quote.tick
     - match: '\{\{'
       scope: entity.template.begin.tick
       push:
