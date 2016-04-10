@@ -49,3 +49,7 @@ fi
 if command -v unclutter >/dev/null 2>&1; then
 	unclutter -idle 3 -root &
 fi
+
+if command -v autocutsel >/dev/null 2>&1; then
+	autocutsel &
+fi
