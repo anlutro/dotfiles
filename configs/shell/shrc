@@ -189,7 +189,7 @@ ccp() {
 avenv() {
 	if [ -f $PWD/.virtualenv/bin/activate ]; then
 		. $PWD/.virtualenv/bin/activate
-	if [ -f $PWD/.venv/bin/activate ]; then
+	elif [ -f $PWD/.venv/bin/activate ]; then
 		. $PWD/.venv/bin/activate
 	elif [ -f $PWD/bin/activate ]; then
 		. $PWD/bin/activate
