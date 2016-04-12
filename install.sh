@@ -70,6 +70,9 @@ install_gtk() {
 install_i3() {
 	[ -d $HOME/.config/i3 ] || mkdir $HOME/.config/i3
 	ln -sf $configs/i3/i3.conf $HOME/.config/i3/config
+
+	ln -sf $scripts/i3-get.py $HOME/bin/i3-get
+	ln -sf $scripts/i3-switch.sh $HOME/bin/i3-switch
 }
 
 install_i3blocks() {
@@ -237,10 +240,12 @@ echo -n "Linking ~/bin files... "
 if [ -d /etc/apache2 ]; then
 	ln -sf $scripts/a2es $HOME/bin/a2es
 fi
-ln -sf $scripts/art $HOME/bin/art
-ln -sf $scripts/templ $HOME/bin/templ
-ln -sf $scripts/i3-get.py $HOME/bin/i3-get
-ln -sf $scripts/i3-switch.sh $HOME/bin/i3-switch
+if command -v php >/dev/null 2>&1; then
+	ln -sf $scripts/art $HOME/bin/art
+fi
+if command -v python3 >/dev/null 2>&1; then
+	ln -sf $scripts/templ $HOME/bin/templ
+fi
 echo "done"
 
 
