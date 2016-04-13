@@ -14,7 +14,7 @@ fi
 # emacs mode
 bindkey -e
 
-setopt hist_ignore_all_dups no_share_history
+setopt hist_ignore_all_dups no_share_history interactivecomments
 
 # use modern completion system
 autoload -Uz compinit
