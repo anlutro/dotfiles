@@ -27,7 +27,6 @@ ui = true
 
 [core]
 autocrlf = input
-excludesfile = ~/.gitignore_global
 pager = less -FRX -x5,9
 
 [credential]
@@ -46,4 +45,4 @@ pushInsteadOf = https://github.com/
 
 # use this for name/email, auth tokens etc
 [include]
-path = ~/.gitconfig.local
+path = config.local
