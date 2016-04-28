@@ -5,9 +5,14 @@ if [ -z "$HOME" ]; then
 	exit 1
 fi
 
+if [ -z "$HOST" ]; then
+	HOST=$(hostname)
+fi
+
 root=$(dirname $(readlink -f "$0"))
 configs=$root/configs
 scripts=$root/scripts
+local="$root/local/$HOST"
 vendor=$root/vendor
 
 install() {
@@ -277,6 +282,14 @@ install vim
 install nvim
 install xorg Xorg
 install zsh
+
+
+# host-specific configuration files
+if [ -d $local ]; then
+	for file in $(find $local -type f | sed "s|$local||"); do
+		ln -sf $local$file $HOME$file
+	done
+fi
 
 
 # look for broken symlinks

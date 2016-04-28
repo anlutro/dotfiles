@@ -1,0 +1,3 @@
+#!/bin/sh
+
+feh --bg-scale '/usr/share/images/desktop-base/login-background-1600x900.png'
