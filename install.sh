@@ -41,6 +41,10 @@ install_dunst() {
 	ln -sf $configs/dunstrc $HOME/.config/dunst/dunstrc
 }
 
+install_feh() {
+	[ -f $local/fehbg ] && ln -sf $local/fehbg $HOME/.fehbg
+}
+
 install_git() {
 	local conf_path=$HOME/.config/git
 
@@ -207,27 +211,15 @@ install_nvim() {
 }
 
 install_xorg() {
-	# attempt to fix previous symlink setup
-	if [ -L $HOME/.Xresources.local ]; then
-		rm -f $HOME/.Xresources.local
-	fi
-	if [ -L $HOME/.Xresources ]; then
-		rm -f $HOME/.Xresources
-		if [ -f $configs/x11/xresources.local ]; then
-			mv $configs/x11/xresources.local $HOME/.Xresources
-		fi
-	fi
-
 	ln -sf $configs/x11/xinitrc $HOME/.xinitrc
 	ln -sf $configs/x11/xsessionrc $HOME/.xsessionrc
 	ln -sf $configs/x11/xdefaults $HOME/.Xdefaults
+	[ -f $local/xresources ] && ln -sf $local/xresources $HOME/.Xresources
 
 	[ -d $HOME/.config/fontconfig ] || mkdir -p $HOME/.config/fontconfig
 	ln -sf $configs/fontconfig/fonts.conf $HOME/.config/fontconfig/fonts.conf
-	if [ ! -f $configs/fontconfig/local.conf ]; then
-		cp $configs/fontconfig/local.conf.default $configs/fontconfig/local.conf
-	fi
-	ln -sf $configs/fontconfig/local.conf $HOME/.config/fontconfig/local.conf
+	[ -f $local/fonts.local.conf ] && \
+		ln -sf $local/fonts.local.conf $HOME/.config/fontconfig/local.conf
 	rm -f $HOME/.fonts.conf
 
 	ln -sf $scripts/lockscreen.sh $HOME/bin/lockscreen
@@ -265,6 +257,7 @@ echo "done"
 install bash
 install compton
 install dunst
+install feh
 install git
 install gtk gtk-launch
 install i3
@@ -282,14 +275,6 @@ install vim
 install nvim
 install xorg Xorg
 install zsh
-
-
-# host-specific configuration files
-if [ -d $local ]; then
-	for file in $(find $local -type f | sed "s|$local||"); do
-		ln -sf $local$file $HOME$file
-	done
-fi
 
 
 # look for broken symlinks
