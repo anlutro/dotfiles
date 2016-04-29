@@ -1,0 +1,10 @@
+#!/bin/sh
+
+if xrandr -q | grep 'HDMI2 connected' > /dev/null; then
+	# 1440 - 1080 = 360
+	xrandr --output eDP1 --auto --pos 0x360
+	       --output HDMI2 --primary --auto --pos 1920x0 
+else
+	xrandr --output eDP1 --auto --primary \
+	       --output HDMI2 --off
+fi
