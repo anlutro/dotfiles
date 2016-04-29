@@ -24,8 +24,7 @@ export EDITOR=vim
 
 # less options
 export LESS='M x4'
-
-# fix journalctl
+export GIT_PAGER='less -FRX -x5,9'
 export SYSTEMD_LESS='KMR +G'
 # export SYSTEMD_LESS='FKMRX +G'
 

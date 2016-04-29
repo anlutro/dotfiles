@@ -27,7 +27,6 @@ ui = true
 
 [core]
 autocrlf = input
-pager = less -FRX -x5,9
 
 [credential]
 helper = cache --timeout=600
