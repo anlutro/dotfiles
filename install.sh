@@ -223,6 +223,7 @@ install_xorg() {
 	rm -f $HOME/.fonts.conf
 
 	ln -sf $scripts/lockscreen.sh $HOME/bin/lockscreen
+	[ -f $local/xrandrinit ] && ln -sf $local/xrandrinit $HOME/.xrandrinit
 }
 
 install_zsh() {
