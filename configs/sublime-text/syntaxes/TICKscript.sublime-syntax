@@ -62,6 +62,9 @@ contexts:
     - match: '[><]=?'
       scope: keyword.operator.compare.tick
 
+    - match: '=~'
+      scope: keyword.operator.regex.tick
+
   nested_parens:
     - match: '\('
       push:
