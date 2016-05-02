@@ -1,3 +1,1 @@
-#!/bin/sh
-
-feh --bg-scale '/usr/share/images/desktop-base/login-background-2560x1440.png' 
+feh  --bg-scale '/usr/share/images/desktop-base/login-background-2560x1440.png' 
