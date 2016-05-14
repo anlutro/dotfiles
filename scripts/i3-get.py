@@ -25,16 +25,23 @@ def find_active_workspace(tree_dict, current_workspace=None):
 		return current_workspace
 	if tree_dict.get('type') == 'workspace':
 		current_workspace = tree_dict
-	if 'nodes' in tree_dict and len(tree_dict['nodes']) > 0:
-		for node in tree_dict['nodes']:
-			workspace = find_active_workspace(node, current_workspace)
-			if workspace is not None:
-				return workspace
+
+	for node in tree_dict['nodes']:
+		workspace = find_active_workspace(node, current_workspace)
+		if workspace is not None:
+			return workspace
+
+	for node in tree_dict['floating_nodes']:
+		workspace = find_active_workspace(node, current_workspace)
+		if workspace is not None:
+			return workspace
 
 
 def find_windows(tree_dict, window_list):
-	if 'nodes' in tree_dict and len(tree_dict['nodes']) > 0:
+	if tree_dict['nodes'] or tree_dict['floating_nodes']:
 		for node in tree_dict['nodes']:
+			find_windows(node, window_list)
+		for node in tree_dict['floating_nodes']:
 			find_windows(node, window_list)
 	else:
 		if (tree_dict['layout'] != 'dockarea' and
