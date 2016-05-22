@@ -15,13 +15,11 @@ fi
 cd $NVIM_PATH || exit 1
 git pull
 make
+
+sudo find /usr/local/share/nvim/runtime -name '*.vim' -delete
 sudo rm /usr/local/share/nvim/runtime/doc/*.awk
-sudo rm /usr/local/share/nvim/runtime/*.vim
-sudo rm /usr/local/share/nvim/runtime/syntax/*.vim
-sudo rm /usr/local/share/nvim/runtime/ftplugin/*.vim
-sudo rm /usr/local/share/nvim/runtime/autoload/*.vim
 sudo rm /usr/local/share/nvim/runtime/tutor/*.tutor
-sudo rm /usr/local/share/nvim/runtime/indent/*.vim
+
 sudo checkinstall -y --pkgname neovim make install
 sudo update-alternatives --install /usr/bin/vim vim /usr/local/bin/nvim 60
 sudo update-alternatives --set vim /usr/local/bin/nvim
