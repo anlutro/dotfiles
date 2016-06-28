@@ -238,6 +238,7 @@ ln -sf $configs/shell/profile $HOME/.profile
 [ -L $HOME/.shell_aliases ] && rm $HOME/.shell_aliases
 [ -L $HOME/.shell_vars ] && rm $HOME/.shell_vars
 ln -sf $configs/shell/shrc $HOME/.shrc
+ln -sf $configs/ssh/rc $HOME/.ssh/rc
 echo "done"
 
 
