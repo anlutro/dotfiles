@@ -10,15 +10,21 @@ scope: source.yaml_mako
 contexts:
 
   mako_inline:
-  - match: '\$\{'
+  - match: '(?i)\$'
     scope: keyword.section.embedded.begin.python
     push:
-      - meta_scope: meta.embedded.line.python
-      - meta_content_scope: source.python
-      - match: '}'
-        scope: keyword.section.embedded.end.python
+      - match: '\}'
+        scope: keyword.section.embedded.begin.python
         pop: true
-      - include: 'scope:source.python'
+      - match: '\{'
+        scope: keyword.section.embedded.end.python
+        push:
+          - meta_scope: meta.embedded.line.python
+          - meta_content_scope: source.python
+          - include: 'scope:source.python'
+        with_prototype:
+           - match: (?i)(?=\})
+             pop: true
 
   mako_block:
   - match: '<%'
@@ -26,10 +32,10 @@ contexts:
     push:
       - meta_scope: meta.embedded.block.python
       - meta_content_scope: source.python
+      - include: 'scope:source.python'
       - match: '%>'
         scope: keyword.section.embedded.end.python
         pop: true
-      - include: 'scope:source.python'
 
   mako_line:
   - match: '^%'
@@ -113,15 +119,8 @@ contexts:
         pop: true
 
   yaml_unquoted_string:
-  - match: "[a-zA-Z0-9\\\\/_.][a-zA-Z0-9\\\\/_.<>()&-'\"| ]*"
+  - match: "[a-zA-Z0-9\\\\/_.][a-zA-Z0-9\\\\/_.<>()&'\":| -]*"
     scope: string.unquoted.yaml
-  # - match: "[a-zA-Z0-9\\\\/_.]"
-  #   scope: string.unquoted.yaml
-  #   push:
-  #     - match: "\n"
-  #       pop: true
-  #     - match: "[a-zA-Z0-9\\\\/_.<>()&-'\"| ]*"
-  #       scope: string.unquoted.yaml
 
   yaml_comment:
   - match: '#.*'
