@@ -82,6 +82,7 @@ alias gdiff='git diff --no-index'
 alias most-common='sort | uniq -c | sort -nr | head'
 alias pwgen-strong='pwgen -Bs'
 alias pwgen-weak='pwgen -ABn'
+alias s='sudo service'
 alias tree='tree --dirsfirst'
 
 # by default, most WMs opening a new terminal will make it start in ~ instead of
@@ -175,7 +176,7 @@ kb() {
 }
 
 # livestreamer
-s() {
+ls() {
 	livestreamer $1 ${2:-high,720p,best}
 }
 
