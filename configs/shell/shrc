@@ -176,7 +176,7 @@ kb() {
 }
 
 # livestreamer
-ls() {
+lvs() {
 	livestreamer $1 ${2:-high,720p,best}
 }
 
