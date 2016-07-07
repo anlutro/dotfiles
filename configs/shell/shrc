@@ -79,6 +79,7 @@ alias apt-everything='sudo apt-get update && sudo apt-get dist-upgrade && \
 alias cal='ncal -Mb3'
 alias crlffix='for file in `find . -type f`; do dos2unix $file; done'
 alias gdiff='git diff --no-index'
+alias lsofi='lsof -i -n -P'
 alias most-common='sort | uniq -c | sort -nr | head'
 alias pwgen-strong='pwgen -Bs'
 alias pwgen-weak='pwgen -ABn'
