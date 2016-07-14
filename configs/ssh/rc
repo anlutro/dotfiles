@@ -3,5 +3,5 @@
 # fix SSH auth socket location so agent forwarding works with tmux
 # http://stackoverflow.com/a/23187030
 if [ -n "$SSH_AUTH_SOCK" ]; then
-	ln -sf $SSH_AUTH_SOCK ~/.ssh/ssh_auth_sock.$HOSTNAME
+	ln -sf $SSH_AUTH_SOCK ~/.ssh/ssh_auth_sock
 fi
