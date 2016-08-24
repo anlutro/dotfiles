@@ -216,11 +216,15 @@ install_xorg() {
 	ln -sf $configs/x11/xdefaults $HOME/.Xdefaults
 	[ -f $local/xresources ] && ln -sf $local/xresources $HOME/.Xresources
 
-	[ -d $HOME/.config/fontconfig ] || mkdir -p $HOME/.config/fontconfig
-	ln -sf $configs/fontconfig/fonts.conf $HOME/.config/fontconfig/fonts.conf
-	[ -f $local/fonts.local.conf ] && \
-		ln -sf $local/fonts.local.conf $HOME/.config/fontconfig/local.conf
+	FC_DIR=$HOME/.config/fontconfig/conf.d
+	[ -d $FC_DIR ] || mkdir -p $FC_DIR
+	ln -sf $configs/fontconfig/fonts.conf $FC_DIR/00-common.conf
+	if [ -f $local/fonts.local.conf ]; then
+		ln -sf $local/fonts.local.conf $FC_DIR/99-local.conf
+	fi
 	rm -f $HOME/.fonts.conf
+	rm -f $HOME/.config/fontconfig/fonts.conf
+	rm -f $HOME/.config/fontconfig/local.conf
 
 	ln -sf $scripts/lockscreen.sh $HOME/bin/lockscreen
 	[ -f $local/xrandrinit ] && ln -sf $local/xrandrinit $HOME/.xrandrinit
