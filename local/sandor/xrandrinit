@@ -1,10 +1,27 @@
 #!/bin/sh
 
-if xrandr -q | grep 'HDMI2 connected' > /dev/null; then
-	# 1440 - 1080 = 360
-	xrandr --output eDP1 --auto --pos 0x360 \
-	       --output HDMI2 --primary --auto --pos 1920x0 
-else
-	xrandr --output eDP1 --auto --primary \
-	       --output HDMI2 --off
+EDP1="--primary"
+HDMI1="--off"
+HDMI2="--off"
+
+if xrandr -q | grep 'HDMI1 connected' > /dev/null; then
+	if [ "$1" = "duplicate" ]; then
+		HDMI1="--same-as eDP1"
+	else
+		# 1440 - 1080 = 360
+		EDP1="--pos 0x360"
+		HDMI1="--primary --pos 1920x0"
+	fi
+elif xrandr -q | grep 'HDMI2 connected' > /dev/null; then
+	if [ "$1" = "duplicate" ]; then
+		HDMI2="--same-as eDP1"
+	else
+		# 1440 - 1080 = 360
+		EDP1="--pos 0x360"
+		HDMI2="--primary --pos 1920x0"
+	fi
 fi
+
+xrandr --output eDP1 --auto $EDP1 \
+       --output HDMI1 --auto $HDMI1 \
+       --output HDMI2 --auto $HDMI2
