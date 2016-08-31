@@ -1,8 +1,13 @@
 [alias]
+a = commit --amend
+aa = commit --all --amend
+aane = commit --all --amend --no-edit
+ane = commit --amend --no-edit
 c = commit
-cam = commit -am
-cb = checkout -b
-cm = commit -m
+ca = commit --all
+cam = commit --all --message
+cb = checkout --branch
+cm = commit --message
 co = checkout
 d = diff
 dc = diff --cached
@@ -12,7 +17,7 @@ ll = log --graph --abbrev-commit --pretty=format:'%C(red)%h%C(reset) %C(green)%a
 mfo = merge --ff-only
 mnf = merge --no-ff
 push-all = !git remote | xargs -L1 git push
-r = remote -v
+r = remote --verbose
 ra = remote add
 rrm = remote rm
 s = status
@@ -31,6 +36,7 @@ helper = cache --timeout=600
 
 [diff]
 algorithm = patience
+
 [push]
 default = current
 
