@@ -169,7 +169,7 @@ install_urxvt() {
 
 vim_common() {
 	# make sure this function is only called once
-	[ $vim_common_installed ] && return
+	[ -n "$vim_common_installed" ] && return
 	vim_common_installed=1
 
 	if [ ! -d $vendor/jellybeans.vim ]; then
