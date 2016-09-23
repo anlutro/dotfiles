@@ -40,6 +40,7 @@ algorithm = patience
 
 [push]
 default = current
+followTags = true
 
 [pull]
 ff = only
