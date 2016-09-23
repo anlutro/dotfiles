@@ -206,6 +206,11 @@ clear_pycache() {
 	find . -type d -name '__pycache__' -print0 | xargs -0 rm -rf
 }
 
+# clone a github repository
+gh_clone() {
+	git clone https://github.com/"$@"
+}
+
 # fetch a github pull request
 gh_fetch_pr() {
 	local remote=$(git remote -v | grep '(fetch)' | grep 'github.com' | cut -f 1)
