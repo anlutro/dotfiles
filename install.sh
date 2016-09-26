@@ -143,6 +143,7 @@ install_subl() {
 	ln -sfT $configs/sublime-text $HOME/.config/sublime-text-3/Packages/User
 	ln -sf $scripts/sublp $HOME/bin/sublp
 	ln -sf $scripts/init-subl-project.py $HOME/bin/init-subl-project
+	ln -sf $scripts/update-sublime-text.sh $HOME/bin/update-sublime-text
 }
 
 install_taskwarrior() {
