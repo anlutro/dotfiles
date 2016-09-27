@@ -1,6 +1,8 @@
 #!/bin/sh
+set -e
 
 NVIM_PATH=${1:-neovim}
+PREFIX=/opt/neovim
 
 if [ ! -d $NVIM_PATH ]; then
 	echo "[ERROR] Directory not found: $NVIM_PATH"
@@ -12,14 +14,23 @@ elif [ ! -d $NVIM_PATH/.git ]; then
 	exit 1
 fi
 
-cd $NVIM_PATH || exit 1
-git pull
-make
+cd $NVIM_PATH
+if [ -z "$NO_GIT_PULL" ]; then
+	git pull
+fi
 
-sudo find /usr/local/share/nvim/runtime -name '*.vim' -delete
-sudo rm /usr/local/share/nvim/runtime/doc/*.awk
-sudo rm /usr/local/share/nvim/runtime/tutor/*.tutor
+make CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX:PATH=$PREFIX" || exit 1
 
-sudo checkinstall -y --pkgname neovim make install
+if [ ! -d $PREFIX ]; then
+	sudo mkdir -f $PREFIX
+fi
+sudo chown $USER:$USER $PREFIX
+
+make install
+
+sudo chown -R root:staff $PREFIX
+
+sudo ln -sf $PREFIX/bin/nvim /usr/local/bin/nvim
+
 sudo update-alternatives --install /usr/bin/vim vim /usr/local/bin/nvim 60
 sudo update-alternatives --set vim /usr/local/bin/nvim
