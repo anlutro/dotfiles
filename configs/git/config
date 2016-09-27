@@ -51,3 +51,4 @@ pushInsteadOf = https://github.com/
 # use this for name/email, auth tokens etc
 [include]
 path = config.local
+path = .gitconfig.local

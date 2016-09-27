@@ -46,20 +46,38 @@ install_feh() {
 }
 
 install_git() {
-	local conf_path=$HOME/.config/git
+	local local_conf
+	local git_version=$(git --version | grep -oP '[\d+.]+')
 
-	[ -d $conf_path ] || mkdir -p $conf_path
-	[ -e $HOME/.gitconfig ] && rm $HOME/.gitconfig
-	[ -e $HOME/.gitignore_global ] && rm $HOME/.gitignore_global
-	[ -e $HOME/.gitconfig.local ] && \
-		mv $HOME/.gitconfig.local $HOME/.config/git/config.local
+	if echo $git_version | grep '^2' > /dev/null; then
+		[ -e $HOME/.gitconfig ] && rm $HOME/.gitconfig
+		[ -e $HOME/.gitignore_global ] && rm $HOME/.gitignore_global
+		[ -e $HOME/.gitconfig.local ] && \
+			mv $HOME/.gitconfig.local $HOME/.config/git/config.local
 
-	ln -sf $configs/git/config $conf_path/config
-	ln -sf $configs/git/ignore_global $conf_path/ignore
-	if [ ! -f $conf_path/config.local ]; then
-		echo '[user]' >> $conf_path/config.local
-		echo 'name = Andreas Lutro' >> $conf_path/config.local
-		echo 'email = anlutro@gmail.com' >> $conf_path/config.local
+		local conf_path=$HOME/.config/git
+		[ -d $conf_path ] || mkdir -p $conf_path
+		ln -sf $configs/git/config $conf_path/config
+		ln -sf $configs/git/ignore_global $conf_path/ignore
+		local_conf=$conf_path/config.local
+	else
+		ln -sf $configs/git/config $HOME/.gitconfig
+		ln -sf $configs/git/ignore_global $HOME/.gitignore_global
+		local_conf=$HOME/.gitconfig.local
+	fi
+
+	if [ ! -f $local_conf ] || ! grep '\[user\]' $local_conf > /dev/null; then
+		echo '[user]' >> $local_conf
+		echo 'name = Andreas Lutro' >> $local_conf
+		echo 'email = anlutro@gmail.com' >> $local_conf
+	fi
+
+	if echo $git_version | grep '^1' > /dev/null && \
+			[ ! -f $local_conf ] || ! grep 'excludesfile = ' $local_conf > /dev/null; then
+		echo '[core]' >> $local_conf
+		echo 'excludesfile = .gitignore_global' >> $local_conf
+	elif echo $git_version | grep '^2' > /dev/null && [ -f $local_conf ]; then
+		sed -i '/^excludesfile/d' $local_conf
 	fi
 
 	ln -sf $scripts/git-abort $HOME/bin/git-abort
