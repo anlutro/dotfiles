@@ -49,7 +49,11 @@ install_git() {
 	local local_conf
 	local git_version=$(git --version | grep -oP '[\d+.]+')
 
-	if echo $git_version | grep '^2' > /dev/null; then
+	if echo $git_version | grep '^1' > /dev/null; then
+		ln -sf $configs/git/config $HOME/.gitconfig
+		ln -sf $configs/git/ignore_global $HOME/.gitignore_global
+		local_conf=$HOME/.gitconfig.local
+	else
 		[ -e $HOME/.gitconfig ] && rm $HOME/.gitconfig
 		[ -e $HOME/.gitignore_global ] && rm $HOME/.gitignore_global
 		[ -e $HOME/.gitconfig.local ] && \
@@ -60,24 +64,21 @@ install_git() {
 		ln -sf $configs/git/config $conf_path/config
 		ln -sf $configs/git/ignore_global $conf_path/ignore
 		local_conf=$conf_path/config.local
-	else
-		ln -sf $configs/git/config $HOME/.gitconfig
-		ln -sf $configs/git/ignore_global $HOME/.gitignore_global
-		local_conf=$HOME/.gitconfig.local
 	fi
 
 	if [ ! -f $local_conf ] || ! grep '\[user\]' $local_conf > /dev/null; then
-		echo '[user]' >> $local_conf
-		echo 'name = Andreas Lutro' >> $local_conf
-		echo 'email = anlutro@gmail.com' >> $local_conf
+		git config --file $local_conf user.name 'Andreas Lutro'
+		git config --file $local_conf user.email 'anlutro@gmail.com'
 	fi
 
-	if echo $git_version | grep '^1' > /dev/null && \
-			[ ! -f $local_conf ] || ! grep 'excludesfile = ' $local_conf > /dev/null; then
-		echo '[core]' >> $local_conf
-		echo 'excludesfile = .gitignore_global' >> $local_conf
-	elif echo $git_version | grep '^2' > /dev/null && [ -f $local_conf ]; then
-		sed -i '/^excludesfile/d' $local_conf
+	if echo $git_version | grep '^1' > /dev/null; then
+		if [ ! -f $local_conf ] || ! grep 'excludesfile = ' $local_conf > /dev/null; then
+			git config --file $local_conf core.excludesfile .gitignore_global
+		fi
+	else
+		if [ -f $local_conf ]; then
+			git config --file $local_conf --unset core.excludesfile
+		fi
 	fi
 
 	ln -sf $scripts/git-abort.sh $HOME/bin/git-abort
