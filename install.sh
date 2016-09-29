@@ -81,6 +81,7 @@ install_git() {
 	fi
 
 	ln -sf $scripts/git-abort $HOME/bin/git-abort
+	ln -sf $scripts/git-with-sshkey.sh $HOME/bin/git-with-sshkey
 }
 
 install_gtk() {
