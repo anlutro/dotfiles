@@ -80,7 +80,7 @@ install_git() {
 		sed -i '/^excludesfile/d' $local_conf
 	fi
 
-	ln -sf $scripts/git-abort $HOME/bin/git-abort
+	ln -sf $scripts/git-abort.sh $HOME/bin/git-abort
 	ln -sf $scripts/git-with-sshkey.sh $HOME/bin/git-with-sshkey
 }
 
@@ -160,7 +160,7 @@ install_nano() {
 
 install_subl() {
 	ln -sfT $configs/sublime-text $HOME/.config/sublime-text-3/Packages/User
-	ln -sf $scripts/sublp $HOME/bin/sublp
+	ln -sf $scripts/sublp.sh $HOME/bin/sublp
 	ln -sf $scripts/init-subl-project.py $HOME/bin/init-subl-project
 	ln -sf $scripts/update-sublime-text.sh $HOME/bin/update-sublime-text
 }
@@ -270,13 +270,13 @@ echo "done"
 echo -n "Linking ~/bin files... "
 [ -d $HOME/bin ] || mkdir $HOME/bin
 if [ -d /etc/apache2 ]; then
-	ln -sf $scripts/a2es $HOME/bin/a2es
+	ln -sf $scripts/a2es.sh $HOME/bin/a2es
 fi
 if command -v php >/dev/null 2>&1; then
-	ln -sf $scripts/art $HOME/bin/art
+	ln -sf $scripts/art.sh $HOME/bin/art
 fi
 if command -v python3 >/dev/null 2>&1; then
-	ln -sf $scripts/templ $HOME/bin/templ
+	ln -sf $scripts/templ.py $HOME/bin/templ
 fi
 echo "done"
 
