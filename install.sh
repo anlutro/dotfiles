@@ -66,18 +66,20 @@ install_git() {
 		local_conf=$conf_path/config.local
 	fi
 
-	if [ ! -f $local_conf ] || ! grep '\[user\]' $local_conf > /dev/null; then
-		git config --file $local_conf user.name 'Andreas Lutro'
-		git config --file $local_conf user.email 'anlutro@gmail.com'
+	local git_config="git config --file $local_conf"
+
+	if [ ! -f $local_conf ] || ! $git_config user.name > /dev/null; then
+		$git_config user.name 'Andreas Lutro'
+		$git_config user.email 'anlutro@gmail.com'
 	fi
 
 	if echo $git_version | grep '^1' > /dev/null; then
-		if [ ! -f $local_conf ] || ! grep 'excludesfile = ' $local_conf > /dev/null; then
-			git config --file $local_conf core.excludesfile .gitignore_global
+		if [ ! -f $local_conf ] || ! $git_config core.excludesfile > /dev/null; then
+			$git_config core.excludesfile .gitignore_global
 		fi
 	else
 		if [ -f $local_conf ]; then
-			git config --file $local_conf --unset core.excludesfile
+			$git_config --unset core.excludesfile
 		fi
 	fi
 
