@@ -1,5 +1,5 @@
 #!/bin/sh
-set -e
+set -eu
 
 NVIM_PATH=${1:-neovim}
 PREFIX=/opt/neovim
@@ -19,7 +19,7 @@ if [ -z "$NO_GIT_PULL" ]; then
 	git pull
 fi
 
-make CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX:PATH=$PREFIX" || exit 1
+make CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX:PATH=$PREFIX"
 
 if [ ! -d $PREFIX ]; then
 	sudo mkdir -f $PREFIX
