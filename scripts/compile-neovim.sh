@@ -15,7 +15,7 @@ elif [ ! -d $NVIM_PATH/.git ]; then
 fi
 
 cd $NVIM_PATH
-if [ -z "$NO_GIT_PULL" ]; then
+if [ -z "${NO_GIT_PULL-}" ]; then
 	git pull
 fi
 
@@ -24,7 +24,7 @@ make CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX:PATH=$PREFIX"
 if [ ! -d $PREFIX ]; then
 	sudo mkdir $PREFIX
 fi
-sudo chown $USER:$USER $PREFIX
+sudo chown -R $USER:$USER $PREFIX
 
 make install
 

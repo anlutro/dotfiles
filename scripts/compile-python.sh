@@ -24,7 +24,7 @@ make test
 if [ ! -d $PREFIX ]; then
 	sudo mkdir $PREFIX
 fi
-sudo chown $USER:$USER $PREFIX
+sudo chown -R $USER:$USER $PREFIX
 
 make install
 
