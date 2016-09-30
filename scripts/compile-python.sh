@@ -1,5 +1,5 @@
 #!/bin/sh
-set -e
+set -eu
 
 if [ $# -lt 1 ]; then
 	echo "Must provide version!"

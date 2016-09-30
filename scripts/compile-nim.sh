@@ -1,4 +1,5 @@
 #!/bin/sh
+set -eu
 
 NIM_PATH=${1:-nim}
 

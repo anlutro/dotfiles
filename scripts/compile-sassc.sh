@@ -1,4 +1,5 @@
 #!/bin/sh
+set -eu
 
 LIBSASS_PATH=${1:-libsass}
 SASSC_PATH="${LIBSASS_PATH}/sassc"
@@ -21,10 +22,10 @@ elif [ ! -d $SASSC_PATH/.git ]; then
 	exit 1
 fi
 
-cd $LIBSASS_PATH || exit 1
+cd $LIBSASS_PATH
 git pull
-cd sassc || exit 1
+cd sassc
 git pull
 cd ..
-make sassc || make sassc || exit 1
+make sassc
 cp sassc/bin/sassc ~/bin/sassc
