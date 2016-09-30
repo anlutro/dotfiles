@@ -22,7 +22,7 @@ fi
 make CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX:PATH=$PREFIX"
 
 if [ ! -d $PREFIX ]; then
-	sudo mkdir -f $PREFIX
+	sudo mkdir $PREFIX
 fi
 sudo chown $USER:$USER $PREFIX
 
