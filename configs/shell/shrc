@@ -184,7 +184,8 @@ lvs() {
 
 # composer create-project
 ccp() {
-	composer create-project "$1" -s dev --prefer-dist "${*:2}";
+	_ccp_from=$1 && shift
+	composer create-project "$_ccp_from" -s dev --prefer-dist "$@";
 }
 
 # find and activate a virtualenv
