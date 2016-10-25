@@ -221,3 +221,8 @@ gh_fetch_pr() {
 		echo "No github remote found!"
 	fi
 }
+
+# local overrides
+if [ -f "$HOME/.shrc.local" ]; then
+	. "$HOME/.shrc.local"
+fi
