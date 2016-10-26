@@ -101,8 +101,8 @@ t() {
 		# opening through i3 exec prevents weird/inconsistent ps trees
 		i3-msg "exec x-terminal-emulator $args" &> /dev/null
 	else
-		# fork in a subshell to make the commands indepentent, and to suppress
-		# all output
+		# fork in a subshell to make the commands indepentent,
+		# and to suppress all output.
 		( x-terminal-emulator $args & )
 	fi
 }
@@ -115,26 +115,47 @@ termname() {
 # note taking
 _NOTES_DIR=~/Dropbox/notes
 n() {
-	if [ $# -lt 1 ]; then
-		echo "Missing argument - usage: n <name>"
+	local name=""
+	local cmd=$EDITOR
+	for arg in "$@"; do
+		case $arg in
+			-r|--rm|--remove|-d|--delete )
+				cmd="rm -v"
+				;;
+			-* )
+				echo "Unknown argument: $arg"
+				return
+				;;
+			* )
+				if [ -n "$name" ]; then
+					echo "Can only provide one name!"
+					return
+				fi
+				name=$arg
+				;;
+		esac
+	done
+	if [ -z "$name" ]; then
+		echo "Missing argument - usage:  n [OPTIONS] <name>"
 		return
 	fi
-	local count=$(nls $1 | wc -l)
+	local count=$(nls $name | wc -l)
 	if [ $count -gt 1 ]; then
-		nls $1
+		nls $name
 		return
 	elif [ $count -eq 0 ]; then
-		$EDITOR "${_NOTES_DIR}/$1.md"
+		eval $cmd "${_NOTES_DIR}/$name.md"
 	else
-		$EDITOR "${_NOTES_DIR}/$(nls $1)"
+		eval $cmd "${_NOTES_DIR}/$(nls $name)"
 	fi
 }
+alias nrm='n --rm'
 nls() {
 	pushd ${_NOTES_DIR} > /dev/null
 	if [ $# = 0 ]; then
 		ls *.md
 	else
-		ls -1 *.md | grep $@
+		ls -1 *.md | grep -- $@
 	fi
 	popd > /dev/null
 }
