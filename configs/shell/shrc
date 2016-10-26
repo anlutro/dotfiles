@@ -115,7 +115,7 @@ termname() {
 # note taking
 _NOTES_DIR=~/Dropbox/notes
 n() {
-	if [ ! "$1" ]; then
+	if [ $# -lt 1 ]; then
 		echo "Missing argument - usage: n <name>"
 		return
 	fi
@@ -145,6 +145,7 @@ ns() {
 		grep -r "$@" ${_NOTES_DIR}
 	fi
 }
+alias ngrep=ns
 
 # journal/diary
 _JOURNAL_FILE=~/Dropbox/diary
