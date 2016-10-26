@@ -23,6 +23,7 @@ ra = remote add
 rrm = remote rm
 s = status
 st = status
+ss = show --stat
 tags = !git tag -n | sort -V | less -FX +G
 up = remote update -p
 
