@@ -89,22 +89,29 @@ install_git() {
 }
 
 install_gtk() {
-	ln -sf $configs/gtkrc-2.0 $HOME/.gtkrc-2.0
+	ln -sf $configs/gtk/gtk2-rc $HOME/.gtkrc-2.0
 
 	[ -d $HOME/.themes ] || mkdir $HOME/.themes
+
+	if [ ! -d $vendor/zuki-themes ]; then
+		git clone https://github.com/lassekongo83/zuki-themes $vendor/zuki-themes
+	fi
+	ln -sfT $vendor/zuki-themes/Zukiwi $HOME/.themes/Zukiwi
+	ln -sfT $vendor/zuki-themes/Zukiwi $HOME/.local/share/themes/Zukiwi
+	ln -sfT $vendor/zuki-themes/Zukitwo $HOME/.themes/Zukitwo
+	ln -sfT $vendor/zuki-themes/Zukitwo $HOME/.local/share/themes/Zukitwo
+	ln -sfT $vendor/zuki-themes/Zukitre $HOME/.themes/Zukitre
+	ln -sfT $vendor/zuki-themes/Zukitre $HOME/.local/share/themes/Zukitre
 
 	if [ ! -d $vendor/paper-gtk-theme ]; then
 		git clone https://github.com/snwh/paper-gtk-theme $vendor/paper-gtk-theme
 	fi
 	ln -sfT $vendor/paper-gtk-theme/Paper $HOME/.themes/Paper
+	ln -sfT $vendor/paper-gtk-theme/Paper $HOME/.local/share/themes/Paper
 
-	if [ ! -d $vendor/zuki-themes ]; then
-		git clone https://github.com/lassekongo83/zuki-themes $vendor/zuki-themes
+	if gtk-launch --version | grep '^3' > /dev/null; then
+		ln -sf $configs/gtk/gtk3-settings.ini $HOME/.config/gtk-3.0/settings.ini
 	fi
-
-	ln -sfT $vendor/zuki-themes/Zukiwi $HOME/.themes/Zukiwi
-	ln -sfT $vendor/zuki-themes/Zukitwo $HOME/.themes/Zukitwo
-	ln -sfT $vendor/zuki-themes/Zukitre $HOME/.themes/Zukitre
 }
 
 install_i3() {
