@@ -42,7 +42,10 @@ install_dunst() {
 }
 
 install_feh() {
-	[ -f $local/fehbg ] && ln -sf $local/fehbg $HOME/.fehbg
+	if [ -L $HOME/.fehbg ] && [ -f $local/fehbg ]; then
+		rm $HOME/.fehbg
+		cp $local/fehbg $HOME/.fehbg
+	fi
 }
 
 install_git() {
