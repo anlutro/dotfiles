@@ -88,6 +88,7 @@ alias pwgen-strong='pwgen -Bs'
 alias pwgen-weak='pwgen -ABn'
 alias s='sudo service'
 alias tree='tree --dirsfirst'
+alias sz='sudo zypper'
 
 # by default, most WMs opening a new terminal will make it start in ~ instead of
 # the current terminal's PWD. this alias lets you open a new terminal in the PWD
