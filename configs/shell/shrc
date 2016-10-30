@@ -1,4 +1,6 @@
 #!/bin/sh
+# note: this script is sourced by either bash or zsh, so it
+# does not really need to be dash/POSIX shell compliant.
 
 # don't put duplicate lines or lines starting with space in the history.
 export HISTCONTROL=ignoreboth
@@ -55,7 +57,7 @@ alias chmod='chmod --preserve-root'
 alias chgrp='chgrp --preserve-root'
 
 # make a directory and cd into it
-md() {
+function md {
 	mkdir -p "$@" && cd $_;
 }
 
@@ -89,7 +91,7 @@ alias tree='tree --dirsfirst'
 
 # by default, most WMs opening a new terminal will make it start in ~ instead of
 # the current terminal's PWD. this alias lets you open a new terminal in the PWD
-t() {
+function t {
 	local args="";
 	if [ "$*" != "" ]; then
 		args="-e $@"
@@ -108,13 +110,13 @@ t() {
 }
 
 # set a terminal's title
-termname() {
+function termname {
 	echo -ne "\033]0;$1\007"
 }
 
 # note taking
 _NOTES_DIR=~/Dropbox/notes
-n() {
+function n {
 	local name=""
 	local cmd=$EDITOR
 	for arg in "$@"; do
@@ -150,7 +152,7 @@ n() {
 	fi
 }
 alias nrm='n --rm'
-nls() {
+function nls {
 	pushd ${_NOTES_DIR} > /dev/null
 	if [ $# = 0 ]; then
 		ls *.md
@@ -159,7 +161,7 @@ nls() {
 	fi
 	popd > /dev/null
 }
-ns() {
+function ns {
 	if command -v ag >/dev/null 2>&1; then
 		ag "$@" ${_NOTES_DIR}
 	else
@@ -170,15 +172,17 @@ alias ngrep=ns
 
 # journal/diary
 _JOURNAL_FILE=~/Dropbox/diary
-j() {
+function j {
 	local tmpfile=/tmp/journal
 
 	vim -c 'setlocal tw=79' $tmpfile
 
 	if [ -e $tmpfile ] && [ -s $tmpfile ]; then
-		echo "===== $(date) =====" >> ${_JOURNAL_FILE}
+		if [ -e ${_JOURNAL_FILE} ] && [ -s ${_JOURNAL_FILE} ]; then
+			echo "\n" >> ${_JOURNAL_FILE}
+		fi
+		echo "=====  $(date)  =====" >> ${_JOURNAL_FILE}
 		cat $tmpfile >> ${_JOURNAL_FILE}
-		echo "\n" >> ${_JOURNAL_FILE}
 		echo "Appended entry to ${_JOURNAL_FILE}"
 	else
 		echo "Entry file empty, not doing anything"
@@ -189,29 +193,29 @@ j() {
 
 
 # improved ps | grep alias
-psgrep() {
+function psgrep {
 	ps auxf | grep "$@" | grep -v grep;
 }
 
 # set the keyboard map
-kb() {
+function kb {
 	setxkbmap -v -option compose:ralt -option caps:super $1 \
 		&& xset r rate 175 35
 }
 
 # livestreamer
-lvs() {
+function lvs {
 	livestreamer $1 ${2:-high,720p,best}
 }
 
 # composer create-project
-ccp() {
+function ccp {
 	_ccp_from=$1 && shift
 	composer create-project "$_ccp_from" -s dev --prefer-dist "$@";
 }
 
 # find and activate a virtualenv
-avenv() {
+function avenv {
 	if [ -f $PWD/.virtualenv/bin/activate ]; then
 		. $PWD/.virtualenv/bin/activate
 	elif [ -f $PWD/.venv/bin/activate ]; then
@@ -224,18 +228,18 @@ avenv() {
 }
 
 # find and remove pycache files
-clear_pycache() {
+function clear_pycache {
 	find . -type f -name '*.pyc' -print0 | xargs -0 rm
 	find . -type d -name '__pycache__' -print0 | xargs -0 rm -rf
 }
 
 # clone a github repository
-gh_clone() {
+function gh_clone {
 	git clone https://github.com/"$@"
 }
 
 # fetch a github pull request
-gh_fetch_pr() {
+function gh_fetch_pr {
 	local remote=$(git remote -v | grep '(fetch)' | grep 'github.com' | cut -f 1)
 	if [ -n "$remote" ]; then
 		git fetch $remote "pull/$1/head:pr-$1"
