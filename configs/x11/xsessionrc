@@ -1,13 +1,25 @@
 #!/bin/sh
 
-# turn on/off system beep
-xset b off
+if command -v xset >/dev/null 2>&1; then
+	# turn on/off system beep
+	xset b off
 
-# mouse acceleration - accel ratio and threshold
-xset m 1/1 0
+	# mouse acceleration - accel ratio and threshold
+	xset m 1/1 0
+
+	# keyboard repeat - delay (ms) and characters per second
+	xset r rate 175 35
+fi
+
+if command -v setxkbmap >/dev/null 2>&1; then
+	# set xkbmap options
+	setxkbmap -option compose:ralt -option caps:super
+fi
 
 # touchpad settings
-if egrep -iq 'synap|alps|etps' /proc/bus/input/devices; then
+if grep -Eiq 'synap|alps|etps' /proc/bus/input/devices && \
+	command -v synclient >/dev/null 2>&1
+then
 	synclient AccelFactor=0
 	synclient MinSpeed=1.25
 	synclient MaxSpeed=3
@@ -15,14 +27,10 @@ if egrep -iq 'synap|alps|etps' /proc/bus/input/devices; then
 	synclient TapButton1=1
 fi
 
-# keyboard repeat - delay (ms) and characters per second
-xset r rate 175 35
-
-# set xkbmap options
-setxkbmap -option compose:ralt -option caps:super
-
 # feh sets the desktop background
-[ -f ~/.fehbg ] && sh ~/.fehbg &
+if [ -x $HOME/.fehbg ]; then
+	$HOME/.fehbg &
+fi
 
 if command -v xflux >/dev/null 2>&1; then
 	xflux -l 58 -g 5 -k 2900 &

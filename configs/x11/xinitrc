@@ -1,13 +1,17 @@
 #!/bin/sh
 
 # redirect stdout/stderr from this script to a log file
-exec >> "$HOME/.xsession-errors" 2>&1
+exec >> "$HOME/.xlog" 2>&1
 
 # load .Xdefaults and .Xresources if they are present
 # note that system-wide files are ignored!
 if command -v xrdb >/dev/null 2>&1; then
-	[ -e $HOME/.Xdefaults ] && xrdb -merge $HOME/.Xdefaults
-	[ -e $HOME/.Xresources ] && xrdb -merge $HOME/.Xresources
+	if [ -e $HOME/.Xdefaults ]; then
+		xrdb -merge $HOME/.Xdefaults
+	fi
+	if [ -e $HOME/.Xresources ]; then
+		xrdb -merge $HOME/.Xresources
+	fi
 fi
 
 # if xhost (from x11-xserver-utils) is installed, use it to give access
@@ -19,7 +23,7 @@ if command -v xhost >/dev/null 2>&1; then
 fi
 
 if command -v 'xdg-user-dirs-update' >/dev/null 2>&1; then
-	/usr/bin/xdg-user-dirs-update
+	xdg-user-dirs-update
 fi
 
 # if no argument was passed, try and guess what command to start x with
@@ -28,6 +32,8 @@ if [ -z "$*" ]; then
 		X_START_CMD='x-session-manager'
 	elif command -v 'x-window-manager' >/dev/null 2>&1; then
 		X_START_CMD='x-window-manager'
+	elif command -v 'i3' >/dev/null 2>&1; then
+		X_START_CMD='i3'
 	else
 		echo "No appropriate X start command found!"
 		exit 1
@@ -53,13 +59,17 @@ if command -v 'ssh-agent' >/dev/null 2>&1; then
 fi
 
 # look for a script that sets up xrandr
-[ -x $HOME/.xrandrinit ] && $HOME/.xrandrinit
+if [ -x $HOME/.xrandrinit ]; then
+	$HOME/.xrandrinit
+fi
 
 # source .xsessionrc if it exists
-[ -e $HOME/.xsessionrc ] && . $HOME/.xsessionrc
+if [ -e $HOME/.xsessionrc ]; then
+	. $HOME/.xsessionrc
+fi
 
 # start the window manager. this is a blocking command (I think?)
-$X_START_CMD
+eval $X_START_CMD
 
 # when the window manager command quits, we can also kill the ssh-agent
 if command -v 'ssh-agent' >/dev/null 2>&1; then
