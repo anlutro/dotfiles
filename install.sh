@@ -112,7 +112,7 @@ install_gtk() {
 	ln -sfT $vendor/paper-gtk-theme/Paper $HOME/.themes/Paper
 	ln -sfT $vendor/paper-gtk-theme/Paper $HOME/.local/share/themes/Paper
 
-	if gtk-launch --version | grep '^3' > /dev/null; then
+	if [ -d $HOME/.config/gtk-3.0 ]; then
 		ln -sf $configs/gtk/gtk3-settings.ini $HOME/.config/gtk-3.0/settings.ini
 	fi
 }
