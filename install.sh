@@ -95,6 +95,7 @@ install_gtk() {
 	ln -sf $configs/gtk/gtk2-rc $HOME/.gtkrc-2.0
 
 	[ -d $HOME/.themes ] || mkdir $HOME/.themes
+	[ -d $HOME/.local/share/themes ] || mkdir $HOME/.local/share/themes
 
 	if [ ! -d $vendor/zuki-themes ]; then
 		git clone https://github.com/lassekongo83/zuki-themes $vendor/zuki-themes
