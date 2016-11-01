@@ -293,6 +293,8 @@ fi
 if command -v python3 >/dev/null 2>&1; then
 	ln -sf $scripts/templ.py $HOME/bin/templ
 fi
+ln -sf $scripts/notes.sh $HOME/bin/notes
+ln -sf $scripts/journal.sh $HOME/bin/journal
 echo "done"
 
 

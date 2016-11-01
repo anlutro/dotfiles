@@ -88,6 +88,10 @@ alias pwgen-weak='pwgen -ABn'
 alias s='sudo service'
 alias tree='tree --dirsfirst'
 alias sz='sudo zypper'
+alias n='notes --new'
+alias nl='notes --list'
+alias ns='notes --search'
+alias nrm='notes --remove'
 
 # by default, most WMs opening a new terminal will make it start in ~ instead of
 # the current terminal's PWD. this alias lets you open a new terminal in the PWD
@@ -101,7 +105,7 @@ function t {
 
 	if command -v i3-msg >/dev/null 2>&1; then
 		# opening through i3 exec prevents weird/inconsistent ps trees
-		i3-msg "exec x-terminal-emulator $args" &> /dev/null
+		i3-msg "exec x-terminal-emulator $args" >/dev/null 2>&1
 	else
 		# fork in a subshell to make the commands indepentent,
 		# and to suppress all output.
@@ -113,84 +117,6 @@ function t {
 function termname {
 	echo -ne "\033]0;$1\007"
 }
-
-# note taking
-_NOTES_DIR=~/Dropbox/notes
-function n {
-	local name=""
-	local cmd=$EDITOR
-	for arg in "$@"; do
-		case $arg in
-			-r|--rm|--remove|-d|--delete )
-				cmd="rm -v"
-				;;
-			-* )
-				echo "Unknown argument: $arg"
-				return
-				;;
-			* )
-				if [ -n "$name" ]; then
-					echo "Can only provide one name!"
-					return
-				fi
-				name=$arg
-				;;
-		esac
-	done
-	if [ -z "$name" ]; then
-		echo "Missing argument - usage:  n [OPTIONS] <name>"
-		return
-	fi
-	local count=$(nls $name | wc -l)
-	if [ $count -gt 1 ]; then
-		nls $name
-		return
-	elif [ $count -eq 0 ]; then
-		eval $cmd "${_NOTES_DIR}/$name.md"
-	else
-		eval $cmd "${_NOTES_DIR}/$(nls $name)"
-	fi
-}
-alias nrm='n --rm'
-function nls {
-	pushd ${_NOTES_DIR} > /dev/null
-	if [ $# = 0 ]; then
-		ls *.md
-	else
-		ls -1 *.md | grep -- $@
-	fi
-	popd > /dev/null
-}
-function ns {
-	if command -v ag >/dev/null 2>&1; then
-		ag "$@" ${_NOTES_DIR}
-	else
-		grep -r "$@" ${_NOTES_DIR}
-	fi
-}
-alias ngrep=ns
-
-# journal/diary
-_JOURNAL_FILE=~/Dropbox/diary
-function j {
-	local tmpfile=/tmp/journal
-
-	vim -c 'setlocal tw=79' $tmpfile
-
-	if [ -e $tmpfile ] && [ -s $tmpfile ]; then
-		if [ -e ${_JOURNAL_FILE} ] && [ -s ${_JOURNAL_FILE} ]; then
-			echo "\n" >> ${_JOURNAL_FILE}
-		fi
-		echo "=====  $(date)  =====" >> ${_JOURNAL_FILE}
-		cat $tmpfile >> ${_JOURNAL_FILE}
-		echo "Appended entry to ${_JOURNAL_FILE}"
-	else
-		echo "Entry file empty, not doing anything"
-	fi
-
-	rm -f $tmpfile
-}
-
 
 # improved ps | grep alias
 function psgrep {
