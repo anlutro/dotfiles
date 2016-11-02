@@ -50,9 +50,10 @@ if command -v 'dbus-launch' >/dev/null 2>&1; then
 fi
 
 # normally you'd prepend ssh-agent to X_START_CMD, which would set all the
-# environment variables and make the agent quit when X quits, but because my
-# .xsessionrc requires the ssh-agent environment variables to be present, use
-# this nasty hack instead. TODO: find alternative solutions
+# environment variables and make the agent quit when X quits, but because a
+# program started from xprograms (xautolock) needs access to the ssh-agent
+# environment variables, use this somewhat nasty hack instead.
+# TODO: find alternative solutions
 if command -v 'ssh-agent' >/dev/null 2>&1; then
 	killall ssh-agent --user $USER
 	eval $(ssh-agent -s)
