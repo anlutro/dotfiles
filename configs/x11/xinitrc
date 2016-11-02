@@ -63,9 +63,12 @@ if [ -x $HOME/.xrandrinit ]; then
 	$HOME/.xrandrinit
 fi
 
-# source .xsessionrc if it exists
-if [ -e $HOME/.xsessionrc ]; then
-	. $HOME/.xsessionrc
+# source .xprograms and .xsettings if they exist
+if [ -e $HOME/.xsettings ]; then
+	. $HOME/.xsettings
+fi
+if [ -e $HOME/.xprograms ]; then
+	. $HOME/.xprograms
 fi
 
 # start the window manager. this is a blocking command (I think?)

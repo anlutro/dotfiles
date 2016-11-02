@@ -248,9 +248,11 @@ install_nvim() {
 
 install_xorg() {
 	ln -sf $configs/x11/xinitrc $HOME/.xinitrc
-	ln -sf $configs/x11/xsessionrc $HOME/.xsessionrc
+	ln -sf $configs/x11/xprograms $HOME/.xprograms
+	ln -sf $configs/x11/xsettings $HOME/.xsettings
 	ln -sf $configs/x11/xdefaults $HOME/.Xdefaults
 	[ -f $local/xresources ] && ln -sf $local/xresources $HOME/.Xresources
+	[ -f $HOME/.xsessionrc ] && rm $HOME/.xsessionrc
 
 	FC_DIR=$HOME/.config/fontconfig/conf.d
 	[ -d $FC_DIR ] || mkdir -p $FC_DIR

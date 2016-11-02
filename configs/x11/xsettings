@@ -1,0 +1,28 @@
+#!/bin/sh
+
+if command -v xset >/dev/null 2>&1; then
+	# turn on/off system beep
+	xset b off
+
+	# mouse acceleration - accel ratio and threshold
+	xset m 1/1 0
+
+	# keyboard repeat - delay (ms) and characters per second
+	xset r rate 175 35
+fi
+
+# keyboard mapping options
+if command -v setxkbmap >/dev/null 2>&1; then
+	setxkbmap -option compose:ralt -option caps:super
+fi
+
+# touchpad settings
+if grep -Eiq 'synap|alps|etps' /proc/bus/input/devices && \
+	command -v synclient >/dev/null 2>&1
+then
+	synclient AccelFactor=0
+	synclient MinSpeed=1.25
+	synclient MaxSpeed=3
+	# tapping the touchpad sends a mouse button 1 event
+	synclient TapButton1=1
+fi
