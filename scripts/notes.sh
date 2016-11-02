@@ -15,8 +15,6 @@ main() {
 		exit 0
 	fi
 
-	set -x
-
 	local func="new"
 	local args=""
 	local name=""
