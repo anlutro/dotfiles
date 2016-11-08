@@ -52,7 +52,7 @@ main() {
 
 note_new() {
 	local name="$1"
-	local count=$(note_list $name | wc -l)
+	local count=$(note_list $name | wc -w)
 	if [ $count -gt 1 ]; then
 		note_list $name
 	elif [ $count -eq 0 ]; then
@@ -64,7 +64,7 @@ note_new() {
 
 note_delete() {
 	local name="$1"
-	local count=$(note_list $name | wc -l)
+	local count=$(note_list $name | wc -w)
 	if [ $count -gt 1 ]; then
 		note_list $name
 	elif [ $count -eq 0 ]; then
@@ -79,7 +79,10 @@ note_list() {
 	if [ $# = 0 ]; then
 		ls *.md
 	else
-		ls -1 *.md | grep -- "$*" | xargs ls
+		files=$(ls -1 *.md | grep -- "$*")
+		if [ -n "$files" ]; then
+			ls $files
+		fi
 	fi
 }
 
