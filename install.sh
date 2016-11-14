@@ -176,7 +176,6 @@ install_nano() {
 install_subl() {
 	ln -sfT $configs/sublime-text $HOME/.config/sublime-text-3/Packages/User
 	ln -sf $scripts/sublp.sh $HOME/bin/sublp
-	ln -sf $scripts/init-subl-project.py $HOME/bin/init-subl-project
 	ln -sf $scripts/update-sublime-text.sh $HOME/bin/update-sublime-text
 }
 
@@ -297,6 +296,7 @@ if command -v python3 >/dev/null 2>&1; then
 fi
 ln -sf $scripts/notes.sh $HOME/bin/notes
 ln -sf $scripts/journal.sh $HOME/bin/journal
+ln -sf $scripts/init-project.py $HOME/bin/init-project
 echo "done"
 
 
