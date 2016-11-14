@@ -131,7 +131,7 @@ function kb {
 
 # livestreamer
 function lvs {
-	livestreamer $1 ${2:-high,720p,best}
+	livestreamer $1 ${2:-900p60,720p60,best,720p30,720p,high}
 }
 
 # composer create-project
