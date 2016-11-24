@@ -34,7 +34,7 @@ for arg in "$@"; do
 done
 
 external=$(xrandr -q | grep -P '^(HDMI|DP)\d connected' | awk '{ print $1 }')
-num_ext=$(echo $external | wc -l)
+num_ext=$(echo $external | wc -w)
 
 if [ $num_ext -eq 1 ]; then
 	if [ "$DUPLICATE" = 'yes' ]; then
