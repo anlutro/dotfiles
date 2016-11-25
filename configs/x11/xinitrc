@@ -59,17 +59,14 @@ if command -v 'ssh-agent' >/dev/null 2>&1; then
 	eval $(ssh-agent -s)
 fi
 
-# look for a script that sets up xrandr
 if [ -x $HOME/.xrandrinit ]; then
 	$HOME/.xrandrinit
 fi
-
-# source .xprograms and .xsettings if they exist
 if [ -e $HOME/.xsettings ]; then
 	. $HOME/.xsettings
 fi
 if [ -e $HOME/.xprograms ]; then
-	. $HOME/.xprograms
+	$HOME/.xprograms
 fi
 
 # start the window manager. this is a blocking command (I think?)
