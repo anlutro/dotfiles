@@ -83,4 +83,9 @@ if [ "$DRYRUN" = 'yes' ]; then
 	xrandr --dryrun $XRANDR_ARGS
 else
 	xrandr $XRANDR_ARGS
+
+	# if screen size changed, need to re-set the desktop background
+	if [ -x $HOME/.fehbg ]; then
+		$HOME/.fehbg &
+	fi
 fi
