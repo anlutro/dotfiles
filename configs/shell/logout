@@ -9,15 +9,14 @@ if [ "$SHLVL" = 1 ]; then
 	fi
 fi
 
-# if SSH agent forwarding is used, try and clean up messed up symlinks for tmuxs
-if [ -n "$SSH_AUTH_SOCK" ]; then
-	agent_dir=$(find /tmp -maxdepth 1 -type d -name 'ssh-*' -user $USER -printf '%T@ %p\n' | sort -n | tail -1 | cut -d' ' -f2)
-	if [ -n "$agent_dir" ]; then
-		agent_sock=$(find $agent_dir -maxdepth 1 -type s -name 'agent.*' -printf '%T@ %p\n' | sort -n | tail -1 | cut -d' ' -f2)
-	fi
-	if [ -n "$agent_sock" ]; then
-		ln -sf $agent_sock ~/.ssh/ssh_auth_sock
-	else
-		rm ~/.ssh/ssh_auth_sock
-	fi
+# if SSH agent forwarding is used, try and clean up messed up symlinks for tmux
+agent_dirs=$(find /tmp -maxdepth 1 -type d -name 'ssh-*' -user $USER)
+if [ -n "$agent_dirs" ]; then
+	agent_socks=$(find $agent_dirs -maxdepth 1 -type s -name 'agent.*' -printf '%T@ %p\n' | sort -nr | cut -d' ' -f2)
+	for agent_sock in $agent_socks; do
+		if [ "$agent_sock" != "$SSH_AUTH_SOCK" ] ; then
+			ln -sf $agent_sock $HOME/.ssh/ssh_auth_sock
+			break
+		fi
+	done
 fi
