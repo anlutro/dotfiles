@@ -117,7 +117,7 @@
 	"show_full_path": false,
 	"show_line_endings": true,
 	"show_tab_close_buttons": false,
-	"tab_size": 3,
+	"tab_size": 4,
 	"theme": "Soda Dark 3.sublime-theme",
 	"translate_tabs_to_spaces": false,
 	"tree_animation_enabled": false,
