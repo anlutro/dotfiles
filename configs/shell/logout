@@ -1,0 +1,23 @@
+#!/bin/sh
+# note: this script is sourced by either bash or zsh, so it
+# does not really need to be dash/POSIX shell compliant.
+
+# when leaving the console clear the screen to increase privacy
+if [ "$SHLVL" = 1 ]; then
+	if [ -x /usr/bin/clear_console ]; then
+		/usr/bin/clear_console -q
+	fi
+fi
+
+# if SSH agent forwarding is used, try and clean up messed up symlinks for tmuxs
+if [ -n "$SSH_AUTH_SOCK" ]; then
+	agent_dir=$(find /tmp -maxdepth 1 -type d -name 'ssh-*' -user $USER -printf '%T@ %p\n' | sort -n | tail -1 | cut -d' ' -f2)
+	if [ -n "$agent_dir" ]; then
+		agent_sock=$(find $agent_dir -maxdepth 1 -type s -name 'agent.*' -printf '%T@ %p\n' | sort -n | tail -1 | cut -d' ' -f2)
+	fi
+	if [ -n "$agent_sock" ]; then
+		ln -sf $agent_sock ~/.ssh/ssh_auth_sock
+	else
+		rm ~/.ssh/ssh_auth_sock
+	fi
+fi

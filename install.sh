@@ -30,6 +30,7 @@ install_bash() {
 	ln -sf $configs/shell/bashrc $HOME/.bashrc
 	[ -f $HOME/.bash_aliases ] && rm $HOME/.bash_aliases
 	[ -f $HOME/.bash_ps1 ] && rm $HOME/.bash_ps1
+	ln -sf $configs/shell/logout $HOME/.bash_logout
 }
 
 install_compton() {
@@ -270,6 +271,7 @@ install_xorg() {
 install_zsh() {
 	ln -sf $configs/shell/zshrc $HOME/.zshrc
 	ln -sf $configs/shell/profile $HOME/.zprofile
+	ln -sf $configs/shell/logout $HOME/.zlogout
 }
 
 
