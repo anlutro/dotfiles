@@ -129,10 +129,11 @@ function kb {
 		&& xset r rate 175 35
 }
 
-# livestreamer
-function lvs {
-	livestreamer $1 ${2:-900p60,720p60,best,720p30,720p,high}
+# livestreamer/streamlink
+function sl {
+	streamlink $1 ${2:-900p60,720p60,best,720p30,720p,high}
 }
+alias lvs=sl
 
 # composer create-project
 function ccp {
