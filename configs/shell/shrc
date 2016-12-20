@@ -2,6 +2,17 @@
 # note: this script is sourced by either bash or zsh, so it
 # does not really need to be dash/POSIX shell compliant.
 
+# this was initially in ~/.ssh/rc but can't check for interactivity there.
+# create a symlink for the SSH agent socket so that we can use the symlink path
+# in tmux to avoid having to constantly update environment variables when re-
+# attaching sessions. only do this in interactive sessions, because some
+# additional logic to ensure that this works is in ~/.bash_logout, which is not
+# invoked when using non-interactive sessions. it's safe to assume that if you
+# start a non-interactive session you're not interested in using tmux anyway.
+if [ -n "$SSH_AUTH_SOCK" ]; then
+	ln -sf $SSH_AUTH_SOCK ~/.ssh/ssh_auth_sock
+fi
+
 # don't put duplicate lines or lines starting with space in the history.
 export HISTCONTROL=ignoreboth
 
@@ -16,7 +27,7 @@ export HISTFILE=~/.history
 export MANWIDTH=80
 
 # make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+test -x /usr/bin/lesspipe && eval "$(SHELL=/bin/sh lesspipe)"
 
 # ls --color config with dircolors
 export LS_COLORS='fi=0:di=1;34:ow=1;34:ln=33:ex=1;32:mi=0;31'
