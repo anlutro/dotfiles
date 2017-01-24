@@ -52,13 +52,20 @@ main() {
 
 note_new() {
 	local name="$1"
-	local count=$(note_list $name | wc -w)
-	if [ $count -gt 1 ]; then
-		note_list $name
-	elif [ $count -eq 0 ]; then
-		eval $EDITOR "$NOTES_DIR/$name.md"
+	if [ -f "$NOTES_DIR/$name.md" ]; then
+		NOTES_PATH="$NOTES_DIR/$name.md"
 	else
-		eval $EDITOR "$NOTES_DIR/$(note_list $name)"
+		local count=$(note_list $name | wc -w)
+		if [ $count -gt 1 ]; then
+			note_list $name
+		elif [ $count -eq 0 ]; then
+			NOTES_PATH="$NOTES_DIR/$name.md"
+		else
+			NOTES_PATH="$NOTES_DIR/$(note_list $name)"
+		fi
+	fi
+	if [ -n "$NOTES_PATH" ]; then
+		eval $EDITOR "$NOTES_PATH"
 	fi
 }
 
