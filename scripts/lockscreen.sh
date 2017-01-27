@@ -15,7 +15,7 @@ while [ $# -gt 0 ]; do
 			cmd="$cmd && systemctl suspend"
 			;;
 		* )
-			echo "Uknown argument: $1" >2&
+			echo "Uknown argument: $1" >&2
 			exit 1
 			;;
 	esac
