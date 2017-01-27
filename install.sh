@@ -9,7 +9,7 @@ if [ -z "$HOST" ]; then
 	HOST=$(hostname)
 fi
 
-root=$(dirname $(readlink -f "$0"))
+root=$(dirname "$(readlink -f "$0")")
 configs=$root/configs
 scripts=$root/scripts
 local="$root/local/$HOST"
@@ -232,7 +232,7 @@ install_vim() {
 	[ -d $HOME/.vim ] || mkdir $HOME/.vim
 	for file in $configs/vim/*; do
 		if [ $file != $configs/vim/init.vim ]; then
-			ln -sfT $file $HOME/.vim/$(basename $file)
+			ln -sfT $file "$HOME/.vim/$(basename "$file")"
 		fi
 	done
 }
@@ -242,7 +242,7 @@ install_nvim() {
 
 	[ -d $HOME/.config/nvim ] || mkdir $HOME/.config/nvim
 	for file in $configs/vim/*; do
-		ln -sfT $file $HOME/.config/nvim/$(basename $file)
+		ln -sfT $file "$HOME/.config/nvim/$(basename "$file")"
 	done
 }
 

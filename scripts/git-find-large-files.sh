@@ -17,8 +17,8 @@ else
 fi
 
 i=0
-for SHA in `cut -f 1 -d' ' < $tmpdir/bigobjects.txt`; do
-	echo $(grep $SHA $tmpdir/bigobjects.txt) $(grep $SHA $tmpdir/allfileshas.txt) \
+for SHA in $(cut -f 1 -d' ' < $tmpdir/bigobjects.txt); do
+	echo "$(grep $SHA $tmpdir/bigobjects.txt)" "$(grep $SHA $tmpdir/allfileshas.txt)" \
 		| awk '{print $1,$3,$7}' \
 		>> $tmpdir/bigtosmall.txt
 	i=$(expr $i + 1)

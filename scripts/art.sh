@@ -1,9 +1,9 @@
 #!/bin/sh
 
 if [ -f ./bin/artisan ]; then
-	php ./bin/artisan $@
+	php ./bin/artisan "$@"
 elif [ -f ./artisan ]; then
-	php ./artisan $@
+	php ./artisan "$@"
 else
 	echo "No artisan file found!"
 	return 1
