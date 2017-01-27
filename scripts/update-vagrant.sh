@@ -15,6 +15,6 @@ if dpkg -s vagrant | grep "Version: 1:$version" > /dev/null; then
 	exit 0
 fi
 
-echo cd ~/Downloads
-echo wget $url
-echo sudo dpkg -i $filename
+cd ~/Downloads
+wget $url
+sudo dpkg -i $filename
