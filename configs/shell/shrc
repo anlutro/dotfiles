@@ -186,6 +186,13 @@ function gh_fetch_pr {
 	fi
 }
 
+function hex2oct {
+	echo "obase=8; ibase=16; $@" | bc
+}
+function oct2hex {
+	echo "obase=16; ibase=8; $@" | bc
+}
+
 # local overrides
 if [ -f "$HOME/.shrc.local" ]; then
 	. "$HOME/.shrc.local"
