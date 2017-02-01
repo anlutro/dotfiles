@@ -6,6 +6,9 @@ case $- in
 	*) return;;
 esac
 
+# get rid of those god damn bash builtin aliases
+unalias -a
+
 # environment variables, aliases and functions
 if [ -f "$HOME/.shrc" ]; then
 	. "$HOME/.shrc"
