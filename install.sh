@@ -188,6 +188,14 @@ install_tmux() {
 	ln -sf $configs/tmux.conf $HOME/.tmux.conf
 }
 
+_install_urxvt_perl() {
+	if [ -f "$vendor/urxvt-perls/$1" ]; then
+		ln -sf "$vendor/urxvt-perls/$1" $HOME/.urxvt/ext/$1
+	elif [ -f "$vendor/urxvt-perls/deprecated/$1" ]; then
+		ln -sf "$vendor/urxvt-perls/deprecated/$1" $HOME/.urxvt/ext/$1
+	fi
+}
+
 install_urxvt() {
 	if [ ! -d $vendor/urxvt-perls ]; then
 		git clone https://github.com/muennich/urxvt-perls $vendor/urxvt-perls
@@ -197,9 +205,9 @@ install_urxvt() {
 	fi
 
 	[ -d $HOME/.urxvt/ext ] || mkdir -p $HOME/.urxvt/ext
-	ln -sf "$vendor/urxvt-perls/url-select" $HOME/.urxvt/ext/url-select
-	ln -sf "$vendor/urxvt-perls/clipboard" $HOME/.urxvt/ext/clipboard
-	ln -sf "$vendor/urxvt-perls/keyboard-select" $HOME/.urxvt/ext/keyboard-select
+	_install_urxvt_perl url-select
+	_install_urxvt_perl clipboard
+	_install_urxvt_perl keyboard-select
 	ln -sf "$vendor/urxvt-font-size/font-size" $HOME/.urxvt/ext/font-size
 }
 
