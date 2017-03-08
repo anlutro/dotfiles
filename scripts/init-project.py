@@ -1,9 +1,20 @@
 #!/usr/bin/env python3
 
 import json
-import sys
 import os
 import os.path
+import readline
+import sys
+
+
+def input_with_prefill(prompt, text):
+	def hook():
+		readline.insert_text(text)
+		readline.redisplay()
+	readline.set_pre_input_hook(hook)
+	result = input(prompt)
+	readline.set_pre_input_hook()
+	return result
 
 
 def write_sublime_project(path, project_types):
@@ -33,7 +44,11 @@ def write_sublime_project(path, project_types):
 			"path": ".",
 			"folder_exclude_patterns": folder_exclude_patterns,
 		}],
+		"settings": {}
 	}
+
+	indent = input_with_prefill('Tabs or spaces for indentation? ', 'tabs')
+	data['settings']['translate_tabs_to_spaces'] = ('space' in indent.lower())
 
 	with open(path, 'w+') as f:
 		f.write(json.dumps(data, indent=2) + '\n')
@@ -48,17 +63,16 @@ def write_gitignore(path, project_types):
 			'/pip-selfcheck.json', '*.egg-info',
 		])
 		ignores.append(['# pytest', '/.cache', '/.coverage'])
-		if os.path.exists('.venv'):
-			ignores.append(['# virtualenv', '.venv'])
-		elif os.path.exists('.virtualenv'):
-			ignores.append(['# virtualenv', '.virtualenv'])
-		elif os.path.exists('lib') and os.path.exists('include'):
-			ignores.append([
-				'# virtualenv', 'bin', 'dist', 'include', 'lib', 'lib64', 'share',
-			])
+		ignores.append([
+			'# virtualenv', '/.venv', '/.virtualenv',
+			'/bin', '/dist', '/include', '/lib', '/lib64', '/share',
+		])
+
+	if 'php' in project_types:
+		ignores.append(['/vendor'])
 
 	if os.path.exists('Vagrantfile'):
-		ignores.append(['# vagrant', '.vagrant'])
+		ignores.append(['# vagrant', '/.vagrant'])
 
 	gitignore_str = '\n\n'.join(['\n'.join(ign) for ign in ignores])
 	if gitignore_str:
@@ -76,11 +90,11 @@ def main():
 	project_types = sys.argv[1:]
 	print('Project name:', project_name)
 	print('Project types:', project_types)
-	file_func_map = {
-		project_name + '.sublime-project': write_sublime_project,
-		'.gitignore': write_gitignore,
-	}
-	for filename, func in file_func_map.items():
+	file_funcs = (
+		(project_name + '.sublime-project', write_sublime_project),
+		('.gitignore', write_gitignore),
+	)
+	for filename, func in file_funcs:
 		if os.path.exists(filename):
 			print(filename, 'already exists!')
 			if not input('overwrite? [y/n] ').lower().startswith('y'):
