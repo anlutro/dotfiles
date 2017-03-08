@@ -104,6 +104,20 @@ alias nl='notes --list'
 alias ns='notes --search'
 alias nrm='notes --remove'
 
+function go {
+	if [ -d $PWD/.gopath ]; then
+		_gopath="$PWD/.gopath"
+	elif [ -n "$GOPATH" ]; then
+		_gopath=$GOPATH
+	fi
+
+	if [ -n "$_gopath" ]; then
+		GOPATH="$_gopath" GOBIN="$_gopath/bin" command go "$@"
+	else
+		echo "gopath not found!"
+	fi
+}
+
 # by default, most WMs opening a new terminal will make it start in ~ instead of
 # the current terminal's PWD. this alias lets you open a new terminal in the PWD
 function t {
