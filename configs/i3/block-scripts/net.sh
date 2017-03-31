@@ -3,7 +3,7 @@
 if [ -n "$1" ]; then
 	iface_name=$1
 else
-	iface_name=$(ip route | grep default | cut -d ' ' -f 5)
+	iface_name=$(ip route | grep 'default via' | cut -d ' ' -f 5)
 	if [ -z "$iface_name" ]; then
 		echo "All networks DOWN"
 		echo "All networks DOWN"
