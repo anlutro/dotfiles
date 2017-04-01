@@ -1,5 +1,5 @@
 [global]
-font = Droid Sans 10, Noto Sans 10, Liberation Sans 10
+font = Droid Sans, Noto Sans, Liberation Sans 10
 
 # Allow a small subset of html markup in notifications and formats:
 #   <b>bold</b>
