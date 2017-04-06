@@ -48,6 +48,9 @@ followTags = true
 [pull]
 ff = only
 
+[rerere]
+enabled = 1
+
 [url "git@github.com:"]
 pushInsteadOf = https://github.com/
 
