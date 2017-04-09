@@ -20,7 +20,7 @@ fi
 
 ip_addr=$(ip addr show $iface_name | grep "$addr_name" | cut -d ' ' -f 6 | cut -d '/' -f 1)
 
-if echo $iface_name | grep wlan > /dev/null; then
+if echo $iface_name | grep ^wl > /dev/null; then
 	quality=$(grep $iface_name /proc/net/wireless | awk '{ print int($3 * 100 / 70) }')
 	text="$iface_name $ip_addr ($quality%)"
 else
