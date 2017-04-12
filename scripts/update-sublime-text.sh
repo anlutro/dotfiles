@@ -4,7 +4,7 @@ set -eu
 rel=$(lsb_release -s -i)
 if [ $rel = 'Debian' ] || [ $rel = 'Ubuntu' ]; then
 	url=$(curl -sSL https://www.sublimetext.com/3dev | grep -oP 'https://[A-z0-9/_.-]*_amd64\.deb')
-	version=$(echo $url | sed -r 's/.*build-([0-9]+)-_amd64.*/\1/')
+	version=$(echo $url | sed -r 's/.*build-([0-9]+)_amd64.*/\1/')
 else
 	url=$(curl -sSL https://www.sublimetext.com/3dev | grep -oP 'https://[A-z0-9/_.-]*_x64\.tar\.bz2')
 	version=$(echo $url | sed -r 's/.*build_([0-9]+)_x64.*/\1/')
