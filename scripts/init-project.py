@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
+import argparse
 import json
 import os
 import os.path
 import readline
-import sys
 
 
 def input_with_prefill(prompt, text):
@@ -21,7 +21,7 @@ def write_sublime_project(path, project_types):
 	folder_exclude_patterns = ["build*"]
 
 	for ptype in project_types:
-		if ptype == 'python':
+		if ptype.startswith('python'):
 			folder_exclude_patterns.extend([
 				".venv*",
 				".virtualenv*",
@@ -82,12 +82,13 @@ def write_gitignore(path, project_types):
 
 
 def main():
-	if len(sys.argv) < 2:
-		print('Usage: %s [project_types ...]' % sys.argv[0])
-		sys.exit(1)
+	parser = argparse.ArgumentParser()
+	parser.add_argument('-n', '--name', type=str, default=os.path.basename(os.getcwd()))
+	parser.add_argument('types', nargs='*', type=list)
+	args = parser.parse_args()
 
-	project_name = os.path.basename(os.getcwd())
-	project_types = sys.argv[1:]
+	project_name = args.name
+	project_types = args.types
 	print('Project name:', project_name)
 	print('Project types:', project_types)
 	file_funcs = (
