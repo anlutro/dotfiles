@@ -26,7 +26,7 @@ fi
 if command -v xfce4-power-manager >/dev/null 2>&1; then
 	xfce4-power-manager &
 elif command -v xautolock >/dev/null 2>&1; then
-	xautolock -time 60 -detectsleep -locker '~/bin/lockscreen --suspend' &
+	xautolock -time 60 -detectsleep -locker 'lockscreen --suspend' &
 fi
 
 # unclutter removes the mouse cursor after a given amount of idle time
