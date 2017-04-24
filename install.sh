@@ -9,6 +9,15 @@ if [ -z "$HOST" ]; then
 	HOST=$(hostname)
 fi
 
+if [ ! -d $HOME/.local ]; then
+	mkdir $HOME/.local
+	chmod 700 $HOME/.local
+fi
+if [ ! -d $HOME/.local/bin ]; then
+	mkdir $HOME/.local/bin
+fi
+bindir=$HOME/.local/bin
+
 root=$(dirname "$(readlink -f "$0")")
 configs=$root/configs
 scripts=$root/scripts
@@ -87,9 +96,9 @@ install_git() {
 		fi
 	fi
 
-	ln -sf $scripts/git-abort.sh $HOME/bin/git-abort
-	ln -sf $scripts/git-with-sshkey.sh $HOME/bin/git-with-sshkey
-	ln -sf $scripts/git-find-large-files.sh $HOME/bin/git-find-large-files
+	ln -sf $scripts/git-abort.sh $bindir/git-abort
+	ln -sf $scripts/git-with-sshkey.sh $bindir/git-with-sshkey
+	ln -sf $scripts/git-find-large-files.sh $bindir/git-find-large-files
 }
 
 install_gtk() {
@@ -123,8 +132,8 @@ install_i3() {
 	[ -d $HOME/.config/i3 ] || mkdir $HOME/.config/i3
 	ln -sf $configs/i3/i3.conf $HOME/.config/i3/config
 
-	ln -sf $scripts/i3-get.py $HOME/bin/i3-get
-	ln -sf $scripts/i3-switch.sh $HOME/bin/i3-switch
+	ln -sf $scripts/i3-get.py $bindir/i3-get
+	ln -sf $scripts/i3-switch.sh $bindir/i3-switch
 }
 
 install_i3blocks() {
@@ -176,8 +185,8 @@ install_nano() {
 
 install_subl() {
 	ln -sfT $configs/sublime-text $HOME/.config/sublime-text-3/Packages/User
-	ln -sf $scripts/sublp.sh $HOME/bin/sublp
-	ln -sf $scripts/update-sublime-text.sh $HOME/bin/update-sublime-text
+	ln -sf $scripts/sublp.sh $bindir/sublp
+	ln -sf $scripts/update-sublime-text.sh $bindir/update-sublime-text
 }
 
 install_taskwarrior() {
@@ -272,7 +281,7 @@ install_xorg() {
 	rm -f $HOME/.config/fontconfig/fonts.conf
 	rm -f $HOME/.config/fontconfig/local.conf
 
-	ln -sf $scripts/lockscreen.sh $HOME/bin/lockscreen
+	ln -sf $scripts/lockscreen.sh $bindir/lockscreen
 	[ -f $local/xrandrinit ] && ln -sf $local/xrandrinit $HOME/.xrandrinit
 }
 
@@ -293,20 +302,19 @@ ln -sf $configs/ssh/rc $HOME/.ssh/rc
 echo "done"
 
 
-echo -n "Linking ~/bin files... "
-[ -d $HOME/bin ] || mkdir $HOME/bin
+echo -n "Linking various bin scripts... "
 if [ -d /etc/apache2 ]; then
-	ln -sf $scripts/a2es.sh $HOME/bin/a2es
+	ln -sf $scripts/a2es.sh $bindir/a2es
 fi
 if command -v php >/dev/null 2>&1; then
-	ln -sf $scripts/art.sh $HOME/bin/art
+	ln -sf $scripts/art.sh $bindir/art
 fi
 if command -v python3 >/dev/null 2>&1; then
-	ln -sf $scripts/templ.py $HOME/bin/templ
+	ln -sf $scripts/templ.py $bindir/templ
 fi
-ln -sf $scripts/notes.sh $HOME/bin/notes
-ln -sf $scripts/journal.sh $HOME/bin/journal
-ln -sf $scripts/init-project.py $HOME/bin/init-project
+ln -sf $scripts/notes.sh $bindir/notes
+ln -sf $scripts/journal.sh $bindir/journal
+ln -sf $scripts/init-project.py $bindir/init-project
 echo "done"
 
 
