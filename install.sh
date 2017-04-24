@@ -186,7 +186,6 @@ install_nano() {
 install_subl() {
 	ln -sfT $configs/sublime-text $HOME/.config/sublime-text-3/Packages/User
 	ln -sf $scripts/sublp.sh $bindir/sublp
-	ln -sf $scripts/update-sublime-text.sh $bindir/update-sublime-text
 }
 
 install_taskwarrior() {
