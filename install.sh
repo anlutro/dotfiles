@@ -184,6 +184,7 @@ install_nano() {
 }
 
 install_subl() {
+	mkdir -p $HOME/.config/sublime-text-3/Packages
 	ln -sfT $configs/sublime-text $HOME/.config/sublime-text-3/Packages/User
 	ln -sf $scripts/sublp.sh $bindir/sublp
 }
