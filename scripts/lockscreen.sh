@@ -1,7 +1,15 @@
 #!/bin/sh
 
-cmd='i3lock -c 000000'
+cmd='true'
 
+# if i3lock is already running, trying to execute it again will fail.
+# the result is that the computer won't suspend through xautolock if
+# the machine has been manually locked (but not suspended) before.
+if ! pidof i3lock > /dev/null; then
+	cmd="$cmd && i3lock -c 000000"
+fi
+
+# delete keys from ssh agent if it is running
 if [ -n "$SSH_AGENT_PID" ]; then
 	cmd="$cmd && ssh-add -D"
 fi
