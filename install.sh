@@ -10,11 +10,11 @@ if [ -z "$HOST" ]; then
 fi
 
 if [ ! -d $HOME/.local ]; then
-	mkdir $HOME/.local
+	mkdir -p $HOME/.local
 	chmod 700 $HOME/.local
 fi
 if [ ! -d $HOME/.local/bin ]; then
-	mkdir $HOME/.local/bin
+	mkdir -p $HOME/.local/bin
 fi
 bindir=$HOME/.local/bin
 
@@ -47,7 +47,7 @@ install_compton() {
 }
 
 install_dunst() {
-	[ -d $HOME/.config/dunst ] || mkdir $HOME/.config/dunst
+	mkdir -p $HOME/.config/dunst
 	ln -sf $configs/dunstrc $HOME/.config/dunst/dunstrc
 }
 
@@ -73,7 +73,7 @@ install_git() {
 			mv $HOME/.gitconfig.local $HOME/.config/git/config.local
 
 		local conf_path=$HOME/.config/git
-		[ -d $conf_path ] || mkdir -p $conf_path
+		mkdir -p $conf_path
 		ln -sf $configs/git/config $conf_path/config
 		ln -sf $configs/git/ignore_global $conf_path/ignore
 		local_conf=$conf_path/config.local
@@ -104,8 +104,8 @@ install_git() {
 install_gtk() {
 	ln -sf $configs/gtk/gtk2-rc $HOME/.gtkrc-2.0
 
-	[ -d $HOME/.themes ] || mkdir $HOME/.themes
-	[ -d $HOME/.local/share/themes ] || mkdir $HOME/.local/share/themes
+	mkdir -p $HOME/.themes
+	mkdir -p $HOME/.local/share/themes
 
 	if [ ! -d $vendor/zuki-themes ]; then
 		git clone https://github.com/lassekongo83/zuki-themes $vendor/zuki-themes
@@ -129,7 +129,7 @@ install_gtk() {
 }
 
 install_i3() {
-	[ -d $HOME/.config/i3 ] || mkdir $HOME/.config/i3
+	mkdir -p $HOME/.config/i3
 	ln -sf $configs/i3/i3.conf $HOME/.config/i3/config
 
 	ln -sf $scripts/i3-get.py $bindir/i3-get
@@ -140,11 +140,11 @@ install_i3blocks() {
 	local conf_path=$HOME/.config/i3blocks
 
 	[ -d $vendor/i3blocks ] || git clone https://github.com/vivien/i3blocks $vendor/i3blocks
-	[ -d $conf_path ] || mkdir $conf_path
+	mkdir -p $conf_path
 	ln -sf $configs/i3/i3blocks.conf $conf_path/config
 
 	[ -L $conf_path/scripts ] && rm $conf_path/scripts
-	[ ! -d $conf_path/scripts ] && mkdir $conf_path/scripts
+	[ ! -d $conf_path/scripts ] && mkdir -p $conf_path/scripts
 
 	for f in $vendor/i3blocks/scripts/*; do
 		filepath=$(readlink -f $f)
@@ -160,18 +160,18 @@ install_i3blocks() {
 }
 
 install_i3status() {
-	[ -d $HOME/.config/i3status ] || mkdir $HOME/.config/i3status
+	mkdir -p $HOME/.config/i3status
 	ln -sf $configs/i3/i3status.conf $HOME/.config/i3status/config
 }
 
 install_irssi() {
-	[ -d $HOME/.irssi ] || mkdir -p $HOME/.irssi
+	mkdir -p $HOME/.irssi
 	ln -sf $configs/irssi/default.theme $HOME/.irssi/default.theme
 	ln -sfT $configs/irssi/scripts $HOME/.irssi/scripts
 }
 
 install_moc() {
-	[ -d $HOME/.moc ] || mkdir -p $HOME/.moc
+	mkdir -p $HOME/.moc
 	ln -sfT $configs/moc.conf $HOME/.moc/config
 }
 
@@ -184,8 +184,13 @@ install_nano() {
 }
 
 install_subl() {
-	mkdir -p $HOME/.config/sublime-text-3/Packages
-	ln -sfT $configs/sublime-text $HOME/.config/sublime-text-3/Packages/User
+	pkgdir=$HOME/.config/sublime-text-3/Packages
+	userdir=$pkgdir/User
+	mkdir -p $pkgdir
+	if [ -d $userdir ] && [ ! -L $userdir ]; then
+		mv $userdir{,.bak}
+	fi
+	ln -sfT $configs/sublime-text $userdir
 	ln -sf $scripts/sublp.sh $bindir/sublp
 }
 
@@ -213,7 +218,7 @@ install_urxvt() {
 		git clone https://github.com/majutsushi/urxvt-font-size $vendor/urxvt-font-size
 	fi
 
-	[ -d $HOME/.urxvt/ext ] || mkdir -p $HOME/.urxvt/ext
+	mkdir -p $HOME/.urxvt/ext
 	_install_urxvt_perl url-select
 	_install_urxvt_perl clipboard
 	_install_urxvt_perl keyboard-select
@@ -246,7 +251,7 @@ install_vim() {
 
 	ln -sfT $configs/vim/init.vim $HOME/.vimrc
 
-	[ -d $HOME/.vim ] || mkdir $HOME/.vim
+	mkdir -p $HOME/.vim
 	for file in $configs/vim/*; do
 		if [ $file != $configs/vim/init.vim ]; then
 			ln -sfT $file "$HOME/.vim/$(basename "$file")"
@@ -257,7 +262,7 @@ install_vim() {
 install_nvim() {
 	vim_common
 
-	[ -d $HOME/.config/nvim ] || mkdir $HOME/.config/nvim
+	mkdir -p $HOME/.config/nvim
 	for file in $configs/vim/*; do
 		ln -sfT $file "$HOME/.config/nvim/$(basename "$file")"
 	done
@@ -272,7 +277,7 @@ install_xorg() {
 	[ -e $HOME/.xsessionrc ] && rm $HOME/.xsessionrc
 
 	FC_DIR=$HOME/.config/fontconfig/conf.d
-	[ -d $FC_DIR ] || mkdir -p $FC_DIR
+	mkdir -p $FC_DIR
 	ln -sf $configs/fontconfig/fonts.conf $FC_DIR/00-common.conf
 	if [ -f $local/fonts.local.conf ]; then
 		ln -sf $local/fonts.local.conf $FC_DIR/99-local.conf
