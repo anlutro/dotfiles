@@ -273,21 +273,33 @@ install_xorg() {
 	ln -sf $configs/x11/xprograms $HOME/.xprograms
 	ln -sf $configs/x11/xsettings $HOME/.xsettings
 	ln -sf $configs/x11/xdefaults $HOME/.Xdefaults
-	[ -f $local/xresources ] && ln -sf $local/xresources $HOME/.Xresources
-	[ -e $HOME/.xsessionrc ] && rm $HOME/.xsessionrc
+	if [ -f $local/xresources ]; then
+		ln -sf $local/xresources $HOME/.Xresources
+	elif [ -L $HOME/.Xresources ]; then
+		rm $HOME/.Xresources
+	fi
+	if [ -e $HOME/.xsessionrc ]; then
+		rm $HOME/.xsessionrc
+	fi
 
 	FC_DIR=$HOME/.config/fontconfig/conf.d
 	mkdir -p $FC_DIR
 	ln -sf $configs/fontconfig/fonts.conf $FC_DIR/00-common.conf
 	if [ -f $local/fonts.local.conf ]; then
 		ln -sf $local/fonts.local.conf $FC_DIR/99-local.conf
+	elif [ -L $FC_DIR/99-local.conf ]; then
+		rm $FC_DIR/99-local.conf
 	fi
 	rm -f $HOME/.fonts.conf
 	rm -f $HOME/.config/fontconfig/fonts.conf
 	rm -f $HOME/.config/fontconfig/local.conf
 
 	ln -sf $scripts/lockscreen.sh $bindir/lockscreen
-	[ -f $local/xrandrinit ] && ln -sf $local/xrandrinit $HOME/.xrandrinit
+	if [ -f $local/xrandrinit ]; then
+		ln -sf $local/xrandrinit $HOME/.xrandrinit
+	elif [ -L $HOME/.xrandrinit ]; then
+		rm $HOME/.xrandrinit
+	fi
 }
 
 install_zsh() {
