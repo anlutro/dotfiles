@@ -1,7 +1,0 @@
-#!/bin/sh
-
-xrandr --output LVDS1 --auto --primary
-
-if [ -x $HOME/.fehbg ]; then
-	$HOME/.fehbg &
-fi
