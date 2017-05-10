@@ -84,7 +84,7 @@ def write_gitignore(path, project_types):
 def main():
 	parser = argparse.ArgumentParser()
 	parser.add_argument('-n', '--name', type=str, default=os.path.basename(os.getcwd()))
-	parser.add_argument('types', nargs='*', type=list)
+	parser.add_argument('types', nargs='*', type=str)
 	args = parser.parse_args()
 
 	project_name = args.name
