@@ -1,4 +1,0 @@
-Xft.dpi: 110
-
-! this one seems dependant on uxrvt/xorg version or something
-URxvt*.letterSpace: -1

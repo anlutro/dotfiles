@@ -1,3 +1,6 @@
+!! this dpi setting applies to things that do not read fonts.conf (I think)
+Xft.dpi: 110
+
 !! colors
 URxvt*.background: rgba:0000/0000/0000/e000
 URxvt*.foreground: #dddddd
@@ -49,7 +52,7 @@ URxvt*.visualBell: false
 URxvt*.font: xft:Source Code Pro:size=10
 URxvt*.boldFont: xft:Source Code Pro:semibold:size=10
 URxvt*.intensityStyles: true
-URxvt*.letterSpace: 0
+URxvt*.letterSpace: -1
 URxvt*.skipBuiltinGlyphs: false
 
 ! scrolling
