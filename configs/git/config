@@ -61,3 +61,7 @@ pushInsteadOf = https://gist.github.com/
 [include]
 path = config.local
 path = .gitconfig.local
+
+# do not try to guess name/email
+[user]
+useConfigOnly = true
