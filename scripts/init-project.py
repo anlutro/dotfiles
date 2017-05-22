@@ -50,6 +50,10 @@ def write_sublime_project(path, project_types):
 	indent = input_with_prefill('Tabs or spaces for indentation? ', 'tabs')
 	data['settings']['translate_tabs_to_spaces'] = ('space' in indent.lower())
 
+	spaces = input_with_prefill('Tab size? (leave empty for default) ', '')
+	if spaces:
+		data['settings']['tab_size'] = int(spaces.strip())
+
 	with open(path, 'w+') as f:
 		f.write(json.dumps(data, indent=2) + '\n')
 	print('Wrote', path)
