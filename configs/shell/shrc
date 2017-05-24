@@ -103,6 +103,7 @@ alias n='notes --new'
 alias nl='notes --list'
 alias ns='notes --search'
 alias nrm='notes --remove'
+alias v='vagrant'
 
 function go {
 	if [ -d $PWD/.gopath ]; then
