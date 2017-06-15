@@ -37,8 +37,11 @@ else
 	outputs[HDMI-1]='--off'
 	outputs[HDMI-2]='--off'
 	outputs[DP-1]='--off'
+	outputs[DP-1-1]='--off'
+	outputs[DP-1-2]='--off'
+	outputs[DP-1-3]='--off'
 
-	if echo "$connected" | grep -F 'DP-1-' > /dev/null; then
+	if [ "$DUPLICATE" != 'yes' ] && echo "$connected" | grep -F 'DP-1-' > /dev/null; then
 		# docked setup for work
 		outputs[DP-1-2]="--${DIRECTION}-of eDP-1"
 		outputs[DP-1-1]="--${DIRECTION}-of DP-1-2"
