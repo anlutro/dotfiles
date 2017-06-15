@@ -26,39 +26,33 @@ for arg in "$@"; do
 done
 
 connected=$(xrandr -q | grep -F ' connected' | awk '{ print $1 }')
-num_connected=$(echo "$external" | wc -w)
 
-if [ $num_connected -eq 1 ]; then
-	# only internal display
-	xrandr_args="--output $connected --auto --primary"
+declare -A outputs
+outputs[eDP-1]='--primary'
+outputs[HDMI-1]='--off'
+outputs[HDMI-2]='--off'
+outputs[DP-1]='--off'
+outputs[DP-1-1]='--off'
+outputs[DP-1-2]='--off'
+outputs[DP-1-3]='--off'
+
+if [ "$DUPLICATE" != 'yes' ] && echo "$connected" | grep -F 'DP-1-' > /dev/null; then
+	# docked setup for work
+	outputs[DP-1-2]="--${DIRECTION}-of eDP-1"
+	outputs[DP-1-1]="--${DIRECTION}-of DP-1-2"
 else
-	declare -A outputs
-	outputs[eDP-1]='--primary'
-	outputs[HDMI-1]='--off'
-	outputs[HDMI-2]='--off'
-	outputs[DP-1]='--off'
-	outputs[DP-1-1]='--off'
-	outputs[DP-1-2]='--off'
-	outputs[DP-1-3]='--off'
-
-	if [ "$DUPLICATE" != 'yes' ] && echo "$connected" | grep -F 'DP-1-' > /dev/null; then
-		# docked setup for work
-		outputs[DP-1-2]="--${DIRECTION}-of eDP-1"
-		outputs[DP-1-1]="--${DIRECTION}-of DP-1-2"
-	else
-		# home with external display, or projector
-		for output in $connected; do
-			if [ "$DUPLICATE" = 'yes' ] && [ -n "$first_output" ]; then
-				outputs[$output]="--same-as $first_output"
-			elif [ -n "$prev_output" ]; then
-				outputs[$output]="--${DIRECTION}-of $prev_output"
-			else
-				outputs[$output]="--primary"
-				first_output=$output
-			fi
-			prev_output=$output
-		done
-	fi
+	# home with external display, or projector
+	for output in $connected; do
+		if [ "$DUPLICATE" = 'yes' ] && [ -n "$first_output" ]; then
+			outputs[$output]="--same-as $first_output"
+		elif [ -n "$prev_output" ]; then
+			outputs[$output]="--${DIRECTION}-of $prev_output"
+		else
+			outputs[$output]="--primary"
+			first_output=$output
+		fi
+		prev_output=$output
+	done
 fi
 
 XRANDR_ARGS=""
