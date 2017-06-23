@@ -13,13 +13,14 @@ URL="https://www.python.org/ftp/python/$VERSION/$FILE"
 PREFIX="/opt/python-$VERSION"
 
 cd ~/Downloads
-wget $URL
+if [ ! -f $FILE ]; then
+	wget $URL
+fi
 tar xf $FILE
 cd $NAME
 
 ./configure --prefix=$PREFIX
 make
-make test
 
 if [ ! -d $PREFIX ]; then
 	sudo mkdir $PREFIX
