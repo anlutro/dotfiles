@@ -158,7 +158,30 @@ function kb {
 
 # livestreamer/streamlink
 function sl {
-	streamlink $1 ${2:-900p60,720p60,best,720p30,720p,high}
+	args=""
+	stream=""
+	quality=""
+	for arg in "$@"; do
+		case $arg in
+			-* )
+				args="$args $arg"
+				;;
+			* )
+				if [ -z "$stream" ]; then
+					stream="$arg"
+				elif [ -z "$quality" ]; then
+					quality="$arg"
+				else
+					args="$args $arg"
+				fi
+				;;
+		esac
+		shift
+	done
+	if [ -z "$quality" ]; then
+		quality=best
+	fi
+	echo streamlink "$stream" "$quality" "$args"
 }
 alias lvs=sl
 
