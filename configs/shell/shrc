@@ -181,7 +181,7 @@ function sl {
 	if [ -z "$quality" ]; then
 		quality=best
 	fi
-	echo streamlink "$stream" "$quality" "$args"
+	streamlink $stream $quality $args
 }
 alias lvs=sl
 
