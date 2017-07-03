@@ -191,17 +191,32 @@ function ccp {
 	composer create-project "$_ccp_from" -s dev --prefer-dist "$@";
 }
 
-# find and activate a virtualenv
+# find and activate a python virtualenv
 function avenv {
-	if [ -f $PWD/.virtualenv/bin/activate ]; then
-		. $PWD/.virtualenv/bin/activate
+	if [ -d $PWD/.tox ]; then
+		if [ -n "$1" ]; then
+			if [ ! -d "$PWD/.tox/$1" ]; then
+				echo "No tox environment $1 found!"
+				exit 1
+			fi
+			venv=$PWD/.tox/$1
+		else
+			venv=$(find $PWD/.tox -mindepth 1 -maxdepth 1 -name 'py*' | sort | tail -1)
+		fi
+	elif [ -f $PWD/.virtualenv/bin/activate ]; then
+		venv=$PWD/.virtualenv
 	elif [ -f $PWD/.venv/bin/activate ]; then
-		. $PWD/.venv/bin/activate
+		venv=$PWD/.venv
 	elif [ -f $PWD/bin/activate ]; then
-		. $PWD/bin/activate
-	else
-		echo "Couldn't find a virtualenv in cwd!"
+		venv=$PWD
 	fi
+
+	if [ -z "$venv" ]; then
+		echo "Couldn't find a virtualenv in cwd!"
+		exit 1
+	fi
+
+	. $venv/bin/activate
 }
 
 # find and remove pycache files
