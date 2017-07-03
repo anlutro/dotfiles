@@ -363,6 +363,7 @@ install zsh
 
 
 # look for broken symlinks
-echo "Looking for broken symlinks..."
+echo "\nLooking for broken symlinks..."
 find $configs -xtype l
 find $scripts -xtype l
+find $bindir -xtype l
