@@ -23,6 +23,7 @@ def write_sublime_project(path, project_types):
 	for ptype in project_types:
 		if ptype.startswith('python'):
 			folder_exclude_patterns.extend([
+				'.tox*',
 				'.venv*',
 				'.virtualenv*',
 				'bin*',
