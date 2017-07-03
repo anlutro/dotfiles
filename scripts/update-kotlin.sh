@@ -15,6 +15,7 @@ unzip $file
 sudo rm -rf /opt/kotlinc
 sudo mv ./kotlinc /opt/
 rm $file
+sudo chown -R root:staff /opt/kotlinc
 
 for bin in kotlin kotlinc; do
 	sudo ln -sf /opt/kotlinc/bin/$bin /usr/local/bin/
