@@ -18,19 +18,19 @@ def input_with_prefill(prompt, text):
 
 
 def write_sublime_project(path, project_types):
-	folder_exclude_patterns = ["build*"]
+	folder_exclude_patterns = ['build*']
 
 	for ptype in project_types:
 		if ptype.startswith('python'):
 			folder_exclude_patterns.extend([
-				".venv*",
-				".virtualenv*",
-				"bin*",
-				"dist*",
-				"include*",
-				"lib*",
-				"local*",
-				"share*",
+				'.venv*',
+				'.virtualenv*',
+				'bin*',
+				'dist*',
+				'include*',
+				'lib*',
+				'local*',
+				'share*',
 			])
 		elif ptype == 'node' or ptype == 'nodejs':
 			folder_exclude_patterns.append('node_modules*')
@@ -42,11 +42,11 @@ def write_sublime_project(path, project_types):
 			print('Unknown project type: %r' % ptype)
 
 	data = {
-		"folders": [{
-			"path": ".",
-			"folder_exclude_patterns": folder_exclude_patterns,
+		'folders': [{
+			'path': '.',
+			'folder_exclude_patterns': folder_exclude_patterns,
 		}],
-		"settings": {}
+		'settings': {}
 	}
 
 	indent = input_with_prefill('Tabs or spaces for indentation? ', 'tabs')
