@@ -30,3 +30,5 @@ sudo chown -R $USER:$USER $PREFIX
 make install
 
 sudo chown -R root:staff $PREFIX
+
+sudo ln -sf $PREFIX/bin/python?.? /usr/local/bin/
