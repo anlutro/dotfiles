@@ -197,7 +197,7 @@ function avenv {
 		if [ -n "$1" ]; then
 			if [ ! -d "$PWD/.tox/$1" ]; then
 				echo "No tox environment $1 found!"
-				exit 1
+				return
 			fi
 			venv=$PWD/.tox/$1
 		else
@@ -213,7 +213,7 @@ function avenv {
 
 	if [ -z "$venv" ]; then
 		echo "Couldn't find a virtualenv in cwd!"
-		exit 1
+		return
 	fi
 
 	. $venv/bin/activate
