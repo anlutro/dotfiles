@@ -10,7 +10,7 @@ vim -c 'setlocal tw=79' $tmpfile
 
 if [ -e $tmpfile ] && [ -s $tmpfile ]; then
 	if [ -e $JOURNAL_FILE ] && [ -s $JOURNAL_FILE ]; then
-		printf "\n" >> $JOURNAL_FILE
+		printf "\n\n" >> $JOURNAL_FILE
 	fi
 	echo "=====  $(date)  =====" >> $JOURNAL_FILE
 	cat $tmpfile >> $JOURNAL_FILE
