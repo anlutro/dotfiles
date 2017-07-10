@@ -26,3 +26,7 @@ then
 	# stop scrolling immediately when lifting fingers
 	synclient CoastingSpeed=0
 fi
+
+if [ ! -x $HOME/.fehbg ]; then
+	xsetroot -solid '#222222'
+fi
