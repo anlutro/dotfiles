@@ -83,7 +83,7 @@ def write_gitignore(path, project_types):
 	if 'php' in project_types:
 		ignores.append(['/vendor'])
 
-	if os.path.exists('Vagrantfile'):
+	if 'vagrant' in project_types:
 		ignores.append(['# vagrant', '/.vagrant'])
 
 	gitignore_str = '\n\n'.join(['\n'.join(ign) for ign in ignores])
@@ -108,6 +108,8 @@ def guess_project_types(root_dir=None):
 		types.append('nodejs')
 	if 'main.tf' in files:
 		types.append('terraform')
+	if 'Vagrantfile' in files:
+		types.append('vagrant')
 	return types
 
 
