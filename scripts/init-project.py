@@ -4,6 +4,7 @@ import argparse
 import json
 import os
 import os.path
+import sys
 import readline
 
 
@@ -18,6 +19,7 @@ def input_with_prefill(prompt, text):
 
 
 def write_sublime_project(path, project_types):
+	file_exclude_patterns = []
 	folder_exclude_patterns = ['build*']
 
 	for ptype in project_types:
@@ -39,12 +41,15 @@ def write_sublime_project(path, project_types):
 			folder_exclude_patterns.append('vendor*')
 		elif ptype == 'go':
 			folder_exclude_patterns.append('.gopath*')
+		elif ptype == 'tf' or ptype == 'terraform':
+			folder_exclude_patterns.append('.terraform*')
 		else:
 			print('Unknown project type: %r' % ptype)
 
 	data = {
 		'folders': [{
 			'path': '.',
+			'file_exclude_patterns': file_exclude_patterns,
 			'folder_exclude_patterns': folder_exclude_patterns,
 		}],
 		'settings': {}
@@ -88,6 +93,24 @@ def write_gitignore(path, project_types):
 		print('Wrote', path)
 
 
+def guess_project_types(root_dir=None):
+	if not root_dir:
+		root_dir = os.getcwd()
+	files = os.listdir(root_dir)
+	types = []
+	if 'setup.py' in files or 'requirements.txt' in files:
+		types.append('python')
+	if 'composer.json' in files:
+		types.append('php')
+	if 'main.go' in files:
+		types.append('go')
+	if 'package.json' in files:
+		types.append('nodejs')
+	if 'main.tf' in files:
+		types.append('terraform')
+	return types
+
+
 def main():
 	parser = argparse.ArgumentParser()
 	parser.add_argument('-n', '--name', type=str, default=os.path.basename(os.getcwd()))
@@ -95,9 +118,16 @@ def main():
 	args = parser.parse_args()
 
 	project_name = args.name
-	project_types = args.types
 	print('Project name:', project_name)
-	print('Project types:', project_types)
+	if args.types:
+		project_types = args.types
+		print('Project types:', project_types)
+	else:
+		project_types = guess_project_types()
+		if not project_types:
+			print('Could not guess project type and no project type provided!')
+			sys.exit(1)
+		print('Project types (guessed):', project_types)
 	file_funcs = (
 		(project_name + '.sublime-project', write_sublime_project),
 		('.gitignore', write_gitignore),
