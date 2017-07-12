@@ -90,6 +90,11 @@ _set_ps1() {
 		PS1="${debian_chroot:+($debian_chroot)} $PS1"
 	fi
 
+	if [ -n "$VIRTUAL_ENV" ]; then
+		venv_short=$(basename "$VIRTUAL_ENV")
+		PS1+="  \[\033[0;37m\]$venv_short\[\033[00m\]"
+	fi
+
 	if command -v __git_ps1 >/dev/null 2>&1; then
 		# GIT_PS1_SHOWDIRTYSTATE=true
 		# GIT_PS1_SHOWUNTRACKEDFILES=true
