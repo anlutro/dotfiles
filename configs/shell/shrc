@@ -204,7 +204,7 @@ function avenv {
 		else
 			venv=$(find $PWD/.tox -mindepth 1 -maxdepth 1 -name 'py*' | sort | tail -1)
 		fi
-		VIRTUAL_ENV_NAME=$(basename $PWD)-$(basename $venv)
+		VIRTUAL_ENV_NAME="$(basename $PWD)/$(basename $venv)"
 	elif [ -f $PWD/.virtualenv/bin/activate ]; then
 		venv=$PWD/.virtualenv
 		VIRTUAL_ENV_NAME=$(basename $PWD)
