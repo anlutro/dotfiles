@@ -91,8 +91,10 @@ _set_ps1() {
 	fi
 
 	if [ -n "$VIRTUAL_ENV" ]; then
-		venv_short=$(basename "$VIRTUAL_ENV")
-		PS1+="  \[\033[0;37m\]$venv_short\[\033[00m\]"
+		if [ -z "$VIRTUAL_ENV_NAME" ]; then
+			VIRTUAL_ENV_NAME=$(basename "$VIRTUAL_ENV")
+		fi
+		PS1+="  \[\033[0;37m\]$VIRTUAL_ENV_NAME\[\033[00m\]"
 	fi
 
 	if command -v __git_ps1 >/dev/null 2>&1; then

@@ -193,6 +193,7 @@ function ccp {
 
 # find and activate a python virtualenv
 function avenv {
+	local venv
 	if [ -d $PWD/.tox ]; then
 		if [ -n "$1" ]; then
 			if [ ! -d "$PWD/.tox/$1" ]; then
@@ -203,12 +204,16 @@ function avenv {
 		else
 			venv=$(find $PWD/.tox -mindepth 1 -maxdepth 1 -name 'py*' | sort | tail -1)
 		fi
+		VIRTUAL_ENV_NAME=$(basename $PWD)-$(basename $venv)
 	elif [ -f $PWD/.virtualenv/bin/activate ]; then
 		venv=$PWD/.virtualenv
+		VIRTUAL_ENV_NAME=$(basename $PWD)
 	elif [ -f $PWD/.venv/bin/activate ]; then
 		venv=$PWD/.venv
+		VIRTUAL_ENV_NAME=$(basename $PWD)
 	elif [ -f $PWD/bin/activate ]; then
 		venv=$PWD
+		VIRTUAL_ENV_NAME=$(basename $PWD)
 	fi
 
 	if [ -z "$venv" ]; then
@@ -216,7 +221,11 @@ function avenv {
 		return
 	fi
 
+	echo "Activating virtualenv: $venv"
+	echo "Python version: $($venv/bin/python --version)"
+	echo "Run \`deactivate\` to exit the virtualenv."
 	. $venv/bin/activate
+	_set_ps1
 }
 
 # find and remove pycache files
