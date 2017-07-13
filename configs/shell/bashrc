@@ -96,6 +96,7 @@ _set_ps1() {
 		fi
 		PS1+="  \[\033[0;34m\]$VIRTUAL_ENV_NAME\[\033[00m\]"
 	fi
+	export VIRTUAL_ENV_DISABLE_PROMPT=1
 
 	if command -v __git_ps1 >/dev/null 2>&1; then
 		# GIT_PS1_SHOWDIRTYSTATE=true
