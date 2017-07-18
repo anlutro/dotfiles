@@ -193,6 +193,10 @@ function ccp {
 
 # find and activate a python virtualenv
 function avenv {
+	if [ -n "$VIRTUAL_ENV" ]; then
+		echo "A virtualenv is already active!"
+		return 1
+	fi
 	local venv
 	if [ -d $PWD/.tox ]; then
 		if [ -n "$1" ]; then
@@ -218,7 +222,7 @@ function avenv {
 
 	if [ -z "$venv" ]; then
 		echo "Couldn't find a virtualenv in cwd!"
-		return
+		return 1
 	fi
 
 	echo -n "Activating virtualenv: $(realpath --relative-to=$PWD $venv)"
