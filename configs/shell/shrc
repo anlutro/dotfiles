@@ -222,7 +222,15 @@ function avenv {
 
 	if [ -z "$venv" ]; then
 		echo "Couldn't find a virtualenv in cwd!"
-		return 1
+		read -p "Create one using $(python3 --version)? [Y/n] "
+		if [ -z "$REPLY" ] || [[ "$REPLY" =~ ^[Yy] ]]; then
+			echo "Creating virtualenv in $PWD/.venv ..."
+			python3 -m venv .venv
+			avenv
+			return 0
+		else
+			return 1
+		fi
 	fi
 
 	echo -n "Activating virtualenv: $(realpath --relative-to=$PWD $venv)"
