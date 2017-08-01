@@ -10,6 +10,7 @@ END {
 	print free " (" pct ")"
 	print free " (" pct ")"
 	gsub(/%$/, "", pct)
+	pct = pct + 0
 	if (pct > 95) {
 		print "#ff0000"
 	}
