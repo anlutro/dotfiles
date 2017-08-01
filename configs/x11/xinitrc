@@ -59,12 +59,20 @@ if command -v 'ssh-agent' >/dev/null 2>&1; then
 	eval $(ssh-agent -s)
 fi
 
+# configure external monitors
 if [ -x $HOME/.xrandrinit ]; then
 	$HOME/.xrandrinit
+else
+	# this normally happens in xrandrinit, but if it does not exist, do it here
+	if [ -x $HOME/.fehbg ]; then
+		$HOME/.fehbg &
+	fi
 fi
+
 if [ -e $HOME/.xsettings ]; then
 	. $HOME/.xsettings
 fi
+
 if [ -e $HOME/.xprograms ]; then
 	$HOME/.xprograms
 fi
