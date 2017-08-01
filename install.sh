@@ -176,7 +176,9 @@ install_moc() {
 }
 
 install_mutt() {
-	ln -sfT $configs/muttrc $HOME/.muttrc
+	if ! [ -e $HOME/.muttrc ] || [ -L $HOME/.muttrc ]; then
+		ln -sfT $configs/muttrc $HOME/.muttrc
+	fi
 }
 
 install_nano() {
