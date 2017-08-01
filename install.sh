@@ -346,7 +346,7 @@ install compton
 install dunst
 install feh
 install git
-install gtk gtk-launch
+install gtk gtk-update-icon-cache
 install i3
 install i3blocks
 install i3status
