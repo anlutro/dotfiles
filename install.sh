@@ -190,7 +190,7 @@ install_subl() {
 	userdir=$pkgdir/User
 	mkdir -p $pkgdir
 	if [ -d $userdir ] && [ ! -L $userdir ]; then
-		mv $userdir{,.bak}
+		mv $userdir $userdir.bak
 	fi
 	ln -sfT $configs/sublime-text $userdir
 	ln -sf $scripts/sublp.sh $bindir/sublp
