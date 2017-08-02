@@ -248,12 +248,12 @@ function clear-pycache {
 }
 
 # clone a github repository
-function gh_clone {
+function gh-clone {
 	git clone https://github.com/"$@"
 }
 
 # fetch a github pull request
-function gh_fetch_pr {
+function gh-fetch-pr {
 	local remote=$(git remote -v | grep '(fetch)' | grep 'github.com' | cut -f 1)
 	if [ -n "$remote" ]; then
 		git fetch $remote "pull/$1/head:pr-$1"
