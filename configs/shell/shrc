@@ -269,6 +269,32 @@ function oct2hex {
 	echo "obase=16; ibase=8; $@" | bc
 }
 
+# list network stuff
+function lsn {
+	local args="-n -P"
+	local proto=""
+	local state_arg=""
+	for arg in "$@"; do
+		case $arg in
+			-u )
+				proto="udp"
+				;;
+			-t )
+				proto="tcp"
+				;;
+			-l )
+				state_arg="-stcp:listen"
+				;;
+			* )
+				args="$args $arg"
+				;;
+		esac
+		shift
+	done
+	args="$args -i${proto} $state_arg"
+	sudo lsof $args
+}
+
 # local overrides
 if [ -f "$HOME/.shrc.local" ]; then
 	. "$HOME/.shrc.local"
