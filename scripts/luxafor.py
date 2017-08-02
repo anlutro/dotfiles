@@ -73,6 +73,8 @@ def main():
 	parser.add_argument('-l', '--led', type=int, default=1)
 	subparsers = parser.add_subparsers(dest='action')
 
+	off_parser = subparsers.add_parser('off')
+
 	color_parser = subparsers.add_parser('color')
 	color_parser.add_argument('color', type=str)
 
@@ -102,7 +104,9 @@ def main():
 	if 'color' in args and args.color in COLORS:
 		args.color = COLORS[args.color]
 
-	if args.action == 'color':
+	if args.action == 'off':
+		luxafor.set_color(args.led, '#000000')
+	elif args.action == 'color':
 		luxafor.set_color(args.led, args.color)
 	elif args.action == 'fade-to-color':
 		luxafor.fade(args.led, args.color, args.duration)
