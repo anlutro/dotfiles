@@ -1,4 +1,11 @@
 #!/bin/sh
+
+if command -v killall >/dev/null 2>&1; then
+	killall xautolock
+elif pidof xautolock >/dev/null; then
+	kill $(pidof xautolock)
+fi
+
 if acpi -b 2> /dev/null | grep Battery > /dev/null; then
 	xautolock -time 60 -detectsleep -locker 'lockscreen --suspend' &
 else
