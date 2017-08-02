@@ -1,0 +1,6 @@
+#!/bin/sh
+if acpi -b 2> /dev/null | grep Battery > /dev/null; then
+	xautolock -time 60 -detectsleep -locker 'lockscreen --suspend' &
+else
+	xautolock -time 15 -locker 'lockscreen' &
+fi

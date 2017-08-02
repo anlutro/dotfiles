@@ -77,6 +77,10 @@ if [ -e $HOME/.xprograms ]; then
 	$HOME/.xprograms
 fi
 
+if command -v xautolock >/dev/null 2>&1 && [ -e $HOME/.xautolock ]; then
+	$HOME/.xautolock
+fi
+
 # start the window manager. this is a blocking command (I think?)
 eval $X_START_CMD
 

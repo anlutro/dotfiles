@@ -302,6 +302,10 @@ install_xorg() {
 	elif [ -L $HOME/.xrandrinit ]; then
 		rm $HOME/.xrandrinit
 	fi
+
+	if [ ! -e $HOME/.xautolock ] && [ ! -L $HOME/.xautolock ]; then
+		ln -sf $configs/x11/xautolock $HOME/.xautolock
+	fi
 }
 
 install_zsh() {

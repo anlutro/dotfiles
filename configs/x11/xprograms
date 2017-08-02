@@ -22,13 +22,6 @@ if command -v nm-applet >/dev/null 2>&1; then
 	nm-applet &
 fi
 
-# programs that auto-suspend the laptop after a given amount of time
-if command -v xfce4-power-manager >/dev/null 2>&1; then
-	xfce4-power-manager &
-elif command -v xautolock >/dev/null 2>&1; then
-	xautolock -time 60 -detectsleep -locker 'lockscreen --suspend' &
-fi
-
 # unclutter removes the mouse cursor after a given amount of idle time
 if command -v unclutter >/dev/null 2>&1; then
 	unclutter -idle 3 -root &
