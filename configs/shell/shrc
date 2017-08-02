@@ -234,7 +234,7 @@ function avenv {
 	fi
 
 	echo -n "Activating virtualenv: $(realpath --relative-to=$PWD $venv)"
-	echo " - $($venv/bin/python --version)"
+	echo " - $($venv/bin/python --version 2>&1)"
 	echo "Run \`deactivate\` to exit the virtualenv."
 	. $venv/bin/activate
 	_set_ps1
