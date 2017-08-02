@@ -12,7 +12,7 @@ touch foo/test.pyc
 mkdir __pycache__
 mkdir foo/__pycache__
 
-clear_pycache
+clear-pycache
 
 assert_test ! -f test.pyc
 assert_test ! -f foo/test.pyc
