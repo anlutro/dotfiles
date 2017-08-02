@@ -225,8 +225,7 @@ function avenv {
 		read -p "Create one using $(python3 --version)? [Y/n] "
 		if [ -z "$REPLY" ] || [[ "$REPLY" =~ ^[Yy] ]]; then
 			echo "Creating virtualenv in $PWD/.venv ..."
-			python3 -m venv .venv
-			avenv
+			python3 -m venv .venv && avenv
 			return 0
 		else
 			return 1
