@@ -241,7 +241,7 @@ function avenv {
 }
 
 # find and remove pycache files
-function clear_pycache {
+function clear-pycache {
 	find . -type f -name '*.pyc' -print0 | xargs --no-run-if-empty -0 rm
 	find . -type d -name '*.egg-info' -print0 | xargs --no-run-if-empty -0 rm -rf
 	find . -type d -name '__pycache__' -print0 | xargs --no-run-if-empty -0 rm -rf
