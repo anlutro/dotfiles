@@ -8,10 +8,10 @@ cd $tmpdir
 
 git init
 git remote add origin example.com:foo/bar.git
-assert_equals "No github remote found!" "$(gh_fetch_pr 1)"
+assert_equals "No github remote found!" "$(gh-fetch-pr 1)"
 
 git remote add upstream https://github.com/githubtraining/example-basic
-gh_fetch_pr 1
+gh-fetch-pr 1
 git branch | grep pr-1
 assert_equals 0 $? "Could not find branch pr-1!"
 
