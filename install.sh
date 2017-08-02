@@ -176,7 +176,7 @@ install_moc() {
 }
 
 install_mutt() {
-	if ! [ -e $HOME/.muttrc ] || [ -L $HOME/.muttrc ]; then
+	if [ ! -e $HOME/.muttrc ] || [ -L $HOME/.muttrc ]; then
 		ln -sfT $configs/muttrc $HOME/.muttrc
 	fi
 }
