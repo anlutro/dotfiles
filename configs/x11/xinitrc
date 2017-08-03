@@ -69,15 +69,15 @@ else
 	fi
 fi
 
-if [ -e $HOME/.xsettings ]; then
+if [ -x $HOME/.xsettings ]; then
 	. $HOME/.xsettings
 fi
 
-if [ -e $HOME/.xprograms ]; then
+if [ -x $HOME/.xprograms ]; then
 	$HOME/.xprograms
 fi
 
-if command -v xautolock >/dev/null 2>&1 && [ -e $HOME/.xautolock ]; then
+if command -v xautolock >/dev/null 2>&1 && [ -x $HOME/.xautolock ]; then
 	$HOME/.xautolock
 fi
 
