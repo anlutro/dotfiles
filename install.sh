@@ -317,6 +317,7 @@ install_zsh() {
 
 echo -n "Shared configs... "
 ln -sf $configs/shell/profile $HOME/.profile
+ln -sf $configs/shell/inputrc $HOME/.inputrc
 [ -L $HOME/.aliases ] && rm $HOME/.aliases
 [ -L $HOME/.shell_aliases ] && rm $HOME/.shell_aliases
 [ -L $HOME/.shell_vars ] && rm $HOME/.shell_vars

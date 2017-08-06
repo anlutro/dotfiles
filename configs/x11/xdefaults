@@ -83,11 +83,25 @@ URxvt*.url-select.underline: false
 
 URxvt*.keysym.M-c: perl:clipboard:copy
 URxvt*.keysym.M-v: perl:clipboard:paste
-URxvt.clipboard.copycmd:  xclip -i -selection clipboard
-URxvt.clipboard.pastecmd: xclip -o -selection clipboard
+URxvt*.clipboard.copycmd:  xclip -i -selection clipboard
+URxvt*.clipboard.pastecmd: xclip -o -selection clipboard
 
 URxvt*.keysym.M-Escape: perl:keyboard-select:activate
 
 URxvt*.keysym.M-equal: perl:font-size:increase
 URxvt*.keysym.M-minus: perl:font-size:decrease
 URxvt*.keysym.C-A-0: perl:font-size:reset
+
+! emulate xterm escape codes for old system compatibility
+URxvt*.keysym.Home:    \033[1~
+URxvt*.keysym.KP_Home: \033[1~
+URxvt*.keysym.End:     \033[4~
+URxvt*.keysym.KP_End:  \033[4~
+URxvt*.keysym.M-Up:    \033[1;5A
+URxvt*.keysym.C-Up:    \033[1;5A
+URxvt*.keysym.M-Down:  \033[1;5B
+URxvt*.keysym.C-Down:  \033[1;5B
+URxvt*.keysym.M-Right: \033[1;5C
+URxvt*.keysym.C-Right: \033[1;5C
+URxvt*.keysym.M-Left:  \033[1;5D
+URxvt*.keysym.C-Left:  \033[1;5D
