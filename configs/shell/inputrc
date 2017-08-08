@@ -2,7 +2,7 @@ $include /etc/inputrc
 
 set colored-stats On
 set completion-ignore-case On
-set completion-prefix-display-length 12
+set completion-prefix-display-length 20
 set mark-symlinked-directories On
 set show-all-if-ambiguous On
 set show-all-if-unmodified On
