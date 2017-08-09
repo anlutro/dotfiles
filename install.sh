@@ -185,6 +185,10 @@ install_nano() {
 	ln -sf $configs/nanorc $HOME/.nanorc
 }
 
+install_python() {
+	ln -sf $scripts/templ.py $bindir/templ
+}
+
 install_subl() {
 	pkgdir=$HOME/.config/sublime-text-3/Packages
 	userdir=$pkgdir/User
@@ -337,9 +341,6 @@ fi
 if command -v php >/dev/null 2>&1; then
 	ln -sf $scripts/art.sh $bindir/art
 fi
-if command -v python3 >/dev/null 2>&1; then
-	ln -sf $scripts/templ.py $bindir/templ
-fi
 ln -sf $scripts/notes.sh $bindir/notes
 ln -sf $scripts/journal.sh $bindir/journal
 ln -sf $scripts/init-project.py $bindir/init-project
@@ -359,6 +360,7 @@ install irssi
 install moc mocp
 install mutt
 install nano
+install python
 install subl
 install taskwarrior task
 install tmux

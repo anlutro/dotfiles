@@ -197,47 +197,98 @@ function avenv {
 		echo "A virtualenv is already active!"
 		return 1
 	fi
-	local venv
-	if [ -d $PWD/.tox ]; then
-		if [ -n "$1" ]; then
-			if [ ! -d "$PWD/.tox/$1" ]; then
-				echo "No tox environment $1 found!"
-				return
-			fi
-			venv=$PWD/.tox/$1
-		else
-			venv=$(find $PWD/.tox -mindepth 1 -maxdepth 1 -name 'py*' | sort | tail -1)
-		fi
-		VIRTUAL_ENV_NAME="$(basename $PWD)/$(basename $venv)"
-	elif [ -f $PWD/.virtualenv/bin/activate ]; then
-		venv=$PWD/.virtualenv
-		VIRTUAL_ENV_NAME=$(basename $PWD)
-	elif [ -f $PWD/.venv/bin/activate ]; then
-		venv=$PWD/.venv
-		VIRTUAL_ENV_NAME=$(basename $PWD)
-	elif [ -f $PWD/bin/activate ]; then
-		venv=$PWD
-		VIRTUAL_ENV_NAME=$(basename $PWD)
-	fi
+
+	eval $(lsvenv $PWD "$@")
 
 	if [ -z "$venv" ]; then
 		echo "Couldn't find a virtualenv in cwd!"
-		read -p "Create one using $(python3 --version)? [Y/n] "
-		if [ -z "$REPLY" ] || [[ "$REPLY" =~ ^[Yy] ]]; then
-			echo "Creating virtualenv in $PWD/.venv ..."
-			python3 -m venv .venv || return 1
-			avenv
-			return $?
-		else
-			return 1
-		fi
+		ASK=1 mkvenv $PWD $1 || return $?
+		avenv "$@"
+		return $?
 	fi
 
-	echo -n "Activating virtualenv: $(realpath --relative-to=$PWD $venv)"
+	local relpath=$(realpath --relative-to=$PWD $venv)
+	if [[ "$relpath" =~ ^\.\. ]]; then
+		relpath=$venv
+	fi
+	echo -n "Activating virtualenv: $relpath"
 	echo " - $($venv/bin/python --version 2>&1)"
 	echo "Run \`deactivate\` to exit the virtualenv."
 	. $venv/bin/activate
 	_set_ps1
+}
+
+function lsvenv {
+	local dir="${1:-$PWD}"
+	local name="$2"
+	local venv
+	local venv_name
+	if [ -d $dir/.tox ]; then
+		if [ -n "$name" ]; then
+			if [ ! -d "$dir/.tox/$name" ]; then
+				echo "No tox environment $name found!" >&2
+				return 0
+			fi
+			venv=$dir/.tox/$name
+		else
+			venv=$(find $dir/.tox -mindepth 1 -maxdepth 1 -name 'py*' | sort | tail -1)
+		fi
+		venv_name="$(basename $dir)/$(basename $venv)"
+	elif [ -f $dir/.virtualenv/bin/activate ]; then
+		venv=$dir/.virtualenv
+		venv_name=$(basename $dir)
+	elif [ -f $dir/.venv/bin/activate ]; then
+		venv=$dir/.venv
+		venv_name=$(basename $dir)
+	elif [ -f $dir/bin/activate ]; then
+		venv=$dir
+		venv_name=$(basename $dir)
+	else
+		hash=$(echo -n $dir | sha256sum | cut -d' ' -f1 | cut -c 1-8)
+		venv_id="dir-$(basename $dir)-$hash"
+		venv="$HOME/.local/venvs/$venv_id"
+		if [ -f $venv/bin/activate ]; then
+			venv_name=$(basename $dir)
+		fi
+	fi
+	if [ -n "$venv_name" ]; then
+		echo "local venv=$venv"
+		echo "export VIRTUAL_ENV_NAME=$venv_name"
+	else
+		return 1
+	fi
+
+	return 0
+}
+
+function mkvenv {
+	dir="${1:-$PWD}"
+	hash=$(echo -n $dir | sha256sum | cut -d' ' -f1 | cut -c 1-8)
+	venv_id="dir-$(basename $dir)-$hash"
+	venv="$HOME/.local/venvs/$venv_id"
+	if [ "$ASK" = 1 ]; then
+		read -p "Create virtualenv in '$venv' using $(python3 --version)? [Y/n] "
+		if [ -n "$REPLY" ] && ! [[ "$REPLY" =~ ^[Yy] ]]; then
+			return 0
+		fi
+	fi
+	echo "Creating virtualenv in $venv ..."
+	python3 -m venv $venv
+	return $?
+}
+
+function rmvenv {
+	dir="${1:-$PWD}"
+	eval $(venv-locate $dir)
+	if [ -z "$venv" ]; then
+		echo "No virtualenv found!"
+		return 0
+	fi
+	if [ -n "$VIRTUAL_ENV" ]; then
+		deactivate
+		_set_ps1
+	fi
+	rm -rf $venv
 }
 
 # find and remove pycache files
