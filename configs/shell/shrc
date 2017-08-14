@@ -262,10 +262,14 @@ function lsvenv {
 }
 
 function mkvenv {
-	dir="${1:-$PWD}"
-	hash=$(echo -n $dir | sha256sum | cut -d' ' -f1 | cut -c 1-8)
-	venv_id="dir-$(basename $dir)-$hash"
-	venv="$HOME/.local/venvs/$venv_id"
+	if [ -n "$1" ] && [ "$1" != "." ]; then
+		local venv="$1"
+	else
+		local dir="$PWD"
+		local hash=$(echo -n $dir | sha256sum | cut -d' ' -f1 | cut -c 1-8)
+		local venv_id="dir-$(basename $dir)-$hash"
+		local venv="$HOME/.local/venvs/$venv_id"
+	fi
 	if [ "$ASK" = 1 ]; then
 		read -p "Create virtualenv in '$venv' using $(python3 --version)? [Y/n] "
 		if [ -n "$REPLY" ] && ! [[ "$REPLY" =~ ^[Yy] ]]; then
