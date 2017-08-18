@@ -262,7 +262,7 @@ function lsvenv {
 }
 
 function mkvenv {
-	if [ -n "$1" ] && [ "$1" != "." ]; then
+	if [ -n "$1" ] && [ "$1" != "$PWD" ] && [ "$1" != "." ]; then
 		local venv="$1"
 	else
 		local dir="$PWD"
@@ -273,7 +273,7 @@ function mkvenv {
 	if [ "$ASK" = 1 ]; then
 		read -p "Create virtualenv in '$venv' using $(python3 --version)? [Y/n] "
 		if [ -n "$REPLY" ] && ! [[ "$REPLY" =~ ^[Yy] ]]; then
-			return 0
+			return 1
 		fi
 	fi
 	echo "Creating virtualenv in $venv ..."
