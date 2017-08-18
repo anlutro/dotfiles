@@ -7,8 +7,9 @@ elif command -v xflux >/dev/null 2>&1; then
 	xflux -l 58 -g 5 -k 2900 &
 fi
 
-# compton is a composition manager, allowing window transparency
-if command -v compton >/dev/null 2>&1; then
+# compton is a composition manager, allowing window transparency.
+# if there's no desktop background, there's no point in running it.
+if [ -x $HOME/.fehbg ] && command -v compton >/dev/null 2>&1; then
 	compton -b &
 fi
 
