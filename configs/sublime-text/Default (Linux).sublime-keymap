@@ -49,6 +49,10 @@
   // from close to close_file to prevent C+w to close sublime entirely
   { "keys": ["ctrl+w"], "command": "close_file" },
 
+  // f12 and ctrl+f12 make for intuitive back and forth jumps
+  { "keys": ["f12"], "command": "goto_definition" },
+  { "keys": ["ctrl+f12"], "command": "jump_back" },
+
   // fix tab completion with "auto_complete_with_fields": true in preferences
   { "keys": ["ctrl+]"], "command": "next_field", "context": [
       { "key": "has_next_field", "operator": "equal", "operand": true }
