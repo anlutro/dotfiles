@@ -41,6 +41,9 @@ helper = cache --timeout=600
 [diff]
 algorithm = patience
 
+[log]
+decorate = true
+
 [push]
 default = current
 followTags = true
