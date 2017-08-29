@@ -31,7 +31,6 @@
 		"dist/*",
 		"composer.lock",
 		"node_modules/*",
-		"vendor/*"
 	],
 	"bold_folder_labels": true,
 	"caret_extra_bottom": 1,
