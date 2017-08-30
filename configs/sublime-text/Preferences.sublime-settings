@@ -75,12 +75,14 @@
 	[
 		"*.cache",
 		"*.egg-info",
+		".eggs",
 		".git",
 		".hg",
 		".idea",
 		".svn",
 		".task",
 		".vagrant",
+		".venv",
 		".virtualenv",
 		"__pycache__",
 		"CVS"

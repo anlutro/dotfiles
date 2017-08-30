@@ -1,6 +1,7 @@
 *.sublime-project
 *.sublime-workspace
 *.swp
+.eggs
 .idea
 .task
 .venv

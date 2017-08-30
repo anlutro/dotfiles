@@ -71,8 +71,8 @@ def write_gitignore(path, project_types):
 	ignores = []
 	if 'python' in project_types:
 		ignores.append([
-			'# python', '__pycache__', '*.pyc',
-			'/pip-selfcheck.json', '*.egg-info',
+			'# python', '__pycache__', '*.pyc', '/pip-selfcheck.json',
+			'*.egg-info', '.eggs',
 		])
 		ignores.append(['# pytest', '/.cache', '/.coverage'])
 		ignores.append([
