@@ -202,7 +202,7 @@ function avenv {
 
 	if [ -z "$venv" ]; then
 		echo "Couldn't find a virtualenv in cwd!"
-		ASK=1 mkvenv $PWD $1 || return $?
+		ASK=1 mkvenv "$@" || return $?
 		avenv "$@"
 		return $?
 	fi
