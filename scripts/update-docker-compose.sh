@@ -10,7 +10,7 @@ if docker-compose --version | grep -F "version $version,"; then
 	exit 1
 fi
 
-cd ~/Downloads
+cd ~/downloads
 wget $url
 chmod +x $file
 mv $file /usr/local/bin/docker-compose

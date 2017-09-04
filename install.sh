@@ -274,6 +274,10 @@ install_nvim() {
 	done
 }
 
+install_xdg() {
+	ln -sf $configs/user-dirs.dirs $HOME/.config/user-dirs.dirs
+}
+
 install_xorg() {
 	ln -sf $configs/x11/xinitrc $HOME/.xinitrc
 	ln -sf $configs/x11/xprograms $HOME/.xprograms
@@ -362,6 +366,7 @@ install urxvt
 install vim
 install nvim
 install xorg Xorg
+install xdg xdg-open
 install zsh
 
 

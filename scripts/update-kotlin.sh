@@ -9,7 +9,7 @@ if kotlin -version | grep $version; then
 	exit 1
 fi
 
-cd ~/Downloads
+cd ~/downloads
 wget $url
 unzip $file
 sudo rm -rf /opt/kotlinc

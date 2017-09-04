@@ -12,7 +12,7 @@ FILE="$NAME.tar.xz"
 URL="https://www.python.org/ftp/python/$VERSION/$FILE"
 PREFIX="/opt/python-$VERSION"
 
-cd ~/Downloads
+cd ~/downloads
 if [ ! -f $FILE ]; then
 	wget $URL
 fi

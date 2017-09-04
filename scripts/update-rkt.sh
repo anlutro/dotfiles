@@ -9,7 +9,7 @@ if dpkg -s rkt 2>/dev/null | grep "Version: $version" > /dev/null; then
 	exit 0
 fi
 
-cd ~/Downloads
+cd ~/downloads
 gpg --recv-key 18AD5014C99EF7E3BA5F6CE950BDD3E0FC8A365E
 wget $url
 wget $url.asc
