@@ -335,12 +335,6 @@ echo "done"
 
 
 echo -n "Linking various bin scripts... "
-if [ -d /etc/apache2 ]; then
-	ln -sf $scripts/a2es.sh $bindir/a2es
-fi
-if command -v php >/dev/null 2>&1; then
-	ln -sf $scripts/art.sh $bindir/art
-fi
 ln -sf $scripts/notes.sh $bindir/notes
 ln -sf $scripts/journal.sh $bindir/journal
 ln -sf $scripts/init-project.py $bindir/init-project
