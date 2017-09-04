@@ -30,7 +30,7 @@
 		"build/*",
 		"dist/*",
 		"composer.lock",
-		"node_modules/*",
+		"node_modules/*"
 	],
 	"bold_folder_labels": true,
 	"caret_extra_bottom": 1,

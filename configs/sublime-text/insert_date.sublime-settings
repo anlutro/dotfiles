@@ -1,3 +1,34 @@
 {
-	"tz_in": "Europe/Amsterdam"
+	"tz_in": "Europe/Amsterdam",
+
+  // default format
+  "format": "%a, %d %b %Y %H:%M:%S %z",
+
+  // custom formats
+  "prompt_config": [
+    { "name": "iso",
+      "format": "iso"
+    },
+    { "name": "iso date",
+      "format": "%Y-%m-%d"
+    },
+    { "name": "Time (24h)",
+      "format": "%H:%M:%S"
+    },
+    { "name": "Date",
+      "format": "%a, %d %b %Y"
+    },
+    { "name": "Date + time",
+      "format": "%a, %d %b %Y %H:%M:%S"
+    },
+    { "name": "Date + time with timezone",
+      "format": "%a, %d %b %Y %H:%M:%S %Z"
+    },
+    { "name": "Date + time with offset",
+      "format": "%a, %d %b %Y %H:%M:%S %z"
+    },
+    { "name": "unix",
+      "format": "unix"
+    },
+  ],
 }
