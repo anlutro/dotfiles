@@ -91,6 +91,7 @@ alias a2log='cd /var/log/apache2 && ls -l'
 alias apt-everything='sudo apt-get update && sudo apt-get dist-upgrade && \
 	sudo apt-get autoremove && sudo apt-get clean'
 alias cal='ncal -Mb3'
+alias dc='docker-compose'
 alias gdiff='git diff --no-index'
 alias lsofi='lsof -i -n -P'
 alias most-common='sort | uniq -c | sort -nr | head'
