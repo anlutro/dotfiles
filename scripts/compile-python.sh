@@ -19,7 +19,9 @@ fi
 tar xf $FILE
 cd $NAME
 
-./configure --prefix=$PREFIX
+./configure --prefix=$PREFIX \
+	--enable-optimizations --enable-loadable-sqlite-extensions
+
 make
 
 if [ ! -d $PREFIX ]; then
