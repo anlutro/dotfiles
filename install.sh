@@ -280,7 +280,6 @@ install_xdg() {
 
 install_xorg() {
 	ln -sf $configs/x11/xinitrc $HOME/.xinitrc
-	ln -sf $configs/x11/xprograms $HOME/.xprograms
 	ln -sf $configs/x11/xsettings $HOME/.xsettings
 	ln -sf $configs/x11/xdefaults $HOME/.Xdefaults
 	if [ -f $local/xresources ]; then
@@ -290,6 +289,9 @@ install_xorg() {
 	fi
 	if [ -e $HOME/.xsessionrc ]; then
 		rm $HOME/.xsessionrc
+	fi
+	if [ -e $HOME/.xprograms ]; then
+		rm $HOME/.xprograms
 	fi
 
 	FC_DIR=$HOME/.config/fontconfig/conf.d

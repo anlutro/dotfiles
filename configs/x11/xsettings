@@ -1,5 +1,10 @@
 #!/bin/sh
 
+# update directories from ~/.config/user-dirs.dirs
+if command -v 'xdg-user-dirs-update' >/dev/null 2>&1; then
+	xdg-user-dirs-update
+fi
+
 if command -v xset >/dev/null 2>&1; then
 	# turn on/off system beep
 	xset b off
