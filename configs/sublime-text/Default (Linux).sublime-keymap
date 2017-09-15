@@ -8,8 +8,9 @@
   { "keys": ["ctrl+a"], "command": "move_to", "args": {"to": "bol", "extend": false } },
   { "keys": ["ctrl+e"], "command": "move_to", "args": {"to": "eol", "extend": false } },
 
-  // re-bind S+A+a to select all since C+a is gone
+  // since C+a is gone, add alternatives
   { "keys": ["shift+alt+a"], "command": "select_all" },
+  { "keys": ["ctrl+shift+a"], "command": "select_all" },
 
   // alt+backspace to delete word like in a terminal
   { "keys": ["alt+backspace"], "command": "delete_word", "args": { "forward": false } },
