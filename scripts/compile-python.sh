@@ -6,6 +6,19 @@ if [ $# -lt 1 ]; then
 	exit 1
 fi
 
+warn=no
+if ! dpkg -l | grep libsqlite.*-dev > /dev/null; then
+	echo "warning: libsqlite not installed!"
+	warn=yes
+fi
+if ! dpkg -l | grep libreadline.*-dev > /dev/null; then
+	echo "warning: libsqlite not installed!"
+	warn = yes
+fi
+if [ $warn = 'yes' ]; then
+	exit 1
+fi
+
 VERSION="$1"
 NAME="Python-$VERSION"
 FILE="$NAME.tar.xz"
