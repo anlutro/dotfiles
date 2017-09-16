@@ -13,26 +13,20 @@ log = logging.getLogger('dpi')
 
 def find_module_files(root_path, depth, exclude):
 	# return tuples of (module, path)
-	def dir_excluded(dir):
-		if dir in exclude:
-			return True
-		if dir.startswith('.'):
-			return True
-		return False
+	def dir_excluded(d):
+		return d in exclude or d.startswith('.')
 
 	for root, dirs, files in os.walk(root_path):
 		dirs[:] = [d for d in dirs if not dir_excluded(d)]
 		for file in files:
-			module = None
 			path = os.path.join(root, file)
 			relpath = os.path.relpath(path, root_path)
 			if file.endswith('.py'):
-				if file == '__init__.py':
-					relpath = relpath.replace('/__init__', '')
 				module = relpath.replace('.py', '').replace('/', '.')
-				yield module, path
-			if module:
+				if file == '__init__.py':
+					module = module.replace('.__init__', '')
 				log.debug('resolved %r to %r', path, module)
+				yield module, path
 
 
 def find_imports_in_file(path):
