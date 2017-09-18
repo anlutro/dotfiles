@@ -3,6 +3,7 @@
 from __future__ import print_function
 import argparse
 import ast
+from collections import defaultdict
 import os
 import os.path
 import logging
@@ -97,9 +98,21 @@ def find_imports(path, depth=0, extra=None, exclude=None):
     return imports
 
 
+def locate_clusters(imports, depth=0):
+    all_modules = set()
+    for src_module, target_module in sorted(imports):
+        all_modules.add(src_module)
+        all_modules.add(target_module)
+    clusters = defaultdict(lambda: set())
+    for module in all_modules:
+        clusters[shorten_module(module, depth)].add(module)
+    return clusters.items()
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('path', type=str, nargs='?', default=os.getcwd())
+    parser.add_argument('-c', '--clusters', action='store_true')
     parser.add_argument('-d', '--depth', type=int, default=0)
     parser.add_argument('-e', '--extra', type=str, default='')
     parser.add_argument('-v', '--verbose', action='store_true')
@@ -119,6 +132,14 @@ def main():
     )
 
     print('digraph {')
+    if args.clusters:
+        for cluster, nodes in locate_clusters(imports):
+            if len(nodes) < 2:
+                continue
+            print('    subgraph cluster_%s {' % cluster)
+            for node in nodes:
+                print('        "%s";' % node)
+            print('    }')
     for src_module, target_module in sorted(imports):
         print('    "%s" -> "%s";' % (src_module, target_module))
     print('}')
