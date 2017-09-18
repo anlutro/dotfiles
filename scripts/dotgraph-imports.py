@@ -30,7 +30,7 @@ def find_module_files(root_path, depth, exclude):
                 module = relpath.replace('.py', '').replace('/', '.')
                 if file == '__init__.py':
                     module = module.replace('.__init__', '')
-                log.debug('resolved %r to %r', path, module)
+                log.debug('resolved %r to %r', relpath, module)
                 yield module, path
 
 
@@ -71,6 +71,8 @@ def guess_path(module, path):
 
 
 def find_imports(path, depth=0, extra=None, exclude=None):
+    if exclude is None:
+        exclude = []
     module_files = list(find_module_files(path, depth=depth, exclude=exclude))
     log.debug('found %d module files', len(module_files))
 
@@ -79,10 +81,17 @@ def find_imports(path, depth=0, extra=None, exclude=None):
     )
     if extra:
         imports_to_search_for.update(extra)
+    log.debug('imports_to_search_for: %r', imports_to_search_for)
 
     imports = set()
     for module, module_path in module_files:
-        if exclude in module.split('.') or exclude in module_path.split('/'):
+        module_parts = module.split('.')
+        module_path_parts = module_path.split('/')
+        if exclude and (
+            any(e in module_parts for e in exclude) or
+            any(e in module_path_parts for e in exclude)
+        ):
+            log.debug('skipping: %r (%s)', module_path, module)
             continue
         module = shorten_module(module, depth)
         for module_import in find_imports_in_file(module_path):
@@ -131,11 +140,16 @@ def main():
         level=logging.DEBUG if args.verbose else logging.INFO,
     )
 
+    extra = args.extra.split(',') if args.extra else []
+    if args.path:
+        extra.append(args.path.replace('/', '.'))
+    exclude = args.exclude.split(',') if args.exclude else []
+
     imports = find_imports(
         args.path,
         depth=args.depth,
-        extra=args.extra,
-        exclude=args.exclude,
+        extra=extra,
+        exclude=exclude,
     )
 
     print('digraph {')
