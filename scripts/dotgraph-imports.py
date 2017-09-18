@@ -111,12 +111,19 @@ def locate_clusters(imports, depth=0):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('path', type=str, nargs='?', default=os.getcwd())
-    parser.add_argument('-c', '--clusters', action='store_true')
-    parser.add_argument('-d', '--depth', type=int, default=0)
-    parser.add_argument('-e', '--extra', type=str, default='')
+    parser.add_argument('path', type=str, nargs='?', default=os.getcwd(),
+        help='path to your Python code. defaults to pwd')
+    parser.add_argument('-c', '--clusters', action='store_true',
+        help='draw boxes around top-level modules')
+    parser.add_argument('-d', '--depth', type=int, default=0,
+        help='inspect submodules as well as top-level modules')
+    parser.add_argument('-e', '--extra', type=str, default='',
+        help='specify external modules that should be included in the graph, '
+             'if they are imported')
+    parser.add_argument('-x', '--exclude', type=str, default='',
+        help='patterns of directories/submodules that should not be graphed. '
+              'useful for tests, for example')
     parser.add_argument('-v', '--verbose', action='store_true')
-    parser.add_argument('-x', '--exclude', type=str, default='')
     args = parser.parse_args()
 
     logging.basicConfig(
