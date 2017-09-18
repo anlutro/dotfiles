@@ -12,11 +12,15 @@ log = logging.getLogger()
 
 
 def find_module_files(root_path, depth, exclude):
-    # return tuples of (module, path)
+    """
+    Given a path, find all python files in that path and guess their module
+    names. Generates tuples of (module, path).
+    """
     def dir_excluded(d):
         return d in exclude or d.startswith('.')
 
     for root, dirs, files in os.walk(root_path):
+        # prevents os.walk from recursing excluded directories
         dirs[:] = [d for d in dirs if not dir_excluded(d)]
         for file in files:
             path = os.path.join(root, file)
@@ -38,6 +42,9 @@ def find_imports_in_file(path):
             return
 
     for node in ast.walk(tree):
+        # note that there's no way for us to know if from x import y imports a
+        # variable or submodule from x, so that will need to be figured out
+        # later on in this script
         if isinstance(node, ast.ImportFrom):
             for name in node.names:
                 yield '%s.%s' % (node.module, name.name)
