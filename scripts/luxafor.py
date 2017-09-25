@@ -7,6 +7,11 @@ sys.path.append(os.path.expanduser('~/.local/lib/python%d.%d/site-packages' % (
 )))
 
 import argparse
+try:
+	import usb.core
+except ImportError:
+	print('module usb.core not found, try: pip install --user pyusb')
+	sys.exit(1)
 
 
 def hex_to_rgb(value): # http://stackoverflow.com/a/214657
