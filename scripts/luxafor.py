@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 from __future__ import print_function
 import sys
 import os.path
@@ -10,7 +10,7 @@ import argparse
 try:
 	import usb.core
 except ImportError:
-	print('module usb.core not found, try: pip install --user pyusb')
+	print('module usb.core not found, try: pip%d install --user pyusb' % sys.version_info[0])
 	sys.exit(1)
 
 
@@ -82,25 +82,25 @@ def main():
 
 	off_parser = subparsers.add_parser('off')
 
-	color_parser = subparsers.add_parser('color')
+	color_parser = subparsers.add_parser('color', aliases=('c',))
 	color_parser.add_argument('color', type=str)
 
-	fade_parser = subparsers.add_parser('fade-to-color')
+	fade_parser = subparsers.add_parser('fade-to-color', aliases=('f',))
 	fade_parser.add_argument('color', type=str)
 	fade_parser.add_argument('-d', '--duration', type=int, default=25)
 
-	strobe_parser = subparsers.add_parser('strobe')
+	strobe_parser = subparsers.add_parser('strobe', aliases=('s',))
 	strobe_parser.add_argument('color', type=str)
 	strobe_parser.add_argument('-d', '--delay', type=int, default=25)
 	strobe_parser.add_argument('-r', '--repeat', type=int, default=100)
 
-	wave_parser = subparsers.add_parser('wave')
+	wave_parser = subparsers.add_parser('wave', aliases=('w',))
 	wave_parser.add_argument('color', type=str)
 	wave_parser.add_argument('pattern', type=int)
 	wave_parser.add_argument('-d', '--delay', type=int, default=25)
 	wave_parser.add_argument('-r', '--repeat', type=int, default=100)
 
-	pattern_parser = subparsers.add_parser('pattern')
+	pattern_parser = subparsers.add_parser('pattern', aliases=('p',))
 	pattern_parser.add_argument('pattern', type=int)
 	pattern_parser.add_argument('-d', '--delay', type=int, default=25)
 
