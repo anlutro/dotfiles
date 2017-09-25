@@ -2,8 +2,10 @@
 from __future__ import print_function
 import sys
 import os.path
-sys.path.append(os.path.expanduser('~/.local/lib/python3.5/site-packages'))
-import usb.core
+sys.path.append(os.path.expanduser('~/.local/lib/python%d.%d/site-packages' % (
+	sys.version_info.major, sys.version_info.minor
+)))
+
 import argparse
 
 
