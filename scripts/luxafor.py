@@ -113,15 +113,15 @@ def main():
 
 	if args.action == 'off':
 		luxafor.set_color(args.led, '#000000')
-	elif args.action == 'color':
+	elif args.action in ('color', 'c'):
 		luxafor.set_color(args.led, args.color)
-	elif args.action == 'fade-to-color':
+	elif args.action in ('fade-to-color', 'f'):
 		luxafor.fade(args.led, args.color, args.duration)
-	elif args.action == 'strobe':
+	elif args.action in ('strobe', 's'):
 		luxafor.strobe(args.led, args.color, args.delay, args.repeat)
-	elif args.action == 'wave':
+	elif args.action in ('wave', 'w'):
 		luxafor.wave(args.color, args.pattern, args.delay, args.repeat)
-	elif args.action == 'pattern':
+	elif args.action in ('pattern', 'p'):
 		luxafor.pattern(args.pattern, args.delay)
 	else:
 		print('Unknown action: %r' % args.action)
