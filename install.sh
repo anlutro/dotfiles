@@ -99,6 +99,7 @@ install_git() {
 	ln -sf $scripts/git-abort.sh $bindir/git-abort
 	ln -sf $scripts/git-with-sshkey.sh $bindir/git-with-sshkey
 	ln -sf $scripts/git-find-large-files.sh $bindir/git-find-large-files
+	ln -sf $scripts/git-all-my-logs.sh $bindir/git-all-my-logs
 }
 
 install_gtk() {
