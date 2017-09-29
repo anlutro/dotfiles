@@ -203,7 +203,7 @@ function avenv {
 
 	if [ -z "$venv" ]; then
 		echo "Couldn't find a virtualenv in cwd!"
-		ASK=1 mkvenv "$@" || return $?
+		mkvenv -a "$@" || return $?
 		avenv "$@"
 		return $?
 	fi
@@ -263,28 +263,58 @@ function lsvenv {
 }
 
 function mkvenv {
-	if [ -n "$1" ] && [ "$1" != "$PWD" ] && [ "$1" != "." ]; then
+	local python='python3'
+	local ask='no'
+	local cmd
+
+	while getopts ':ap:3' opt; do
+		case $opt in
+			a )
+				ask='yes'
+				;;
+			p )
+				python="$OPTARG"
+				;;
+			3 )
+				python='python3'
+				;;
+			\? )
+				echo "Unknown option: -$OPTARG"
+				return 1
+				;;
+		esac
+	done
+
+	if [[ "$python" =~ ^python3 ]]; then
+		cmd="$python -m venv"
+	else
+		cmd="virtualenv -p $python"
+	fi
+
+	shift $((OPTIND-1))
+
+	if [ -n "$1" ] && [ "$1" != "$PWD" ] && [ "$1" != '.' ]; then
 		local venv="$1"
 	else
-		local dir="$PWD"
+		local dir="$(readlink -f $PWD)"
 		local hash=$(echo -n $dir | sha256sum | cut -d' ' -f1 | cut -c 1-8)
 		local venv_id="dir-$(basename $dir)-$hash"
 		local venv="$HOME/.local/venvs/$venv_id"
 	fi
-	if [ "$ASK" = 1 ]; then
-		read -p "Create virtualenv in '$venv' using $(python3 --version)? [Y/n] "
+	if [ "$ask" = 'yes' ]; then
+		read -p "Create virtualenv in '$venv' using $($python --version)? [Y/n] "
 		if [ -n "$REPLY" ] && ! [[ "$REPLY" =~ ^[Yy] ]]; then
 			return 1
 		fi
 	fi
 	echo "Creating virtualenv in $venv ..."
-	python3 -m venv $venv
+	$cmd $venv
 	return $?
 }
 
 function rmvenv {
 	dir="${1:-$PWD}"
-	eval $(venv-locate $dir)
+	eval $(lsvenv $dir)
 	if [ -z "$venv" ]; then
 		echo "No virtualenv found!"
 		return 0
@@ -293,6 +323,7 @@ function rmvenv {
 		deactivate
 		_set_ps1
 	fi
+	echo "Removing $venv ..."
 	rm -rf $venv
 }
 
