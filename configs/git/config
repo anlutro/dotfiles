@@ -12,8 +12,11 @@ cb = checkout --branch
 cm = commit --message
 co = checkout
 d = diff
+dw = diff --color-words
 dc = diff --cached
+dcw = diff --cached --color-words
 ds = diff --staged
+dsw = diff --staged --color-words
 l = log --graph --abbrev-commit --pretty=format:'%C(red)%h%C(reset) %s%C(yellow)%d%C(reset)'
 ll = log --graph --abbrev-commit --pretty=format:'%C(red)%h%C(reset) %C(green)%ai%C(reset) %s %C(bold blue)<%an>%C(reset) %C(yellow)%d%C(reset)'
 lp = log --patch
