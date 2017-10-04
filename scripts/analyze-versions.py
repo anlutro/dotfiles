@@ -136,7 +136,9 @@ def find_project_dirs(path=None):
 
 
 def main():
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description='Assuming a set of python '
+        'project directories are in PWD, find their requirements files and '
+        'print packages that have many different versions required.')
     parser.add_argument('-v', '--verbose', action='store_true')
     parser.add_argument('-m', '--min-diverging', type=int, default=2)
     args = parser.parse_args()
