@@ -308,13 +308,14 @@ function mkvenv {
 		local venv_id="dir-$(basename $dir)-$hash"
 		local venv="$HOME/.local/venvs/$venv_id"
 	fi
+
+	echo "Creating virtualenv in '$venv' using $($python --version 2>&1) ..."
 	if [ "$ask" = 'yes' ]; then
-		read -p "Create virtualenv in '$venv' using $($python --version 2>&1)? [Y/n] "
+		read -p "Confirm [Y/n] "
 		if [ -n "$REPLY" ] && ! [[ "$REPLY" =~ ^[Yy] ]]; then
 			return 1
 		fi
 	fi
-	echo "Creating virtualenv in $venv ..."
 	$cmd $venv
 	return $?
 }
