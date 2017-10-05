@@ -267,22 +267,31 @@ function mkvenv {
 	local ask='no'
 	local cmd
 
-	while getopts ':ap:3' opt; do
-		case $opt in
-			a )
+	while [ $# -gt 0 ]; do
+		arg="$1"
+		case $arg in
+			-a|--ask )
 				ask='yes'
 				;;
-			p )
-				python="$OPTARG"
+			-p|--python )
+				shift
+				python="$1"
 				;;
-			3 )
+			-2|--two )
+				python='python2'
+				;;
+			-3|--three )
 				python='python3'
 				;;
-			\? )
-				echo "Unknown option: -$OPTARG"
+			-* )
+				echo "Unknown option: $arg"
 				return 1
 				;;
+			* )
+				break
+				;;
 		esac
+		shift
 	done
 
 	if [[ "$python" =~ ^python3 ]]; then
@@ -290,8 +299,6 @@ function mkvenv {
 	else
 		cmd="virtualenv -p $python"
 	fi
-
-	shift $((OPTIND-1))
 
 	if [ -n "$1" ] && [ "$1" != "$PWD" ] && [ "$1" != '.' ]; then
 		local venv="$1"
@@ -302,7 +309,7 @@ function mkvenv {
 		local venv="$HOME/.local/venvs/$venv_id"
 	fi
 	if [ "$ask" = 'yes' ]; then
-		read -p "Create virtualenv in '$venv' using $($python --version)? [Y/n] "
+		read -p "Create virtualenv in '$venv' using $($python --version 2>&1)? [Y/n] "
 		if [ -n "$REPLY" ] && ! [[ "$REPLY" =~ ^[Yy] ]]; then
 			return 1
 		fi
@@ -313,12 +320,40 @@ function mkvenv {
 }
 
 function rmvenv {
-	dir="${1:-$PWD}"
+	local ask='no'
+	local dir="$PWD"
+
+	while [ $# -gt 0 ]; do
+		arg="$1"
+		case $arg in
+			-a|--ask )
+				ask='yes'
+				;;
+			-* )
+				echo "Unknown option: $arg"
+				return 1
+				;;
+			* )
+				dir="${1:-$PWD}"
+				break
+				;;
+		esac
+		shift
+	done
+
 	eval $(lsvenv $dir)
 	if [ -z "$venv" ]; then
 		echo "No virtualenv found!"
 		return 0
 	fi
+
+	if [ "$ask" = 'yes' ]; then
+		read -p "Remove virtualenv '$venv'? [Y/n] "
+		if [ -n "$REPLY" ] && ! [[ "$REPLY" =~ ^[Yy] ]]; then
+			return 1
+		fi
+	fi
+
 	if [ -n "$VIRTUAL_ENV" ]; then
 		deactivate
 		_set_ps1
