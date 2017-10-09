@@ -266,6 +266,7 @@ function mkvenv {
 	local python='python3'
 	local ask='no'
 	local cmd
+	local venv
 
 	while [ $# -gt 0 ]; do
 		arg="$1"
@@ -288,7 +289,11 @@ function mkvenv {
 				return 1
 				;;
 			* )
-				break
+				if [ -n "$venv" ]; then
+					echo "Extra argument received: $arg"
+					return 1
+				fi
+				venv="$1"
 				;;
 		esac
 		shift
@@ -300,12 +305,10 @@ function mkvenv {
 		cmd="virtualenv -p $python"
 	fi
 
-	if [ -n "$1" ] && [ "$1" != "$PWD" ] && [ "$1" != '.' ]; then
-		local venv="$1"
-	else
+	if [ -z "$venv" ] || [ "$venv" = "$PWD" ] || [ "$venv" = '.' ]; then
 		local dir="$(readlink -f $PWD)"
 		local hash=$(echo -n $dir | sha256sum | cut -d' ' -f1 | cut -c 1-8)
-		local venv_id="dir-$(basename $dir)-$hash"
+		venv_id="dir-$(basename $dir)-$hash"
 		local venv="$HOME/.local/venvs/$venv_id"
 	fi
 
