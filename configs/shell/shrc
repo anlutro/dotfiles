@@ -325,7 +325,7 @@ function mkvenv {
 
 function rmvenv {
 	local ask='no'
-	local dir="$PWD"
+	local dir
 
 	while [ $# -gt 0 ]; do
 		arg="$1"
@@ -338,12 +338,20 @@ function rmvenv {
 				return 1
 				;;
 			* )
-				dir="${1:-$PWD}"
+				if [ -n "$dir" ]; then
+					echo "Extra argument received: $arg"
+					return 1
+				fi
+				dir="$arg"
 				break
 				;;
 		esac
 		shift
 	done
+
+	if [ -z "$dir" ]; then
+		dir="$PWD"
+	fi
 
 	eval $(lsvenv $dir)
 	if [ -z "$venv" ]; then
