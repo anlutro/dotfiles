@@ -12,6 +12,19 @@ import sys
 log = logging.getLogger()
 
 
+def find_root_module(path):
+    path = os.path.abspath(path)
+    module_parts = []
+    while path != '/':
+        def exists(filename):
+            return os.path.exists(os.path.join(path, filename))
+        if exists('setup.py') or exists('setup.cfg'):
+            break
+        module_parts.insert(0, os.path.basename(path))
+        path = os.path.dirname(path)
+    return '.'.join(module_parts)
+
+
 def find_module_files(root_path, depth, exclude):
     """
     Given a path, find all python files in that path and guess their module
@@ -19,6 +32,9 @@ def find_module_files(root_path, depth, exclude):
     """
     def dir_excluded(d):
         return d in exclude or d.startswith('.')
+
+    root_module = find_root_module(root_path)
+    log.debug('resolved path %r to root_module %r', root_path, root_module)
 
     for root, dirs, files in os.walk(root_path):
         # prevents os.walk from recursing excluded directories
@@ -28,8 +44,15 @@ def find_module_files(root_path, depth, exclude):
             relpath = os.path.relpath(path, root_path)
             if file.endswith('.py'):
                 module = relpath.replace('.py', '').replace('/', '.')
-                if file == '__init__.py':
-                    module = module.replace('.__init__', '')
+                module = module.replace('.__init__', '')
+                if module == '__init__':
+                    if root_module:
+                        module = root_module
+                    else:
+                        log.warning('could not guess module of %r', relpath)
+                        continue
+                elif root_module:
+                    module = '%s.%s' % (root_module, module)
                 log.debug('resolved %r to %r', relpath, module)
                 yield module, path
 
@@ -65,7 +88,10 @@ def module_matches(module, searches):
     return False
 
 
-def guess_path(module, path):
+def guess_path(module, path, root_module=None):
+    if root_module:
+        dotdots = ['..'] * (root_module.count('.') + 1)
+        path = os.path.join(path, *dotdots)
     module_path = os.path.join(path, module.replace('.', '/'))
     return os.path.isdir(module_path) or os.path.isfile(module_path + '.py')
 
@@ -73,15 +99,17 @@ def guess_path(module, path):
 def find_imports(path, depth=0, extra=None, exclude=None):
     if exclude is None:
         exclude = []
+
+    root_module = find_root_module(path)
     module_files = list(find_module_files(path, depth=depth, exclude=exclude))
-    log.debug('found %d module files', len(module_files))
+    log.info('found %d module files', len(module_files))
 
     imports_to_search_for = set(
         shorten_module(module, depth) for module, path in module_files
     )
     if extra:
         imports_to_search_for.update(extra)
-    log.debug('imports_to_search_for: %r', imports_to_search_for)
+    log.info('imports_to_search_for: %r', sorted(imports_to_search_for))
 
     imports = set()
     for module, module_path in module_files:
@@ -91,19 +119,34 @@ def find_imports(path, depth=0, extra=None, exclude=None):
             any(e in module_parts for e in exclude) or
             any(e in module_path_parts for e in exclude)
         ):
-            log.debug('skipping: %r (%s)', module_path, module)
+            log.debug('module skipped because it is in exclude: %r (%s)',
+                module_path, module)
             continue
+
         module = shorten_module(module, depth)
-        for module_import in find_imports_in_file(module_path):
+        module_imports = list(find_imports_in_file(module_path))
+        log.debug('found %d imports in %r (module=%r)',
+            len(module_imports), module_path, module)
+
+        for module_import in module_imports:
             module_import = shorten_module(module_import, depth)
-            if (
-                module != module_import and
-                module_matches(module_import, imports_to_search_for) and (
-                    guess_path(module_import, path) or
-                    module_matches(module_import, extra)
-                )
-            ):
+            if module == module_import:
+                log.debug('module is importing itself, skipping')
+                continue
+
+            if not module_matches(module_import, imports_to_search_for):
+                log.debug('module %r is not in imports_to_search_for, skipping',
+                    module_import)
+                continue
+
+            module_import_path = guess_path(module_import, path, root_module)
+            extra_match = module_matches(module_import, extra)
+            if module_import_path or extra_match:
                 imports.add((module, module_import))
+            else:
+                log.debug('skipping %r -> %r (module_import_path=%r, extra_match=%r)',
+                    module, module_import, module_import_path, extra_match)
+
     return imports
 
 
@@ -133,16 +176,21 @@ def main():
         help='patterns of directories/submodules that should not be graphed. '
               'useful for tests, for example')
     parser.add_argument('-v', '--verbose', action='store_true')
+    parser.add_argument('-vv', '--very-verbose', action='store_true')
     args = parser.parse_args()
+
+    level = logging.WARNING
+    if args.very_verbose:
+        level = logging.DEBUG
+    elif args.verbose:
+        level = logging.INFO
 
     logging.basicConfig(
         format='%(asctime)s [%(levelname)8s] %(message)s',
-        level=logging.DEBUG if args.verbose else logging.INFO,
+        level=level,
     )
 
     extra = args.extra.split(',') if args.extra else []
-    if args.path:
-        extra.append(args.path.replace('/', '.'))
     exclude = args.exclude.split(',') if args.exclude else []
 
     imports = find_imports(
@@ -151,6 +199,7 @@ def main():
         extra=extra,
         exclude=exclude,
     )
+    log.info('found total of %d imports in %r', len(imports), args.path)
 
     print('digraph {')
     if args.clusters:
