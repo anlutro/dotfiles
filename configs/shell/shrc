@@ -84,6 +84,7 @@ alias apt-everything='sudo apt-get update && sudo apt-get dist-upgrade && \
 alias cal='ncal -Mb3'
 alias dc='docker-compose'
 alias gdiff='git diff --no-index'
+alias k='kubectl'
 alias lsofi='lsof -i -n -P'
 alias most-common='sort | uniq -c | sort -nr | head'
 alias pwgen-strong='pwgen -Bs'
