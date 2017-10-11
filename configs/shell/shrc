@@ -399,8 +399,14 @@ function gh-fetch-pr {
 function hex2oct {
 	echo "obase=8; ibase=16; $@" | bc
 }
+function hex2dec {
+	echo "obase=10; ibase=16; $@" | bc
+}
 function oct2hex {
 	echo "obase=16; ibase=8; $@" | bc
+}
+function oct2dec {
+	echo "obase=10; ibase=8; $@" | bc
 }
 
 # list network stuff
