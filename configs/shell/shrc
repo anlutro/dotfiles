@@ -435,6 +435,10 @@ function lsn {
 	sudo lsof $args
 }
 
+function f {
+	awk "{ print \$$1 }"
+}
+
 # local overrides
 if [ -f "$HOME/.shrc.local" ]; then
 	. "$HOME/.shrc.local"
