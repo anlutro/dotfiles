@@ -6,7 +6,7 @@ elif pidof xautolock >/dev/null; then
 	kill $(pidof xautolock)
 fi
 
-if acpi -b 2> /dev/null | grep Battery > /dev/null; then
+if acpi -b 2> /dev/null | grep -q Battery; then
 	xautolock -time 60 -detectsleep -locker 'lockscreen --suspend' &
 else
 	xautolock -time 15 -locker 'lockscreen' &

@@ -10,7 +10,7 @@ if [ -z "$url" ]; then
 	exit 1
 fi
 
-if dpkg -s vagrant | grep "Version: 1:$version" > /dev/null; then
+if dpkg -s vagrant | grep -q "Version: 1:$version"; then
 	echo "Latest version ($version) already installed!"
 	exit 0
 fi

@@ -5,7 +5,7 @@ if [ $(find /sys/class/backlight/ -mindepth 1 -maxdepth 1 | wc -l) -lt 1 ]; then
 	exit 1
 fi
 
-if echo "$1" | grep -P '^[-+][\d.]+\%?$' > /dev/null; then
+if echo "$1" | grep -Pq '^[-+][\d.]+\%?$'; then
 	modifier=$(echo "$1" | grep -o '[-+][0-9.]*')
 else
 	new_brightness_p=$(echo "$1" | grep -o '[0-9.]*')

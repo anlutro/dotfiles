@@ -7,11 +7,11 @@ if [ $# -lt 1 ]; then
 fi
 
 warn=no
-if ! dpkg -l | grep libsqlite.*-dev > /dev/null; then
+if ! dpkg -l | grep -q 'libsqlite.*-dev'; then
 	echo "warning: libsqlite not installed!"
 	warn=yes
 fi
-if ! dpkg -l | grep libreadline.*-dev > /dev/null; then
+if ! dpkg -l | grep -q 'libreadline.*-dev'; then
 	echo "warning: libsqlite not installed!"
 	warn = yes
 fi

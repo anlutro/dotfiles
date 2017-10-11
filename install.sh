@@ -62,7 +62,7 @@ install_git() {
 	local local_conf
 	local git_version=$(git --version | grep -oP '[\d+.]+')
 
-	if echo $git_version | grep '^1' > /dev/null; then
+	if echo $git_version | grep -q '^1'; then
 		ln -sf $configs/git/config $HOME/.gitconfig
 		ln -sf $configs/git/ignore_global $HOME/.gitignore_global
 		local_conf=$HOME/.gitconfig.local
@@ -86,7 +86,7 @@ install_git() {
 		$git_config user.email 'anlutro@gmail.com'
 	fi
 
-	if echo $git_version | grep '^1' > /dev/null; then
+	if echo $git_version | grep -q '^1'; then
 		if [ ! -f $local_conf ] || ! $git_config core.excludesfile > /dev/null; then
 			$git_config core.excludesfile .gitignore_global
 		fi
