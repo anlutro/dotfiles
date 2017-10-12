@@ -4,6 +4,10 @@
   { "keys": ["ctrl+alt+m"], "command": "toggle_menu" },
   { "keys": ["ctrl+k", "ctrl+n"], "command": "new_window_for_project" },
 
+
+  { "keys": ["ctrl+shift+pagedown"], "command": "move_to_neighboring_group" },
+  { "keys": ["ctrl+shift+pageup"], "command": "move_to_neighboring_group", "args": {"forward": false} },
+
   // C+a and C+e move to start/end of line, as in a unix shell
   { "keys": ["ctrl+a"], "command": "move_to", "args": {"to": "bol", "extend": false } },
   { "keys": ["ctrl+e"], "command": "move_to", "args": {"to": "eol", "extend": false } },
