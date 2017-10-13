@@ -1,0 +1,5 @@
+{
+  "pep8": false,
+  "validate_imports": false,
+  "use_pylint": false,
+}

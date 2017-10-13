@@ -62,6 +62,10 @@ def write_sublime_project(path, project_types):
 	if spaces:
 		data['settings']['tab_size'] = int(spaces.strip())
 
+	if ptype.startswith('python') and 'VIRTUAL_ENV' in os.environ:
+		python_path = os.environ['VIRTUAL_ENV'] + '/bin/python'
+		data['settings']['python_interpreter'] = python_path
+
 	with open(path, 'w+') as f:
 		f.write(json.dumps(data, indent=2) + '\n')
 	print('Wrote', path)

@@ -7,6 +7,7 @@
 	"installed_packages":
 	[
 		"Alignment",
+		"Anaconda",
 		"ColorPicker",
 		"Dart",
 		"DocBlockr",
