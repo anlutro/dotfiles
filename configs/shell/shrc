@@ -83,6 +83,7 @@ alias apt-everything='sudo apt-get update && sudo apt-get dist-upgrade && \
 	sudo apt-get autoremove && sudo apt-get clean'
 alias cal='ncal -Mb3'
 alias dc='docker-compose'
+alias dm='docker-machine'
 alias gdiff='git diff --no-index'
 alias k='kubectl'
 alias lsofi='lsof -i -n -P'
