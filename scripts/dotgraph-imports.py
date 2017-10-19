@@ -98,7 +98,7 @@ def guess_path(module, path, root_module=None):
     return os.path.isdir(module_path) or os.path.isfile(module_path + '.py')
 
 
-def find_imports(path, depth=0, extra=None, exclude=None):
+def find_imports(path, depth=0, include=None, exclude=None):
     if exclude is None:
         exclude = []
 
@@ -109,8 +109,8 @@ def find_imports(path, depth=0, extra=None, exclude=None):
     imports_to_search_for = set(
         shorten_module(module, depth) for module, path in module_files
     )
-    if extra:
-        imports_to_search_for.update(extra)
+    if include:
+        imports_to_search_for.update(include)
     log.info('imports_to_search_for: %r', sorted(imports_to_search_for))
 
     imports = set()
@@ -142,12 +142,12 @@ def find_imports(path, depth=0, extra=None, exclude=None):
                 continue
 
             module_import_path = guess_path(module_import, path, root_module)
-            extra_match = module_matches(module_import, extra)
-            if module_import_path or extra_match:
+            include_match = module_matches(module_import, include)
+            if module_import_path or include_match:
                 imports.add((module, module_import))
             else:
-                log.debug('skipping %r -> %r (module_import_path=%r, extra_match=%r)',
-                    module, module_import, module_import_path, extra_match)
+                log.debug('skipping %r -> %r (module_import_path=%r, include_match=%r)',
+                    module, module_import, module_import_path, include_match)
 
     return imports
 
@@ -171,10 +171,10 @@ def main():
         help='draw boxes around top-level modules')
     parser.add_argument('-d', '--depth', type=int, default=0,
         help='inspect submodules as well as top-level modules')
-    parser.add_argument('-e', '--extra', type=str, default='',
+    parser.add_argument('-i', '--include', type=str, nargs='*',
         help='specify external modules that should be included in the graph, '
              'if they are imported')
-    parser.add_argument('-x', '--exclude', type=str, default='',
+    parser.add_argument('-x', '--exclude', type=str, nargs='*',
         help='patterns of directories/submodules that should not be graphed. '
               'useful for tests, for example')
     parser.add_argument('-v', '--verbose', action='store_true')
@@ -192,16 +192,18 @@ def main():
         level=level,
     )
 
-    extra = args.extra.split(',') if args.extra else []
-    exclude = args.exclude.split(',') if args.exclude else []
+    include = args.include or []
+    exclude = args.exclude or []
 
     imports = find_imports(
         args.path,
         depth=args.depth,
-        extra=extra,
+        include=include,
         exclude=exclude,
     )
     log.info('found total of %d imports in %r', len(imports), args.path)
+    if not imports:
+        log.warning('found no imports - try increasing depth!')
 
     print('digraph {')
     if args.clusters:
