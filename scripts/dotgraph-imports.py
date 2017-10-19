@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 
 from __future__ import print_function
+from collections import defaultdict
+from fnmatch import fnmatch
 import argparse
 import ast
-from collections import defaultdict
+import logging
 import os
 import os.path
-import logging
-import sys
 
 log = logging.getLogger()
 
@@ -81,9 +81,11 @@ def shorten_module(module, depth):
     return '.'.join(module.split('.')[:depth+1])
 
 
-def module_matches(module, searches):
+def module_matches(module, searches, allow_fnmatch=False):
     for search in searches:
         if module == search or module.startswith(search + '.'):
+            return True
+        if allow_fnmatch and fnmatch(module, search):
             return True
     return False
 
@@ -134,7 +136,7 @@ def find_imports(path, depth=0, extra=None, exclude=None):
                 log.debug('module is importing itself, skipping')
                 continue
 
-            if not module_matches(module_import, imports_to_search_for):
+            if not module_matches(module_import, imports_to_search_for, allow_fnmatch=True):
                 log.debug('module %r is not in imports_to_search_for, skipping',
                     module_import)
                 continue
