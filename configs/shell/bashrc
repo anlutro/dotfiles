@@ -48,6 +48,10 @@ bind "set completion-map-case on"
 # correct spelling errors during tab-completion
 shopt -s dirspell
 
+# fzf bash configuration
+if [ -f ~/.fzf.bash ]; then
+	source ~/.fzf.bash
+fi
 
 #	 /$$$$$$$   /$$$$$$    /$$  
 #	| $$__  $$ /$$__  $$ /$$$$  
