@@ -177,6 +177,8 @@ def main():
     parser.add_argument('-x', '--exclude', type=str, nargs='*',
         help='patterns of directories/submodules that should not be graphed. '
               'useful for tests, for example')
+    parser.add_argument('-r', '--rankdir', type=str, default='TB',
+        help='Graphviz "rankdir" attribute.')
     parser.add_argument('-v', '--verbose', action='store_true')
     parser.add_argument('-vv', '--very-verbose', action='store_true')
     args = parser.parse_args()
@@ -206,6 +208,7 @@ def main():
         log.warning('found no imports - try increasing depth!')
 
     print('digraph {')
+    print('  rankdir=%s' % args.rankdir)
     if args.clusters:
         for cluster, nodes in locate_clusters(imports):
             if len(nodes) < 2:
