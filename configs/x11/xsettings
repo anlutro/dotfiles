@@ -1,5 +1,16 @@
 #!/bin/sh
 
+# load .Xdefaults and .Xresources if they are present
+# note that system-wide files are ignored!
+if command -v xrdb >/dev/null 2>&1; then
+	if [ -e $HOME/.Xdefaults ]; then
+		xrdb $HOME/.Xdefaults
+	fi
+	if [ -e $HOME/.Xresources ]; then
+		xrdb -merge $HOME/.Xresources
+	fi
+fi
+
 # update directories from ~/.config/user-dirs.dirs
 if command -v 'xdg-user-dirs-update' >/dev/null 2>&1; then
 	xdg-user-dirs-update
