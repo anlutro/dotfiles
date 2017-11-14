@@ -79,6 +79,7 @@ alias i3rename='i3-msg rename workspace to'
 alias i3mv='i3-msg move workspace to output'
 
 # misc
+alias ap='ansible-playbook'
 alias apt-everything='sudo apt-get update && sudo apt-get dist-upgrade && \
 	sudo apt-get autoremove && sudo apt-get clean'
 alias cal='ncal -Mb3'
