@@ -78,10 +78,14 @@ alias i3lock='i3lock -c 000000'
 alias i3rename='i3-msg rename workspace to'
 alias i3mv='i3-msg move workspace to output'
 
+function apt-everything {
+	for cmd in update dist-upgrade autoremove clean; do
+		sudo apt $cmd
+	done
+}
+
 # misc
 alias ap='ansible-playbook'
-alias apt-everything='sudo apt-get update && sudo apt-get dist-upgrade && \
-	sudo apt-get autoremove && sudo apt-get clean'
 alias cal='ncal -Mb3'
 alias dc='docker-compose'
 alias dm='docker-machine'
