@@ -107,3 +107,8 @@ $X_START_CMD
 if command -v 'ssh-agent' >/dev/null 2>&1; then
 	ssh-agent -k
 fi
+
+# kill the gpg-agent if it's running
+if command -v gpgconf >/dev/null 2>&1; then
+	gpgconf --kill gpg-agent
+fi
