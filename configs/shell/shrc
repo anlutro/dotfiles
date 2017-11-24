@@ -69,7 +69,7 @@ alias chgrp='chgrp --preserve-root'
 
 # make a directory and cd into it
 function md {
-	mkdir -p "$@" && cd $_;
+	mkdir -p "$@" && cd "$_";
 }
 
 # i3 shortcuts
