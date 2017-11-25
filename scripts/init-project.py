@@ -71,7 +71,7 @@ def write_gitignore(path, project_types):
 		ignores.append(['# pytest', '/.cache', '/.coverage'])
 		ignores.append([
 			'# virtualenv', '/.venv', '/.virtualenv',
-			'/bin', '/dist', '/include', '/lib', '/lib64', '/share',
+			'/dist', '/include', '/lib', '/lib64', '/share',
 		])
 
 	if 'php' in project_types:
