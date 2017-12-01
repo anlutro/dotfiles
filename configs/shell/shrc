@@ -184,10 +184,27 @@ function sl {
 }
 alias lvs=sl
 
-# composer create-project
-function ccp {
-	_ccp_from=$1 && shift
-	composer create-project "$_ccp_from" -s dev --prefer-dist "$@";
+# php in docker
+function dphp {
+	local tty_arg
+	tty -s && tty_arg=--tty
+	echo docker run --rm --interactive $tty_arg \
+		--volume $PWD:/usr/src/myapp \
+		--workdir /usr/src/myapp \
+		--network host \
+		php:7-cli-alpine "$@"
+}
+
+# composer in docker
+function dcomposer {
+	local tty_arg
+	tty -s && tty_arg=--tty
+	docker run --rm --interactive $tty_arg \
+		--volume $PWD:/app \
+		--user $(id -u):$(id -g) \
+		--volume $SSH_AUTH_SOCK:/ssh-auth.sock \
+		--env SSH_AUTH_SOCK=/ssh-auth.sock \
+		composer "$@"
 }
 
 # find and activate a python virtualenv
