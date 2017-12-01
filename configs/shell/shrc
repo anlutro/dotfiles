@@ -188,7 +188,7 @@ alias lvs=sl
 function dphp {
 	local tty_arg
 	tty -s && tty_arg=--tty
-	echo docker run --rm --interactive $tty_arg \
+	docker run --rm --interactive $tty_arg \
 		--volume $PWD:/usr/src/myapp \
 		--workdir /usr/src/myapp \
 		--network host \
