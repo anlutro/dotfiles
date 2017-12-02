@@ -11,6 +11,7 @@
 /configs/sublime-text/Package Control.merged-ca-bundle
 /configs/sublime-text/Package Control.user-ca-bundle
 /configs/sublime-text/TextPastryHistory.sublime-settings
+/configs/sublime-text/oscrypto-ca-bundle.crt
 
 # vim files
 /configs/vim/.netrwhist
