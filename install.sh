@@ -29,7 +29,7 @@ install() {
 	func="install_$(echo $1 | tr -s '-' '_')"
 	cmd=${2:-$1}
 	if command -v $cmd >/dev/null 2>&1; then
-		echo -n "Setting up $name... "
+		printf "Setting up $name... "
 		$func
 		echo "done"
 	fi
@@ -253,7 +253,7 @@ vim_common() {
 	ln -sf ../../../vendor/jellybeans.vim/colors/jellybeans.vim $configs/vim/colors/jellybeans.vim
 
 	if command -v salt >/dev/null 2>&1; then
-		echo -n "salt-vim... "
+		printf "salt-vim... "
 		if [ ! -d $vendor/salt-vim ]; then
 			git clone https://github.com/saltstack/salt-vim $vendor/salt-vim
 		fi
@@ -337,7 +337,7 @@ install_zsh() {
 }
 
 
-echo -n "Shared configs... "
+printf "Shared configs... "
 ln -sf $configs/shell/profile $HOME/.profile
 ln -sf $configs/shell/inputrc $HOME/.inputrc
 [ -L $HOME/.aliases ] && rm $HOME/.aliases
@@ -352,7 +352,7 @@ ln -sf $configs/ssh/rc $HOME/.ssh/rc
 echo "done"
 
 
-echo -n "Linking various bin scripts... "
+printf "Linking various bin scripts... "
 ln -sf $scripts/notes.sh $bindir/notes
 ln -sf $scripts/journal.sh $bindir/journal
 ln -sf $scripts/init-project.py $bindir/init-project
