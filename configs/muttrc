@@ -5,25 +5,84 @@ set hostname = 'lutro.me'
 set folder = '~/.mail'
 set record = '~/.sentmail'
 
-set wrap = 72
+# SMTP example
+#set smtp_url = 'smtp://{smtp_user}@{smtp_domain}/'
+#set smtp_pass = '{smtp_pass}'
+
+# IMAP example
+#set folder = "imaps://{imap_domain}/"
+#set imap_authenticators = 'login'
+#set imap_login = '{imap_login}'
+#set imap_user = '{imap_user}'
+#set imap_pass = '{imap_pass}'
+#set spoolfile = '=INBOX'
+#sidebar_whitelist 'imaps://{imap_domain}/'
+
+# Gmail-like folders and hotkeys for IMAP
+#set mbox = "=INBOX.Archive"
+#set record = "=INBOX.Sent"
+#set postponed = "=INBOX.Drafts"
+#set trash = "=INBOX.Trash"
+#set move = no
+#macro index gi "<change-folder> =INBOX<enter>" "go to inbox"
+#macro index ga "<change-folder> =INBOX.Archive<enter>" "go to archive"
+#macro index gs "<change-folder> =INBOX.Sent<enter>" "go to sent mail"
+#macro index gt "<change-folder> =INBOX.Trash<enter>" "go to trash"
+
+# wrapping
+set wrap = 80
 set smart_wrap = yes
 
+# colors and string formatting
 color normal default default
 color message default default
 color signature default default
 color tilde default default
+color tree red default
 color status white black
+set index_format = ' %?M?   ↳&%4C?   %Z      %D     %-15.15n    %s'
 
-set pager_stop = yes
-set smart_wrap = yes
-unset markers
-alternative_order text/plain
+# sidebar is disabled
+set sidebar_visible = no
+set sidebar_delim_chars = '/.'
+set sidebar_new_mail_only = no
+
+# show text/html directly instead of opening as attachment
 auto_view text/html
-set reverse_name = yes
-set reverse_realname = yes
 
+# sort by threads, then date?
 set sort = 'threads'
 set sort_browser = 'reverse-date'
 set sort_aux = 'last-date-received'
+
+# activate TLS if available on the server
+set ssl_starttls=yes
+
+# always use SSL when connecting to a server
+set ssl_force_tls=yes
+
+# don't wait to enter mailbox manually 
+unset imap_passive
+
+# automatically poll subscribed mailboxes for new mail (new in 1.5.11)
+set imap_check_subscribed
+
+# reduce polling frequency to a sane level
+set mail_check=60
+
+# and poll the current mailbox more often (not needed with IDLE in post 1.5.11)
+set timeout=10
+
+# keep a cache of headers for faster loading (1.5.9+?)
+set header_cache=~/.hcache
+
+# display download progress every 5K
+set net_inc=5
+
+# I don't know what any of these do
+set pager_stop = yes
+set reverse_name = yes
+set reverse_realname = yes
+unset markers
 unset collapse_unread
-set index_format = ' %?M?   ↳&%4C?   %Z      %D     %-15.15n    %s'
+alternative_order text/plain
