@@ -192,7 +192,7 @@ function dphp {
 		--volume $PWD:/usr/src/myapp \
 		--workdir /usr/src/myapp \
 		--network host \
-		php:7-cli-alpine "$@"
+		php:7-cli-alpine php "$@"
 }
 
 # composer in docker
