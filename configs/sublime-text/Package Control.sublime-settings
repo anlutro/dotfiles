@@ -1,15 +1,15 @@
 {
 	"auto_upgrade_last_run": null,
 	"bootstrapped": true,
-	"in_process_packages":
-	[
+	"in_process_packages": [],
+	"install_prereleases": [
+		"SublimeLinter"
 	],
 	"installed_packages":
 	[
 		"Alignment",
 		"Anaconda",
 		"ColorPicker",
-		"Dart",
 		"DocBlockr",
 		"Dockerfile Syntax Highlighting",
 		"Elixir",
@@ -17,7 +17,6 @@
 		"InsertDate",
 		"Jinja2",
 		"Kotlin",
-		"Laravel Blade Highlighter",
 		"LESS",
 		"Makefile Improved",
 		"Mako",
@@ -38,8 +37,6 @@
 		"SublimeLinter-php",
 		"Syntax Highlighting for Sass",
 		"Terraform",
-		"Text Pastry",
-		"Theme - Soda",
-		"Varnish VCL"
+		"Text Pastry"
 	]
 }
