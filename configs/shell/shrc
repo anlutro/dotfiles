@@ -84,6 +84,19 @@ function apt-everything {
 	done
 }
 
+function apt-add-key {
+	url="$1"
+	if [ -n "$2" ]; then
+		file="$2"
+	else
+		file="$(basename $url)"
+	fi
+	file="${file%.*}.gpg"
+	curl -sSL "$1" | gpg --dearmor > $file
+	sudo chown root:root $file
+	sudo mv $file /etc/apt/trusted.gpg.d/
+}
+
 # misc
 alias ap='ansible-playbook'
 alias cal='ncal -Mb3'
