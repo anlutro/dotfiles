@@ -1,8 +1,11 @@
 {
 	"auto_upgrade_last_run": null,
 	"bootstrapped": true,
-	"in_process_packages": [],
-	"install_prereleases": [
+	"in_process_packages":
+	[
+	],
+	"install_prereleases":
+	[
 		"SublimeLinter"
 	],
 	"installed_packages":
