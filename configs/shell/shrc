@@ -284,11 +284,10 @@ function lsvenv {
 	if [ -n "$venv_name" ]; then
 		echo "local venv=$venv"
 		echo "export VIRTUAL_ENV_NAME=$venv_name"
+		return 0
 	else
 		return 1
 	fi
-
-	return 0
 }
 
 function mkvenv {
