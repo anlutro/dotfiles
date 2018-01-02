@@ -33,6 +33,8 @@ def write_sublime_project(path, project_types):
 			folder_exclude_patterns.append('.gopath*')
 		elif ptype == 'tf' or ptype == 'terraform':
 			folder_exclude_patterns.append('.terraform*')
+		elif ptype == 'ansible':
+			folder_exclude_patterns.append('*.retry')
 		else:
 			print('Unknown project type: %r' % ptype)
 
@@ -80,6 +82,8 @@ def write_gitignore(path, project_types):
 	if 'vagrant' in project_types:
 		ignores.append(['# vagrant', '/.vagrant'])
 
+
+
 	gitignore_str = '\n\n'.join(['\n'.join(ign) for ign in ignores])
 	if gitignore_str:
 		with open(path, 'w+') as f:
@@ -102,6 +106,8 @@ def guess_project_types(root_dir=None):
 		types.append('nodejs')
 	if 'main.tf' in files:
 		types.append('terraform')
+	if 'ansible.cfg' in files or 'inventory' in files or 'roles' in files:
+		types.append('ansible')
 	if 'Vagrantfile' in files:
 		types.append('vagrant')
 	return types
