@@ -5,13 +5,6 @@
 # but this is bash, so...
 cmd='true'
 
-# if i3lock is already running, trying to execute it again will fail.
-# the result is that the computer won't suspend through xautolock if
-# the machine has been manually locked (but not suspended) before.
-if ! pidof i3lock > /dev/null; then
-	cmd="$cmd && i3lock -c 000000"
-fi
-
 # delete keys from ssh agent if it is running
 if [ -n "$SSH_AGENT_PID" ]; then
 	cmd="$cmd && ssh-add -D"
@@ -20,6 +13,23 @@ fi
 # delete keys from gpg agent if it is running
 if pidof gpg-agent > /dev/null; then
 	cmd="$cmd && gpgconf --reload gpg-agent"
+fi
+
+# if i3lock is already running, trying to execute it again will fail.
+# the result is that the computer won't suspend through xautolock if
+# the machine has been manually locked (but not suspended) before.
+if ! pidof i3lock > /dev/null; then
+	if command -v scrot 2>&1 >/dev/null && command -v convert 2>&1 >/dev/null; then
+		# blurring
+		# scrot /tmp/lock.bmp && convert /tmp/lock.bmp -blur 0x5 /tmp/lock.png
+
+		# pixelization
+		scrot /tmp/lock.bmp && convert /tmp/lock.bmp -scale 10% -scale 1000% /tmp/lock.png
+
+		cmd="$cmd && i3lock -i /tmp/lock.png && rm /tmp/lock.*"
+	else
+		cmd="$cmd && i3lock -c 000000"
+	fi
 fi
 
 while [ $# -gt 0 ]; do
