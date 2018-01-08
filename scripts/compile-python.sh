@@ -15,6 +15,10 @@ if ! dpkg -l | grep -q 'libreadline.*-dev'; then
 	echo "warning: libsqlite not installed!"
 	warn = yes
 fi
+if ! dpkg -l | grep -q 'libssl.*-dev'; then
+	echo "warning: libssl not installed!"
+	warn = yes
+fi
 if [ $warn = 'yes' ]; then
 	exit 1
 fi
