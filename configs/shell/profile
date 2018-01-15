@@ -4,19 +4,20 @@
 # for ssh logins, install and configure the libpam-umask package.
 umask 022
 
-# alter $PATH
-if [ -d "/sbin" ]; then
-	PATH="/sbin:$PATH"
-fi
-if [ -d "/usr/sbin" ]; then
-	PATH="/usr/sbin:$PATH"
-fi
-if [ -d "$HOME/bin" ]; then
-	PATH="$HOME/bin:$PATH"
-fi
-if [ -d $HOME/.local/bin ]; then
-	PATH="$HOME/.local/bin:$PATH"
-fi
+# add paths to $PATH. these should be listed in order of
+# least precedence first, highest precedence last
+_paths="
+	/sbin
+	/usr/sbin
+	$HOME/.cargo/bin
+	$HOME/.local/bin
+	$HOME/bin
+"
+for path in $_paths; do
+	if [ -d "$path" ]; then
+		PATH="$path:$PATH"
+	fi
+done
 
 # bashrc doesn't execute itself
 if [ -n "$BASH_VERSION" ]; then
