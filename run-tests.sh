@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 export ROOT_DIR=$(dirname $(readlink -f $0))
 export CONFIG_DIR=$ROOT_DIR/configs

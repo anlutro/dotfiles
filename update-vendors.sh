@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 root=$(dirname $(readlink -f "$0"))
 cd $root/vendor
