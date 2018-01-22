@@ -44,6 +44,10 @@ _install_fzf() {
 	fi
 }
 
+install_alacritty() {
+	ln -sf $configs/alacritty.yml $HOME/.config/alacritty.yml
+}
+
 install_bash() {
 	ln -sf $configs/shell/bashrc $HOME/.bashrc
 	[ -f $HOME/.bash_aliases ] && rm $HOME/.bash_aliases
@@ -359,6 +363,7 @@ ln -sf $scripts/init-project.py $bindir/init-project
 echo "done"
 
 
+install alacritty
 install bash
 install compton
 install dunst
