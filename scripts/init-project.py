@@ -36,7 +36,7 @@ def write_sublime_project(path, project_types):
 		elif ptype == 'tf' or ptype == 'terraform':
 			folder_exclude_patterns.append('.terraform*')
 		elif ptype == 'ansible':
-			folder_exclude_patterns.append('*.retry')
+			file_exclude_patterns.append('*.retry')
 		elif ptype == 'puppet':
 			default_indent = 'spaces'
 			default_spaces = 2
