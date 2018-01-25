@@ -21,6 +21,8 @@ def input_with_prefill(prompt, text):
 def write_sublime_project(path, project_types):
 	file_exclude_patterns = []
 	folder_exclude_patterns = ['build*']
+	default_indent = 'tabs'
+	default_spaces = ''
 
 	for ptype in project_types:
 		if ptype.startswith('python'):
@@ -35,6 +37,9 @@ def write_sublime_project(path, project_types):
 			folder_exclude_patterns.append('.terraform*')
 		elif ptype == 'ansible':
 			folder_exclude_patterns.append('*.retry')
+		elif ptype == 'puppet':
+			default_indent = 'spaces'
+			default_spaces = 2
 		else:
 			print('Unknown project type: %r' % ptype)
 
@@ -47,10 +52,10 @@ def write_sublime_project(path, project_types):
 		'settings': {}
 	}
 
-	indent = input_with_prefill('Tabs or spaces for indentation? ', 'tabs')
+	indent = input_with_prefill('Tabs or spaces for indentation? ', default_indent)
 	data['settings']['translate_tabs_to_spaces'] = ('space' in indent.lower())
 
-	spaces = input_with_prefill('Tab size? (leave empty for default) ', '')
+	spaces = input_with_prefill('Tab size? (leave empty for default) ', default_spaces)
 	if spaces:
 		data['settings']['tab_size'] = int(spaces.strip())
 
