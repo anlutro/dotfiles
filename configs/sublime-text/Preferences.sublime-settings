@@ -95,7 +95,6 @@
 	"ignored_packages":
 	[
 		"Makefile",
-		"PHP",
 		"Vintage"
 	],
 	"indent_guide_options":
