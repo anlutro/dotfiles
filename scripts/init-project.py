@@ -4,8 +4,13 @@ import argparse
 import json
 import os
 import os.path
+import subprocess
 import sys
 import readline
+
+
+def confirm(prompt):
+	return input(prompt).lower().startswith('y')
 
 
 def input_with_prefill(prompt, text):
@@ -142,9 +147,17 @@ def main():
 	for filename, func in file_funcs:
 		if os.path.exists(filename):
 			print(filename, 'already exists!')
-			if not input('overwrite? [y/n] ').lower().startswith('y'):
+			if not confirm('overwrite? [y/n] '):
 				continue
 		func(filename, project_types)
+
+	for project_type in project_types:
+		skel_path = os.path.expanduser('~/skel/project-%s/' % project_type)
+		if (
+			os.path.exists(skel_path) and
+			confirm("copy files from %s if they don't already exist? [y/n] " % skel_path)
+		):
+			subprocess.run(['rsync', '-rv', '--ignore-existing', skel_path, '.'])
 
 if __name__ == '__main__':
 	main()
