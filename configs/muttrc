@@ -41,6 +41,7 @@ color tilde default default
 color tree red default
 color status white black
 set index_format = ' %?M?   ↳&%4C?   %Z      %D     %-15.15n    %s'
+set date_format = '!%Y-%m-%d %I:%M %Z'
 
 # sidebar is disabled
 set sidebar_visible = no
