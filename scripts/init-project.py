@@ -152,7 +152,7 @@ def main():
 		func(filename, project_types)
 
 	for project_type in project_types:
-		skel_path = os.path.expanduser('~/skel/project-%s/' % project_type)
+		skel_path = os.path.expanduser('~/.local/skel/project-%s/' % project_type)
 		if (
 			os.path.exists(skel_path) and
 			confirm("copy files from %s if they don't already exist? [y/n] " % skel_path)

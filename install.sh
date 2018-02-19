@@ -341,7 +341,7 @@ install_zsh() {
 }
 
 
-printf "Shared configs... "
+printf "Linking shared configs... "
 ln -sf $configs/shell/profile $HOME/.profile
 ln -sf $configs/shell/inputrc $HOME/.inputrc
 [ -L $HOME/.aliases ] && rm $HOME/.aliases
@@ -360,6 +360,11 @@ printf "Linking various bin scripts... "
 ln -sf $scripts/notes.sh $bindir/notes
 ln -sf $scripts/journal.sh $bindir/journal
 ln -sf $scripts/init-project.py $bindir/init-project
+echo "done"
+
+
+printf "Linking skel directory scripts... "
+ln -sf $root/skel $HOME/.local/skel
 echo "done"
 
 
