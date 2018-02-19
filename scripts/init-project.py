@@ -31,7 +31,7 @@ def write_sublime_project(path, project_types):
 
 	for ptype in project_types:
 		if ptype.startswith('python'):
-			folder_exclude_patterns.extend(['.tox*', '.venv*', '.virtualenv*'])
+			folder_exclude_patterns.extend(['.tox*', '.pytest_cache*', '.venv*', '.virtualenv*'])
 		elif ptype == 'node' or ptype == 'nodejs':
 			folder_exclude_patterns.append('node_modules*')
 		elif ptype == 'php':
@@ -80,7 +80,7 @@ def write_gitignore(path, project_types):
 			'# python', '__pycache__', '*.pyc', '/pip-selfcheck.json',
 			'*.egg-info', '.eggs',
 		])
-		ignores.append(['# pytest', '/.cache', '/.coverage'])
+		ignores.append(['# pytest', '/.pytest_cache', '/.cache', '/.coverage'])
 		ignores.append([
 			'# virtualenv', '/.venv', '/.virtualenv',
 			'/dist', '/include', '/lib', '/lib64', '/share',
