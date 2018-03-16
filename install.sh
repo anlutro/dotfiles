@@ -364,7 +364,7 @@ echo "done"
 
 
 printf "Linking skel directory scripts... "
-ln -sf $root/skel $HOME/.local/skel
+ln -sfT $root/skel $HOME/.local/skel
 echo "done"
 
 
