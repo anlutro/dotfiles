@@ -9,7 +9,7 @@ confirm() {
 }
 
 apt update && apt -y dist-upgrade
-apt -y install git vim tree curl irssi zip fuse psmisc \
+apt -y install git vim tree curl irssi zip fuse psmisc jq \
 	policykit-1 sudo network-manager apt-transport-https
 
 usermod -a -G sudo,root,adm,staff,systemd-journal andreas
@@ -18,7 +18,7 @@ if confirm "Install X11, i3 and utilities?"; then
 	apt -y install \
 		xserver-xorg{,-input-{kbd,mouse,evdev}} x11-xserver-utils xinit \
 		dbus-x11 xautolock xclip i3-wm i3lock i3blocks \
-		dmenu dunst libnotify-bin \
+		rofi dmenu dunst libnotify-bin \
 		scrot imagemagick \
 		xdg-user-dirs \
 		rxvt-unicode-256color
