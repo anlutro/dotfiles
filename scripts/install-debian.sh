@@ -10,18 +10,16 @@ confirm() {
 
 apt update && apt -y dist-upgrade
 apt -y install git vim tree curl irssi zip fuse psmisc jq \
-	policykit-1 sudo network-manager apt-transport-https
+	policykit-1 sudo apt-transport-https
+apt -y install --no-install-recommends network-manager
 
 usermod -a -G sudo,root,adm,staff,systemd-journal andreas
 
 if confirm "Install X11, i3 and utilities?"; then
-	apt -y install \
-		xserver-xorg{,-input-{kbd,mouse,evdev}} x11-xserver-utils xinit \
-		dbus-x11 xautolock xclip i3-wm i3lock i3blocks \
-		rofi dmenu dunst libnotify-bin \
-		scrot imagemagick \
-		xdg-user-dirs \
-		rxvt-unicode-256color
+	apt -y install xserver-xorg{,-input-{kbd,mouse,evdev}} x11-xserver-utils \
+		xinit dbus-x11 xautolock xclip i3-wm i3lock rofi dmenu dunst \
+		libnotify-bin scrot imagemagick xdg-user-dirs feh
+	apt -y install --no-install-recommends rxvt-unicode-256color i3blocks
 
 	mv /etc/fonts/conf.d/??-user.conf /etc/fonts/conf.d/98-user.conf
 	mv /etc/fonts/conf.d/??-local.conf /etc/fonts/conf.d/98-local.conf
@@ -48,7 +46,7 @@ if confirm "Install Dropbox?"; then
 		grep -oP 'href="dropbox_\d{4}.*amd64.deb"' | cut -d\" -f2 | sort | tail -1)
 	wget https://linux.dropbox.com/packages/debian/$file
 	dpkg -i $file
-	apt-get install -f
+	apt install -f
 	rm $file
 fi
 
