@@ -9,7 +9,7 @@ confirm() {
 }
 
 apt update && apt -y dist-upgrade
-apt -y install git vim tree curl irssi zip fuse psmisc jq \
+apt -y install git vim tree curl irssi zip fuse psmisc jq bc silversearcher-ag \
 	policykit-1 sudo apt-transport-https
 apt -y install --no-install-recommends network-manager
 
