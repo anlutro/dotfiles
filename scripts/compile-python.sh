@@ -12,7 +12,7 @@ if ! dpkg -l | grep -q 'libsqlite.*-dev'; then
 	warn=yes
 fi
 if ! dpkg -l | grep -q 'libreadline.*-dev'; then
-	echo "warning: libsqlite not installed!"
+	echo "warning: libreadline not installed!"
 	warn=yes
 fi
 if ! dpkg -l | grep -q 'libssl.*-dev'; then
