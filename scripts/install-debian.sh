@@ -68,7 +68,7 @@ fi
 echo
 echo "Finished! Note that some packages have been left out:"
 echo "  * xserver-xorg-video-intel (in case you're using nvidia)"
-echo "  * xserver-xorg-video-synaptics (in case you want to use libinput)"
+echo "  * xserver-xorg-input-synaptics (in case you want to use libinput)"
 echo "  * chromium (in case you want to get chrome instead)"
 echo "Look in ~/code/dotfiles/scripts for useful things to install/update."
 echo "Check debian and linux in ~/Dropbox/notes for useful tips."
