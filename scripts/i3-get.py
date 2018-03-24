@@ -16,6 +16,7 @@ Add --all or -a to find the next/previous window in all workspaces, not just the
 active one.
 '''
 
+import argparse
 import json
 import sys
 
@@ -52,8 +53,8 @@ def find_windows(tree_dict, window_list):
 	return window_list        
 
 
-def get_window(find='next', all_workspaces=False):
-	tree = json.load(sys.stdin)
+def get_window(tree_fh, find='next', all_workspaces=False):
+	tree = json.load(tree_fh)
 	if not all_workspaces:
 		tree = find_active_workspace(tree)
 	window_list = find_windows(tree, [])
@@ -63,43 +64,35 @@ def get_window(find='next', all_workspaces=False):
 		return ''
 
 	if find == 'next':
-		next_index = -1
+		window_idx = -1
 		for i in range(window_count):
 			if window_list[i]['focused'] == True:
-				next_index = i + 1
+				window_idx = i + 1
 				break
 	elif find == 'prev':
-		next_index = window_count
+		window_idx = window_count
+		# iterate backwards by 1, starting at window_count-1
 		for i in range(window_count - 1, -1, -1):
 			if window_list[i]['focused'] == True:
-				if i == 0:
-					next_index = window_count - 1
-				else:
-					next_index = i - 1
+				window_idx = i - 1
 				break
 	else:
-		exit_help()
+		raise ValueError('unknown find/direction: %r' % find)
 
-	next_id = 0
-	if next_index == -1 or next_index == window_count:
-		next_id = window_list[0]['window']
-	else:
-		next_id = window_list[next_index]['window']
+	while window_idx >= window_count:
+		window_idx -= window_count
 
-	return next_id
-
-
-def exit_help():
-	print('Usage: i3-get.py (next|prev)')
-	sys.exit(1)
+	return window_list[window_idx]['window']
 
 
 def main():
-	if len(sys.argv) < 2:
-		exit_help()
+	parser = argparse.ArgumentParser()
+	parser.add_argument('direction', choices=('next', 'prev'))
+	parser.add_argument('-a', '--all')
+	parser.add_argument('-f', '--file', type=argparse.FileType('r'), default=sys.stdin)
+	args = parser.parse_args()
 
-	all_workspaces = '-a' in sys.argv or '--all' in sys.argv
-	print(get_window(sys.argv[1], all_workspaces=all_workspaces))
+	print(get_window(args.file, args.direction, all_workspaces=args.all))
 
 if __name__ == '__main__':
 	main()
