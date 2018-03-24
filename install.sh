@@ -225,7 +225,9 @@ install_tmux() {
 }
 
 _install_urxvt_perl() {
-	if [ -f "$vendor/urxvt-perls/$1" ]; then
+	if [ -f "$configs/urxvt-ext/$1" ]; then
+		ln -sf "$configs/urxvt-ext/$1" $HOME/.urxvt/ext/$1
+	elif [ -f "$vendor/urxvt-perls/$1" ]; then
 		ln -sf "$vendor/urxvt-perls/$1" $HOME/.urxvt/ext/$1
 	elif [ -f "$vendor/urxvt-perls/deprecated/$1" ]; then
 		ln -sf "$vendor/urxvt-perls/deprecated/$1" $HOME/.urxvt/ext/$1
