@@ -88,11 +88,6 @@ if command -v unclutter >/dev/null 2>&1; then
 	unclutter -idle 3 -root &
 fi
 
-# autocutsel keeps the two linux clipboards in sync
-if command -v autocutsel >/dev/null 2>&1; then
-	autocutsel &
-fi
-
 # how to run xautolock can vary from computer to computer, so it goes in a
 # separate file
 if command -v xautolock >/dev/null 2>&1 && [ -x $HOME/.xautolock ]; then
