@@ -4,7 +4,7 @@ url=$(curl -sSL https://www.terraform.io/downloads.html | grep -oP 'https://[A-z
 file=$(basename $url)
 version=$(echo $url | sed -r 's/.*terraform_([0-9.]+)_linux_amd64.*/\1/')
 
-if command -v terraform 2>&1 >/dev/null; then
+if command -v terraform >/dev/null 2>&1; then
 	installed_version=$(terraform --version | grep -oP '[\d.]+')
 fi
 

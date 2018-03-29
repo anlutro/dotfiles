@@ -18,7 +18,7 @@ if [ ! -d $PREFIX ]; then
 	sudo chown -R root:staff $PREFIX
 fi
 
-if ! command go version | grep -qF $VERSION 2>&1 >/dev/null; then
+if ! command go version | grep -qF $VERSION >/dev/null 2>&1; then
 	ln -sf $PREFIX/go/bin/go* /usr/local/bin
 else
 	echo "Go already at the latest version ($VERSION)"

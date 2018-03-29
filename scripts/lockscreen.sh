@@ -19,7 +19,7 @@ fi
 # the result is that the computer won't suspend through xautolock if
 # the machine has been manually locked (but not suspended) before.
 if ! pidof i3lock > /dev/null; then
-	if command -v scrot 2>&1 >/dev/null && command -v convert 2>&1 >/dev/null; then
+	if command -v scrot >/dev/null 2>&1 && command -v convert >/dev/null 2>&1; then
 		# blurring
 		# scrot /tmp/lock.bmp && convert /tmp/lock.bmp -blur 0x5 /tmp/lock.png
 

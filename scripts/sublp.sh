@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if ! command -v subl 2>&1 > /dev/null; then
+if ! command -v subl >/dev/null 2>&1; then
 	echo "Sublime Text (subl) not installed!"
 	exit 1
 fi
