@@ -66,9 +66,12 @@ def write_sublime_project(path, project_types):
 	if spaces:
 		data['settings']['tab_size'] = int(spaces.strip())
 
-	if ptype.startswith('python') and 'VIRTUAL_ENV' in os.environ:
-		python_path = os.environ['VIRTUAL_ENV'] + '/bin/python'
-		data['settings']['python_interpreter'] = python_path
+	if ptype.startswith('python'):
+		python_path = None
+		if 'VIRTUAL_ENV' in os.environ:
+			python_path = os.environ['VIRTUAL_ENV'] + '/bin/python'
+		if python_path:
+			data['settings']['python_interpreter'] = python_path
 
 	with open(path, 'w+') as f:
 		f.write(json.dumps(data, indent=2) + '\n')
@@ -93,8 +96,6 @@ def write_gitignore(path, project_types):
 
 	if 'vagrant' in project_types:
 		ignores.append(['# vagrant', '/.vagrant'])
-
-
 
 	gitignore_str = '\n\n'.join(['\n'.join(ign) for ign in ignores])
 	if gitignore_str:
