@@ -21,10 +21,10 @@ fi
 if ! pidof i3lock > /dev/null; then
 	if command -v scrot >/dev/null 2>&1 && command -v convert >/dev/null 2>&1; then
 		# blurring
-		# scrot /tmp/lock.bmp && convert /tmp/lock.bmp -blur 0x5 /tmp/lock.bmp
+		# scrot /tmp/lock.bmp && convert /tmp/lock.bmp -blur 0x5 /tmp/lock.png
 
 		# pixelization
-		scrot /tmp/lock.bmp && convert /tmp/lock.bmp -scale 10% -scale 1000% /tmp/lock.bmp
+		scrot /tmp/lock.bmp && convert /tmp/lock.bmp -scale 10% -scale 1000% /tmp/lock.png
 
 		cmd="$cmd && i3lock -i /tmp/lock.png && rm /tmp/lock.*"
 	else
