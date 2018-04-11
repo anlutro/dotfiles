@@ -15,9 +15,9 @@ main() {
 		exit 0
 	fi
 
-	local func="new"
-	local args=""
-	local name=""
+	func="new"
+	args=""
+	name=""
 
 	for arg in "$@"; do
 		case $arg in
@@ -51,11 +51,11 @@ main() {
 }
 
 note_new() {
-	local name="$1"
+	name="$1"
 	if [ -f "$NOTES_DIR/$name.md" ]; then
 		NOTES_PATH="$NOTES_DIR/$name.md"
 	else
-		local count=$(note_list $name | wc -w)
+		count=$(note_list $name | wc -w)
 		if [ $count -gt 1 ]; then
 			note_list $name
 		elif [ $count -eq 0 ]; then
@@ -70,8 +70,8 @@ note_new() {
 }
 
 note_delete() {
-	local name="$1"
-	local count=$(note_list $name | wc -w)
+	name="$1"
+	count=$(note_list $name | wc -w)
 	if [ $count -gt 1 ]; then
 		note_list $name
 	elif [ $count -eq 0 ]; then
@@ -82,11 +82,11 @@ note_delete() {
 }
 
 note_list() {
-	cd $NOTES_DIR
+	cd $NOTES_DIR || exit 1
 	if [ $# = 0 ]; then
 		ls *.md
 	else
-		files=$(ls -1 *.md | grep -- "$*")
+		files=$(ls -1 -- *.md | grep -- "$*")
 		if [ -n "$files" ]; then
 			ls $files
 		fi

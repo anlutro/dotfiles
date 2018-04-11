@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ $(find /sys/class/backlight/ -mindepth 1 -maxdepth 1 | wc -l) -lt 1 ]; then
+if [ "$(find /sys/class/backlight/ -mindepth 1 -maxdepth 1 | wc -l)" -lt 1 ]; then
 	echo "Couldn't find anything in /sys/class/backlight!"
 	exit 1
 fi

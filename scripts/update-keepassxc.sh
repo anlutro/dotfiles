@@ -13,7 +13,7 @@ if [ "$installed_version" = "$version" ]; then
 	exit
 fi
 
-cd ~/downloads
+cd ~/downloads || exit 1
 wget $url
 chmod +x $file
 mv $file /usr/local/bin/keepassxc

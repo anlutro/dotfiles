@@ -13,6 +13,6 @@ if [ "$version" = "$installed_version" ]; then
 	exit
 fi
 
-cd ~/downloads
+cd ~/downloads || exit 1
 wget $url && unzip $file && mv ./terraform /usr/local/bin/
 rm -f $file

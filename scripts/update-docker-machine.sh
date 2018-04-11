@@ -10,7 +10,7 @@ if docker-machine --version 2>&1 | grep -qF "version $version,"; then
 	exit 1
 fi
 
-cd ~/downloads
+cd ~/downloads || exit 1
 wget $url
 chmod +x $file
 mv $file /usr/local/bin/docker-machine

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 confirm() {
 	read -p "$* [Y/n] "
