@@ -41,6 +41,9 @@ export GIT_PAGER='less -FRX -x5,9'
 export SYSTEMD_LESS='KMR +G'
 # export SYSTEMD_LESS='FKMRX +G'
 
+# application configuration
+export PIPSI_HOME=$HOME/.local/share/pipsi-venvs
+
 # enable colors for grep
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
