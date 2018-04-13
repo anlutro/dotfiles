@@ -18,3 +18,4 @@ fi
 cd ~/downloads
 wget $url
 sudo dpkg -i $filename
+rm -f $filename
