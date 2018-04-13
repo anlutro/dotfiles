@@ -217,6 +217,7 @@ function dcomposer {
 	tty -s && tty_arg=--tty
 	docker run --rm --interactive $tty_arg \
 		--volume $PWD:/app \
+		--volume $HOME/.config/composer:/tmp \
 		--user $(id -u):$(id -g) \
 		--volume $SSH_AUTH_SOCK:/ssh-auth.sock \
 		--env SSH_AUTH_SOCK=/ssh-auth.sock \
