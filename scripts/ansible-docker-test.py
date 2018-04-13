@@ -214,10 +214,14 @@ RUN ansible-playbook /etc/ansible/apply-role.yml -e role=base -e docker_build=tr
 def parse_args(args=None):
 	parser = argparse.ArgumentParser()
 	parser.add_argument('role')
-	parser.add_argument('-b', '--base-name', default='roletest')
-	parser.add_argument('-d', '--default-image', default='debian:stretch')
-	parser.add_argument('-e', '--env-var', default='machine_env')
-	parser.add_argument('-r', '--root-dir', default=os.getcwd())
+	parser.add_argument('-b', '--base-name', default='roletest',
+		help='Base of names for docker images and containers.')
+	parser.add_argument('-d', '--default-image', default='debian:stretch',
+		help='The image to base docker containers on by default.')
+	parser.add_argument('-e', '--env-var', default='machine_env',
+		help='An Ansible variable name that gets set to "docker".')
+	parser.add_argument('-r', '--root-dir', default=os.getcwd(),
+		help='Root directory of your Ansible setup.')
 	parser.add_argument('-s', '--skip-build-images', action='store_true',
 		help='Skip building of the base image(s).')
 	return parser.parse_args()
