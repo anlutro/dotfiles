@@ -4,7 +4,7 @@ url=$(curl -s https://api.github.com/repos/JetBrains/kotlin/releases | grep brow
 file=$(basename $url)
 version=$(echo $file | sed -r 's/.*kotlin-compiler-([0-9.-]+)\.zip/\1/')
 
-if kotlin -version | grep $version; then
+if kotlin -version | grep -q $version$; then
 	echo "Latest version ($version) already installed!"
 	exit 1
 fi
