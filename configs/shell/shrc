@@ -350,8 +350,8 @@ function mkvenv {
 			return 1
 		fi
 	fi
-	$cmd $venv
-	return $?
+	$cmd $venv || return 1
+	$venv/bin/pip install --upgrade pip
 }
 
 function rmvenv {
