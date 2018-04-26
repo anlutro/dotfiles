@@ -1,0 +1,13 @@
+#!/bin/sh
+
+version=$(curl -s https://api.github.com/repos/kubernetes/minikube/releases/latest | grep tag_name | cut -d '"' -f 4)
+
+if minikube version | grep -qF "version: $version"; then
+	echo "Latest version ($version) already installed!"
+	exit 1
+fi
+
+cd ~/downloads || exit 1
+wget https://github.com/kubernetes/minikube/releases/download/$version/minikube-linux-amd64
+sudo cp minikube-linux-amd64 /usr/local/bin/minikube
+sudo chmod 755 /usr/local/bin/minikube
