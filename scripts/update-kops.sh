@@ -9,5 +9,5 @@ fi
 
 cd ~/downloads || exit 1
 wget https://github.com/kubernetes/kops/releases/download/$version/kops-linux-amd64
-sudo cp kops-linux-amd64 /usr/local/bin/kops
-sudo chmod 755 /usr/local/bin/kops
+cp kops-linux-amd64 /usr/local/bin/kops
+chmod 755 /usr/local/bin/kops

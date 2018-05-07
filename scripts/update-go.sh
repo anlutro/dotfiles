@@ -13,7 +13,7 @@ if [ ! -d $PREFIX ]; then
 	cd ~/downloads
 	wget $URL
 	mkdir /tmp/go-${VERSION}
-	tar -C /tmp/go-${VERSION} $FILENAME
+	tar xf $FILENAME -C /tmp/go-${VERSION}
 	sudo mv /tmp/go-${VERSION} $PREFIX
 	sudo chown -R root:staff $PREFIX
 fi

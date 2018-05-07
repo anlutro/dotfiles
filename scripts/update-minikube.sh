@@ -9,5 +9,5 @@ fi
 
 cd ~/downloads || exit 1
 wget https://github.com/kubernetes/minikube/releases/download/$version/minikube-linux-amd64
-sudo cp minikube-linux-amd64 /usr/local/bin/minikube
-sudo chmod 755 /usr/local/bin/minikube
+cp minikube-linux-amd64 /usr/local/bin/minikube
+chmod 755 /usr/local/bin/minikube

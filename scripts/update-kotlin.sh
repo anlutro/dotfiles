@@ -18,5 +18,5 @@ rm $file
 sudo chown -R root:staff /opt/kotlinc
 
 for bin in kotlin kotlinc; do
-	sudo ln -sf /opt/kotlinc/bin/$bin /usr/local/bin/
+	ln -sf /opt/kotlinc/bin/$bin /usr/local/bin/
 done
