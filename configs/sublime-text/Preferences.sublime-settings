@@ -82,6 +82,7 @@
 		".idea",
 		".svn",
 		".task",
+		".tox",
 		".vagrant",
 		".venv",
 		".virtualenv",
