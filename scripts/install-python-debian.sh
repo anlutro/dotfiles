@@ -6,7 +6,7 @@ while [ $# -gt 0 ]; do
 	arg="$1"
 	case $arg in
 		-2|--two )
-			python='python2'
+			python='python'
 			;;
 		-3|--three )
 			python='python3'
