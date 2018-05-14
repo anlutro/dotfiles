@@ -258,6 +258,9 @@ function lsvenv {
 	elif [ -f $dir/.venv/bin/activate ]; then
 		venv=$dir/.venv
 		venv_name=$(basename $dir)
+	elif [ -f $dir/venv/bin/activate ]; then
+		venv=$dir/venv
+		venv_name=$(basename $dir)
 	elif [ -f $dir/bin/activate ]; then
 		venv=$dir
 		venv_name=$(basename $dir)
