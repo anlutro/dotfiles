@@ -183,7 +183,6 @@ function sl {
 	fi
 	streamlink $stream $quality $args
 }
-alias lvs=sl
 
 # php in docker
 function dphp {
