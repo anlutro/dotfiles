@@ -8,12 +8,23 @@ import subprocess
 import sys
 import readline
 
+interactive = False
 
-def confirm(prompt):
-	return input(prompt).lower().startswith('y')
+
+def confirm(prompt, default=False):
+	if interactive:
+		prompt += ' [%s/%s] ' % (
+			'Y' if default else 'y',
+			'n' if default else 'N',
+		)
+		return input(prompt).lower().startswith('y')
+	return default
 
 
 def input_with_prefill(prompt, text):
+	if not interactive:
+		return text
+
 	def hook():
 		readline.insert_text(text)
 		readline.redisplay()
@@ -83,12 +94,12 @@ def write_gitignore(path, project_types):
 	if 'python' in project_types:
 		ignores.append([
 			'# python', '__pycache__', '*.pyc', '/pip-selfcheck.json',
-			'*.egg-info', '.eggs',
+			'*.egg-info', '.eggs', '/dist',
 		])
 		ignores.append(['# pytest', '/.pytest_cache', '/.cache', '/.coverage'])
 		ignores.append([
 			'# virtualenv', '/.venv', '/.virtualenv',
-			'/dist', '/include', '/lib', '/lib64', '/share',
+			'/include', '/lib', '/lib64', '/share',
 		])
 
 	if 'php' in project_types:
@@ -107,9 +118,9 @@ def write_gitignore(path, project_types):
 def guess_project_types(root_dir=None):
 	if not root_dir:
 		root_dir = os.getcwd()
-	files = os.listdir(root_dir)
+	files = set(os.listdir(root_dir))
 	types = []
-	if 'setup.py' in files or 'requirements.txt' in files:
+	if files & {'setup.py', 'setup.cfg', 'requirements', 'requirements.txt'}:
 		types.append('python')
 	if 'composer.json' in files:
 		types.append('php')
@@ -129,8 +140,13 @@ def guess_project_types(root_dir=None):
 def main():
 	parser = argparse.ArgumentParser()
 	parser.add_argument('-n', '--name', type=str, default=os.path.basename(os.getcwd()))
+	parser.add_argument('--noninteractive', action='store_true')
 	parser.add_argument('types', nargs='*', type=str)
 	args = parser.parse_args()
+
+	if args.noninteractive:
+		global interactive
+		interactive = False
 
 	project_name = args.name
 	print('Project name:', project_name)
@@ -150,7 +166,7 @@ def main():
 	for filename, func in file_funcs:
 		if os.path.exists(filename):
 			print(filename, 'already exists!')
-			if not confirm('overwrite? [y/n] '):
+			if not confirm('overwrite?'):
 				continue
 		func(filename, project_types)
 
@@ -158,7 +174,7 @@ def main():
 		skel_path = os.path.expanduser('~/.local/skel/project-%s/' % project_type)
 		if (
 			os.path.exists(skel_path) and
-			confirm("copy files from %s if they don't already exist? [y/n] " % skel_path)
+			confirm("copy files from %s if they don't already exist?" % skel_path)
 		):
 			subprocess.run(['rsync', '-rv', '--ignore-existing', skel_path, '.'])
 
