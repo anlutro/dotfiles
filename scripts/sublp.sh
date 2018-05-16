@@ -15,4 +15,8 @@ if [ -z "$sp" ]; then
 	sp=$(find "$dir" -maxdepth 1 -name '*.sublime-project')
 fi
 
+if [ -z "$sp" ]; then
+	sp="$dir"
+fi
+
 subl -n "$sp"
