@@ -25,5 +25,6 @@ for d in $root/*; do
 	fi
 	repo="$(basename "$d")"
 	git --no-pager -C "$d" log --all --author="$author" \
-		--pretty=tformat:"%C(green)%ai%C(reset) %C(yellow)[$repo]%C(reset) %s" "$@"
+		--date=format:"%F %H:%M (%a wk%V)" \
+		--pretty=tformat:"%C(green)%ad%C(reset) %C(yellow)[$repo]%C(reset) %s" "$@"
 done | sort
