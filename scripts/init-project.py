@@ -77,7 +77,7 @@ def write_sublime_project(path, project_types):
 	if spaces:
 		data['settings']['tab_size'] = int(spaces.strip())
 
-	if ptype.startswith('python'):
+	if any(ptype.startswith('python') for ptype in project_types):
 		python_path = None
 		if 'VIRTUAL_ENV' in os.environ:
 			python_path = os.environ['VIRTUAL_ENV'] + '/bin/python'
@@ -141,6 +141,7 @@ def main():
 	parser = argparse.ArgumentParser()
 	parser.add_argument('-n', '--name', type=str, default=os.path.basename(os.getcwd()))
 	parser.add_argument('--noninteractive', action='store_true')
+	parser.add_argument('--allow-no-type', action='store_true')
 	parser.add_argument('types', nargs='*', type=str)
 	args = parser.parse_args()
 
@@ -155,10 +156,12 @@ def main():
 		print('Project types:', project_types)
 	else:
 		project_types = guess_project_types()
-		if not project_types:
+		if project_types:
+			print('Project types (guessed):', project_types)
+		else:
 			print('Could not guess project type and no project type provided!')
-			sys.exit(1)
-		print('Project types (guessed):', project_types)
+			if not args.allow_no_type:
+				sys.exit(1)
 	file_funcs = (
 		(project_name + '.sublime-project', write_sublime_project),
 		('.gitignore', write_gitignore),

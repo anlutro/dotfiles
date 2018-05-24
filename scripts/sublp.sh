@@ -11,7 +11,7 @@ cd $dir || exit 1
 sp=$(find "$dir" -maxdepth 1 -name '*.sublime-project')
 if [ -z "$sp" ]; then
 	echo "No sublime-project found, running init-project ..."
-	init-project --noninteractive
+	init-project --noninteractive --allow-no-type
 	sp=$(find "$dir" -maxdepth 1 -name '*.sublime-project')
 fi
 
