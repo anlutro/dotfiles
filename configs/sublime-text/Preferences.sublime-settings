@@ -108,6 +108,7 @@
 	"line_padding_top": 4,
 	"minimap_scroll_to_clicked_text": true,
 	"overlay_scroll_bars": "enabled",
+	"python_interpreter": "python3",
 	"remember_open_files": false,
 	"rulers":
 	[
