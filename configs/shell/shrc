@@ -264,13 +264,6 @@ function lsvenv {
 	elif [ -f $dir/bin/activate ]; then
 		venv=$dir
 		venv_name=$(basename $dir)
-	else
-		hash=$(echo -n $dir | sha256sum | cut -d' ' -f1 | cut -c 1-8)
-		venv_id="dir-$(basename $dir)-$hash"
-		venv="$HOME/.local/venvs/$venv_id"
-		if [ -f $venv/bin/activate ]; then
-			venv_name=$(basename $dir)
-		fi
 	fi
 	if [ -n "$venv_name" ]; then
 		echo "local venv=$venv"
@@ -325,10 +318,7 @@ function mkvenv {
 	fi
 
 	if [ -z "$venv" ] || [ "$venv" = "$PWD" ] || [ "$venv" = '.' ]; then
-		local dir="$(readlink -f $PWD)"
-		local hash=$(echo -n $dir | sha256sum | cut -d' ' -f1 | cut -c 1-8)
-		venv_id="dir-$(basename $dir)-$hash"
-		local venv="$HOME/.local/venvs/$venv_id"
+		venv=".venv"
 	fi
 
 	echo "Creating virtualenv in '$venv' using $($python --version 2>&1) ..."
