@@ -36,7 +36,7 @@ fi
 if grep -Eiq 'synap|alps|etps' /proc/bus/input/devices && \
 	command -v synclient >/dev/null 2>&1
 then
-	synclient AccelFactor=0 MinSpeed=1.25 MaxSpeed=3
+	synclient AccelFactor=0 MinSpeed=1.75 MaxSpeed=3.5
 	# tapping the touchpad sends a mouse button 1 event
 	synclient TapButton1=1
 	# stop scrolling immediately when lifting fingers
