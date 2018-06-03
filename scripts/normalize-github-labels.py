@@ -7,23 +7,56 @@ import logging
 from allib.logging import setup_logging
 from github import Github
 
-LABEL_COLORS = {
-	# github defaults
-	'bug': 'fc2929', # red
-	'duplicate': 'cccccc', # grey
-	'enhancement': '84b6eb', # light blue
-	'invalid': 'e6e6e6', # grey
-	'question': 'cc317c', # pink
-	'wontfix': 'ffffff', # white
 
-	# semi-official
-	'help wanted': '0e8a16', # dark green
-	'good first issue': 'c2e0c6', # light green
+
+LABELS = {
+	# github defaults
+	'bug': (
+		'd73a4a', # red
+		"Something isn't working",
+	),
+	'duplicate': (
+		'cfd3d7', # grey
+		"This issue or pull request already exists",
+	),
+	'enhancement': (
+		'a2eeef', # light blue
+		"New feature or request",
+	),
+	'good first issue': (
+		'7057ff', # blue/purple-ish
+		"Good for newcomers",
+	),
+	'help wanted': (
+		'008672', # teal
+		"Extra attention is needed",
+	),
+	'invalid': (
+		'e4e669', # yellow
+		"This doesn't seem right",
+	),
+	'question': (
+		'd876e3', # purple
+		"Further information is requested"
+	),
+	'wontfix': (
+		'ffffff', # white
+		"This will not be worked on",
+	),
 
 	# custom
-	'wip': 'fbca04', # yellow
-	'discussion': 'd4c5f9', # light purple
-	'documentation': 'bfdadc', # light teal
+	'wip': (
+		'fbca04', # yellow
+		"Work in progress",
+	),
+	'discussion': (
+		'd876e3', # light purple
+		"Needs to be discussed"
+	),
+	'documentation': (
+		'bfdadc', # light teal
+		"Problem with or suggestion for documentation"
+	),
 }
 
 
@@ -68,6 +101,8 @@ def parse_args(args=None):
 	parser = argparse.ArgumentParser()
 	parser.add_argument('-t', '--token', default=os.getenv('GITHUB_TOKEN'))
 	parser.add_argument('--fix-colors', action='store_true')
+	parser.add_argument('--fix-description', action='store_true')
+	parser.add_argument('--fix-name', action='store_true')
 	parser.add_argument('--fix-missing', action='store_true')
 	parser.add_argument('--delete-extra', action='store_true')
 	parser.add_argument('-v', '--verbose', action='store_true')
@@ -87,30 +122,52 @@ def main():
 	for repo in repos.values():
 		repo_labels = set()
 		for label in repo.get_labels():
-			if label.name not in LABEL_COLORS:
+			label_edit_kwargs = {}
+			lname = label.name.lower().strip()
+
+			if lname not in LABELS:
 				continue
-			if label.color.lower() != LABEL_COLORS[label.name]:
-				print('updating %r from #%s to #%s in %r' % (
-					label, label.color, LABEL_COLORS[label.name], repo
+
+			if lname != label.name:
+				print('updating %r name to %r in %r' % (label, lname, repo))
+				if args.fix_name:
+					label_edit_kwargs['name'] = lname
+
+			lcolor, ldescription = LABELS[lname]
+
+			if label.color.lower() != lcolor:
+				print('updating %r color from #%s to #%s in %r' % (
+					label, label.color, lcolor, repo
 				))
 				if args.fix_colors:
-					label.edit(
-						name=label.name,
-						color=LABEL_COLORS[label.name],
-					)
-			repo_labels.add(label.name)
+					label_edit_kwargs['color'] = lcolor
 
-		missing_labels = set(LABEL_COLORS) - repo_labels
+			if label.descriptions is not None and label.description != ldescription:
+				print('updating %r description from %r to %r in %r' % (
+					label, label.description, ldescription, repo
+				))
+				if args.fix_description:
+					label_edit_kwargs['description'] = ldescription
+
+			if label_edit_kwargs:
+				label_edit_kwargs.setdefault('name', lname)
+				label_edit_kwargs.setdefault('color', lcolor)
+				label_edit_kwargs.setdefault('description', ldescription)
+				label.edit(**label_edit_kwargs)
+
+			repo_labels.add(lname)
+
+		missing_labels = set(LABELS) - repo_labels
 		for label_name in missing_labels:
 			print('adding missing label %r to %r' % (label_name, repo))
 			if args.fix_missing:
-				repo.create_label(label_name, LABEL_COLORS[label_name])
+				repo.create_label(label_name, *LABELS[label_name])
 
-		extra_labels = repo_labels - set(LABEL_COLORS)
+		extra_labels = repo_labels - set(LABELS)
 		for label_name in extra_labels:
 			print('deleting extra label %r to %r' % (label_name, repo))
 			if args.delete_extra:
-				repo.delete_label(label_name, LABEL_COLORS[label_name])
+				repo.delete_label(label_name, *LABELS[label_name])
 
 
 if __name__ == '__main__':
