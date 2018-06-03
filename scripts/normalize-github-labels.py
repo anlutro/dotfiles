@@ -27,19 +27,40 @@ LABEL_COLORS = {
 }
 
 
-def get_repos(user):
+def normalize_whitelist(whitelist, user):
+	if not whitelist:
+		return []
+
+	for item in whitelist:
+		if '/' not in item:
+			yield '%s/%s' % (user.login, item)
+			continue
+
+		if item.startswith('https://github.com/'):
+			item = item[19:]
+		yield item
+
+
+def get_repos(user, whitelist=None):
 	repo_dict = {}
+	whitelist = set(normalize_whitelist(whitelist, user))
+
+	def add_repo(repo, prefix):
+		if repo.archived or not repo.has_issues:
+			return
+		key = '%s/%s' % (prefix, repo.name)
+		if whitelist and key not in whitelist:
+			return
+		repo_dict[key] = repo
+
 	def add_repos(repos, prefix):
 		for repo in repos:
-			if not repo.has_issues:
-				continue
-			if repo.archived:
-				continue
-			key = '%s/%s' % (prefix, repo.name)
-			repo_dict[key] = repo
+			add_repo(repo, prefix)
+
 	add_repos(user.get_repos(), user.login)
 	for org in user.get_orgs():
 		add_repos(org.get_repos(), org.login)
+
 	return repo_dict
 
 
@@ -48,7 +69,9 @@ def parse_args(args=None):
 	parser.add_argument('-t', '--token', default=os.getenv('GITHUB_TOKEN'))
 	parser.add_argument('--fix-colors', action='store_true')
 	parser.add_argument('--fix-missing', action='store_true')
+	parser.add_argument('--delete-extra', action='store_true')
 	parser.add_argument('-v', '--verbose', action='store_true')
+	parser.add_argument('repo', nargs='*')
 	return parser.parse_args(args)
 
 
@@ -58,7 +81,7 @@ def main():
 
 	github = Github(args.token)
 	user = github.get_user()
-	repos = get_repos(user)
+	repos = get_repos(user, args.repo)
 	print('Checking repos:', ', '.join(repos))
 
 	for repo in repos.values():
@@ -67,8 +90,8 @@ def main():
 			if label.name not in LABEL_COLORS:
 				continue
 			if label.color.lower() != LABEL_COLORS[label.name]:
-				print('Updating %r %r from #%s to #%s' % (
-					repo, label, label.color, LABEL_COLORS[label.name]
+				print('updating %r from #%s to #%s in %r' % (
+					label, label.color, LABEL_COLORS[label.name], repo
 				))
 				if args.fix_colors:
 					label.edit(
@@ -76,11 +99,18 @@ def main():
 						color=LABEL_COLORS[label.name],
 					)
 			repo_labels.add(label.name)
-		missing_labels = repo_labels - set(LABEL_COLORS.keys())
+
+		missing_labels = set(LABEL_COLORS) - repo_labels
 		for label_name in missing_labels:
-			print('%r missing %r, adding it' % (repo, label_name))
+			print('adding missing label %r to %r' % (label_name, repo))
 			if args.fix_missing:
 				repo.create_label(label_name, LABEL_COLORS[label_name])
+
+		extra_labels = repo_labels - set(LABEL_COLORS)
+		for label_name in extra_labels:
+			print('deleting extra label %r to %r' % (label_name, repo))
+			if args.delete_extra:
+				repo.delete_label(label_name, LABEL_COLORS[label_name])
 
 
 if __name__ == '__main__':
