@@ -4,8 +4,10 @@ url=$(curl -s https://api.github.com/repos/keepassxreboot/keepassxc/releases | g
 file=$(basename $url)
 version=$(echo $file | grep -oP '[\d.]{3,}')
 
-if command -v keepassxc >/dev/null 2>&1; then
-	installed_version=$(keepassxc --version | grep -oP '[\d.]{3,}')
+if command -v keepassxc-cli >/dev/null 2>&1; then
+	installed_version=$(keepassxc-cli --version | grep -oP '[\d.]{3,}')
+elif command -v keepassxc >/dev/null 2>&1; then
+	installed_version=$(keepassxc cli --version | grep -oP '[\d.]{3,}')
 fi
 
 if [ "$installed_version" = "$version" ]; then
