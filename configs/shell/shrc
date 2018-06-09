@@ -290,6 +290,9 @@ function mkvenv {
 				shift
 				python="$1"
 				;;
+			-p* )
+				python="${1:2}"
+				;;
 			-2|--two )
 				python='python2'
 				;;
@@ -311,7 +314,11 @@ function mkvenv {
 		shift
 	done
 
-	if [[ "$python" =~ ^python3 ]]; then
+	if echo "$python" | grep -qP '^[\d\.]+$'; then
+		python="python${python}"
+	fi
+
+	if echo "$python" | grep -q '^python3'; then
 		cmd="$python -m venv"
 	else
 		cmd="virtualenv -p $python"
