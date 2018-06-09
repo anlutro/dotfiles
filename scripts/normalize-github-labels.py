@@ -5,7 +5,7 @@ import os
 import logging
 
 from allib.logging import setup_logging
-from github import Github
+import github3
 
 
 
@@ -74,25 +74,25 @@ def normalize_whitelist(whitelist, user):
 		yield item
 
 
-def get_repos(user, whitelist=None):
+def get_repos(github, whitelist=None):
+	user = github.me()
 	repo_dict = {}
 	whitelist = set(normalize_whitelist(whitelist, user))
 
-	def add_repo(repo, prefix):
+	def add_repo(repo):
 		if repo.archived or not repo.has_issues:
 			return
-		key = '%s/%s' % (prefix, repo.name)
-		if whitelist and key not in whitelist:
+		if whitelist and repo.full_name not in whitelist:
 			return
-		repo_dict[key] = repo
+		repo_dict[repo.full_name] = repo
 
-	def add_repos(repos, prefix):
+	def add_repos(repos):
 		for repo in repos:
-			add_repo(repo, prefix)
+			add_repo(repo)
 
-	add_repos(user.get_repos(), user.login)
-	for org in user.get_orgs():
-		add_repos(org.get_repos(), org.login)
+	add_repos(github.repositories_by(user.login))
+	for org in user.organizations():
+		add_repos(github.repositories_by(org.login))
 
 	return repo_dict
 
@@ -114,16 +114,16 @@ def main():
 	args = parse_args()
 	setup_logging(log_level=logging.DEBUG if args.verbose else logging.WARNING)
 
-	github = Github(args.token)
-	user = github.get_user()
-	repos = get_repos(user, args.repo)
+	github = github3.login(token=args.token)
+	repos = get_repos(github, args.repo)
 	print('Checking repos:', ', '.join(repos))
 
 	for repo in repos.values():
 		repo_labels = set()
-		for label in repo.get_labels():
+		for label in repo.labels():
 			label_edit_kwargs = {}
 			lname = label.name.lower().strip()
+			repo_labels.add(lname)
 
 			if lname not in LABELS:
 				continue
@@ -142,7 +142,7 @@ def main():
 				if args.fix_colors:
 					label_edit_kwargs['color'] = lcolor
 
-			if label.descriptions is not None and label.description != ldescription:
+			if label.description is not None and label.description != ldescription:
 				print('updating %r description from %r to %r in %r' % (
 					label, label.description, ldescription, repo
 				))
@@ -154,8 +154,6 @@ def main():
 				label_edit_kwargs.setdefault('color', lcolor)
 				label_edit_kwargs.setdefault('description', ldescription)
 				label.edit(**label_edit_kwargs)
-
-			repo_labels.add(lname)
 
 		missing_labels = set(LABELS) - repo_labels
 		for label_name in missing_labels:
