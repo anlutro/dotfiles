@@ -8,36 +8,36 @@ confirm() {
 	return 1
 }
 
-apt update && apt -y dist-upgrade
-apt -y install git vim tree curl irssi zip fuse psmisc jq bc silversearcher-ag \
-	policykit-1 sudo apt-transport-https
-apt -y install --no-install-recommends network-manager
+apt_inst='apt-get -y install --no-install-recommends'
+
+apt-get update && apt-get -y dist-upgrade
+$apt_inst git vim tree curl irssi zip fuse psmisc jq bc silversearcher-ag \
+	policykit-1 sudo apt-transport-https network-manager
 
 usermod -a -G sudo,root,adm,staff,systemd-journal andreas
 
 if confirm "Install X11, i3 and utilities?"; then
-	apt -y install xserver-xorg{,-input-{kbd,mouse,evdev}} x11-xserver-utils \
-		xinit dbus-x11 xautolock xclip i3-wm i3lock rofi dmenu dunst \
-		libnotify-bin scrot imagemagick xdg-user-dirs feh
-	apt -y install --no-install-recommends rxvt-unicode-256color i3blocks
+	$apt_inst xserver-xorg-{core,input-{kbd,mouse,evdev}} x11-xserver-utils \
+		dbus-x11 xclip rofi dunst libnotify-bin scrot imagemagick xdg-user-dirs \
+		feh rxvt-unicode-256color i3-wm i3lock i3blocks xinit xautolock
 
 	mv /etc/fonts/conf.d/??-user.conf /etc/fonts/conf.d/98-user.conf
 	mv /etc/fonts/conf.d/??-local.conf /etc/fonts/conf.d/98-local.conf
 
 	if confirm "Install laptop utilities?"; then
-		apt -y install pm-utils xbacklight
+		$apt_inst pm-utils xbacklight
 	fi
 
 	if confirm "Install MS TrueType fonts?"; then
-		apt -y install ttf-mscorefonts-installer
+		$apt_inst ttf-mscorefonts-installer
 	fi
 
 	if confirm "Install Sublime Text?"; then
 		curl -fsSL https://download.sublimetext.com/sublimehq-pub.gpg | gpg --dearmor \
-			> /etc/apt/sources.list.d/sublimetext.gpg
+			> /etc/apt/trusted.gpg.d/sublimetext.gpg
 		echo "deb https://download.sublimetext.com/ apt/dev/" \
 			> /etc/apt/sources.list.d/sublime-text.list
-		apt update && apt install sublime-text
+		apt-get update && apt-get install sublime-text
 	fi
 fi
 
@@ -46,23 +46,17 @@ if confirm "Install Dropbox?"; then
 		grep -oP 'href="dropbox_\d{4}.*amd64.deb"' | cut -d\" -f2 | sort | tail -1)
 	wget https://linux.dropbox.com/packages/debian/$file
 	dpkg -i $file
-	apt install -f
+	apt-get install -f
 	rm $file
 fi
 
 if confirm "Install Docker?"; then
 	curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor \
-		> /etc/apt/sources.list.d/docker.gpg
+		> /etc/apt/trusted.gpg.d/docker.gpg
 	echo "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" \
 		> /etc/apt/sources.list.d/docker.list
-	apt update && apt install docker-ce
+	apt-get update && apt-get install docker-ce
 	usermod -a -G docker andreas
-fi
-
-if [ ! -d ~/code/dotfiles ]; then
-	mkdir -p ~/code
-	git clone https://github.com/anlutro/dotfiles ~/code/dotfiles
-	~/code/dotfiles/install.sh
 fi
 
 echo
