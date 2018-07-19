@@ -29,7 +29,7 @@ fi
 
 # keyboard mapping options
 if command -v setxkbmap >/dev/null 2>&1; then
-	setxkbmap -option compose:ralt -option caps:super -option apple:badmap
+	setxkbmap -option compose:ralt -option caps:super
 fi
 
 # touchpad settings
