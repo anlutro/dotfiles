@@ -52,6 +52,15 @@ main() {
 
 note_new() {
 	name="$1"
+
+	if command -v fzf >/dev/null 2>&1; then
+		cd $NOTES_DIR
+		match=$(ls -1 -- *.md | sed 's/\.md$//' | fzf --query "$name" --select-1 --exit-0)
+		if [ -n "$match" ]; then
+			name=$match
+		fi
+	fi
+
 	if [ -f "$NOTES_DIR/$name.md" ]; then
 		NOTES_PATH="$NOTES_DIR/$name.md"
 	else
