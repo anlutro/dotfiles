@@ -29,7 +29,16 @@ fi
 
 # keyboard mapping options
 if command -v setxkbmap >/dev/null 2>&1; then
+	# default options, applies to all currently connected keyboards
 	setxkbmap -option compose:ralt -option caps:super
+
+	# for apple keyboards, put the `~ key in the correct spot
+	if command -v xinput >/dev/null 2>&1; then
+		apple_kbd_ids=$(xinput list | grep 'Apple Keyboard' | sed -r 's/.*id=([0-9]+).*/\1/')
+		for device_id in $apple_kbd_ids; do
+			setxkbmap -device $device_id -option apple:badmap
+		done
+	fi
 fi
 
 # touchpad settings
