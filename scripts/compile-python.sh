@@ -55,3 +55,4 @@ make install
 sudo chown -R root:staff $PREFIX
 
 sudo ln -sf $PREFIX/bin/python?.? /usr/local/bin/
+sudo ln -sf $PREFIX/bin/python?.? /usr/local/bin/python$VERSION
