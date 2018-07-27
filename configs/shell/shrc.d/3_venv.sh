@@ -4,7 +4,6 @@ alias av=venv-activate
 alias avenv=venv-activate
 alias rmvenv=venv-destroy
 
-# find and activate a python virtualenv
 function venv-activate {
 	if [ -n "$VIRTUAL_ENV" ]; then
 		echo "A virtualenv is already active!"
