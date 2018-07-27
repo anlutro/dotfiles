@@ -10,37 +10,19 @@
 	],
 	"installed_packages":
 	[
-		"Alignment",
 		"Anaconda",
-		"ColorPicker",
-		"DocBlockr",
 		"Dockerfile Syntax Highlighting",
 		"Elixir",
-		"Elm Language Support",
 		"Emmet",
 		"InsertDate",
 		"Jinja2",
 		"Kotlin",
-		"LESS",
-		"Makefile Improved",
 		"Mako",
-		"Markdown Extended",
-		"Ninja",
 		"Package Control",
-		"PHP Companion",
-		"PHP Completions Kit",
-		"PHP-Twig",
-		"PHPGrammar",
-		"PHPSnippets",
-		"Puppet",
 		"Rust Enhanced",
 		"SaltStack-related syntax highlighting and snippets",
 		"Sass",
 		"ShellScriptImproved",
-		"SublimeLinter",
-		"SublimeLinter-jshint",
-		"SublimeLinter-php",
-		"Terraform",
-		"Text Pastry"
+		"Terraform"
 	]
 }

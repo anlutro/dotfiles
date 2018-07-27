@@ -96,7 +96,7 @@
 	"hot_exit": false,
 	"ignored_packages":
 	[
-		"Makefile",
+		"Rust",
 		"Vintage"
 	],
 	"indent_guide_options":
