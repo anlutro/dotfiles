@@ -2,6 +2,7 @@
 
 alias av=venv-activate
 alias avenv=venv-activate
+alias rmvenv=venv-destroy
 
 # find and activate a python virtualenv
 function venv-activate {
@@ -10,12 +11,12 @@ function venv-activate {
 		return 1
 	fi
 
-	eval $(venv_locate $PWD "$@")
+	eval $(venv-locate $PWD "$@")
 
 	if [ -z "$venv" ]; then
 		echo "Couldn't find a virtualenv in cwd!"
-		venv_create -a "$@" || return $?
-		venv_activate "$@"
+		venv-create -a "$@" || return $?
+		venv-activate "$@"
 		return $?
 	fi
 
@@ -133,7 +134,7 @@ function venv-create {
 	$venv/bin/pip install --upgrade pip setuptools
 }
 
-function venv-rm {
+function venv-destroy {
 	local ask='no'
 	local dir
 
@@ -163,7 +164,7 @@ function venv-rm {
 		dir="$PWD"
 	fi
 
-	eval $(venv_locate $dir)
+	eval $(venv-locate $dir)
 	if [ -z "$venv" ]; then
 		echo "No virtualenv found!"
 		return 0
