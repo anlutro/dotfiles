@@ -7,8 +7,10 @@ case $- in
 esac
 
 # environment variables, aliases and functions
-if [ -f "$HOME/.shrc" ]; then
-	. "$HOME/.shrc"
+if [ -d "$HOME/.shrc.d" ]; then
+	for f in $HOME/.shrc.d/*.sh; do
+		. "$f"
+	done
 fi
 
 # emacs mode
