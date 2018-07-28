@@ -2,6 +2,7 @@
 
 alias av=venv-activate
 alias avenv=venv-activate
+alias mkvenv=venv-create
 alias rmvenv=venv-destroy
 
 function venv-activate {
