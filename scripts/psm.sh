@@ -3,11 +3,14 @@
 # psm -- python script manager
 # replacement for pipsi.
 
-_get_scripts() {
+_psm_list_scripts() {
+	venv=~/.local/share/psm/$1
 	$venv/bin/python -c "
 import pkg_resources
-for s in pkg_resources.iter_entry_points('console_scripts', '$1'):
-	print(s.name)
+dist = pkg_resources.get_distribution('$1')
+scripts = dist.get_entry_map()['console_scripts'].values()
+for script in scripts:
+	print(script.name)
 "
 }
 
@@ -27,7 +30,7 @@ _psm_upgrade() {
 		echo "Installing package: $pkg ..."
 		$venv/bin/pip install -q -U $pkg
 		echo "Creating script symlinks for $pkg ..."
-		_get_scripts $pkg | xargs -r -n1 -I% ln -sf $venv/bin/% ~/.local/bin/
+		_psm_list_scripts $pkg | xargs -r -n1 -I% ln -sf $venv/bin/% ~/.local/bin/
 	done
 }
 
@@ -39,13 +42,13 @@ _psm_upgrade_all() {
 _psm_uninstall() {
 	for pkg in $@; do
 		echo "Uninstalling package: $pkg ..."
-		_get_scripts $pkg | xargs -r -n1 -I% rm -f ~/.local/bin/%
+		_psm_list_scripts $pkg | xargs -r -n1 -I% rm -f ~/.local/bin/%
 		rm -rf ~/.local/share/psm/$pkg
 	done
 }
 
 psm() {
-	func="$1" && shift
+	func="$(echo "$1" | tr -s - _)" && shift
 	eval _psm_$func $@
 }
 
