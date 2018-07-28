@@ -13,6 +13,7 @@ for s in pkg_resources.iter_entry_points('console_scripts', '$1'):
 
 _psm_install() {
 	for pkg in $@; do
+		echo "Creating virtual environment for $pkg ..."
 		venv=~/.local/share/psm/$pkg
 		python3.6 -m venv $venv
 	done
@@ -21,8 +22,11 @@ _psm_install() {
 
 _psm_upgrade() {
 	for pkg in $@; do
+		echo "Installing pip and setuptools for $pkg ..."
 		$venv/bin/pip install -q -U pip setuptools
+		echo "Installing package: $pkg ..."
 		$venv/bin/pip install -q -U $pkg
+		echo "Creating script symlinks for $pkg ..."
 		_get_scripts $pkg | xargs -r -n1 -I% ln -sf $venv/bin/% ~/.local/bin/
 	done
 }
@@ -34,6 +38,7 @@ _psm_upgrade_all() {
 
 _psm_uninstall() {
 	for pkg in $@; do
+		echo "Uninstalling package: $pkg ..."
 		_get_scripts $pkg | xargs -r -n1 -I% rm -f ~/.local/bin/%
 		rm -rf ~/.local/share/psm/$pkg
 	done
