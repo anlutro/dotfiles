@@ -6,11 +6,17 @@
 _psm_list_scripts() {
 	venv=~/.local/share/psm/$1
 	$venv/bin/python -c "
-import pkg_resources
-dist = pkg_resources.get_distribution('$1')
-scripts = dist.get_entry_map()['console_scripts'].values()
+from pkg_resources import get_distribution
+from os.path import abspath, basename, join
+dist = get_distribution('$1')
+scripts = dist.get_entry_map().get('console_scripts', {}).values()
 for script in scripts:
 	print(script.name)
+if dist.has_metadata('installed-files.txt'):
+	for line in dist.get_metadata_lines('installed-files.txt'):
+		path = abspath(join(dist.egg_info, line.split(',')[0]))
+		if path.startswith('$venv/bin/'):
+			print(basename(path))
 "
 }
 
