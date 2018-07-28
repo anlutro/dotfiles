@@ -2,7 +2,7 @@
 set -euo pipefail
 source $TESTS_DIR/common.sh
 
-source $CONFIG_DIR/shell/shrc
+for f in $CONFIG_DIR/shell/shrc.d/*.sh; do source $f; done
 tmpdir=$(mktemp -d)
 cd $tmpdir
 
