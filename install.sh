@@ -203,6 +203,7 @@ install_nano() {
 
 install_python() {
 	ln -sf $scripts/templ.py $bindir/templ
+	ln -sf $scripts/psm.sh $bindir/psm
 }
 
 install_subl() {
