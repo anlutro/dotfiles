@@ -36,7 +36,7 @@ def input_with_prefill(prompt, text):
 
 def write_sublime_project(path, project_types):
 	file_exclude_patterns = []
-	folder_exclude_patterns = ['build*']
+	folder_exclude_patterns = ['build*', '_build*', '.build*']
 	default_indent = 'tabs'
 	default_spaces = ''
 
@@ -55,7 +55,7 @@ def write_sublime_project(path, project_types):
 			file_exclude_patterns.append('*.retry')
 		elif ptype in ('kotlin', 'kt', 'java'):
 			folder_exclude_patterns.append('.gradle')
-		elif ptype == 'puppet':
+		elif ptype in ('puppet', 'elixir', 'crystal', 'ruby'):
 			default_indent = 'spaces'
 			default_spaces = 2
 		else:
@@ -75,7 +75,7 @@ def write_sublime_project(path, project_types):
 
 	spaces = input_with_prefill('Tab size? (leave empty for default) ', default_spaces)
 	if spaces:
-		data['settings']['tab_size'] = int(spaces.strip())
+		data['settings']['tab_size'] = int(spaces)
 
 	if any(ptype.startswith('python') for ptype in project_types):
 		python_path = None
