@@ -2,7 +2,7 @@
 
 # make a directory and cd into it
 function md {
-	mkdir -p "$@" && cd "$_";
+	mkdir -p "$@" && cd "$_" || return 1;
 }
 
 function apt-everything {
@@ -30,7 +30,7 @@ function apt-add-key {
 function t {
 	local args="";
 	if [ "$*" != "" ]; then
-		args="-e $@"
+		args="-e $*"
 	fi
 
 	args="-cd $PWD $args"
@@ -95,7 +95,7 @@ function dphp {
 	tty -s && tty_arg=--tty
 	docker run --rm --interactive $tty_arg \
 		--volume $PWD:/usr/src/myapp \
-		--user $(id -u):$(id -g) \
+		--user "$(id -u):$(id -g)" \
 		--workdir /usr/src/myapp \
 		--network host \
 		php:7-cli-alpine php "$@"
@@ -108,7 +108,7 @@ function dcomposer {
 	docker run --rm --interactive $tty_arg \
 		--volume $PWD:/app \
 		--volume $HOME/.config/composer:/tmp \
-		--user $(id -u):$(id -g) \
+		--user "$(id -u):$(id -g)" \
 		--volume $SSH_AUTH_SOCK:/ssh-auth.sock \
 		--env SSH_AUTH_SOCK=/ssh-auth.sock \
 		composer "$@"
@@ -123,12 +123,13 @@ function clear-pycache {
 
 # clone a github repository
 function gh-clone {
-	git clone https://github.com/"$@"
+	git clone https://github.com/"$*"
 }
 
 # fetch a github pull request
 function gh-fetch-pr {
-	local remote=$(git remote -v | grep '(fetch)' | grep 'github.com' | cut -f 1)
+	local remote
+	remote=$(git remote -v | grep '(fetch)' | grep 'github.com' | cut -f 1)
 	if [ -n "$remote" ]; then
 		git fetch $remote "pull/$1/head:pr-$1"
 	else
@@ -137,16 +138,16 @@ function gh-fetch-pr {
 }
 
 function hex2oct {
-	echo "obase=8; ibase=16; $@" | bc
+	echo "obase=8; ibase=16; $*" | bc
 }
 function hex2dec {
-	echo "obase=10; ibase=16; $@" | bc
+	echo "obase=10; ibase=16; $*" | bc
 }
 function oct2hex {
-	echo "obase=16; ibase=8; $@" | bc
+	echo "obase=16; ibase=8; $*" | bc
 }
 function oct2dec {
-	echo "obase=10; ibase=8; $@" | bc
+	echo "obase=10; ibase=8; $*" | bc
 }
 
 # list network stuff

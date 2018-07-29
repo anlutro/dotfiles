@@ -21,16 +21,16 @@ if dist.has_metadata('installed-files.txt'):
 }
 
 _psm_install() {
-	for pkg in $@; do
+	for pkg in "$@"; do
 		echo "Creating virtual environment for $pkg ..."
 		venv=~/.local/share/psm/$pkg
 		python3.6 -m venv $venv
 	done
-	_psm_upgrade $@
+	_psm_upgrade "$@"
 }
 
 _psm_upgrade() {
-	for pkg in $@; do
+	for pkg in "$@"; do
 		echo "Installing pip and setuptools for $pkg ..."
 		$venv/bin/pip install -q -U pip setuptools
 		echo "Installing package: $pkg ..."
@@ -41,12 +41,15 @@ _psm_upgrade() {
 }
 
 _psm_upgrade_all() {
-	pkgs=$(find ~/.local/share/psm -mindepth 1 -maxdepth 1 -type d | xargs -n1 basename)
+	pkgs=$(
+		find ~/.local/share/psm -mindepth 1 -maxdepth 1 -type d -print0 \
+		| xargs -r -0 -n1 basename
+	)
 	_psm_upgrade $pkgs
 }
 
 _psm_uninstall() {
-	for pkg in $@; do
+	for pkg in "$@"; do
 		echo "Uninstalling package: $pkg ..."
 		_psm_list_scripts $pkg | xargs -r -n1 -I% rm -f ~/.local/bin/%
 		rm -rf ~/.local/share/psm/$pkg
@@ -55,7 +58,7 @@ _psm_uninstall() {
 
 psm() {
 	func="$(echo "$1" | tr -s - _)" && shift
-	eval _psm_$func $@
+	eval _psm_$func "$@"
 }
 
-psm $@
+psm "$@"

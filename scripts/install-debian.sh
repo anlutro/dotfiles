@@ -1,7 +1,7 @@
 #!/bin/bash
 
 confirm() {
-	read -p "$* [Y/n] "
+	read -rp "$* [Y/n] "
 	if [ -z "$REPLY" ] || [[ "$REPLY" =~ ^[Yy] ]]; then
 		return 0
 	fi

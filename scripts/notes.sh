@@ -54,8 +54,10 @@ note_new() {
 	name="$1"
 
 	if command -v fzf >/dev/null 2>&1; then
-		cd $NOTES_DIR
-		match=$(ls -1 -- *.md | sed 's/\.md$//' | fzf --query "$name" --select-1 --exit-0)
+		match=$(
+			find $NOTES_DIR -name '*.md' -print0 | xargs -0 -r -n1 basename \
+			| sed 's/\.md$//' | fzf --query "$name" --select-1 --exit-0
+		)
 		if [ -n "$match" ]; then
 			name=$match
 		fi
@@ -93,9 +95,9 @@ note_delete() {
 note_list() {
 	cd $NOTES_DIR || exit 1
 	if [ $# = 0 ]; then
-		ls *.md
+		ls -- *.md
 	else
-		files=$(ls -1 -- *.md | grep -- "$*")
+		files=$(find -name '*.md' -print0 | xargs -0 -r -n1 basename | grep -- "$*")
 		if [ -n "$files" ]; then
 			ls $files
 		fi

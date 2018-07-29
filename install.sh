@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 if [ -z "$HOME" ]; then
-	echo '$HOME is empty, aborting'
+	echo "\$HOME is empty, aborting"
 	exit 1
 fi
 
@@ -29,7 +29,7 @@ install() {
 	func="install_$(echo $1 | tr -s '-' '_')"
 	cmd=${2:-$1}
 	if command -v $cmd >/dev/null 2>&1; then
-		printf "Setting up $name... "
+		printf "Setting up %s ... " "$name"
 		$func
 		echo "done"
 	fi
@@ -74,7 +74,8 @@ install_feh() {
 
 install_git() {
 	local local_conf
-	local git_version=$(git --version | grep -oP '[\d+.]+')
+	local git_version
+	git_version=$(git --version | grep -oP '[\d+.]+')
 
 	if echo $git_version | grep -q '^1'; then
 		ln -sf $configs/git/config $HOME/.gitconfig
@@ -385,7 +386,7 @@ install zsh
 
 
 # look for broken symlinks
-echo "\nLooking for broken symlinks..."
+printf "\nLooking for broken symlinks..."
 find $configs -xtype l
 find $scripts -xtype l
 find $bindir -xtype l

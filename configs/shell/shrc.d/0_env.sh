@@ -14,7 +14,8 @@ export HISTFILE=~/.history
 export MANWIDTH=80
 
 # need this for signing commits with git, for some reason
-export GPG_TTY=$(tty)
+GPG_TTY=$(tty)
+export GPG_TTY
 
 # make less more friendly for non-text input files, see lesspipe(1)
 test -x /usr/bin/lesspipe && eval "$(SHELL=/bin/sh lesspipe)"

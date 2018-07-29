@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
-root=$(dirname $(readlink -f "$0"))
-cd $root/vendor
+root=$(dirname "$(readlink -f "$0")")
+cd $root/vendor || exit 1
 
 update_fzf() {
 	./install --bin
@@ -10,7 +10,7 @@ update_fzf() {
 for dir in *; do
 	if [ -d $dir ]; then
 		echo "Updating $dir ..."
-		cd $dir
+		cd $dir || exit 1
 		git checkout .
 		git pull
 		if type "update_$dir" > /dev/null; then

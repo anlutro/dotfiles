@@ -11,7 +11,7 @@ function venv-activate {
 		return 1
 	fi
 
-	eval $(venv-locate $PWD "$@")
+	eval "$(venv-locate $PWD "$@")"
 
 	if [ -z "$venv" ]; then
 		echo "Couldn't find a virtualenv in cwd!"
@@ -20,7 +20,8 @@ function venv-activate {
 		return $?
 	fi
 
-	local relpath=$(realpath --relative-to=$PWD $venv)
+	local relpath
+	relpath=$(realpath --relative-to=$PWD $venv)
 	if [[ "$relpath" =~ ^\.\. ]]; then
 		relpath=$venv
 	fi
@@ -125,7 +126,7 @@ function venv-create {
 
 	echo "Creating virtualenv in '$venv' using $($python --version 2>&1) ..."
 	if [ "$ask" = 'yes' ]; then
-		read -p "Confirm [Y/n] "
+		read -rp "Confirm [Y/n] "
 		if [ -n "$REPLY" ] && ! [[ "$REPLY" =~ ^[Yy] ]]; then
 			return 1
 		fi
@@ -164,14 +165,14 @@ function venv-destroy {
 		dir="$PWD"
 	fi
 
-	eval $(venv-locate $dir)
+	eval "$(venv-locate $dir)"
 	if [ -z "$venv" ]; then
 		echo "No virtualenv found!"
 		return 0
 	fi
 
 	if [ "$ask" = 'yes' ]; then
-		read -p "Remove virtualenv '$venv'? [Y/n] "
+		read -rp "Remove virtualenv '$venv'? [Y/n] "
 		if [ -n "$REPLY" ] && ! [[ "$REPLY" =~ ^[Yy] ]]; then
 			return 1
 		fi

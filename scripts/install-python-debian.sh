@@ -26,4 +26,4 @@ curl -s https://bootstrap.pypa.io/get-pip.py | $python - --user
 
 # prevent system pip from installing things into /usr/local if the user running
 # it is part of the "staff" group
-find /usr/local/lib/python* -maxdepth 1 -type d | xargs sudo chmod og-w
+find /usr/local/lib/python* -maxdepth 1 -type d -print0 | xargs -r -0 sudo chmod og-w
