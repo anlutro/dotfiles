@@ -53,31 +53,28 @@ main() {
 note_new() {
 	name="$1"
 
-	if [ ! -f "$NOTES_DIR/$name.md" ] && command -v fzf >/dev/null 2>&1; then
-		match=$(
-			find $NOTES_DIR -name '*.md' -print0 | xargs -0 -r -n1 basename \
-			| sed 's/\.md$//' | fzf --query "$name" --print-query --select-1 --exit-0
-		) || return
-		if [ -n "$match" ]; then
-			name=$match
+	if [ ! -f "$NOTES_DIR/$name.md" ]; then
+		if command -v fzf >/dev/null 2>&1; then
+			match=$(
+				find $NOTES_DIR -name '*.md' -print0 | xargs -0 -r -n1 basename \
+				| sed 's/\.md$//' | fzf --query "$name" --print-query --select-1
+			)
+			if [ -n "$match" ]; then
+				name="$(echo "$match" | tail -1)"
+			fi
+		else
+			match=$(note_list "$name")
+			count=$(echo "$match" | wc -w)
+			if [ $count -gt 1 ]; then
+				note_list "$name"
+				return
+			elif [ $count -eq 1 ]; then
+				name="$match"
+			fi
 		fi
 	fi
 
-	if [ -f "$NOTES_DIR/$name.md" ]; then
-		NOTES_PATH="$NOTES_DIR/$name.md"
-	else
-		count=$(note_list $name | wc -w)
-		if [ $count -gt 1 ]; then
-			note_list $name
-		elif [ $count -eq 0 ]; then
-			NOTES_PATH="$NOTES_DIR/$name.md"
-		else
-			NOTES_PATH="$NOTES_DIR/$(note_list $name)"
-		fi
-	fi
-	if [ -n "$NOTES_PATH" ]; then
-		eval $EDITOR "$NOTES_PATH"
-	fi
+	eval $EDITOR "$NOTES_DIR/$name.md"
 }
 
 note_delete() {
