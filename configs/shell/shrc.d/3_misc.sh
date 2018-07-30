@@ -9,6 +9,8 @@ function apt-everything {
 	for cmd in update dist-upgrade autoremove clean; do
 		sudo apt $cmd
 	done
+	purge_pkgs=$(dpkg -l | grep '^rc' | awk '{ print $2 }')
+	apt purge $purge_pkgs
 }
 
 # apt-key add is meh
