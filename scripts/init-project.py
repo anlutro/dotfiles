@@ -47,8 +47,6 @@ def write_sublime_project(path, project_types):
 			folder_exclude_patterns.append('node_modules*')
 		elif ptype == 'php':
 			folder_exclude_patterns.append('vendor*')
-		elif ptype == 'go':
-			folder_exclude_patterns.append('.gopath*')
 		elif ptype == 'tf' or ptype == 'terraform':
 			folder_exclude_patterns.append('.terraform*')
 		elif ptype == 'ansible':
