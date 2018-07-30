@@ -53,11 +53,11 @@ main() {
 note_new() {
 	name="$1"
 
-	if command -v fzf >/dev/null 2>&1; then
+	if [ ! -f "$NOTES_DIR/$name.md" ] && command -v fzf >/dev/null 2>&1; then
 		match=$(
 			find $NOTES_DIR -name '*.md' -print0 | xargs -0 -r -n1 basename \
-			| sed 's/\.md$//' | fzf --query "$name" --select-1 --exit-0
-		)
+			| sed 's/\.md$//' | fzf --query "$name" --print-query --select-1 --exit-0
+		) || return
 		if [ -n "$match" ]; then
 			name=$match
 		fi
