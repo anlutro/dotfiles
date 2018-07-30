@@ -23,6 +23,10 @@ if ! dpkg -l | grep -q 'zlib.*-dev'; then
 	echo "warning: zlib not installed!"
 	warn=yes
 fi
+if ! dpkg -l | grep -q 'libncurses.*-dev'; then
+	echo "warning: libncurses not installed!"
+	warn=yes
+fi
 if [ $warn = 'yes' ]; then
 	exit 1
 fi
