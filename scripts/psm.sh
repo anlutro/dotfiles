@@ -3,6 +3,11 @@
 # psm -- python script manager
 # replacement for pipsi.
 
+python=$(
+	find /usr/local/bin /usr/bin -regex .*/python[3-9]\.[0-9]+ -printf '%f\n' \
+	| sort -n | tail -1
+)
+
 _psm_list_scripts() {
 	venv=~/.local/share/psm/$1
 	$venv/bin/python -c "
@@ -24,7 +29,7 @@ _psm_install() {
 	for pkg in "$@"; do
 		echo "Creating virtual environment for $pkg ..."
 		venv=~/.local/share/psm/$pkg
-		python3.6 -m venv $venv
+		$python -m venv $venv
 	done
 	_psm_upgrade "$@"
 }
