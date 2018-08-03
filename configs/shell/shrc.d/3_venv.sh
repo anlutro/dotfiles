@@ -7,14 +7,14 @@ alias rmvenv=venv-destroy
 
 function venv-activate {
 	if [ -n "$VIRTUAL_ENV" ]; then
-		echo "A virtualenv is already active!"
+		echo "A virtualenv is already active!" >&2
 		return 1
 	fi
 
 	eval "$(venv-locate $PWD "$@")"
 
 	if [ -z "$venv" ]; then
-		echo "Couldn't find a virtualenv in cwd!"
+		echo "Couldn't find a virtualenv in cwd!" >&2
 		venv-create -a "$@" || return $?
 		venv-activate "$@"
 		return $?
@@ -39,13 +39,13 @@ function venv-locate {
 	local venv_name
 	if [ -d $dir/.tox ]; then
 		if [ -n "$name" ]; then
-			if [ ! -d "$dir/.tox/$name" ]; then
-				echo "No tox environment $name found!" >&2
-				return 0
-			fi
 			venv=$dir/.tox/$name
 		else
 			venv=$(find $dir/.tox -mindepth 1 -maxdepth 1 -name 'py*' | sort | tail -1)
+		fi
+		if [ ! -d "$venv" ]; then
+			echo ".tox directory found but no virtualenvs!" >&2
+			return 1
 		fi
 		venv_name="$(basename $dir)/$(basename $venv)"
 	elif [ -f $dir/.virtualenv/bin/activate ]; then
@@ -96,12 +96,12 @@ function venv-create {
 				python='python3'
 				;;
 			-* )
-				echo "Unknown option: $arg"
+				echo "Unknown option: $arg" >&2
 				return 1
 				;;
 			* )
 				if [ -n "$venv" ]; then
-					echo "Extra argument received: $arg"
+					echo "Extra argument received: $arg" >&2
 					return 1
 				fi
 				venv="$1"
@@ -146,12 +146,12 @@ function venv-destroy {
 				ask='yes'
 				;;
 			-* )
-				echo "Unknown option: $arg"
+				echo "Unknown option: $arg" >&2
 				return 1
 				;;
 			* )
 				if [ -n "$dir" ]; then
-					echo "Extra argument received: $arg"
+					echo "Extra argument received: $arg" >&2
 					return 1
 				fi
 				dir="$arg"

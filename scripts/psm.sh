@@ -3,7 +3,8 @@
 # psm -- python script manager
 # replacement for pipsi.
 
-python=$(
+VENV_DIR=~/.local/share/psm
+PYTHON=$(
 	find /usr/local/bin /usr/bin -regex .*/python[3-9]\.[0-9]+ -printf '%f\n' \
 	| sort -n | tail -1
 )
@@ -28,14 +29,14 @@ if dist.has_metadata('installed-files.txt'):
 _psm_install() {
 	for pkg in "$@"; do
 		echo "Creating virtual environment for $pkg ..."
-		venv=~/.local/share/psm/$pkg
-		$python -m venv $venv
+		$PYTHON -m venv $VENV_DIR/$pkg
 	done
 	_psm_upgrade "$@"
 }
 
 _psm_upgrade() {
 	for pkg in "$@"; do
+		venv=$VENV_DIR/$pkg
 		echo "Installing pip and setuptools for $pkg ..."
 		$venv/bin/pip install -q -U pip setuptools
 		echo "Installing package: $pkg ..."
