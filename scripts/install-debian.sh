@@ -12,7 +12,7 @@ apt_inst='apt-get -y install --no-install-recommends'
 
 apt-get update && apt-get -y dist-upgrade
 $apt_inst git vim tree curl irssi zip fuse psmisc jq bc silversearcher-ag \
-	policykit-1 sudo apt-transport-https network-manager
+	policykit-1 sudo apt-transport-https network-manager python3 python3-venv
 
 usermod -a -G sudo,root,adm,staff,systemd-journal andreas
 
