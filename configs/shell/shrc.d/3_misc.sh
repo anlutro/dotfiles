@@ -10,7 +10,7 @@ function apt-everything {
 		sudo apt $cmd
 	done
 	purge_pkgs=$(dpkg -l | grep '^rc' | awk '{ print $2 }')
-	apt purge $purge_pkgs
+	sudo apt purge $purge_pkgs
 }
 
 # apt-key add is meh
