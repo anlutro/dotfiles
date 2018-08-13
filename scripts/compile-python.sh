@@ -35,7 +35,13 @@ VERSION="$1"
 NAME="Python-$VERSION"
 FILE="$NAME.tar.xz"
 URL="https://www.python.org/ftp/python/$VERSION/$FILE"
-PREFIX="/opt/python-$VERSION"
+
+if [ -w /usr/local ]; then
+	PRE_PREFIX="/usr/local"
+else
+	PRE_PREFIX="$HOME/.local"
+fi
+PREFIX="$PRE_PREFIX/share/python-$VERSION"
 
 cd ~/downloads
 if [ ! -f $FILE ]; then
@@ -44,19 +50,11 @@ fi
 tar xf $FILE
 cd $NAME
 
-./configure --prefix=$PREFIX \
-	--enable-optimizations --enable-loadable-sqlite-extensions
+./configure --prefix=$PREFIX --enable-loadable-sqlite-extensions
 
 make
 
-if [ ! -d $PREFIX ]; then
-	sudo mkdir $PREFIX
-fi
-sudo chown -R $USER:$USER $PREFIX
-
 make install
 
-sudo chown -R root:staff $PREFIX
-
-sudo ln -sf $PREFIX/bin/python?.? /usr/local/bin/
-sudo ln -sf $PREFIX/bin/python?.? /usr/local/bin/python$VERSION
+ln -sf $PREFIX/bin/python?.? $PRE_PREFIX/bin/
+ln -sf $PREFIX/bin/python?.? $PRE_PREFIX/bin/python$VERSION
