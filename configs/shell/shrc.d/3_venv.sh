@@ -37,7 +37,10 @@ function venv-locate {
 	local name="$2"
 	local venv
 	local venv_name
-	if [ -d $dir/.tox ]; then
+	if [ -f "$name/bin/activate" ]; then
+		venv="$(readlink -f $name)"
+		venv_name="$name"
+	elif [ -d $dir/.tox ]; then
 		if [ -n "$name" ]; then
 			venv=$dir/.tox/$name
 		else
