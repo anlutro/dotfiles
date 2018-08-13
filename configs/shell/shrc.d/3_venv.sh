@@ -114,7 +114,7 @@ function venv-create {
 		python="python${python}"
 	fi
 
-	if echo "$python" | grep -q '^python3'; then
+	if echo "$python" | grep -q 'python3'; then
 		cmd="$python -m venv"
 	else
 		cmd="virtualenv -p $python"
