@@ -7,6 +7,7 @@ c = commit
 cb = checkout -b
 cm = commit --message
 co = checkout
+cp = cherry-pick
 d = diff
 dw = diff --color-words
 dc = diff --cached
