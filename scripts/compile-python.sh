@@ -6,30 +6,19 @@ if [ $# -lt 1 ]; then
 	exit 1
 fi
 
-warn=no
-if ! dpkg -l | grep -q 'libsqlite.*-dev'; then
-	echo "warning: libsqlite not installed!"
-	warn=yes
-fi
-if ! dpkg -l | grep -q 'libreadline.*-dev'; then
-	echo "warning: libreadline not installed!"
-	warn=yes
-fi
-if ! dpkg -l | grep -q 'libssl.*-dev'; then
-	echo "warning: libssl not installed!"
-	warn=yes
-fi
-if ! dpkg -l | grep -q 'zlib.*-dev'; then
-	echo "warning: zlib not installed!"
-	warn=yes
-fi
-if ! dpkg -l | grep -q 'libncurses.*-dev'; then
-	echo "warning: libncurses not installed!"
-	warn=yes
-fi
-if [ $warn = 'yes' ]; then
-	exit 1
-fi
+check_pkg() {
+	pattern="$1"
+	if ! dpkg -l | grep -q "$pattern"; then
+		echo "warning: package matching pattern '$pattern' not found!"
+		exit 1
+	fi
+}
+check_pkg 'libsqlite.*-dev'
+check_pkg 'libreadline.*-dev'
+check_pkg 'libssl.*-dev'
+check_pkg 'zlib.*-dev'
+check_pkg 'libncurses.*-dev'
+check_pkg 'libbz2.*-dev'
 
 VERSION="$1"
 NAME="Python-$VERSION"
