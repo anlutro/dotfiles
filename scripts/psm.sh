@@ -62,8 +62,21 @@ _psm_uninstall() {
 	done
 }
 
+_psm_help() {
+	echo "psm - python script manager"
+	echo
+	echo "psm install pkg [pkg ...]"
+	echo "psm uninstall pkg [pkg ...]"
+	echo "psm upgrade pkg [pkg ...]"
+	echo "psm upgrade-all"
+}
+
 psm() {
-	func="$(echo "$1" | tr -s - _)" && shift
+	if [ $# -lt 1 ] || [ "$1" = '-h' ] || [ "$1" = '--help' ]; then
+		func=help
+	else
+		func="$(echo "$1" | tr -s - _)" && shift
+	fi
 	eval _psm_$func "$@"
 }
 
