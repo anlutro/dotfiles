@@ -72,12 +72,20 @@ _psm_help() {
 }
 
 psm() {
-	if [ $# -lt 1 ] || [ "$1" = '-h' ] || [ "$1" = '--help' ]; then
-		func=help
+	cmd="$(echo "$1" | tr -s - _)" && shift
+
+	if [ -z "$cmd" ] || [ "$cmd" = '-h' ] || [ "$cmd" = '--help' ]; then
+		func=_psm_help
 	else
-		func="$(echo "$1" | tr -s - _)" && shift
+		func="_psm_$cmd"
 	fi
-	eval _psm_$func "$@"
+
+	if ! type $func >/dev/null 2>&1; then
+		echo "Unknown command $cmd"
+		exit 1
+	fi
+
+	eval $func "$@"
 }
 
 psm "$@"
