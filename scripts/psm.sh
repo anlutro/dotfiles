@@ -8,6 +8,7 @@ PYTHON=$(
 	find /usr/local/bin /usr/bin -regex .*/python[3-9]\.[0-9]+ -printf '%f\n' \
 	| sort -n | tail -1
 )
+PYTHON_VER=$($PYTHON --version 2>&1 | cut -d' ' -f2)
 
 _psm_list_scripts() {
 	venv=~/.local/share/psm/$1
@@ -37,6 +38,11 @@ _psm_install() {
 _psm_upgrade() {
 	for pkg in "$@"; do
 		venv=$VENV_DIR/$pkg
+		venv_pyver=$($venv/bin/python --version 2>&1 | cut -d' ' -f2)
+		if [ $venv_pyver != $PYTHON_VER ]; then
+			echo "Recreating venv with new python for $pkg ..."
+			$PYTHON -m venv --clear $VENV_DIR/$pkg
+		fi
 		echo "Installing pip and setuptools for $pkg ..."
 		$venv/bin/pip install -q -U pip setuptools
 		echo "Installing package: $pkg ..."
