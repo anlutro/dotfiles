@@ -74,7 +74,10 @@ function venv-locate {
 }
 
 function venv-create {
-	local python='python3'
+	local python=$(
+		find /usr/local/bin /usr/bin -regex .*/python[3-9]\.[0-9]+ -printf '%f\n' \
+		| sort -n | tail -1
+	)
 	local ask='no'
 	local cmd
 	local venv
