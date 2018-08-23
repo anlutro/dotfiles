@@ -22,7 +22,7 @@ function venv-activate {
 
 	local relpath
 	relpath=$(realpath --relative-to=$PWD $venv)
-	if [[ "$relpath" =~ ^\.\. ]]; then
+	if echo "$relpath" | grep -q '^\.\.'; then
 		relpath=$venv
 	fi
 	echo -n "Activating virtualenv: $relpath"
