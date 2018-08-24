@@ -70,6 +70,7 @@ fi
 
 # wrap in a function to allow local variables
 _set_ps1() {
+	export PROMPT_DIRTRIM=5
 	local user_color='32' # green
 	local host_color='32' # green
 	local host_str='\h'
