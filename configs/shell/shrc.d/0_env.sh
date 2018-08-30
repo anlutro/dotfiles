@@ -38,3 +38,6 @@ export PIPSI_HOME=$HOME/.local/share/pipsi-venvs
 # go
 export GOPATH=~/.gopath
 export GO111MODULE=on
+
+# docker
+export DOCKER_BUILDKIT=1
