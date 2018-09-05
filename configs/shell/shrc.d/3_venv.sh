@@ -51,18 +51,14 @@ function venv-locate {
 			return 1
 		fi
 		venv_name="$(basename $dir)/$(basename $venv)"
-	elif [ -f $dir/.virtualenv/bin/activate ]; then
-		venv=$dir/.virtualenv
-		venv_name=$(basename $dir)
-	elif [ -f $dir/.venv/bin/activate ]; then
-		venv=$dir/.venv
-		venv_name=$(basename $dir)
-	elif [ -f $dir/venv/bin/activate ]; then
-		venv=$dir/venv
-		venv_name=$(basename $dir)
-	elif [ -f $dir/bin/activate ]; then
-		venv=$dir
-		venv_name=$(basename $dir)
+	else
+		for venv_dir in .virtualenv .venv venv .; do
+			if [ -f $venv_dir/bin/activate ]; then
+				venv=$venv_dir
+				venv_name=$(basename $dir)
+				break
+			fi
+		done
 	fi
 	if [ -n "$venv_name" ]; then
 		echo "local venv=$venv"
