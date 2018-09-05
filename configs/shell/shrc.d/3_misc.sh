@@ -136,7 +136,12 @@ function gh-fetch-pr {
 		git fetch $remote "pull/$1/head:pr-$1"
 	else
 		echo "No github remote found!"
+		return 1
 	fi
+}
+
+function gh-checkout-pr {
+	gh-fetch-pr "$1" && git checkout "pr-$1"
 }
 
 function hex2oct {
