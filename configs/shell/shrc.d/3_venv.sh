@@ -37,6 +37,7 @@ function venv-locate {
 	local name="$2"
 	local venv
 	local venv_name
+	local venv_dir
 	if [ -f "$name/bin/activate" ]; then
 		venv="$(readlink -f $name)"
 		venv_name="$name"
