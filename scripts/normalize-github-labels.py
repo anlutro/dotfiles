@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
 import argparse
-import os
 import logging
+import os
+import sys
 
-from allib.logging import setup_logging
 import github3
 
 
@@ -112,9 +112,15 @@ def parse_args(args=None):
 
 def main():
 	args = parse_args()
-	setup_logging(log_level=logging.DEBUG if args.verbose else logging.WARNING)
+	logging.basicConfig(
+		format='%(asctime)s [%(levelname)8s] [%(name)s] %(message)s',
+		level=logging.DEBUG if args.verbose else logging.WARNING
+	)
 
 	github = github3.login(token=args.token)
+	if not github:
+		print('-t / --token / GITHUB_TOKEN missing')
+		sys.exit(1)
 	repos = get_repos(github, args.repo)
 	print('Checking repos:', ', '.join(repos))
 
