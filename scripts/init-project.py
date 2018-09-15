@@ -113,12 +113,16 @@ def write_gitignore(path, project_types):
 		print('Wrote', path)
 
 
+python_files = {'setup.py', 'setup.cfg', 'pyproject.toml',
+                'requirements', 'requirements.txt'}
+
+
 def guess_project_types(root_dir=None):
 	if not root_dir:
 		root_dir = os.getcwd()
 	files = set(os.listdir(root_dir))
 	types = []
-	if files & {'setup.py', 'setup.cfg', 'requirements', 'requirements.txt'}:
+	if files & python_files:
 		types.append('python')
 	if 'composer.json' in files:
 		types.append('php')
