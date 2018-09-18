@@ -119,8 +119,15 @@ function venv-create {
 
 	if echo "$python" | grep -q 'python3'; then
 		cmd="$python -m venv"
-	else
+	elif command -v virtualenv >/dev/null 2>&1; then
 		cmd="virtualenv -p $python"
+	elif [ -e /usr/lib/python3/dist-packages/virtualenv.py ]; then
+		cmd="python3 -m virtualenv -p $python"
+	elif [ -e /usr/lib/python2.7/dist-packages/virtualenv.py ]; then
+		cmd="python2.7 -m virtualenv -p $python"
+	else
+		echo "Don't know how to make a virtualenv for $python" >&2
+		return 1
 	fi
 
 	if [ -z "$venv" ] || [ "$venv" = "$PWD" ] || [ "$venv" = '.' ]; then
