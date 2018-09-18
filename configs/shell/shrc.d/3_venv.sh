@@ -11,10 +11,11 @@ function venv-activate {
 		return 1
 	fi
 
-	eval "$(venv-locate $PWD "$@")"
+	echo "$@"
+	eval "$(venv-locate "$@")"
 
 	if [ -z "$venv" ]; then
-		echo "Couldn't find a virtualenv in cwd!" >&2
+		echo "Couldn't find a virtualenv in PWD!" >&2
 		venv-create -a "$@" || return $?
 		venv-activate "$@"
 		return $?
@@ -34,14 +35,11 @@ function venv-activate {
 
 function venv-locate {
 	local dir="${1:-$PWD}"
-	local name="$2"
 	local venv
 	local venv_name
 	local venv_dir
-	if [ -f "$name/bin/activate" ]; then
-		venv="$(readlink -f $name)"
-		venv_name="$name"
-	elif [ -d $dir/.tox ]; then
+	if [ -d $dir/.tox ]; then
+		local name="$2"
 		if [ -n "$name" ]; then
 			venv=$dir/.tox/$name
 		else
@@ -53,7 +51,7 @@ function venv-locate {
 		fi
 		venv_name="$(basename $dir)/$(basename $venv)"
 	else
-		for venv_dir in .virtualenv .venv venv .; do
+		for venv_dir in $dir .virtualenv .venv venv .; do
 			if [ -f $venv_dir/bin/activate ]; then
 				venv=$venv_dir
 				venv_name=$(basename $dir)
@@ -171,11 +169,7 @@ function venv-destroy {
 		shift
 	done
 
-	if [ -z "$dir" ]; then
-		dir="$PWD"
-	fi
-
-	eval "$(venv-locate $dir)"
+	eval "$(venv-locate $@)"
 	if [ -z "$venv" ]; then
 		echo "No virtualenv found!"
 		return 0
