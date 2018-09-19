@@ -11,7 +11,6 @@ function venv-activate {
 		return 1
 	fi
 
-	echo "$@"
 	eval "$(venv-locate "$@")"
 
 	if [ -z "$venv" ]; then
