@@ -11,6 +11,7 @@ function venv {
 	local func
 	local python
 	local venv
+	local venv_name
 	local venv_found
 
 	while [ $# -gt 0 ]; do
@@ -92,13 +93,12 @@ function venv {
 		echo " - $($venv/bin/python --version 2>&1)"
 		echo "Run \`deactivate\` to exit the virtualenv."
 		. $venv/bin/activate
-		export VIRTUAL_ENV_NAME
+		export VIRTUAL_ENV_NAME="$venv_name"
 		_set_ps1
 	}
 
 	function venv-locate {
-		local dir="${venv:-$PWD}"
-		local venv_name
+		local dir="$PWD"
 		local venv_dir
 		if [ -d $dir/.tox ]; then
 			local name="$2"
@@ -113,7 +113,7 @@ function venv {
 			fi
 			venv_name="$(basename $dir)/$(basename $venv)"
 		else
-			for venv_dir in $dir .virtualenv .venv venv .; do
+			for venv_dir in . $venv .virtualenv .venv venv .; do
 				if [ -f $venv_dir/bin/activate ]; then
 					venv_found=$venv_dir
 					venv_name=$(basename $dir)
@@ -122,7 +122,6 @@ function venv {
 			done
 		fi
 		if [ -n "$venv_name" ]; then
-			VIRTUAL_ENV_NAME="$venv_name"
 			return 0
 		else
 			return 1
