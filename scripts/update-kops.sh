@@ -7,7 +7,13 @@ if kops version | grep -qF "Version $version "; then
 	exit 1
 fi
 
+if [ -w /usr/local ]; then
+	DIR=/usr/local/bin
+else
+	DIR="$HOME/bin"
+fi
+
 cd ~/downloads || exit 1
 wget https://github.com/kubernetes/kops/releases/download/$version/kops-linux-amd64
-cp kops-linux-amd64 /usr/local/bin/kops
-chmod 755 /usr/local/bin/kops
+cp kops-linux-amd64 $DIR/kops
+chmod 755 $DIR/kops

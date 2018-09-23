@@ -13,6 +13,12 @@ if [ "$version" = "$installed_version" ]; then
 	exit
 fi
 
+if [ -w /usr/local ]; then
+	DIR=/usr/local/bin
+else
+	DIR="$HOME/bin"
+fi
+
 cd ~/downloads || exit 1
-wget $url && unzip $file && mv ./terraform /usr/local/bin/
+wget $url && unzip $file && mv ./terraform $DIR/
 rm -f $file

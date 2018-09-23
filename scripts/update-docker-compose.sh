@@ -10,7 +10,13 @@ if docker-compose --version | grep -F "version $version,"; then
 	exit 1
 fi
 
+if [ -w /usr/local ]; then
+	DIR=/usr/local/bin
+else
+	DIR="$HOME/bin"
+fi
+
 cd ~/downloads || exit 1
 wget $url
-chmod +x $file
-mv $file /usr/local/bin/docker-compose
+cp $file $DIR/docker-compose
+chmod +x $DIR/docker-compose

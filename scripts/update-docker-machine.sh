@@ -10,7 +10,13 @@ if docker-machine --version 2>&1 | grep -qF "version $version,"; then
 	exit 1
 fi
 
+if [ -w /usr/local ]; then
+	DIR=/usr/local/bin
+else
+	DIR="$HOME/bin"
+fi
+
 cd ~/downloads || exit 1
 wget $url
-chmod +x $file
-mv $file /usr/local/bin/docker-machine
+cp $file $DIR/docker-machine
+chmod +x $DIR/docker-machine
