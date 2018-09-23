@@ -19,6 +19,9 @@ function venv {
 			-a|--ask )
 				ask='yes'
 				;;
+			-n|--no-ask|--noninteractive )
+				ask='no'
+				;;
 			-p|--python )
 				shift
 				python="$1"
@@ -75,7 +78,7 @@ function venv {
 			venv="$venv_found"
 		else
 			echo "Couldn't find a virtualenv in PWD!" >&2
-			ask=yes venv-create || return $?
+			ask="${ask:-yes}" venv-create || return $?
 			venv-activate
 			return $?
 		fi
