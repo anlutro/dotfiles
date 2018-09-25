@@ -5,7 +5,7 @@
 
 VENV_DIR=~/.local/share/psm
 PYTHON=$(
-	find /usr/local/bin /usr/bin -regex .*/python[3-9]\.[0-9]+ -printf '%f\n' \
+	find /usr/local/bin /usr/bin -regex '.*/python[3-9]\.[0-9]+' -printf '%f\n' \
 	| sort -n | tail -1
 )
 PYTHON_VER=$($PYTHON --version 2>&1 | cut -d' ' -f2)
