@@ -101,7 +101,7 @@ function venv {
 		local dir="$PWD"
 		local venv_dir
 		if [ -d $dir/.tox ]; then
-			local name="$2"
+			local name="$venv"
 			if [ -n "$name" ]; then
 				venv_found=$dir/.tox/$name
 			else
