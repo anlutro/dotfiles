@@ -354,11 +354,6 @@ ln -sf $scripts/init-project.py $bindir/init-project
 echo "done"
 
 
-printf "Linking skel directory scripts... "
-ln -sfT $root/skel $HOME/.local/skel
-echo "done"
-
-
 install alacritty
 install bash
 install compton
