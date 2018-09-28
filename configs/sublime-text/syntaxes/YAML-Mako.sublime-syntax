@@ -110,7 +110,7 @@ contexts:
         pop: true
 
   yaml_map_key:
-  - match: '(?=([^:]+:)\s+)'
+  - match: '(?=([^#][^:]+:)\s+)'
     push:
       - meta_scope: source.yaml entity.name.tag.yaml
       - include: mako_inline
