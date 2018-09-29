@@ -23,7 +23,8 @@ check_pkg 'libbz2.*-dev'
 VERSION="$1"
 NAME="Python-$VERSION"
 FILE="$NAME.tar.xz"
-URL="https://www.python.org/ftp/python/$VERSION/$FILE"
+DIR=$(echo $VERSION | grep -oP '^\d[\d\.]+')
+URL="https://www.python.org/ftp/python/$DIR/$FILE"
 
 if [ -w /usr/local ]; then
 	PRE_PREFIX="/usr/local"
