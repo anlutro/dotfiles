@@ -46,5 +46,9 @@ make
 
 make install
 
-ln -sf $PREFIX/bin/python?.? $PRE_PREFIX/bin/
 ln -sf $PREFIX/bin/python?.? $PRE_PREFIX/bin/python$VERSION
+
+# won't match alpha/beta/rc
+if echo $VERSION | grep -qxP '\d[\d\.]+'; then
+	ln -sf $PREFIX/bin/python?.? $PRE_PREFIX/bin/
+fi
