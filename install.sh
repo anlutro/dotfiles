@@ -192,6 +192,11 @@ install_moc() {
 	ln -sfT $configs/moc.conf $HOME/.moc/config
 }
 
+install_mpv() {
+	mkdir -p $HOME/.config/mpv
+	ln -sfT $configs/mpv-config $HOME/.config/mpv/config
+}
+
 install_mutt() {
 	if [ ! -e $HOME/.muttrc ] || [ -L $HOME/.muttrc ]; then
 		ln -sfT $configs/muttrc $HOME/.muttrc
@@ -366,6 +371,7 @@ install i3blocks
 install i3status
 install irssi
 install moc mocp
+install mpv
 install mutt
 install nano
 install python
