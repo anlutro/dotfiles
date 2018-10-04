@@ -45,6 +45,7 @@ function venv {
 					func="$1"
 				elif [ -z "$venv" ]; then
 					venv="$1"
+					venv_name="$1"
 				else
 					echo "Extra argument received: $arg" >&2
 					return 1
@@ -101,17 +102,16 @@ function venv {
 		local dir="$PWD"
 		local venv_dir
 		if [ -d $dir/.tox ]; then
-			local name="$venv"
-			if [ -n "$name" ]; then
-				venv_found=$dir/.tox/$name
+			if [ -n "$venv_name" ]; then
+				venv_found=$dir/.tox/$venv_name
 			else
 				venv_found=$(find $dir/.tox -mindepth 1 -maxdepth 1 -name 'py*' | sort | tail -1)
 			fi
-			if [ ! -d "$venv" ]; then
+			if [ ! -d "$venv_found" ]; then
 				echo ".tox directory found but no virtualenvs!" >&2
 				return 1
 			fi
-			venv_name="$(basename $dir)/$(basename $venv)"
+			venv_name="$(basename $dir)/$(basename $venv_found)"
 		else
 			for venv_dir in . $venv .virtualenv .venv venv .; do
 				if [ -f $venv_dir/bin/activate ]; then
