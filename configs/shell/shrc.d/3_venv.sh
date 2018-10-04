@@ -59,6 +59,11 @@ function venv {
 		venv=".venv"
 	fi
 
+	# remove trailing slash, which is common when autocompleting directories
+	if [ -n "$venv_name" ] && [ -e "$venv_name" ]; then
+		venv_name="${venv_name%/}"
+	fi
+
 	if [ -z "$python" ]; then
 		python=$(
 			find /usr/local/bin /usr/bin -regex '.*/python[3-9][0-9.]+' -printf '%f\n' \
@@ -116,12 +121,14 @@ function venv {
 			for venv_dir in . $venv .virtualenv .venv venv .; do
 				if [ -f $venv_dir/bin/activate ]; then
 					venv_found=$venv_dir
-					venv_name=$(basename $dir)
+					if [ -z "$venv_name" ]; then
+						venv_name=$(basename $dir)
+					fi
 					break
 				fi
 			done
 		fi
-		if [ -n "$venv_name" ]; then
+		if [ -n "$venv_found" ]; then
 			return 0
 		else
 			return 1
