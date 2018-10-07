@@ -4,14 +4,22 @@
 # replacement for pipsi.
 
 VENV_DIR=~/.local/share/psm
+BIN_DIR=~/.local/bin
 PYTHON=$(
 	find /usr/local/bin /usr/bin -regex '.*/python[3-9]\.[0-9]+' -printf '%f\n' \
 	| sort -n | tail -1
 )
 PYTHON_VER=$($PYTHON --version 2>&1 | cut -d' ' -f2)
 
+_psm_list() {
+	for venv in $VENV_DIR/*/; do
+		name=$(basename $venv)
+		$venv/bin/pip list "$@" | grep -P "^$name\s+" | awk '{ print $1, $2 }'
+	done
+}
+
 _psm_list_scripts() {
-	venv=~/.local/share/psm/$1
+	venv=$VENV_DIR/$1
 	$venv/bin/python -c "
 from pkg_resources import get_distribution
 from os.path import abspath, basename, join
@@ -48,13 +56,13 @@ _psm_upgrade() {
 		echo "Installing package: $pkg ..."
 		$venv/bin/pip install -q -U $pkg
 		echo "Creating script symlinks for $pkg ..."
-		_psm_list_scripts $pkg | xargs -r -n1 -I% ln -sf $venv/bin/% ~/.local/bin/
+		_psm_list_scripts $pkg | xargs -r -n1 -I% ln -sf $venv/bin/% $BIN_DIR/
 	done
 }
 
 _psm_upgrade_all() {
 	pkgs=$(
-		find ~/.local/share/psm -mindepth 1 -maxdepth 1 -type d -print0 \
+		find $VENV_DIR -mindepth 1 -maxdepth 1 -type d -print0 \
 		| xargs -r -0 -n1 basename
 	)
 	_psm_upgrade $pkgs
@@ -63,8 +71,8 @@ _psm_upgrade_all() {
 _psm_uninstall() {
 	for pkg in "$@"; do
 		echo "Uninstalling package: $pkg ..."
-		_psm_list_scripts $pkg | xargs -r -n1 -I% rm -f ~/.local/bin/%
-		rm -rf ~/.local/share/psm/$pkg
+		_psm_list_scripts $pkg | xargs -r -n1 -I% rm -f $BIN_DIR/%
+		rm -rf $VENV_DIR/$pkg
 	done
 }
 
