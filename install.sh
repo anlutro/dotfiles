@@ -155,19 +155,19 @@ install_i3() {
 
 install_i3blocks() {
 	local conf_path=$HOME/.config/i3blocks
+	local contrib_dir=$vendor/i3blocks-contrib
 
-	[ -d $vendor/i3blocks ] || git clone https://github.com/vivien/i3blocks $vendor/i3blocks
+	if [ ! -d $contrib_dir ]; then
+		git clone https://github.com/vivien/i3blocks-contrib $contrib_dir
+	fi
 	mkdir -p $conf_path
 	ln -sf $configs/i3/i3blocks.conf $conf_path/config
 
 	[ -L $conf_path/scripts ] && rm $conf_path/scripts
 	[ ! -d $conf_path/scripts ] && mkdir -p $conf_path/scripts
 
-	for f in $vendor/i3blocks/scripts/*; do
-		filepath=$(readlink -f $f)
-		filename=$(basename $f)
-		ln -sf $filepath $conf_path/scripts/$filename
-	done
+	ln -sf $contrib_dir/memory/memory $conf_path/scripts/
+	ln -sf $contrib_dir/volume/volume $conf_path/scripts/
 
 	for f in $configs/i3/block-scripts/*; do
 		filepath=$(readlink -f $f)
