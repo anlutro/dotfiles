@@ -87,7 +87,8 @@
 		".venv",
 		".virtualenv",
 		"__pycache__",
-		"CVS"
+		"CVS",
+		"htmlcov"
 	],
 	"font_face": "Source Code Pro",
 	"font_size": 11,
