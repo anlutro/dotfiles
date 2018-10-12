@@ -46,30 +46,36 @@ main() {
 }
 
 note_new() {
-	name="$1"
+	file="$NOTES_DIR/$*"
 
-	if [ ! -f "$NOTES_DIR/$name.md" ]; then
+	if [ ! -f "$file" ]; then
 		if command -v fzf >/dev/null 2>&1; then
 			match=$(
-				find $NOTES_DIR -name '*.md' | sed -e "s|$NOTES_DIR/||" -e 's/\.md$//' \
+				find $NOTES_DIR -type f | sed -e "s|$NOTES_DIR/||" \
+				| grep -Px '[^.]+(|\.(md|txt))' \
 				| fzf --query "$*" --print-query --select-1
 			)
 			if [ -n "$match" ]; then
-				name="$(echo "$match" | tail -1)"
+				match="$(echo "$match" | tail -1)"
+			fi
+			if [ -f "$match" ]; then
+				file="$match"
+			else
+				file="$(echo "$file" | sed -r s/\\s+/-/)"
 			fi
 		else
 			match=$(note_list "$@")
 			count=$(echo "$match" | wc -w)
 			if [ $count -gt 1 ]; then
-				note_list "$name"
+				echo "$match"
 				return
 			elif [ $count -eq 1 ]; then
-				name="$match"
+				file="$match"
 			fi
 		fi
 	fi
 
-	eval $EDITOR "$NOTES_DIR/$name.md"
+	$EDITOR "$file"
 }
 
 note_delete() {
