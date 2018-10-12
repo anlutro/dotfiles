@@ -16,7 +16,6 @@ main() {
 	fi
 
 	func="new"
-	args=""
 	name=""
 
 	for arg in "$@"; do
@@ -38,16 +37,12 @@ main() {
 				exit 1
 				;;
 			* )
-				if [ -n "$name" ]; then
-					echo "Too many arguments!"
-					exit 1
-				fi
-				name="$arg"
-				;;
+				break;;
 		esac
+		shift
 	done
 
-	eval note_$func $args $name
+	eval note_$func $@
 }
 
 note_new() {
@@ -56,14 +51,14 @@ note_new() {
 	if [ ! -f "$NOTES_DIR/$name.md" ]; then
 		if command -v fzf >/dev/null 2>&1; then
 			match=$(
-				find $NOTES_DIR -name '*.md' -print0 | xargs -0 -r -n1 basename \
-				| sed 's/\.md$//' | fzf --query "$name" --print-query --select-1
+				find $NOTES_DIR -name '*.md' | sed -e "s|$NOTES_DIR/||" -e 's/\.md$//' \
+				| fzf --query "$*" --print-query --select-1
 			)
 			if [ -n "$match" ]; then
 				name="$(echo "$match" | tail -1)"
 			fi
 		else
-			match=$(note_list "$name")
+			match=$(note_list "$@")
 			count=$(echo "$match" | wc -w)
 			if [ $count -gt 1 ]; then
 				note_list "$name"
