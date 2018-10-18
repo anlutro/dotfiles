@@ -1,9 +1,7 @@
 {
 	"auto_upgrade_last_run": null,
 	"bootstrapped": true,
-	"in_process_packages":
-	[
-	],
+	"in_process_packages": [],
 	"install_prereleases":
 	[
 		"SublimeLinter"
@@ -13,7 +11,6 @@
 		"Anaconda",
 		"Dockerfile Syntax Highlighting",
 		"Elixir",
-		"Emmet",
 		"InsertDate",
 		"Jinja2",
 		"Kotlin",
