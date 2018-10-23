@@ -46,9 +46,9 @@ main() {
 }
 
 note_new() {
-	file="$NOTES_DIR/$*"
+	file="$*"
 
-	if [ ! -f "$file" ]; then
+	if [ ! -f "$NOTES_DIR/$file" ]; then
 		if command -v fzf >/dev/null 2>&1; then
 			match=$(
 				find $NOTES_DIR -type f | sed -e "s|$NOTES_DIR/||" \
@@ -58,7 +58,7 @@ note_new() {
 			if [ -n "$match" ]; then
 				match="$(echo "$match" | tail -1)"
 			fi
-			if [ -f "$match" ]; then
+			if [ -f "$NOTES_DIR/$match" ]; then
 				file="$match"
 			else
 				file="$(echo "$file" | sed -r s/\\s+/-/)"
@@ -75,7 +75,7 @@ note_new() {
 		fi
 	fi
 
-	$EDITOR "$file"
+	$EDITOR $NOTES_DIR/$file
 }
 
 note_delete() {
