@@ -5,10 +5,6 @@ if [ -z "$HOME" ]; then
 	exit 1
 fi
 
-if [ -z "$HOST" ]; then
-	HOST=$(hostname)
-fi
-
 if [ ! -d $HOME/.local ]; then
 	mkdir -p $HOME/.local
 	chmod 700 $HOME/.local
@@ -21,7 +17,6 @@ bindir=$HOME/.local/bin
 root=$(dirname "$(readlink -f "$0")")
 configs=$root/configs
 scripts=$root/scripts
-local="$root/local/$HOST"
 vendor=$root/vendor
 
 install() {
@@ -63,13 +58,6 @@ install_compton() {
 install_dunst() {
 	mkdir -p $HOME/.config/dunst
 	ln -sf $configs/dunstrc $HOME/.config/dunst/dunstrc
-}
-
-install_feh() {
-	if [ -L $HOME/.fehbg ] && [ -f $local/fehbg ]; then
-		rm $HOME/.fehbg
-		cp $local/fehbg $HOME/.fehbg
-	fi
 }
 
 install_git() {
@@ -318,11 +306,6 @@ install_xorg() {
 	FC_DIR=$HOME/.config/fontconfig/conf.d
 	mkdir -p $FC_DIR
 	ln -sf $configs/fontconfig/fonts.conf $FC_DIR/00-common.conf
-	if [ -f $local/fonts.local.conf ]; then
-		ln -sf $local/fonts.local.conf $FC_DIR/99-local.conf
-	elif [ -L $FC_DIR/99-local.conf ]; then
-		rm $FC_DIR/99-local.conf
-	fi
 	rm -f $HOME/.fonts.conf
 	rm -f $HOME/.config/fontconfig/fonts.conf
 	rm -f $HOME/.config/fontconfig/local.conf
@@ -363,7 +346,6 @@ install alacritty
 install bash
 install compton
 install dunst
-install feh
 install git
 install gtk gtk-update-icon-cache
 install i3
