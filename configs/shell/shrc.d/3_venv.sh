@@ -159,7 +159,7 @@ function venv {
 			fi
 		fi
 		$cmd "$venv" || return 1
-		"$venv/bin/pip" install --upgrade pip setuptools
+		"$venv/bin/pip" install --upgrade pip setuptools wheel
 	}
 
 	function venv-destroy {
