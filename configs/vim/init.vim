@@ -4,9 +4,9 @@ filetype plugin indent on
 
 "" INDENTATION
 " to use tabs:
-set noexpandtab
+"set noexpandtab
 " to use spaces:
-"set expandtab
+set expandtab
 
 set autoindent
 set tabstop=4
