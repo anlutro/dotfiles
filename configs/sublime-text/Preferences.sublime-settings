@@ -116,7 +116,7 @@
 		79,
 		99
 	],
-	"shift_tab_unindent": true,
+	"shift_tab_unindent": false,
 	"show_encoding": true,
 	"show_full_path": false,
 	"show_line_endings": true,
