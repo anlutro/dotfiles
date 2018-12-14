@@ -105,6 +105,7 @@ function dphp {
 
 # composer in docker
 function dcomposer {
+	mkdir -p $HOME/.config/composer
 	local tty_arg
 	tty -s && tty_arg=--tty
 	docker run --rm --interactive $tty_arg \
