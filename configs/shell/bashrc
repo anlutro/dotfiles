@@ -55,8 +55,9 @@ bind "set completion-map-case on"
 shopt -s dirspell
 
 # fzf bash configuration
-if [ -f ~/.fzf.bash ]; then
-	source ~/.fzf.bash
+if [ -e "$HOME/code/dotfiles/vendor/fzf" ]; then
+	source "$HOME/code/dotfiles/vendor/fzf/shell/completion.bash"
+	source "$HOME/code/dotfiles/vendor/fzf/shell/key-bindings.bash"
 fi
 
 #	 /$$$$$$$   /$$$$$$    /$$  

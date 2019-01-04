@@ -34,9 +34,7 @@ _install_fzf() {
 	if [ ! -d $vendor/fzf ]; then
 		git clone https://github.com/junegunn/fzf $vendor/fzf
 	fi
-	if ! command -v fzf >/dev/null 2>&1; then
-		$vendor/fzf/install --key-bindings --completion --no-update-rc
-	fi
+	ln -sf $vendor/fzf/bin/fzf $bindir
 }
 
 install_alacritty() {
