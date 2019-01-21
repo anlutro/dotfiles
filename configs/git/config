@@ -1,8 +1,8 @@
 [alias]
 a = commit --amend
 ane = commit --amend --no-edit
-b = branch
-ba = branch --all
+b = branch --sort=-committerdate
+ba = branch --sort=-committerdate --all
 c = commit
 cb = checkout -b
 cm = commit --message
