@@ -106,6 +106,9 @@ _set_ps1() {
 		if [ -z "$VIRTUAL_ENV_NAME" ]; then
 			VIRTUAL_ENV_NAME=$(basename "$VIRTUAL_ENV")
 		fi
+		if [ "$VIRTUAL_ENV_NAME" = '.venv' ]; then
+			VIRTUAL_ENV_NAME=$(basename $(basename "$VIRTUAL_ENV"))
+		fi
 		PS1+="  \[\033[0;34m\]$VIRTUAL_ENV_NAME\[\033[00m\]"
 	fi
 
