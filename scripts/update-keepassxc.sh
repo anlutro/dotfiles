@@ -1,6 +1,10 @@
 #!/bin/sh
 
-url=$(curl -s https://api.github.com/repos/keepassxreboot/keepassxc/releases | grep browser_download_url | grep \.AppImage | head -1 | cut -d\" -f4)
+url=$(
+	curl -s https://api.github.com/repos/keepassxreboot/keepassxc/releases | \
+	grep browser_download_url | grep -P '\/[\d\.]+\/' | grep \.AppImage | \
+	head -1 | cut -d\" -f4
+)
 file=$(basename $url)
 version=$(echo $file | grep -oP '[\d.]{3,}')
 
