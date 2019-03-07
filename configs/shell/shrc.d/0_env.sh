@@ -32,9 +32,6 @@ export GIT_PAGER='less -FRX -x5,9'
 export SYSTEMD_LESS='KMR +G'
 # export SYSTEMD_LESS='FKMRX +G'
 
-# application configuration
-export PIPSI_HOME=$HOME/.local/share/pipsi-venvs
-
 # go
 export GOPATH=~/.gopath
 export GO111MODULE=on
