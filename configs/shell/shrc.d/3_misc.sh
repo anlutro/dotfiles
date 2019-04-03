@@ -11,6 +11,9 @@ function apt-everything {
 	done
 	purge_pkgs=$(dpkg -l | grep '^rc' | awk '{ print $2 }')
 	sudo apt purge $purge_pkgs
+	if command -v apt-file >/dev/null 2>&1; then
+		sudo apt-file update
+	fi
 }
 
 # apt-key add is meh
