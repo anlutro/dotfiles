@@ -6,7 +6,7 @@ url=$(
 	head -1 | cut -d\" -f4
 )
 file=$(basename $url)
-version=$(echo $file | grep -oP '[\d.]{3,}')
+version=$(echo $file | grep -oP '\d[\d.]{2,}\d')
 
 if command -v keepassxc-cli >/dev/null 2>&1; then
 	installed_version=$(keepassxc-cli --version | grep -oP '[\d.]{3,}')
