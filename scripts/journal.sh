@@ -17,7 +17,7 @@ if [ -e $tmpfile ] && [ -s $tmpfile ]; then
 	if [ -s $JOURNAL_FILE ]; then
 		printf "\n\n" >> $JOURNAL_FILE
 	fi
-	echo "=====  $(date)  =====" >> $JOURNAL_FILE
+	echo "=====  $(date -R)  =====" >> $JOURNAL_FILE
 	cat $tmpfile >> $JOURNAL_FILE
 	echo "Appended entry to $JOURNAL_FILE"
 else
