@@ -8,7 +8,7 @@ exec >> "$HOME/.xlog" 2>&1
 # unlike other uses of xhost, this is safe since the kernel can check
 # the actual owner of the calling process.
 if command -v xhost >/dev/null 2>&1; then
-	xhost +si:localuser:$(id -un) || :
+	xhost "+si:localuser:$(id -un)" || :
 fi
 
 # if no argument was passed, try and guess what command to start x with
@@ -24,7 +24,7 @@ if [ -z "$*" ]; then
 		exit 1
 	fi
 else
-	X_START_CMD="$@"
+	X_START_CMD="$*"
 fi
 
 # use dbus-launch to spawn the session if available. this enables X applications
@@ -41,7 +41,7 @@ fi
 # TODO: find alternative solutions
 if command -v 'ssh-agent' >/dev/null 2>&1; then
 	killall ssh-agent --user $USER
-	eval $(ssh-agent -s)
+	eval "$(ssh-agent -s)"
 fi
 
 # configure external monitors

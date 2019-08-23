@@ -32,7 +32,7 @@ VIDEO_BITRATE_MAX="3600k"
 # twitch server in frankfurt, see http://bashtech.net/twitch/ingest.php for list
 SERVER="live-ams"
 
-ffmpeg -f x11grab -s $CAPTURE_RESOLUTION -r $FPS -i :0.0 -ar $AUDIO_RATE
+ffmpeg -f x11grab -s $CAPTURE_RESOLUTION -r $FPS -i :0.0 -ar $AUDIO_RATE \
 	-f alsa -i hw:1,0 -f flv -ac 2 -vcodec libx264 -g $GOP -keyint_min $FPS \
 	-b:v $VIDEO_BITRATE_MAX -minrate $VIDEO_BITRATE_MIN -maxrate $VIDEO_BITRATE_MAX \
 	-pix_fmt yuv420p -s $OUTPUT_RESOLUTION -preset $PRESET -tune film \

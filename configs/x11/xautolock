@@ -3,7 +3,7 @@
 if command -v killall >/dev/null 2>&1; then
 	killall xautolock
 elif pidof xautolock >/dev/null; then
-	kill $(pidof xautolock)
+	kill "$(pidof xautolock)"
 fi
 
 if acpi -b 2> /dev/null | grep -q Battery; then
