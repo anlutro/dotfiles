@@ -100,6 +100,7 @@ function dphp {
 	tty -s && tty_arg=--tty
 	docker run --rm --interactive $tty_arg \
 		--volume $PWD:/usr/src/myapp \
+        --volume /tmp/docker-php:/tmp \
 		--user "$(id -u):$(id -g)" \
 		--workdir /usr/src/myapp \
 		--network host \
