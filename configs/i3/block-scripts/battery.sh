@@ -23,9 +23,7 @@ if [ "$status" = 'Charging' ]; then
 		hexchar=$(printf '%02x' $hexint 2> /dev/null)
 		echo "#${hexchar}ff${hexchar}"
 	fi
-	if [ -e $warn_state_file ]; then
-		rm $warn_state_file
-	fi
+	rm -f $warn_state_file
 else
 	# percentage-based coloring
 	if [ $pct -gt 66 ]; then
@@ -64,9 +62,13 @@ else
 	# fi
 
 	if command -v notify-send >/dev/null 2>&1; then
-		if [ $pct -lt 5 ] && [ ! -e $warn_state_file ]; then
-			notify-send --urgency=critical 'Battery warning' "Battery level: $pct%"
-			touch $warn_state_file
+		if [ $pct -lt 5 ]; then
+			if [ ! -e $warn_state_file ]; then
+				notify-send --urgency=critical 'Battery warning' "Battery level: $pct%"
+				touch $warn_state_file
+			fi
+		elif [ $pct -gt 10 ]; then
+			rm -f $warn_state_file
 		fi
 	fi
 fi
