@@ -64,6 +64,9 @@ pushInsteadOf = https://gist.github.com/
 [url "git@bitbucket.org:"]
 insteadOf = https://bitbucket.org/
 
+[url "git@gitlab.com:"]
+pushInsteadOf = https://gitlab.com/
+
 # use this for name/email, auth tokens etc
 [include]
 path = config.local
