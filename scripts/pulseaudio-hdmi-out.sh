@@ -1,7 +1,7 @@
 #!/bin/sh
 
 card_path="/sys/class/drm/card0/"
-audio_output="analog-surround-40"
+audio_output=""
 
 for output in $(cd "$card_path" && echo card*); do
 	out_status=$(<"$card_path"/"$output"/status)
@@ -17,5 +17,7 @@ for output in $(cd "$card_path" && echo card*); do
 		esac
 	fi
 done
-echo "selecting output $audio_output"
-pactl set-card-profile 0 output:$audio_output+input:analog-stereo
+if [ -n "$audio_output" ]; then
+	echo "selecting output $audio_output"
+	pactl set-card-profile 0 output:$audio_output
+fi
