@@ -9,7 +9,7 @@ if [ ! -e $JOURNAL_FILE ]; then
 	exit 1
 fi
 
-tmpfile=/tmp/journal
+tmpfile=$JOURNAL_FILE.draft
 
 vim -c 'setlocal tw=79' $tmpfile
 
