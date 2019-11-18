@@ -8,11 +8,12 @@ import subprocess
 import sys
 import readline
 
-interactive = False
+g = argparse.Namespace()
+g.interactive = sys.__stdin__.isatty()
 
 
 def confirm(prompt, default=False):
-	if interactive:
+	if g.interactive:
 		prompt += ' [%s/%s] ' % (
 			'Y' if default else 'y',
 			'n' if default else 'N',
@@ -22,7 +23,7 @@ def confirm(prompt, default=False):
 
 
 def input_with_prefill(prompt, text):
-	if not interactive:
+	if not g.interactive:
 		return text
 
 	def hook():
@@ -42,7 +43,7 @@ def write_sublime_project(path, project_types):
 
 	for ptype in project_types:
 		if ptype.startswith('python'):
-			folder_exclude_patterns.extend(['.tox*', '.pytest_cache*', '.venv*', '.virtualenv*'])
+			folder_exclude_patterns.extend(['.tox*', '.pytest_cache*', '.venv*', '.mypy_cache*'])
 		elif ptype == 'node' or ptype == 'nodejs':
 			folder_exclude_patterns.append('node_modules*')
 		elif ptype == 'php':
@@ -95,10 +96,8 @@ def write_gitignore(path, project_types):
 			'*.egg-info', '.eggs', '/dist',
 		])
 		ignores.append(['# pytest', '/.pytest_cache', '/.cache', '/.coverage'])
-		ignores.append([
-			'# virtualenv', '/.venv', '/.virtualenv',
-			'/include', '/lib', '/lib64', '/share',
-		])
+		ignores.append(['# mypy', '/.mypy_cache'])
+		ignores.append(['# virtualenv', '/.venv', '/.virtualenv', '.tox'])
 
 	if 'php' in project_types:
 		ignores.append(['/vendor'])
@@ -148,8 +147,7 @@ def main():
 	args = parser.parse_args()
 
 	if args.noninteractive:
-		global interactive
-		interactive = False
+		g.interactive = False
 
 	project_name = args.name
 	print('Project name:', project_name)
