@@ -22,6 +22,8 @@
 		"Rust Enhanced",
 		"SaltStack-related syntax highlighting and snippets",
 		"Sass",
-		"Terraform"
+		"sql-formatter",
+		"Terraform",
+		"Text Pastry"
 	]
 }
