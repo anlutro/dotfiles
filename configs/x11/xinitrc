@@ -61,10 +61,16 @@ if [ -x $HOME/.xsettings ]; then
 fi
 
 # xflux/redshift change the screen's color when night time comes around
+# amsterdam
+#lat=52.377956
+#lon=4.897070
+# tenerife
+lat=28.291565
+lon=-16.629129
 if command -v redshift >/dev/null 2>&1; then
-	redshift -l 58:5 -t 6500:2900 &
+	redshift -l $lat:$lon -t 6500:2900 &
 elif command -v xflux >/dev/null 2>&1; then
-	xflux -l 58 -g 5 -k 2900 &
+	xflux -l $lat -g $lon -k 2900 &
 fi
 
 # compton is a composition manager, allowing window transparency.
