@@ -1,14 +1,14 @@
 #!/bin/sh
 
 if [ -n "$1" ]; then
-	STREAM_KEY="$1"
+    STREAM_KEY="$1"
 elif [ -f ~/.twitch_stream_key ]; then
-	STREAM_KEY="$(cat ~/.twitch_stream_key)"
+    STREAM_KEY="$(cat ~/.twitch_stream_key)"
 fi
 
 if [ -z "$STREAM_KEY" ]; then
-	echo "Missing stream key!"
-	exit 1
+    echo "Missing stream key!"
+    exit 1
 fi
 
 # input resolution
@@ -33,8 +33,8 @@ VIDEO_BITRATE_MAX="3600k"
 SERVER="live-ams"
 
 ffmpeg -f x11grab -s $CAPTURE_RESOLUTION -r $FPS -i :0.0 -ar $AUDIO_RATE \
-	-f alsa -i hw:1,0 -f flv -ac 2 -vcodec libx264 -g $GOP -keyint_min $FPS \
-	-b:v $VIDEO_BITRATE_MAX -minrate $VIDEO_BITRATE_MIN -maxrate $VIDEO_BITRATE_MAX \
-	-pix_fmt yuv420p -s $OUTPUT_RESOLUTION -preset $PRESET -tune film \
-	-acodec aac -b:a $AUDIO_BITRATE -threads $THREADS -strict normal \
-	-bufsize $VIDEO_BITRATE "rtmp://$SERVER.twitch.tv/app/$STREAM_KEY"
+    -f alsa -i hw:1,0 -f flv -ac 2 -vcodec libx264 -g $GOP -keyint_min $FPS \
+    -b:v $VIDEO_BITRATE_MAX -minrate $VIDEO_BITRATE_MIN -maxrate $VIDEO_BITRATE_MAX \
+    -pix_fmt yuv420p -s $OUTPUT_RESOLUTION -preset $PRESET -tune film \
+    -acodec aac -b:a $AUDIO_BITRATE -threads $THREADS -strict normal \
+    -bufsize $VIDEO_BITRATE "rtmp://$SERVER.twitch.tv/app/$STREAM_KEY"

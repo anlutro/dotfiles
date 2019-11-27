@@ -1,10 +1,10 @@
 #!/bin/sh
 
 if [ -f $1 ]; then
-	GIT_IDENTITY=$1 && shift
+    GIT_IDENTITY=$1 && shift
 elif [ -z $GIT_IDENTITY ]; then
-	echo 'Must provide SSH key file as first argument or as GIT_IDENTITY environment variable.'
-	exit 1
+    echo 'Must provide SSH key file as first argument or as GIT_IDENTITY environment variable.'
+    exit 1
 fi
 
 SSHWRAPPER=$(mktemp --suffix=ssh-git-id-wrapper)

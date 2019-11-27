@@ -8,5 +8,5 @@
 # invoked when using non-interactive sessions. it's safe to assume that if you
 # start a non-interactive session you're not interested in using tmux anyway.
 if [ -n "${SSH_AUTH_SOCK-}" ] && [ ! -L "$SSH_AUTH_SOCK" ]; then
-	ln -sf $SSH_AUTH_SOCK $HOME/.ssh/ssh_auth_sock
+    ln -sf $SSH_AUTH_SOCK $HOME/.ssh/ssh_auth_sock
 fi

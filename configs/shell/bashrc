@@ -2,8 +2,8 @@
 
 # if not running interactively, don't do anything
 case $- in
-	*i*) ;;
-	*) return;;
+    *i*) ;;
+    *) return;;
 esac
 
 # get rid of those god damn bash builtin aliases
@@ -11,9 +11,9 @@ unalias -a
 
 # environment variables, aliases and functions
 if [ -d "$HOME/.shrc.d" ]; then
-	for f in $HOME/.shrc.d/*.sh; do
-		. "$f"
-	done
+    for f in $HOME/.shrc.d/*.sh; do
+        . "$f"
+    done
 fi
 
 # append to the history file, don't overwrite it
@@ -34,15 +34,15 @@ shopt -s globstar
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
 if ! shopt -oq posix; then
-	if [ -f /usr/share/bash-completion/bash_completion ]; then
-		. /usr/share/bash-completion/bash_completion
-	elif [ -f /etc/bash_completion ]; then
-		. /etc/bash_completion
-	fi
+    if [ -f /usr/share/bash-completion/bash_completion ]; then
+        . /usr/share/bash-completion/bash_completion
+    elif [ -f /etc/bash_completion ]; then
+        . /etc/bash_completion
+    fi
 
-	if [ -f /usr/local/etc/bash_completion ]; then
-		. /usr/local/etc/bash_completion
-	fi
+    if [ -f /usr/local/etc/bash_completion ]; then
+        . /usr/local/etc/bash_completion
+    fi
 fi
 
 # perform file completion in a case insensitive fashion
@@ -56,71 +56,71 @@ shopt -s dirspell
 
 # fzf bash configuration
 if [ -e "$HOME/code/dotfiles/vendor/fzf" ]; then
-	source "$HOME/code/dotfiles/vendor/fzf/shell/completion.bash"
-	source "$HOME/code/dotfiles/vendor/fzf/shell/key-bindings.bash"
+    source "$HOME/code/dotfiles/vendor/fzf/shell/completion.bash"
+    source "$HOME/code/dotfiles/vendor/fzf/shell/key-bindings.bash"
 fi
 
-#	 /$$$$$$$   /$$$$$$    /$$  
-#	| $$__  $$ /$$__  $$ /$$$$  
-#	| $$  \ $$| $$  \__/|_  $$  
-#	| $$$$$$$/|  $$$$$$   | $$  
-#	| $$____/  \____  $$  | $$  
-#	| $$       /$$  \ $$  | $$  
-#	| $$      |  $$$$$$/ /$$$$$$
-#	|__/       \______/ |______/
+#    /$$$$$$$   /$$$$$$    /$$  
+#   | $$__  $$ /$$__  $$ /$$$$  
+#   | $$  \ $$| $$  \__/|_  $$  
+#   | $$$$$$$/|  $$$$$$   | $$  
+#   | $$____/  \____  $$  | $$  
+#   | $$       /$$  \ $$  | $$  
+#   | $$      |  $$$$$$/ /$$$$$$
+#   |__/       \______/ |______/
 
 # wrap in a function to allow local variables
 _set_ps1() {
-	export PROMPT_DIRTRIM=5
-	local user_color='32' # green
-	local host_color='32' # green
-	local host_str='\h'
+    export PROMPT_DIRTRIM=5
+    local user_color='32' # green
+    local host_color='32' # green
+    local host_str='\h'
 
-	if [ $USER = 'vagrant' ]; then
-		user_color='34' # blue
-	elif [ $USER = 'root' ]; then
-		user_color='31' # red
-	elif [ $USER != 'andreas' ]; then
-		user_color='33' # yellow
-	fi
+    if [ $USER = 'vagrant' ]; then
+        user_color='34' # blue
+    elif [ $USER = 'root' ]; then
+        user_color='31' # red
+    elif [ $USER != 'andreas' ]; then
+        user_color='33' # yellow
+    fi
 
-	if [ -n "$SSH_CLIENT" ]; then
-		host_str=$(hostname -f 2>/dev/null || hostname)
-		if [[ $host_str == *vagrant* ]]; then
-			host_color='34' # blue
-		else
-			host_color='33' # yellow
-		fi
-	fi
+    if [ -n "$SSH_CLIENT" ]; then
+        host_str=$(hostname -f 2>/dev/null || hostname)
+        if [[ $host_str == *vagrant* ]]; then
+            host_color='34' # blue
+        else
+            host_color='33' # yellow
+        fi
+    fi
 
-	PS1='\[\033[01;'$user_color'm\]\u\[\033[0;37m\]@\[\033[01;'$host_color'm\]'$host_str'\[\033[00m\] \w'
+    PS1='\[\033[01;'$user_color'm\]\u\[\033[0;37m\]@\[\033[01;'$host_color'm\]'$host_str'\[\033[00m\] \w'
 
-	if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
-		debian_chroot=$(cat /etc/debian_chroot)
-	fi
-	if [ ! -z "$debian_chroot" ]; then
-		PS1="${debian_chroot:+($debian_chroot)} $PS1"
-	fi
+    if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
+        debian_chroot=$(cat /etc/debian_chroot)
+    fi
+    if [ ! -z "$debian_chroot" ]; then
+        PS1="${debian_chroot:+($debian_chroot)} $PS1"
+    fi
 
-	if [ -n "$VIRTUAL_ENV" ]; then
-		if [ -z "$VIRTUAL_ENV_NAME" ]; then
-			VIRTUAL_ENV_NAME=$(basename "$VIRTUAL_ENV")
-		fi
-		if [ "$VIRTUAL_ENV_NAME" = '.venv' ]; then
-			VIRTUAL_ENV_NAME=$(basename "$(basename "$VIRTUAL_ENV")")
-		fi
-		PS1+="  \[\033[0;34m\]$VIRTUAL_ENV_NAME\[\033[00m\]"
-	fi
+    if [ -n "$VIRTUAL_ENV" ]; then
+        if [ -z "$VIRTUAL_ENV_NAME" ]; then
+            VIRTUAL_ENV_NAME=$(basename "$VIRTUAL_ENV")
+        fi
+        if [ "$VIRTUAL_ENV_NAME" = '.venv' ]; then
+            VIRTUAL_ENV_NAME=$(basename "$(basename "$VIRTUAL_ENV")")
+        fi
+        PS1+="  \[\033[0;34m\]$VIRTUAL_ENV_NAME\[\033[00m\]"
+    fi
 
-	if command -v __git_ps1 >/dev/null 2>&1; then
-		# GIT_PS1_SHOWDIRTYSTATE=true
-		# GIT_PS1_SHOWUNTRACKEDFILES=true
-		GIT_PS1_SHOWUPSTREAM="auto"
-		# GIT_PS1_SHOWCOLORHINTS=true
-		PS1+='$(__git_ps1 "  \[\033[01;37m\]%s\[\033[00m\]")'
-	fi
+    if command -v __git_ps1 >/dev/null 2>&1; then
+        # GIT_PS1_SHOWDIRTYSTATE=true
+        # GIT_PS1_SHOWUNTRACKEDFILES=true
+        GIT_PS1_SHOWUPSTREAM="auto"
+        # GIT_PS1_SHOWCOLORHINTS=true
+        PS1+='$(__git_ps1 "  \[\033[01;37m\]%s\[\033[00m\]")'
+    fi
 
-	PS1+='\n\[\033[0;37m\]\$\[\033[00m\] '
+    PS1+='\n\[\033[0;37m\]\$\[\033[00m\] '
 }
 
 _set_ps1

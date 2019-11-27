@@ -3,61 +3,61 @@
 # load .Xdefaults and .Xresources if they are present
 # note that system-wide files are ignored!
 if command -v xrdb >/dev/null 2>&1; then
-	if [ -e $HOME/.Xdefaults ]; then
-		xrdb $HOME/.Xdefaults
-	fi
-	if [ -e $HOME/.Xresources ]; then
-		xrdb -merge $HOME/.Xresources
-	fi
+    if [ -e $HOME/.Xdefaults ]; then
+        xrdb $HOME/.Xdefaults
+    fi
+    if [ -e $HOME/.Xresources ]; then
+        xrdb -merge $HOME/.Xresources
+    fi
 fi
 
 # update directories from ~/.config/user-dirs.dirs
 if command -v 'xdg-user-dirs-update' >/dev/null 2>&1; then
-	xdg-user-dirs-update
+    xdg-user-dirs-update
 fi
 
 if command -v xset >/dev/null 2>&1; then
-	# turn on/off system beep
-	xset b off
+    # turn on/off system beep
+    xset b off
 
-	# mouse acceleration - accel ratio and threshold
-	xset m 1/1 0
+    # mouse acceleration - accel ratio and threshold
+    xset m 1/1 0
 
-	# keyboard repeat - delay (ms) and characters per second
-	xset r rate 175 35
+    # keyboard repeat - delay (ms) and characters per second
+    xset r rate 175 35
 fi
 
 # keyboard mapping options
 if command -v setxkbmap >/dev/null 2>&1; then
-	# default options, applies to all currently connected keyboards
-	setxkbmap -option compose:ralt -option caps:super
+    # default options, applies to all currently connected keyboards
+    setxkbmap -option compose:ralt -option caps:super
 
-	if command -v xinput >/dev/null 2>&1; then
-		# for apple keyboards, put the `~ key in the correct spot
-		apple_kbd_ids=$(xinput list | grep 'Apple Keyboard' | sed -r 's/.*id=([0-9]+).*/\1/')
-		for device_id in $apple_kbd_ids; do
-			setxkbmap -device $device_id -option apple:badmap
-		done
+    if command -v xinput >/dev/null 2>&1; then
+        # for apple keyboards, put the `~ key in the correct spot
+        apple_kbd_ids=$(xinput list | grep 'Apple Keyboard' | sed -r 's/.*id=([0-9]+).*/\1/')
+        for device_id in $apple_kbd_ids; do
+            setxkbmap -device $device_id -option apple:badmap
+        done
 
-		# disable middle click for touchpads
-		touchpad_ids=$(xinput list | grep 'Touchpad' | sed -r 's/.*id=([0-9]+).*/\1/')
-		for device_id in $touchpad_ids; do
-			xinput set-button-map $device_id 1 0 3 4 5 6 7
-		done
-	fi
+        # disable middle click for touchpads
+        touchpad_ids=$(xinput list | grep 'Touchpad' | sed -r 's/.*id=([0-9]+).*/\1/')
+        for device_id in $touchpad_ids; do
+            xinput set-button-map $device_id 1 0 3 4 5 6 7
+        done
+    fi
 fi
 
 # touchpad settings
 if grep -Eiq 'synap|alps|etps' /proc/bus/input/devices && \
-	command -v synclient >/dev/null 2>&1
+    command -v synclient >/dev/null 2>&1
 then
-	synclient AccelFactor=0 MinSpeed=1.75 MaxSpeed=3.5
-	# tapping the touchpad sends a mouse button 1 event
-	synclient TapButton1=1
-	# stop scrolling immediately when lifting fingers
-	synclient CoastingSpeed=0
+    synclient AccelFactor=0 MinSpeed=1.75 MaxSpeed=3.5
+    # tapping the touchpad sends a mouse button 1 event
+    synclient TapButton1=1
+    # stop scrolling immediately when lifting fingers
+    synclient CoastingSpeed=0
 fi
 
 if [ ! -x $HOME/.fehbg ]; then
-	xsetroot -solid '#222222'
+    xsetroot -solid '#222222'
 fi

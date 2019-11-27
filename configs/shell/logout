@@ -4,19 +4,19 @@
 
 # when leaving the console clear the screen to increase privacy
 if [ "$SHLVL" = 1 ]; then
-	if [ -x /usr/bin/clear_console ]; then
-		/usr/bin/clear_console -q
-	fi
+    if [ -x /usr/bin/clear_console ]; then
+        /usr/bin/clear_console -q
+    fi
 fi
 
 # if SSH agent forwarding is used, try and clean up messed up symlinks for tmux
 agent_dirs=$(find /tmp -maxdepth 1 -type d -name 'ssh-*' -user $USER)
 if [ -n "$agent_dirs" ]; then
-	agent_socks=$(find $agent_dirs -maxdepth 1 -type s -name 'agent.*' -printf '%T@ %p\n' | sort -nr | cut -d' ' -f2)
-	for agent_sock in $agent_socks; do
-		if [ "$agent_sock" != "$SSH_AUTH_SOCK" ] ; then
-			ln -sf $agent_sock $HOME/.ssh/ssh_auth_sock
-			break
-		fi
-	done
+    agent_socks=$(find $agent_dirs -maxdepth 1 -type s -name 'agent.*' -printf '%T@ %p\n' | sort -nr | cut -d' ' -f2)
+    for agent_sock in $agent_socks; do
+        if [ "$agent_sock" != "$SSH_AUTH_SOCK" ] ; then
+            ln -sf $agent_sock $HOME/.ssh/ssh_auth_sock
+            break
+        fi
+    done
 fi

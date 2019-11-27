@@ -13,14 +13,14 @@ require_work_tree
 cd_to_toplevel
 
 if [ -e $GIT_DIR/CHERRY_PICK_HEAD ]; then
-	exec git cherry-pick --abort "$@"
+    exec git cherry-pick --abort "$@"
 elif [ -e $GIT_DIR/REVERT_HEAD ]; then
-	exec git revert --abort "$@"
+    exec git revert --abort "$@"
 elif [ -e $GIT_DIR/rebase-apply/applying ]; then
-	exec git am --abort "$@"
+    exec git am --abort "$@"
 elif [ -e $GIT_DIR/rebase-apply ] || [ -e $GIT_DIR/rebase-merge ]; then
-	exec git rebase --abort "$@"
+    exec git rebase --abort "$@"
 else
-	echo "git-abort: unknown state"
-	exit 1
+    echo "git-abort: unknown state"
+    exit 1
 fi

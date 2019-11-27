@@ -2,16 +2,16 @@
 set -eu
 
 if [ $# -lt 1 ]; then
-	echo "Must provide version!"
-	exit 1
+    echo "Must provide version!"
+    exit 1
 fi
 
 check_pkg() {
-	pattern="$1"
-	if ! dpkg -l | grep -q "$pattern"; then
-		echo "warning: package matching pattern '$pattern' not found!"
-		exit 1
-	fi
+    pattern="$1"
+    if ! dpkg -l | grep -q "$pattern"; then
+        echo "warning: package matching pattern '$pattern' not found!"
+        exit 1
+    fi
 }
 check_pkg 'libsqlite.*-dev'
 check_pkg 'libreadline.*-dev'
@@ -27,15 +27,15 @@ DIR=$(echo $VERSION | grep -oP '^\d[\d\.]+')
 URL="https://www.python.org/ftp/python/$DIR/$FILE"
 
 if [ -w /usr/local ]; then
-	PRE_PREFIX="/usr/local"
+    PRE_PREFIX="/usr/local"
 else
-	PRE_PREFIX="$HOME/.local"
+    PRE_PREFIX="$HOME/.local"
 fi
 PREFIX="$PRE_PREFIX/share/python-$VERSION"
 
 cd ~/downloads
 if [ ! -f $FILE ]; then
-	wget $URL
+    wget $URL
 fi
 tar xf $FILE
 cd $NAME
@@ -50,5 +50,5 @@ ln -sf $PREFIX/bin/python?.? $PRE_PREFIX/bin/python$VERSION
 
 # won't match alpha/beta/rc
 if echo $VERSION | grep -qxP '\d[\d\.]+'; then
-	ln -sf $PREFIX/bin/python?.? $PRE_PREFIX/bin/
+    ln -sf $PREFIX/bin/python?.? $PRE_PREFIX/bin/
 fi

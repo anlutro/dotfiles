@@ -8,30 +8,30 @@ exec >> "$HOME/.xlog" 2>&1
 # unlike other uses of xhost, this is safe since the kernel can check
 # the actual owner of the calling process.
 if command -v xhost >/dev/null 2>&1; then
-	xhost "+si:localuser:$(id -un)" || :
+    xhost "+si:localuser:$(id -un)" || :
 fi
 
 # if no argument was passed, try and guess what command to start x with
 if [ -z "$*" ]; then
-	if command -v 'x-session-manager' >/dev/null 2>&1; then
-		X_START_CMD='x-session-manager'
-	elif command -v 'x-window-manager' >/dev/null 2>&1; then
-		X_START_CMD='x-window-manager'
-	elif command -v 'i3' >/dev/null 2>&1; then
-		X_START_CMD='i3'
-	else
-		echo "No appropriate X start command found!"
-		exit 1
-	fi
+    if command -v 'x-session-manager' >/dev/null 2>&1; then
+        X_START_CMD='x-session-manager'
+    elif command -v 'x-window-manager' >/dev/null 2>&1; then
+        X_START_CMD='x-window-manager'
+    elif command -v 'i3' >/dev/null 2>&1; then
+        X_START_CMD='i3'
+    else
+        echo "No appropriate X start command found!"
+        exit 1
+    fi
 else
-	X_START_CMD="$*"
+    X_START_CMD="$*"
 fi
 
 # use dbus-launch to spawn the session if available. this enables X applications
 # to talk to dbus because it spawns a dbus session and sets some environment
 # variables (I think?)
 if command -v 'dbus-launch' >/dev/null 2>&1; then
-	X_START_CMD="dbus-launch --exit-with-session $X_START_CMD"
+    X_START_CMD="dbus-launch --exit-with-session $X_START_CMD"
 fi
 
 # normally you'd prepend ssh-agent to X_START_CMD, which would set all the
@@ -40,24 +40,24 @@ fi
 # environment variables, use this somewhat nasty hack instead.
 # TODO: find alternative solutions
 if command -v 'ssh-agent' >/dev/null 2>&1; then
-	killall ssh-agent --user $USER
-	eval "$(ssh-agent -s)"
+    killall ssh-agent --user $USER
+    eval "$(ssh-agent -s)"
 fi
 
 # configure external monitors
 if [ -x $HOME/.xrandrinit ]; then
-	$HOME/.xrandrinit
+    $HOME/.xrandrinit
 else
-	# this normally happens in xrandrinit, but if it does not exist, do it here
-	if [ -x $HOME/.fehbg ]; then
-		$HOME/.fehbg &
-	fi
+    # this normally happens in xrandrinit, but if it does not exist, do it here
+    if [ -x $HOME/.fehbg ]; then
+        $HOME/.fehbg &
+    fi
 fi
 
 # I want to be able to re-run commands that set settings like mouse sensitivity,
 # keyboard repeat rate etc., so split that up into its own file
 if [ -x $HOME/.xsettings ]; then
-	. $HOME/.xsettings
+    . $HOME/.xsettings
 fi
 
 # xflux/redshift change the screen's color when night time comes around
@@ -68,36 +68,36 @@ fi
 lat=28.291565
 lon=-16.629129
 if command -v redshift >/dev/null 2>&1; then
-	redshift -l $lat:$lon -t 6500:2900 &
+    redshift -l $lat:$lon -t 6500:2900 &
 elif command -v xflux >/dev/null 2>&1; then
-	xflux -l $lat -g $lon -k 2900 &
+    xflux -l $lat -g $lon -k 2900 &
 fi
 
 # compton is a composition manager, allowing window transparency.
 # if there's no desktop background, there's no point in running it.
 if [ -x $HOME/.fehbg ] && command -v compton >/dev/null 2>&1; then
-	compton -b &
+    compton -b &
 fi
 
 # dropbox should be self-explanatory
 if command -v dropbox >/dev/null 2>&1; then
-	dropbox start &
+    dropbox start &
 fi
 
 # network-manager applet, puts a network icon in the tray
 if command -v nm-applet >/dev/null 2>&1; then
-	nm-applet &
+    nm-applet &
 fi
 
 # unclutter removes the mouse cursor after a given amount of idle time
 if command -v unclutter >/dev/null 2>&1; then
-	unclutter -idle 3 -root &
+    unclutter -idle 3 -root &
 fi
 
 # how to run xautolock can vary from computer to computer, so it goes in a
 # separate file
 if command -v xautolock >/dev/null 2>&1 && [ -x $HOME/.xautolock ]; then
-	$HOME/.xautolock
+    $HOME/.xautolock
 fi
 
 # start the window manager. this is a blocking command. normally you'd want to
@@ -106,10 +106,10 @@ $X_START_CMD
 
 # when the window manager command quits, we can also kill the ssh-agent
 if command -v 'ssh-agent' >/dev/null 2>&1; then
-	ssh-agent -k
+    ssh-agent -k
 fi
 
 # kill the gpg-agent if it's running
 if command -v gpgconf >/dev/null 2>&1; then
-	gpgconf --kill gpg-agent
+    gpgconf --kill gpg-agent
 fi

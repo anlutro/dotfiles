@@ -2,8 +2,8 @@
 
 # local overrides
 if [ -f "$HOME/.shrc" ]; then
-	. "$HOME/.shrc"
+    . "$HOME/.shrc"
 fi
 if [ -f "$HOME/.shrc.local" ]; then
-	. "$HOME/.shrc.local"
+    . "$HOME/.shrc.local"
 fi

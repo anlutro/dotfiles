@@ -5,8 +5,8 @@ file=$(basename $url)
 version=$(echo $file | sed -r 's/.*rkt_([0-9.-]+)_amd64\.deb/\1/')
 
 if dpkg -s rkt 2>/dev/null | grep -q "Version: $version"; then
-	echo "Latest version ($version) already installed!"
-	exit 0
+    echo "Latest version ($version) already installed!"
+    exit 0
 fi
 
 cd ~/downloads || exit 1

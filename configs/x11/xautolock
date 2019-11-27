@@ -1,13 +1,13 @@
 #!/bin/sh
 
 if command -v killall >/dev/null 2>&1; then
-	killall xautolock
+    killall xautolock
 elif pidof xautolock >/dev/null; then
-	kill "$(pidof xautolock)"
+    kill "$(pidof xautolock)"
 fi
 
 if acpi -b 2> /dev/null | grep -q Battery; then
-	xautolock -time 60 -corners 000- -cornersize 30 -detectsleep -locker 'lockscreen --suspend' &
+    xautolock -time 60 -corners 000- -cornersize 30 -detectsleep -locker 'lockscreen --suspend' &
 else
-	xautolock -time 15 -locker 'lockscreen' &
+    xautolock -time 15 -locker 'lockscreen' &
 fi
