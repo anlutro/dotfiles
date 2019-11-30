@@ -36,7 +36,7 @@ fi
 
 # normally you'd prepend ssh-agent to X_START_CMD, which would set all the
 # environment variables and make the agent quit when X quits, but because a
-# program started from xinitrc (xautolock/xidlehook) needs access to the
+# program started from this script (xautolock/xidlehook) needs access to the
 # ssh-agent environment variables, use this somewhat nasty hack instead.
 # TODO: find alternative solutions
 if command -v 'ssh-agent' >/dev/null 2>&1; then
