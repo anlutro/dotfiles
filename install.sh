@@ -299,6 +299,7 @@ install_xorg() {
     ln -sf $configs/x11/xrandrinit $HOME/.xrandrinit
     ln -sf $configs/x11/xsettings $HOME/.xsettings
     ln -sf $scripts/lockscreen.sh $bindir/lockscreen
+    ln -sf $scripts/adjust-brightness.sh $bindir/adjust-brightness
 
     # xrdb stuff
     ln -sf $configs/x11/xdefaults $HOME/.Xdefaults
@@ -337,7 +338,6 @@ echo "done"
 
 
 printf "Linking various bin scripts... "
-ln -sf $scripts/adjust-brightness.sh $bindir/adjust-brightness
 ln -sf $scripts/set-brightness.sh $bindir/set-brightness
 ln -sf $scripts/init-project.py $bindir/init-project
 ln -sf $scripts/journal.sh $bindir/journal
