@@ -293,7 +293,7 @@ install_xdg() {
 }
 
 install_xorg() {
-    [ -e $HOME/.xinitrc ] && rm $HOME/.xinitrc
+    [ -L $HOME/.xinitrc ] && rm $HOME/.xinitrc
 
     # various scripts
     ln -sf $configs/x11/startxrc $HOME/.startxrc
