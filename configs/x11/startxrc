@@ -96,11 +96,7 @@ fi
 
 # auto lock/suspend after inactivity
 if command -v xidlehook >/dev/null 2>&1; then
-    xidlehook_args="--timer 600 'lockscreen' ''"
-    if acpi -b 2> /dev/null | grep -q Battery; then
-        xidlehook_args="$xidlehook_args --timer 1800 'lockscreen --suspend' ''"
-    fi
-    xidlehook --not-when-fullscreen --not-when-audio $xidlehook_args &
+    xidlehook --not-when-fullscreen --not-when-audio --timer 600 'lockscreen' '' --timer 1800 'lockscreen --suspend' '' &
 elif command -v xautolock >/dev/null 2>&1; then
     if acpi -b 2> /dev/null | grep -q Battery; then
         xautolock -time 60 -corners 000- -cornersize 30 -detectsleep -locker 'lockscreen --suspend' &
