@@ -54,12 +54,6 @@ else
     fi
 fi
 
-# I want to be able to re-run commands that set settings like mouse sensitivity,
-# keyboard repeat rate etc., so split that up into its own file
-if [ -x $HOME/.xsettings ]; then
-    . $HOME/.xsettings
-fi
-
 # xflux/redshift change the screen's color when night time comes around
 # amsterdam
 #lat=52.377956
@@ -103,6 +97,12 @@ elif command -v xautolock >/dev/null 2>&1; then
     else
         xautolock -time 15 -locker 'lockscreen' &
     fi
+fi
+
+# I want to be able to re-run commands that set settings like mouse sensitivity,
+# keyboard repeat rate etc., so split that up into its own file
+if [ -x $HOME/.xsettings ]; then
+    . $HOME/.xsettings
 fi
 
 # start the window manager. this is a blocking command. normally you'd want to
