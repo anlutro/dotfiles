@@ -83,6 +83,16 @@ function venv {
 
         if [ -n "$venv_found" ]; then
             venv="$venv_found"
+            if [ ! -e "$venv/bin/python" ]; then
+                ls --color=yes -l $venv/bin/python*
+                echo "Python binary not found in venv, possibly due to python being upgraded." >&2
+                read -rp "Re-create virtualenv? [Y/n] "
+                if [ -n "$REPLY" ] && ! [[ "$REPLY" =~ ^[Yy] ]]; then
+                    return 1
+                fi
+                venv-destroy
+                venv-create
+            fi
         else
             echo "Couldn't find a virtualenv in PWD!" >&2
             ask="${ask:-yes}" venv-create || return $?
