@@ -7,10 +7,7 @@ fi
 
 if ! echo "$1" | grep -Pqx '[-+]?[0-9]+%?'; then
     echo "Unknown format! Usage examples:"
-    echo "set-brightness 1"
-    echo "set-brightness 50%"
-    echo "set-brightness +100"
-    echo "set-brightness +25%"
+    echo "set-brightness 1 | 50% | +100 | +25%"
     exit 1
 fi
 
@@ -29,8 +26,9 @@ else
 fi
 
 for dir in $(find /sys/class/backlight/ -mindepth 1 -maxdepth 1); do
-    old_brightness=$(cat $dir/brightness)
-    max_brightness=$(cat $dir/max_brightness)
+    name=$(basename "$dir")
+    old_brightness=$(cat "$dir/brightness")
+    max_brightness=$(cat "$dir/max_brightness")
 
     if [ -n "$modifier_p" ]; then
         old_brightness_p=$(echo "100 * $old_brightness / $max_brightness" | bc -l)
@@ -48,12 +46,12 @@ for dir in $(find /sys/class/backlight/ -mindepth 1 -maxdepth 1); do
         new_brightness=1
     fi
 
-    echo "new_brightness=$new_brightness"
+    echo "New brightness for $name: $new_brightness"
 
-    if [ -w $dir/brightness ]; then
-        echo $new_brightness > $dir/brightness
+    if [ -w "$dir/brightness" ]; then
+        echo $new_brightness > "$dir/brightness"
     else
-        echo "$dir/brightness is not writable, using sudo"
-        sudo sh -c "echo $new_brightness > $dir/brightness"
+        echo "Not writable, using sudo to modify $dir/brightness"
+        sudo sh -c "echo '$new_brightness' > '$dir/brightness'"
     fi
 done
