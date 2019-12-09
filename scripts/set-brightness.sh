@@ -12,10 +12,6 @@ else
 fi
 
 for dir in $(find /sys/class/backlight/ -mindepth 1 -maxdepth 1); do
-    if [ ! -w $dir/brightness ]; then
-        echo "$dir/brightness is not writeable!"
-        exit 1
-    fi
     old_brightness=$(cat $dir/brightness)
     max_brightness=$(cat $dir/max_brightness)
     if [ -n "$modifier" ]; then
@@ -29,5 +25,10 @@ for dir in $(find /sys/class/backlight/ -mindepth 1 -maxdepth 1); do
     elif [ $new_brightness -lt 0 ]; then
         new_brightness=0
     fi
-    echo $new_brightness > $dir/brightness
+    if [ -w $dir/brightness ]; then
+        echo $new_brightness > $dir/brightness
+    else
+        echo "$dir/brightness is not writable, using sudo"
+        sudo sh -c "echo $new_brightness > $dir/brightness"
+    fi
 done
