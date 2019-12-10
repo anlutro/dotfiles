@@ -4,7 +4,9 @@ cur_name=$(i3-msg -t get_workspaces | jq -r '.[] | select (.focused==true).name'
 cur_num=$(echo $cur_name | grep -oP '^[0-9]+')
 
 if [ "${1-}" = "-d" ] || [ "${1-}" = "--dir" ]; then
-	new_name=$(basename $(pwd))
+	shift
+	dir="${1-$PWD}"
+	new_name=$(basename $dir)
 elif [ $# -gt 0 ]; then
 	new_name="$*"
 else

@@ -19,4 +19,8 @@ if [ -z "$sp" ]; then
     sp="$dir"
 fi
 
+if command -v i3-rename-workspace >/dev/null 2>&1; then
+	i3-rename-workspace --dir
+fi
+
 subl -n "$sp"
