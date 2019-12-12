@@ -55,12 +55,8 @@ else
 fi
 
 # xflux/redshift change the screen's color when night time comes around
-# amsterdam
-#lat=52.377956
-#lon=4.897070
-# tenerife
-lat=28.291565
-lon=-16.629129
+lat=52.377956 lon=4.897070  # amsterdam
+# lat=28.291565 lon=-16.629129  # tenerife
 if command -v redshift >/dev/null 2>&1; then
     redshift -l $lat:$lon -t 6500:2900 &
 elif command -v xflux >/dev/null 2>&1; then
