@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if [ -z "$NOTES_DIR" ]; then
-    NOTES_DIR=~/Dropbox/notes
+    NOTES_DIR=~/Dropbox/shared-rw/notes
 fi
 
 main() {
