@@ -22,4 +22,4 @@ fi
 cd ~/downloads || exit 1
 wget $url
 chmod +x $file
-mv -f $file /usr/local/bin/keepassxc
+mv -f $file $HOME/.local/bin/keepassxc

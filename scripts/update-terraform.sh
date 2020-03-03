@@ -16,7 +16,7 @@ fi
 if [ -w /usr/local ]; then
     DIR=/usr/local/bin
 else
-    DIR="$HOME/bin"
+    DIR="$HOME/.local/bin"
 fi
 
 cd ~/downloads || exit 1
