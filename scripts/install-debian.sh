@@ -24,7 +24,7 @@ apt_inst='apt-get -y install --no-install-recommends'
 
 apt-get update && apt-get -y dist-upgrade
 $apt_inst git vim tree curl irssi zip fuse psmisc jq bc silversearcher-ag \
-    policykit-1 sudo apt-transport-https python3 python3-venv htop
+    policykit-1 sudo apt-transport-https htop gpg
 
 usermod -a -G sudo,root,adm,staff,systemd-journal andreas
 
