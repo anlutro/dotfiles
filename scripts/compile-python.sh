@@ -19,6 +19,7 @@ check_pkg 'libssl.*-dev'
 check_pkg 'zlib.*-dev'
 check_pkg 'libncurses.*-dev'
 check_pkg 'libbz2.*-dev'
+check_pkg 'libffi.*-dev'
 
 VERSION="$1"
 NAME="Python-$VERSION"
