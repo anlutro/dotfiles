@@ -66,7 +66,7 @@ function venv {
 
     if [ -z "$python" ]; then
         python=$(
-            find /usr/local/bin /usr/bin -regex '.*/python[3-9][0-9.]+' -printf '%f\n' \
+            find /usr/local/bin /usr/bin $HOME/.local/bin -regex '.*/python[3-9][0-9.]+' -printf '%f\n' \
             | sort -V | tail -1
         )
     elif echo "$python" | grep -qP '^[\d\.]+$'; then
