@@ -8,6 +8,18 @@ confirm() {
     return 1
 }
 
+# common variables
+debian_release=$(lsb_release -cs)
+
+# make sure contrib and non-free components are enabled, add backports repo
+debian_mirror=$(grep -oP 'http.*ftp.*debian\.org' /etc/apt/sources.list | sort | uniq)
+sed -ri "s/(.* $debian_release main)$/\1 contrib non-free/g" /etc/apt/sources.list
+mkdir -p /etc/apt/sources.list.d
+cat <<EOF > /etc/apt/sources.list.d/backports.list
+deb $debian_mirror/debian/ $debian_release-backports main
+deb-src $debian_mirror/debian/ $debian_release-backports main
+EOF
+
 apt_inst='apt-get -y install --no-install-recommends'
 
 apt-get update && apt-get -y dist-upgrade
@@ -54,7 +66,7 @@ fi
 if confirm "Install Docker?"; then
     curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor \
         > /etc/apt/trusted.gpg.d/docker.gpg
-    echo "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" \
+    echo "deb [arch=amd64] https://download.docker.com/linux/debian $debian_release stable" \
         > /etc/apt/sources.list.d/docker.list
     apt-get update && $apt_inst docker-ce
     usermod -a -G docker andreas
