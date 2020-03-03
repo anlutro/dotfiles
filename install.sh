@@ -33,6 +33,7 @@ install() {
 _install_fzf() {
     if [ ! -d $vendor/fzf ]; then
         git clone https://github.com/junegunn/fzf $vendor/fzf
+        $vendor/fzf/install --bin
     fi
     ln -sf $vendor/fzf/bin/fzf $bindir
 }
