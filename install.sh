@@ -13,7 +13,6 @@ if [ ! -d $HOME/.local/bin ]; then
     mkdir -p $HOME/.local/bin
 fi
 bindir=$HOME/.local/bin
-
 root=$(dirname "$(readlink -f "$0")")
 configs=$root/configs
 scripts=$root/scripts
@@ -30,11 +29,26 @@ install() {
     fi
 }
 
-_install_fzf() {
-    if [ ! -d $vendor/fzf ]; then
-        git clone https://github.com/junegunn/fzf $vendor/fzf
-        $vendor/fzf/install --bin
+vendor_install() {
+    git_repo="$1"
+    if [ -n "${2-}" ]; then
+        name="$2"
+    else
+        name=$(basename "$git_repo")
     fi
+    if [ -e "$HOME/code/$name" ]; then
+        ln -sfT "$HOME/code/$name" "$vendor/$name"
+    elif [ -e "$HOME/code/contrib/$name" ]; then
+        ln -sfT "$HOME/code/contrib/$name" "$vendor/$name"
+    elif [ ! -e "$vendor/$name" ]; then
+        git clone "$git_repo" "$vendor/$name"
+        return 0
+    fi
+    return 1
+}
+
+_install_fzf() {
+    vendor_install https://github.com/junegunn/fzf && $vendor/fzf/install --bin
     ln -sf $vendor/fzf/bin/fzf $bindir
 }
 
@@ -110,9 +124,7 @@ install_gtk() {
     mkdir -p $HOME/.themes
     mkdir -p $HOME/.local/share/themes
 
-    if [ ! -d $vendor/zuki-themes ]; then
-        git clone https://github.com/lassekongo83/zuki-themes $vendor/zuki-themes
-    fi
+    vendor_install https://github.com/lassekongo83/zuki-themes
     ln -sfT $vendor/zuki-themes/Zukiwi $HOME/.themes/Zukiwi
     ln -sfT $vendor/zuki-themes/Zukiwi $HOME/.local/share/themes/Zukiwi
     ln -sfT $vendor/zuki-themes/Zukitwo $HOME/.themes/Zukitwo
@@ -120,9 +132,7 @@ install_gtk() {
     ln -sfT $vendor/zuki-themes/Zukitre $HOME/.themes/Zukitre
     ln -sfT $vendor/zuki-themes/Zukitre $HOME/.local/share/themes/Zukitre
 
-    if [ ! -d $vendor/paper-gtk-theme ]; then
-        git clone https://github.com/snwh/paper-gtk-theme $vendor/paper-gtk-theme
-    fi
+    vendor_install https://github.com/snwh/paper-gtk-theme
     ln -sfT $vendor/paper-gtk-theme/Paper $HOME/.themes/Paper
     ln -sfT $vendor/paper-gtk-theme/Paper $HOME/.local/share/themes/Paper
 
@@ -141,20 +151,17 @@ install_i3() {
 }
 
 install_i3blocks() {
-    local conf_path=$HOME/.config/i3blocks
-    local contrib_dir=$vendor/i3blocks-contrib
+    vendor_install https://github.com/vivien/i3blocks-contrib
 
-    if [ ! -d $contrib_dir ]; then
-        git clone https://github.com/vivien/i3blocks-contrib $contrib_dir
-    fi
+    local conf_path=$HOME/.config/i3blocks
     mkdir -p $conf_path
     ln -sf $configs/i3/i3blocks.conf $conf_path/config
 
     [ -L $conf_path/scripts ] && rm $conf_path/scripts
     [ ! -d $conf_path/scripts ] && mkdir -p $conf_path/scripts
 
-    ln -sf $contrib_dir/memory/memory $conf_path/scripts/
-    ln -sf $contrib_dir/volume/volume $conf_path/scripts/
+    ln -sf $vendor/i3blocks-contrib/memory/memory $conf_path/scripts/
+    ln -sf $vendor/i3blocks-contrib/volume/volume $conf_path/scripts/
 
     for f in $configs/i3/block-scripts/*; do
         filepath=$(readlink -f $f)
@@ -196,9 +203,7 @@ install_nano() {
 
 install_python() {
     ln -sf $scripts/templ.py $bindir/templ
-    if [ ! -d $vendor/psm ]; then
-        git clone https://github.com/anlutro/psm $vendor/psm
-    fi
+    vendor_install https://github.com/anlutro/psm
     ln -sf $vendor/psm/psm.sh $bindir/psm
 }
 
@@ -232,12 +237,8 @@ _install_urxvt_perl() {
 }
 
 install_urxvt() {
-    if [ ! -d $vendor/urxvt-perls ]; then
-        git clone https://github.com/muennich/urxvt-perls $vendor/urxvt-perls
-    fi
-    if [ ! -d $vendor/urxvt-font-size ]; then
-        git clone https://github.com/majutsushi/urxvt-font-size $vendor/urxvt-font-size
-    fi
+    vendor_install https://github.com/muennich/urxvt-perls
+    vendor_install https://github.com/majutsushi/urxvt-font-size
 
     mkdir -p $HOME/.urxvt/ext
     _install_urxvt_perl url-select
@@ -251,16 +252,12 @@ vim_common() {
     [ -n "$vim_common_installed" ] && return
     vim_common_installed=1
 
-    if [ ! -d $vendor/jellybeans.vim ]; then
-        git clone https://github.com/nanotech/jellybeans.vim $vendor/jellybeans.vim
-    fi
+    vendor_install https://github.com/nanotech/jellybeans.vim
     ln -sf ../../../vendor/jellybeans.vim/colors/jellybeans.vim $configs/vim/colors/jellybeans.vim
 
     if command -v salt >/dev/null 2>&1; then
         printf "salt-vim... "
-        if [ ! -d $vendor/salt-vim ]; then
-            git clone https://github.com/saltstack/salt-vim $vendor/salt-vim
-        fi
+        vendor_install https://github.com/saltstack/salt-vim
         ln -sf ../../../vendor/salt-vim/ftdetect/sls.vim $configs/vim/ftdetect/sls.vim
         ln -sf ../../../vendor/salt-vim/ftplugin/sls.vim $configs/vim/ftplugin/sls.vim
         ln -sf ../../../vendor/salt-vim/syntax/sls.vim $configs/vim/syntax/sls.vim

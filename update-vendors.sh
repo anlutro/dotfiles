@@ -1,15 +1,28 @@
 #!/usr/bin/env sh
 
 root=$(dirname "$(readlink -f "$0")")
-cd $root/vendor || exit 1
 
+update_fzf() {
+    ./install --bin
+}
+
+cd $root/vendor || exit 1
 for dir in *; do
-    if [ -d $dir ]; then
-        echo "Updating $dir ..."
-        cd $dir || exit 1
-        git checkout .
-        git pull
-        cd ..
-        echo
+    name=$(basename "$dir")
+    if [ ! -d "$dir" ]; then
+        continue
     fi
+
+    echo "Updating $name ..."
+    cd $dir || exit 1
+    git checkout .
+    git pull
+
+    func="update_$(echo "$name" | tr -s '-' '_')"
+    if command -v "$func" >/dev/null 2>&1; then
+        $func
+    fi
+
+    cd ..
+    echo
 done
