@@ -24,8 +24,8 @@ EOF
 echo 'apt::install-recommends "false";' > /etc/apt/apt.conf.d/99-install-recommends
 
 apt-get update && apt-get dist-upgrade -y
-apt-get install -y git vim tree curl irssi zip fuse psmisc jq bc silversearcher-ag \
-    policykit-1 sudo apt-transport-https htop gpg
+apt-get install -y git vim tree curl irssi zip unzip fuse psmisc jq bc \
+    silversearcher-ag policykit-1 sudo apt-transport-https htop gpg
 
 usermod -a -G sudo,root,adm,staff,systemd-journal andreas
 
