@@ -17,7 +17,11 @@ for output in $(cd "$card_path" && echo card*); do
         esac
     fi
 done
-if [ -n "$audio_output" ]; then
-    echo "selecting output $audio_output"
-    pactl set-card-profile 0 output:$audio_output
+
+if [ -z "$audio_output" ]; then
+    echo "no HDMI output found - try restarting pulseaudio"
+    exit 1
 fi
+
+echo "selecting output $audio_output"
+pactl set-card-profile 0 output:$audio_output
