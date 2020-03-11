@@ -5,13 +5,15 @@ search='Battery 0: '
 full_text=$(acpi -b | grep "^$search" | cut -d: -f2-)
 status=$(echo "$full_text" | cut -d, -f1)
 pct=$(echo "$full_text" | cut -d, -f2 | sed s/%//)
-remaining=$(echo "$full_text" | cut -d, -f3 | cut -d' ' -f2)
+if ! echo "$full_text" | grep -qF 'rate information unavailable'; then
+    remaining=$(echo "$full_text" | cut -d, -f3 | cut -d' ' -f2-)
+fi
 
 if [ "$status" = 'Unknown' ]; then
     status="Full"
 fi
 text="$status $pct%"
-if [ -n "$remaining" ]; then
+if [ -n "${remaining-}" ]; then
     text="$text $remaining"
 fi
 
