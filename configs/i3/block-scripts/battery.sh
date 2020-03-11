@@ -2,13 +2,17 @@
 
 warn_state_file=/tmp/.battery-warning-sent
 search='Battery 0: '
-text=$(acpi -b | grep "$search" | cut -d ' ' -f 3-5 | sed -e "s/$search//" \
-    -e 's/, discharging//' -e 's/, charging//' -e 's/,//g')
-status=$(echo $text | cut -d ' ' -f 1)
-pct=$(echo $text | cut -d ' ' -f 2 | sed s/%//)
+full_text=$(acpi -b | grep "^$search" | cut -d: -f2-)
+status=$(echo "$full_text" | cut -d, -f1)
+pct=$(echo "$full_text" | cut -d, -f2 | sed s/%//)
+remaining=$(echo "$full_text" | cut -d, -f3 | cut -d' ' -f2)
 
 if [ "$status" = 'Unknown' ]; then
-    text="Full ${pct}%"
+    status="Full"
+fi
+text="$status $pct%"
+if [ -n "$remaining" ]; then
+    text="$text $remaining"
 fi
 
 # long/short text
