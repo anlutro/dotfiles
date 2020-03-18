@@ -81,15 +81,15 @@ if command -v unclutter >/dev/null 2>&1; then
 fi
 
 # auto lock/suspend after inactivity
-if command -v xidlehook >/dev/null 2>&1; then
-    xidlehook --not-when-fullscreen --not-when-audio --timer 300 'lockscreen' '' --timer 1800 'lockscreen --suspend' '' &
-elif command -v xautolock >/dev/null 2>&1; then
-    if acpi -b 2> /dev/null | grep -q Battery; then
-        xautolock -time 60 -corners 000- -cornersize 30 -detectsleep -locker 'lockscreen --suspend' &
-    else
-        xautolock -time 5 -locker 'lockscreen' &
-    fi
-fi
+# if command -v xidlehook >/dev/null 2>&1; then
+#     xidlehook --not-when-fullscreen --not-when-audio --timer 300 'lockscreen' '' --timer 1800 'lockscreen --suspend' '' &
+# elif command -v xautolock >/dev/null 2>&1; then
+#     if acpi -b 2> /dev/null | grep -q Battery; then
+#         xautolock -time 60 -corners 000- -cornersize 30 -detectsleep -locker 'lockscreen --suspend' &
+#     else
+#         xautolock -time 5 -locker 'lockscreen' &
+#     fi
+# fi
 
 # I want to be able to re-run commands that set settings like mouse sensitivity,
 # keyboard repeat rate etc., so split that up into its own file
