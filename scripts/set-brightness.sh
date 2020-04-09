@@ -69,7 +69,18 @@ for dir in $(find /sys/class/backlight/ -mindepth 1 -maxdepth 1); do
     echo "New brightness for $name: $new_brightness"
 
     if [ -w "$dir/brightness" ]; then
-        echo $new_brightness > "$dir/brightness"
+        steps=10
+        for i in $(seq $steps); do
+            if [ $new_brightness -gt $old_brightness ]; then
+                op=+
+                diff=$(( new_brightness - old_brightness ))
+            else
+                op=-
+                diff=$(( old_brightness - new_brightness ))
+            fi
+            echo $(( old_brightness $op (diff * i / steps) )) > "$dir/brightness"
+            sleep 0.01
+        done
     else
         echo "Not writable, using sudo to modify $dir/brightness"
         sudo sh -c "echo '$new_brightness' > '$dir/brightness'"
