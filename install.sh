@@ -321,6 +321,13 @@ install_zsh() {
 }
 
 
+if [ ! -e $root/.venv ]; then
+    python3 -m venv $root/.venv
+    $root/.venv pip install --upgrade setuptools pip
+fi
+$root/.venv pip install --upgrade --requirements $root/requirements.txt
+
+
 printf "Linking shared configs... "
 ln -sf $configs/shell/profile $HOME/.profile
 ln -sf $configs/shell/inputrc $HOME/.inputrc
