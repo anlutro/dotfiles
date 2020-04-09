@@ -82,7 +82,9 @@ for dir in $(find /sys/class/backlight/ -mindepth 1 -maxdepth 1); do
             sleep 0.01
         done
     else
-        echo "Not writable, using sudo to modify $dir/brightness"
+        echo "$dir/brightness not writable, consider adding udev rule and adding yourself to the 'video' group:"
+        echo '  SUBSYSTEM=="backlight", ACTION=="add", RUN+="/bin/chgrp video /sys/class/backlight/%k/brightness", RUN+="/bin/chmod g+w /sys/class/backlight/%k/brightness"'
+        echo "Using sudo for now:"
         sudo sh -c "echo '$new_brightness' > '$dir/brightness'"
     fi
 done
