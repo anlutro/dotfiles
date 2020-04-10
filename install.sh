@@ -321,11 +321,11 @@ install_zsh() {
 }
 
 
+if [ ! -e $root/.venv ]; then
+    python3 -m venv $root/.venv
+    $root/.venv pip install --upgrade setuptools pip
+fi
 if [ -e $root/requirements.txt ]; then
-    if [ ! -e $root/.venv ]; then
-        python3 -m venv $root/.venv
-        $root/.venv pip install --upgrade setuptools pip
-    fi
     $root/.venv pip install --upgrade --requirements $root/requirements.txt
 fi
 
