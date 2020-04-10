@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env /home/andreas/code/dotfiles/.venv/bin/python
 
 from __future__ import print_function
 from collections import defaultdict
@@ -10,7 +10,6 @@ import logging
 import os
 import os.path
 import re
-import sys
 
 log = logging.getLogger()
 

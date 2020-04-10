@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env /home/andreas/code/dotfiles/.venv/bin/python
 
 from datetime import datetime, timedelta
 import os
@@ -8,11 +8,11 @@ import tweepy
 
 def get_api_client():
     auth = tweepy.OAuthHandler(
-        consumer_key=os.getenv("CONSUMER_KEY"),
-        consumer_secret=os.getenv("CONSUMER_SECRET"),
+        consumer_key=os.environ["CONSUMER_KEY"],
+        consumer_secret=os.environ["CONSUMER_SECRET"],
     )
     auth.set_access_token(
-        key=os.getenv("ACCESS_TOKEN"), secret=os.getenv("ACCESS_TOKEN_SECRET"),
+        key=os.environ["ACCESS_TOKEN"], secret=os.environ["ACCESS_TOKEN_SECRET"],
     )
     return tweepy.API(auth)
 

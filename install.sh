@@ -321,6 +321,19 @@ install_zsh() {
 }
 
 
+if [ ! -e $root/.venv ]; then
+    echo "Setting up virtual environment ..."
+    python3 -m venv $root/.venv
+    $root/.venv/bin/pip install --upgrade setuptools pip
+    echo
+fi
+if [ -e $root/requirements.txt ]; then
+    echo "Installing Python requirements ..."
+    $root/.venv/bin/pip install --upgrade -r $root/requirements.txt
+    echo
+fi
+
+
 printf "Linking shared configs... "
 ln -sf $configs/shell/profile $HOME/.profile
 ln -sf $configs/shell/inputrc $HOME/.inputrc
@@ -369,10 +382,11 @@ install nvim
 install xorg Xorg
 install xdg xdg-open
 install zsh
+echo
 
 
 # look for broken symlinks
-printf "\nLooking for broken symlinks..."
+echo "Looking for broken symlinks..."
 find $configs -xtype l
 find $scripts -xtype l
 find $bindir -xtype l
