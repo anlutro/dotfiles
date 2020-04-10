@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env /home/andreas/code/dotfiles/.venv/bin/python
 
 import argparse
 import logging

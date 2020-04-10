@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env /home/andreas/code/dotfiles/.venv/bin/python
 
 from __future__ import print_function
 import argparse

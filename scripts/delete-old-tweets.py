@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env /home/andreas/code/dotfiles/.venv/bin/python
 
 from datetime import datetime, timedelta
 import os
