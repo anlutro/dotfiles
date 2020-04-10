@@ -37,9 +37,9 @@ vendor_install() {
         name=$(basename "$git_repo")
     fi
     if [ -e "$HOME/code/$name" ]; then
-        ln -sfT "$HOME/code/$name" "$vendor/$name"
+        rm -rf "$vendor/$name" && ln -sfT "$HOME/code/$name" "$vendor/$name"
     elif [ -e "$HOME/code/contrib/$name" ]; then
-        ln -sfT "$HOME/code/contrib/$name" "$vendor/$name"
+        rm -rf "$vendor/$name" && ln -sfT "$HOME/code/contrib/$name" "$vendor/$name"
     elif [ ! -e "$vendor/$name" ]; then
         git clone "$git_repo" "$vendor/$name"
         return 0
