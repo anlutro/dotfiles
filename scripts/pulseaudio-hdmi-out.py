@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env /home/andreas/code/dotfiles/.venv/bin/python
 
 import pulsectl
 pulse = pulsectl.Pulse(__file__)
