@@ -1,66 +1,40 @@
 #!/usr/bin/env /home/andreas/code/dotfiles/.venv/bin/python
 
-import subprocess
-
-
-def _get_pa_resources(resource):
-    line_prefix = resource.title() + " #"
-    line_prefix_len = len(line_prefix)
-    ret = {}
-    cur = None
-    is_in_ports = False
-    pactl_list = subprocess.check_output(
-        ["pactl", "list", resource + "s"], encoding="utf-8"
-    ).splitlines()
-
-    for line in pactl_list:
-        # print(repr(line), line_prefix, line_prefix_len)
-        if line.startswith(line_prefix):
-            cur = line[line_prefix_len:]
-            ret[cur] = {}
-        elif line == "":
-            cur = None
-
-        if line.startswith("\tPorts:"):
-            is_in_ports = True
-        elif is_in_ports:
-            if line.startswith("\t\t"):
-                port, info = line.strip().split(": ", 1)
-                if "not available" not in info.lower():
-                    ret[cur][port] = info
-            else:
-                is_in_ports = False
-
-    return ret
+import pulsectl
+pulse = pulsectl.Pulse(__file__)
 
 
 def _find_preferred_port(resources, search_for):
     if isinstance(search_for, str):
         search_for = (search_for,)
     preferred = None
-    for source, ports in resources.items():
-        for port in ports:
-            if any(s in port for s in search_for):
-                preferred = source, port
+    for resource in resources:
+        for port in resource.port_list:
+            if port.available == 'no':
+                continue
+            if any(s in port.name for s in search_for):
+                preferred = resource, port
                 break
-            preferred = source, port
+            preferred = resource, port
     return preferred
 
 
 def switch_source():
-    pa_sources = _get_pa_resources("source")
+    pa_sources = pulse.source_list()
     preferred = _find_preferred_port(pa_sources, "headset-mic")
     if preferred:
-        print("switching source %s to port %s" % preferred)
-        subprocess.check_call(["pactl", "set-source-port", preferred[0], preferred[1]])
+        source, port = preferred
+        print("switching source %s to port %s" % (source.name, port.name))
+        pulse.source_port_set(source.index, port.name)
 
 
 def switch_sink():
-    pa_sinks = _get_pa_resources("sink")
+    pa_sinks = pulse.sink_list()
     preferred = _find_preferred_port(pa_sinks, ("headset", "headphone"))
     if preferred:
-        print("switching sink %s to port %s" % preferred)
-        subprocess.check_call(["pactl", "set-sink-port", preferred[0], preferred[1]])
+        sink, port = preferred
+        print("switching sink %s to port %s" % (sink.name, port.name))
+        pulse.sink_port_set(sink.index, port.name)
 
 
 if __name__ == "__main__":
