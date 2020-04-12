@@ -298,7 +298,6 @@ install_xorg() {
     ln -sf $configs/x11/xautolock $HOME/.xautolock
     ln -sf $configs/x11/xrandrinit $HOME/.xrandrinit
     ln -sf $configs/x11/xsettings $HOME/.xsettings
-    ln -sf $scripts/adjust-brightness.sh $bindir/adjust-brightness
     ln -sf $scripts/lockscreen.sh $bindir/lockscreen
 
     # xrdb stuff
