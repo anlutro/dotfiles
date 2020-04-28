@@ -6,6 +6,10 @@ update_fzf() {
     ./install --bin
 }
 
+update_git_crypt() {
+    make && mv ./git-crypt ~/.local/bin
+}
+
 cd $root/vendor || exit 1
 for dir in *; do
     name=$(basename "$dir")
