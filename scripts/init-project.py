@@ -8,19 +8,19 @@ import subprocess
 import sys
 import readline
 
-g = argparse.Namespace()
-g.interactive = sys.__stdin__.isatty()
+
+is_interactive = sys.__stdin__.isatty
 
 
 def confirm(prompt, default=False):
-    if g.interactive:
+    if is_interactive():
         prompt += " [%s/%s] " % ("Y" if default else "y", "n" if default else "N",)
         return input(prompt).lower().startswith("y")
     return default
 
 
 def input_with_prefill(prompt, text):
-    if not g.interactive:
+    if not is_interactive():
         return text
 
     def hook():
@@ -161,28 +161,33 @@ def main():
     args = parser.parse_args()
 
     if args.noninteractive:
-        g.interactive = False
+        global is_interactive
+        is_interactive = lambda: False
 
     project_name = args.name
     print("Project name:", project_name)
     if args.types:
         project_types = args.types
-        print("Project types:", project_types)
+        print("Project types:", ",".join(project_types))
     else:
         project_types = guess_project_types()
         if project_types:
-            print("Project types (guessed):", project_types)
+            print("Project types (guessed):", ",".join(project_types))
         else:
             print("Could not guess project type and no project type provided!")
             if not args.allow_no_type:
                 sys.exit(1)
+
     file_funcs = (
         (project_name + ".sublime-project", write_sublime_project),
         (".gitignore", write_gitignore),
     )
+    file_exists_msg = "already exists" + (
+        "!" if is_interactive() else ", not overwriting"
+    )
     for filename, func in file_funcs:
         if os.path.exists(filename):
-            print(filename, "already exists!")
+            print(filename, file_exists_msg)
             if not confirm("overwrite?"):
                 continue
         func(filename, project_types)
