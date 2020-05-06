@@ -190,3 +190,8 @@ function lsn {
 function f {
     awk "{ print \$$1 }"
 }
+
+function whatsmyip {
+    curl -sSL https://canihazip.com/s
+    echo
+}
