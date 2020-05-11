@@ -1,5 +1,6 @@
 *.sublime-project
 *.sublime-workspace
 *.swp
+.ansible-vault-password
 .task
 .venv*
