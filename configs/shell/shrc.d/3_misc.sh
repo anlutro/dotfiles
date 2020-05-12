@@ -195,3 +195,8 @@ function whatsmyip {
     curl -sSL https://canihazip.com/s
     echo
 }
+
+function cd-git-root {
+    root=$(git rev-parse --show-toplevel)
+    [ $? = 0 ] && cd $root
+}

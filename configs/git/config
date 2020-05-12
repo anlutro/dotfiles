@@ -23,6 +23,7 @@ mnf = merge --no-ff
 push-all = !git remote | xargs -L1 git push
 r = remote --verbose
 ra = remote add
+root = rev-parse --show-toplevel
 rrm = remote rm
 s = status
 st = status
