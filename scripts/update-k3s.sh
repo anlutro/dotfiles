@@ -1,4 +1,5 @@
-#!/bin/sh -eu
+#!/bin/sh
+set -eu
 
 version=$(curl -s https://api.github.com/repos/rancher/k3s/releases/latest | grep tag_name | cut -d '"' -f 4)
 
@@ -8,6 +9,6 @@ if k3s --version | grep -qF "$version"; then
 fi
 
 cd ~/downloads
-wget https://github.com/rancher/k3s/releases/download/$version/k3s
-cp k3s $HOME/.local/bin/
+wget -nc https://github.com/rancher/k3s/releases/download/$version/k3s
+mv -f k3s $HOME/.local/bin/
 chmod +x $HOME/.local/bin/k3s

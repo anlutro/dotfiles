@@ -1,4 +1,5 @@
 #!/bin/sh
+set -eu
 
 if [ -z "$JOURNAL_FILE" ]; then
     JOURNAL_FILE=~/Dropbox/diary

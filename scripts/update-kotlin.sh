@@ -1,5 +1,5 @@
 #!/bin/sh
-set -eux
+set -eu
 
 URL=$(
     curl -s https://api.github.com/repos/JetBrains/kotlin/releases | \
@@ -21,7 +21,7 @@ fi
 PREFIX="$PRE_PREFIX/share/kotlin-$VERSION"
 
 cd ~/downloads || exit 1
-# wget $URL
+wget -nc $URL
 unzip $FILE
 rsync -r ./kotlinc/ $PREFIX
 rm -rf ./kotlinc

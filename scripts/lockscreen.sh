@@ -1,4 +1,5 @@
 #!/bin/sh
+set -eu
 
 # call /bin/true just to make it easier to chain commands.
 # in python I'd just do cmds = [...] and ' && '.join(cmds)

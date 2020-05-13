@@ -29,7 +29,7 @@ fi
 PREFIX="$PRE_PREFIX/share/go-$VERSION"
 
 cd ~/downloads
-wget $URL
+wget -nc $URL
 mkdir -p $PREFIX
 tar xf $FILENAME -C $PREFIX --strip-components=1
 ln -sf $PREFIX/bin/go* $PRE_PREFIX/bin/

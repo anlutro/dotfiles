@@ -1,4 +1,5 @@
 #!/bin/sh
+set -eu
 
 if [ -z "$NOTES_DIR" ]; then
     NOTES_DIR=~/Dropbox/shared-rw/notes

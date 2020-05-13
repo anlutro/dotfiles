@@ -1,4 +1,5 @@
 #!/bin/sh
+set -eu
 
 url=$(curl -sSL https://www.terraform.io/downloads.html | grep -oP 'https://[A-z0-9/_.-]*_linux_amd64\.zip')
 file=$(basename $url)
@@ -20,5 +21,5 @@ else
 fi
 
 cd ~/downloads || exit 1
-wget $url && unzip $file && mv ./terraform $DIR/
+wget -nc $url && unzip $file && mv ./terraform $DIR/
 rm -f $file

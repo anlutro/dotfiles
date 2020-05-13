@@ -1,4 +1,5 @@
 #!/bin/sh
+set -eu
 
 LIMIT=${LIMIT:=100}
 tmpdir=$(mktemp -d)

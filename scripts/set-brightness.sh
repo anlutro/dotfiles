@@ -1,4 +1,5 @@
 #!/bin/sh
+set -eu
 
 smart_modifier=
 
@@ -44,10 +45,10 @@ for dir in $(find /sys/class/backlight/ -mindepth 1 -maxdepth 1); do
         modifier="-$(( $old_brightness / 2 ))"
     fi
 
-    if [ -n "$modifier_p" ]; then
+    if [ -n "${modifier_p-}" ]; then
         old_brightness_p=$(( 100 * $old_brightness / $max_brightness ))
         new_brightness_p=$(( $old_brightness_p $modifier_p ))
-    elif [ -n "$modifier" ]; then
+    elif [ -n "${modifier-}" ]; then
         op=$(echo $modifier | grep -o '^[-+]')
         modifier=$(echo $modifier | grep -o '[0-9]*$')
         if [ -n "$smart_modifier" ]; then
@@ -56,7 +57,7 @@ for dir in $(find /sys/class/backlight/ -mindepth 1 -maxdepth 1); do
         fi
         new_brightness=$(( $old_brightness $op $modifier ))
     fi
-    if [ -n "$new_brightness_p" ]; then
+    if [ -n "${new_brightness_p-}" ]; then
         new_brightness=$(( $max_brightness * $new_brightness_p / 100 ))
     fi
 

@@ -1,4 +1,5 @@
-#!/bin/sh -eu
+#!/bin/sh
+set -eu
 
 cur_name=$(i3-msg -t get_workspaces | jq -r '.[] | select (.focused==true).name')
 cur_num=$(echo $cur_name | grep -oP '^[0-9]+')

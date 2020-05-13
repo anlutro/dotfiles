@@ -1,4 +1,5 @@
 #!/bin/sh
+set -eu
 
 version=$(curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | grep tag_name | cut -d '"' -f 4)
 
@@ -14,6 +15,6 @@ else
 fi
 
 cd ~/downloads || exit 1
-wget https://github.com/kubernetes/kops/releases/download/$version/kops-linux-amd64
-cp kops-linux-amd64 $DIR/kops
+wget -nc https://github.com/kubernetes/kops/releases/download/$version/kops-linux-amd64
+mv -f kops-linux-amd64 $DIR/kops
 chmod 755 $DIR/kops

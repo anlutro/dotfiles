@@ -1,4 +1,5 @@
 #!/bin/sh
+set -eu
 
 url=$(
     curl -s https://api.github.com/repos/keepassxreboot/keepassxc/releases | \
@@ -20,6 +21,6 @@ if [ "$installed_version" = "$version" ]; then
 fi
 
 cd ~/downloads || exit 1
-wget $url
+wget -nc $url
 chmod +x $file
 mv -f $file $HOME/.local/bin/keepassxc

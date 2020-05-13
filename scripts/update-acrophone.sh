@@ -1,4 +1,5 @@
 #!/bin/sh
+set -eu
 
 url=$(curl -s https://api.github.com/repos/bcicen/acrophone/releases | grep browser_download_url \
     | grep linux-amd64 | head -1 | cut -d\" -f4)
@@ -17,6 +18,6 @@ else
 fi
 
 cd ~/downloads || exit 1
-wget $url
-cp $file $DIR/acrophone
+wget -nc $url
+mv -f $file $DIR/acrophone
 chmod +x $DIR/acrophone

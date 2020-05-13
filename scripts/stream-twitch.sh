@@ -1,4 +1,5 @@
 #!/bin/sh
+set -eu
 
 if [ -n "$1" ]; then
     STREAM_KEY="$1"

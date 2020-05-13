@@ -1,4 +1,5 @@
 #!/bin/sh
+set -eu
 
 url=$(curl -s https://api.github.com/repos/coreos/rkt/releases | grep browser_download_url | grep amd64\.deb | head -1 | cut -d\" -f4)
 file=$(basename $url)
@@ -11,7 +12,7 @@ fi
 
 cd ~/downloads || exit 1
 gpg --recv-key 18AD5014C99EF7E3BA5F6CE950BDD3E0FC8A365E
-wget $url
-wget $url.asc
+wget -nc $url
+wget -nc $url.asc
 gpg --verify $file.asc
 sudo dpkg -i $file

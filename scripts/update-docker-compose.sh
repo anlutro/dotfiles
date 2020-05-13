@@ -1,4 +1,5 @@
 #!/bin/sh
+set -eu
 
 url=$(curl -s https://api.github.com/repos/docker/compose/releases | grep browser_download_url \
     | grep Linux-x86_64 | grep -v -- '-rc' | head -1 | cut -d\" -f4)
@@ -17,6 +18,6 @@ else
 fi
 
 cd ~/downloads || exit 1
-wget $url
-cp $file $DIR/docker-compose
+wget -nc $url
+mv -f $file $DIR/docker-compose
 chmod +x $DIR/docker-compose

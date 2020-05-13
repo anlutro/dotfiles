@@ -1,4 +1,5 @@
 #!/bin/sh
+set -eu
 
 if [ -f $1 ]; then
     GIT_IDENTITY=$1 && shift
