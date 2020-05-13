@@ -35,7 +35,7 @@ def input_with_prefill(prompt, text):
 
 def write_sublime_project(path, project_types):
     file_exclude_patterns = []
-    folder_exclude_patterns = ["build*", "_build*", ".build*"]
+    folder_exclude_patterns = []
     default_indent = "tabs"
     default_spaces = ""
 
