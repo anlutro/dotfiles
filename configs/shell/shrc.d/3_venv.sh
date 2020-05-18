@@ -147,6 +147,7 @@ function venv {
 
     function venv-create {
         local cmd
+        local venv_pdir
 
         if echo "$python" | grep -q 'python3'; then
             cmd="$python -m venv"
@@ -169,7 +170,16 @@ function venv {
             fi
         fi
         $cmd "$venv" || return 1
-        "$venv/bin/pip" install --upgrade pip setuptools wheel
+        echo "Upgrading pip, setuptools, wheel ..."
+        "$venv/bin/pip" --quiet install --upgrade pip setuptools wheel
+
+        venv_pdir=$(dirname $(readlink -f "$venv"))
+        if [ -e "$venv_pdir/pyproject.toml" ]; then
+            if grep -qF '[tool.poetry]' "$venv_pdir/pyproject.toml"; then
+                echo "Installing poetry ..."
+                "$venv/bin/pip" --quiet install --upgrade poetry
+            fi
+        fi
     }
 
     function venv-destroy {
