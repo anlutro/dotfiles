@@ -99,9 +99,8 @@ function dphp {
     local tty_arg
     tty -s && tty_arg=--tty
     docker run --rm --interactive $tty_arg \
-        --volume $PWD:/usr/src/myapp \
+        --volume $PWD:$PWD --workdir $PWD \
         --user "$(id -u):$(id -g)" \
-        --workdir /usr/src/myapp \
         --network host \
         php:7-cli-alpine php "$@"
 }
@@ -112,7 +111,7 @@ function dcomposer {
     local tty_arg
     tty -s && tty_arg=--tty
     docker run --rm --interactive $tty_arg \
-        --volume $PWD:/app \
+        --volume $PWD:$PWD --workdir $PWD \
         --volume $HOME/.config/composer:/tmp \
         --user "$(id -u):$(id -g)" \
         --volume $SSH_AUTH_SOCK:/ssh-auth.sock \
