@@ -7,11 +7,23 @@ alias rmvenv='venv destroy'
 
 function venv {
     function confirm {
+        : "${ask_default:=yes}"
+
         if [ "$ask" = 'no' ]; then
-            return 0
+            if [ "$ask_default" = 'yes' ]; then
+                return 0
+            fi
+            return 1
         fi
-        read -rp "$* [Y/n] "
-        if [ -z "$REPLY" ] || [[ "$REPLY" =~ ^[Yy] ]]; then
+
+        local ask_options
+        ask_options="Y/n"
+        if [ "$ask_default" = 'no' ]; then
+            ask_options="y/N"
+        fi
+
+        read -rp "$* [$ask_options] "
+        if [[ "$REPLY" =~ ^[Yy] ]] || [ -z "$REPLY" ] && [ "$ask_default" = 'yes' ]; then
             return 0
         fi
         return 1
@@ -189,14 +201,14 @@ function venv {
         fi
 
         for f in dev-requirements.txt requirements-dev.txt requirements/dev.txt; do
-            if [ -e $f ] && confirm "Install $f?"; then
+            if [ -e $f ] && ask_default=no confirm "Install $f?"; then
                 $venv/bin/pip install --upgrade -r $f
             fi
         done
     }
 
     function venv-destroy {
-        venv-locate || echo "No virtualenv found!"
+        venv-locate || echo "No virtualenv found!" && return 0
         venv="$venv_found"
 
         if ! confirm "Remove virtualenv '$venv'?"; then
