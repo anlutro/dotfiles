@@ -4,3 +4,4 @@
 .ansible-vault-password
 .task
 .venv*
+.phpunit.result.cache
