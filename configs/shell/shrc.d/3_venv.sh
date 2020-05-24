@@ -6,6 +6,17 @@ alias mkvenv='venv create'
 alias rmvenv='venv destroy'
 
 function venv {
+    function confirm {
+        if [ "$ask" = 'no' ]; then
+            return 0
+        fi
+        read -rp "$* [Y/n] "
+        if [ -z "$REPLY" ] || [[ "$REPLY" =~ ^[Yy] ]]; then
+            return 0
+        fi
+        return 1
+    }
+
     local arg
     local ask
     local func
@@ -86,8 +97,7 @@ function venv {
             if [ ! -e "$venv/bin/python" ]; then
                 ls --color=yes -l $venv/bin/python*
                 echo "Python binary not found in venv, possibly due to python being upgraded." >&2
-                read -rp "Re-create virtualenv? [Y/n] "
-                if [ -n "$REPLY" ] && ! [[ "$REPLY" =~ ^[Yy] ]]; then
+                if ! confirm "Re-create virtualenv?"; then
                     return 1
                 fi
                 venv-destroy
@@ -163,11 +173,8 @@ function venv {
         fi
 
         echo "Creating virtualenv in '$venv' using $($python --version 2>&1) ..."
-        if [ "$ask" = 'yes' ]; then
-            read -rp "Confirm [Y/n] "
-            if [ -n "$REPLY" ] && ! [[ "$REPLY" =~ ^[Yy] ]]; then
-                return 1
-            fi
+        if ! confirm "Confirm"; then
+            return 1
         fi
         $cmd "$venv" || return 1
         echo "Upgrading pip, setuptools, wheel ..."
@@ -180,17 +187,20 @@ function venv {
                 "$venv/bin/pip" --quiet install --upgrade poetry
             fi
         fi
+
+        for f in dev-requirements.txt requirements-dev.txt requirements/dev.txt; do
+            if [ -e $f ] && confirm "Install $f?"; then
+                $venv/bin/pip install --upgrade -r $f
+            fi
+        done
     }
 
     function venv-destroy {
         venv-locate || echo "No virtualenv found!"
         venv="$venv_found"
 
-        if [ "$ask" = 'yes' ]; then
-            read -rp "Remove virtualenv '$venv'? [Y/n] "
-            if [ -n "$REPLY" ] && ! [[ "$REPLY" =~ ^[Yy] ]]; then
-                return 1
-            fi
+        if ! confirm "Remove virtualenv '$venv'?"; then
+            return 1
         fi
 
         if [ -n "$VIRTUAL_ENV" ]; then
