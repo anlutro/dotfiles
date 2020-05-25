@@ -194,7 +194,7 @@ function venv {
 
         venv_pdir=$(dirname $(readlink -f "$venv"))
         if [ -e "$venv_pdir/pyproject.toml" ]; then
-            if grep -qF '[tool.poetry]' "$venv_pdir/pyproject.toml"; then
+            if grep -qF '[tool.poetry]' "$venv_pdir/pyproject.toml" && ask_default=no confirm "Poetry config detected, install it??"; then
                 echo "Installing poetry ..."
                 "$venv/bin/pip" --quiet install --upgrade poetry
             fi
