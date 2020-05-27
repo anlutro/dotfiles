@@ -1,9 +1,7 @@
 #!/bin/sh
 set -eu
 
-if [ -z "$NOTES_DIR" ]; then
-    NOTES_DIR=~/Dropbox/shared-rw/notes
-fi
+: "${NOTES_DIR:=$HOME/Dropbox/shared-rw/notes}"
 
 main() {
     if [ $# -lt 1 ]; then
