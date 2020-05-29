@@ -33,6 +33,12 @@ alias i3exec='i3-msg exec'
 alias i3rename='i3-msg rename workspace to'
 alias i3mv='i3-msg move workspace to output'
 
+# venv.sh
+alias av='venv activate'
+alias avenv='venv activate'
+alias mkvenv='venv create'
+alias rmvenv='venv destroy'
+
 # misc
 alias ap='ansible-playbook'
 alias cal='ncal -Mb3'

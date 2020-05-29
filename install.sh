@@ -205,6 +205,7 @@ install_python() {
     ln -sf $scripts/templ.py $bindir/templ
     vendor_install https://github.com/anlutro/psm
     ln -sf $vendor/psm/psm.sh $bindir/psm
+    vendor_install https://github.com/anlutro/venv.sh
 }
 
 install_subl() {
