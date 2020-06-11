@@ -43,6 +43,9 @@ helper = cache --timeout=600
 [diff]
 algorithm = patience
 
+[diff "ansible-vault"]
+textconv = ansible-vault view
+
 [log]
 decorate = true
 
