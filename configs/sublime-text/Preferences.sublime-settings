@@ -114,8 +114,9 @@
 	"remember_open_files": false,
 	"rulers":
 	[
-		79,
-		99
+		78,
+		88,
+		98
 	],
 	"shift_tab_unindent": false,
 	"show_encoding": true,
