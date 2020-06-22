@@ -1,8 +1,7 @@
 [alias]
 a = commit --amend
 ane = commit --amend --no-edit
-b = branch --sort=-committerdate
-ba = branch --sort=-committerdate --all
+b = ! git branch --sort=-committerdate --color=always | fzf --ansi --height=30% --preview-window right:66% --preview 'git log $(cut -c3- <<< {})' | cut -c3- | xargs git checkout
 c = commit
 cb = checkout -b
 cm = commit --message
