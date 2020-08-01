@@ -54,6 +54,9 @@ _install_fzf() {
 
 install_alacritty() {
     ln -sf $configs/alacritty.yml $HOME/.config/alacritty.yml
+    if [ -d $HOME/.config/alacritty ]; then
+        ln -sf $configs/alacritty.yml $HOME/.config/alacritty/alacritty.yml
+    fi
 }
 
 install_bash() {
