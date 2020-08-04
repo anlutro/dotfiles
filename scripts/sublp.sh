@@ -24,11 +24,12 @@ done
 if [ -z "$sp" ]; then
     echo "No sublime-project found, running init-project ..."
     init-project --noninteractive --allow-no-type
+    dir=$(readlink -f "${1-$PWD}")
     sp="$(find_sublime_project_file "$dir")"
 fi
 if [ -z "$sp" ]; then
     echo "No sublime-project file found, just opening as directory"
-    sp="${1-$PWD}"
+    sp=$dir
 fi
 
 # rename i3 workspace
