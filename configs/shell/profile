@@ -6,8 +6,15 @@ umask 022
 
 # add paths to $PATH. these should be listed in order of
 # least precedence first, highest precedence last
-paths="/sbin /usr/sbin $HOME/Library/Python/*/bin \
-       $HOME/.cargo/bin $HOME/.local/bin $HOME/bin"
+paths="
+/sbin
+/usr/sbin
+$HOME/Library/Python/*/bin
+$HOME/.cargo/bin
+$HOME/.npm/bin
+$HOME/.local/bin
+$HOME/bin
+"
 for path in $paths; do
     if [ -d "$path" ]; then
         PATH="$path:$PATH"
