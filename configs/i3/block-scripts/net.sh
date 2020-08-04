@@ -3,7 +3,9 @@
 if [ -n "$1" ]; then
     iface_name=$1
 else
-    iface_name=$(ip route | grep -oP 'dev e[\w\d]+' | cut -d ' ' -f 2 | sort | uniq)
+	# explicitly exclude wifi by only finding devices that begin with "e".
+	# wifi is covered by another block/script
+    iface_name=$(ip route | grep ^default | grep -v linkdown | grep -oP 'dev e[\w\d]+' | cut -d' ' -f2)
     if [ -z "$iface_name" ]; then
         exit
     fi
@@ -22,7 +24,6 @@ text="$iface_name $ip_addr"
 echo "$text"
 echo "$text"
 
-# color - green/yellow/red based on percentage
 if [ "$ip_addr" = 'down' ]; then
     echo "#ff3333"
 else
