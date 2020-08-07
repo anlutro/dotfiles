@@ -10,7 +10,7 @@ fi
 
 SSHWRAPPER=$(mktemp --suffix=ssh-git-id-wrapper)
 echo "#!/bin/sh" > $SSHWRAPPER
-echo "exec ssh -i $GIT_IDENTITY -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no \$*" >> $SSHWRAPPER
+echo "exec ssh -i $GIT_IDENTITY -o IdentitiesOnly=yes -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no \$*" >> $SSHWRAPPER
 chmod 755 $SSHWRAPPER
 GIT_SSH=$SSHWRAPPER git "$@"
 rm $SSHWRAPPER
