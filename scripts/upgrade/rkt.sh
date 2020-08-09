@@ -12,7 +12,7 @@ fi
 
 cd ~/downloads || exit 1
 gpg --recv-key 18AD5014C99EF7E3BA5F6CE950BDD3E0FC8A365E
-wget -nc $url
-wget -nc $url.asc
+wget -nv $url
+wget -nv $url.asc
 gpg --verify $file.asc
 sudo dpkg -i $file

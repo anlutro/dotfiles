@@ -9,6 +9,6 @@ if kubeseal --version | grep -qF "version: $version"; then
 fi
 
 cd ~/downloads || exit 1
-wget -nc https://github.com/bitnami-labs/sealed-secrets/releases/download/$version/kubeseal-linux-amd64
+wget -nv https://github.com/bitnami-labs/sealed-secrets/releases/download/$version/kubeseal-linux-amd64
 mv -f kubeseal-linux-amd64 $HOME/.local/bin/kubeseal
 chmod 755 $HOME/.local/bin/kubeseal

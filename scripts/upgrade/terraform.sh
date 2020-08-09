@@ -20,5 +20,5 @@ else
 fi
 
 cd ~/downloads || exit 1
-wget -nc $url && unzip $file && mv ./terraform $DIR/
+wget -nv $url && unzip $file && mv ./terraform $DIR/
 rm -f $file

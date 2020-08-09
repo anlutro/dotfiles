@@ -9,6 +9,6 @@ if fluxctl version | grep -qF "version: $version"; then
 fi
 
 cd ~/downloads || exit 1
-wget -nc https://github.com/fluxcd/flux/releases/download/$version/fluxctl_linux_amd64
+wget -nv https://github.com/fluxcd/flux/releases/download/$version/fluxctl_linux_amd64
 mv -f fluxctl_linux_amd64 $HOME/.local/bin/fluxctl
 chmod 755 $HOME/.local/bin/fluxctl

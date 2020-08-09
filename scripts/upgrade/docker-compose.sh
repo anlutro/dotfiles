@@ -18,6 +18,6 @@ else
 fi
 
 cd ~/downloads || exit 1
-wget -nc $url
+wget -nv $url
 mv -f $file $DIR/docker-compose
 chmod +x $DIR/docker-compose

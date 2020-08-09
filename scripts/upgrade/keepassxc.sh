@@ -21,6 +21,6 @@ if [ "$installed_version" = "$version" ]; then
 fi
 
 cd ~/downloads || exit 1
-wget -nc $url
+wget -nv $url
 chmod +x $file
 mv -f $file $HOME/.local/bin/keepassxc

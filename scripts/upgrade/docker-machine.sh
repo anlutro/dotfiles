@@ -18,6 +18,6 @@ else
 fi
 
 cd ~/downloads || exit 1
-wget -nc $url
+wget -nv $url
 mv -f $file $DIR/docker-machine
 chmod +x $DIR/docker-machine

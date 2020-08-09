@@ -15,6 +15,6 @@ else
 fi
 
 cd ~/downloads || exit 1
-wget -nc https://github.com/kubernetes/kops/releases/download/$version/kops-linux-amd64
+wget -nv https://github.com/kubernetes/kops/releases/download/$version/kops-linux-amd64
 mv -f kops-linux-amd64 $DIR/kops
 chmod 755 $DIR/kops

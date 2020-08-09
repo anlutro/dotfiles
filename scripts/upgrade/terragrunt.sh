@@ -9,6 +9,6 @@ if terragrunt --version | grep -qF "version $version"; then
 fi
 
 cd ~/downloads || exit 1
-wget -nc https://github.com/gruntwork-io/terragrunt/releases/download/$version/terragrunt_linux_amd64
+wget -nv https://github.com/gruntwork-io/terragrunt/releases/download/$version/terragrunt_linux_amd64
 mv -f terragrunt_linux_amd64 $HOME/.local/bin/terragrunt
 chmod 755 $HOME/.local/bin/terragrunt

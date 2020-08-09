@@ -60,7 +60,7 @@ fi
 if confirm "Install Dropbox?"; then
     file=$(curl -s https://linux.dropbox.com/packages/debian/ | \
         grep -oP 'href="dropbox_\d{4}.*amd64.deb"' | cut -d\" -f2 | sort | tail -1)
-    wget -nc https://linux.dropbox.com/packages/debian/$file
+    wget -nv https://linux.dropbox.com/packages/debian/$file
     dpkg -i $file
     apt-get install -y -f
     rm $file

@@ -9,6 +9,6 @@ if kubectl version --client --short | grep -q $version$; then
 fi
 
 cd ~/downloads || exit 1
-wget -nc https://storage.googleapis.com/kubernetes-release/release/$version/bin/linux/amd64/kubectl
+wget -nv https://storage.googleapis.com/kubernetes-release/release/$version/bin/linux/amd64/kubectl
 mv -f kubectl $HOME/.local/bin/
 chmod 755 $HOME/.local/bin/kubectl

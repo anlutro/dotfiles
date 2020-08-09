@@ -9,6 +9,6 @@ if helm version --template '{{.Version}}' | grep -qFx "$version"; then
 fi
 
 cd ~/downloads
-wget -nc https://get.helm.sh/helm-$version-linux-amd64.tar.gz
+wget -nv https://get.helm.sh/helm-$version-linux-amd64.tar.gz
 tar xf helm-$version-linux-amd64.tar.gz
 mv -f linux-amd64/helm $HOME/.local/bin/

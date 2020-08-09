@@ -21,7 +21,7 @@ fi
 PREFIX="$PRE_PREFIX/share/kotlin-$VERSION"
 
 cd ~/downloads || exit 1
-wget -nc $URL
+wget -nv $URL
 unzip $FILE
 rsync -r ./kotlinc/ $PREFIX
 rm -rf ./kotlinc

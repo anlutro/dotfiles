@@ -9,6 +9,6 @@ if k3s --version | grep -qF "$version"; then
 fi
 
 cd ~/downloads
-wget -nc https://github.com/rancher/k3s/releases/download/$version/k3s
+wget -nv https://github.com/rancher/k3s/releases/download/$version/k3s
 mv -f k3s $HOME/.local/bin/
 chmod +x $HOME/.local/bin/k3s

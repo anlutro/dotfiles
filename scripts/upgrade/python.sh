@@ -36,7 +36,7 @@ PREFIX="$PRE_PREFIX/share/python-$VERSION"
 
 cd ~/downloads
 if [ ! -f $FILE ]; then
-    wget -nc $URL
+    wget -nv $URL
 fi
 tar xf $FILE
 cd $NAME

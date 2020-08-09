@@ -9,6 +9,6 @@ if minikube version | grep -qF "version: $version"; then
 fi
 
 cd ~/downloads || exit 1
-wget -nc https://github.com/kubernetes/minikube/releases/download/$version/minikube-linux-amd64
+wget -nv https://github.com/kubernetes/minikube/releases/download/$version/minikube-linux-amd64
 mv -f minikube-linux-amd64 $HOME/.local/bin/minikube
 chmod 755 $HOME/.local/bin/minikube
