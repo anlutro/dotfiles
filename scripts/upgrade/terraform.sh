@@ -7,11 +7,10 @@ version=$(echo $url | sed -r 's/.*terraform_([0-9.]+)_linux_amd64.*/\1/')
 
 if command -v terraform >/dev/null 2>&1; then
     installed_version=$(terraform --version | grep -oP '[\d.]+')
-fi
-
-if [ "$version" = "$installed_version" ]; then
-    echo "Latest version ($version) already installed!"
-    exit
+	if [ "$version" = "$installed_version" ]; then
+	    echo "Latest version ($version) already installed!"
+	    exit
+	fi
 fi
 
 if [ -w /usr/local ]; then
