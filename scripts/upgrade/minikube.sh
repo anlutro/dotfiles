@@ -1,14 +1,13 @@
 #!/bin/sh
 set -eu
+# shellcheck source=_lib.sh
+. "$(dirname "$(readlink -f "$0")")/_lib.sh"
 
-version=$(curl -s https://api.github.com/repos/kubernetes/minikube/releases/latest | grep tag_name | cut -d '"' -f 4)
+version=$(gh_latest_tag kubernetes/minikube)
 
 if minikube version | grep -qF "version: $version"; then
-    echo "Latest version ($version) already installed!"
-    exit 1
+	latest_already_installed
 fi
 
-cd ~/downloads || exit 1
-wget -nv https://github.com/kubernetes/minikube/releases/download/$version/minikube-linux-amd64
-mv -f minikube-linux-amd64 $HOME/.local/bin/minikube
-chmod 755 $HOME/.local/bin/minikube
+filename=$(download https://github.com/kubernetes/minikube/releases/download/$version/minikube-linux-amd64)
+install_bin $filename minikube

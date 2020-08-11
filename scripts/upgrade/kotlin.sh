@@ -1,31 +1,20 @@
 #!/bin/sh
 set -eu
+# shellcheck source=_lib.sh
+. "$(dirname "$(readlink -f "$0")")/_lib.sh"
 
-URL=$(
-    curl -s https://api.github.com/repos/JetBrains/kotlin/releases | \
-    grep -F browser_download_url | grep -F linux-x64 | head -1 | cut -d\" -f4
-)
-FILE=$(basename $URL)
-VERSION=$(echo $FILE | grep -oP '\d+(\.\d+)+')
+url=$(gh_url JetBrains/kotlin | grep -F linux-x64 | head -1)
+version=$(basename $url | grep -oP '\d+(\.\d+)+')
 
-if kotlin -version | grep -qF "$VERSION"; then
-    echo "Latest version ($VERSION) already installed!"
-    exit 1
+if kotlin -version | grep -qF "$version"; then
+	latest_already_installed
 fi
 
-if [ -w /usr/local ]; then
-    PRE_PREFIX="/usr/local"
-else
-    PRE_PREFIX="$HOME/.local"
-fi
-PREFIX="$PRE_PREFIX/share/kotlin-$VERSION"
-
-cd ~/downloads || exit 1
-wget -nv $URL
-unzip $FILE
-rsync -r ./kotlinc/ $PREFIX
+filename=$(download $url)
+unzip $filename
+prefix=$(get_prefix kotlin-$version)
+rsync -r ./kotlinc/ $prefix
 rm -rf ./kotlinc
-
 for bin in kotlin kotlinc; do
-    ln -sf $PREFIX/bin/$bin $PRE_PREFIX/bin
+    ln -sf $prefix/bin/$bin $BIN_DIR/bin
 done

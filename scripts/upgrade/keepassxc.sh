@@ -1,13 +1,11 @@
 #!/bin/sh
 set -eu
+# shellcheck source=_lib.sh
+. "$(dirname "$(readlink -f "$0")")/_lib.sh"
 
-url=$(
-    curl -s https://api.github.com/repos/keepassxreboot/keepassxc/releases | \
-    grep browser_download_url | grep -P '\/[\d\.]+\/' | grep \.AppImage | \
-    head -1 | cut -d\" -f4
-)
-file=$(basename $url)
-version=$(echo $file | grep -oP '\d[\d.]{2,}\d')
+# grep for digits removes alpha/beta/rc releases
+url=$(gh_urls keepassxreboot/keepassxc | grep -P '\/[\d\.]+\/' | grep '\.AppImage$' | head -1)
+version=$(basename $url | grep -oP '\d[\d.]{2,}\d')
 
 if command -v keepassxc-cli >/dev/null 2>&1; then
     installed_version=$(keepassxc-cli --version | grep -oP '[\d.]{3,}')
@@ -16,11 +14,8 @@ elif command -v keepassxc >/dev/null 2>&1; then
 fi
 
 if [ "$installed_version" = "$version" ]; then
-    echo "Latest version ($version) already installed!"
-    exit
+	latest_already_installed
 fi
 
-cd ~/downloads || exit 1
-wget -nv $url
-chmod +x $file
-mv -f $file $HOME/.local/bin/keepassxc
+filename=$(download $url)
+install_bin $filename keepassxc

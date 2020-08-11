@@ -1,14 +1,13 @@
 #!/bin/sh
 set -eu
+# shellcheck source=_lib.sh
+. "$(dirname "$(readlink -f "$0")")/_lib.sh"
 
-version=$(curl -s https://api.github.com/repos/rancher/k3s/releases/latest | grep tag_name | cut -d '"' -f 4)
+version=$(gh_tags rancher/k3s | head -1)
 
 if k3s --version | grep -qF "$version"; then
-    echo "Latest version ($version) already installed!"
-    exit 1
+	latest_already_installed
 fi
 
-cd ~/downloads
-wget -nv https://github.com/rancher/k3s/releases/download/$version/k3s
-mv -f k3s $HOME/.local/bin/
-chmod +x $HOME/.local/bin/k3s
+filename=$(download https://github.com/rancher/k3s/releases/download/$version/k3s)
+install_bin $filename

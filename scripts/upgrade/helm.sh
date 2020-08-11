@@ -1,14 +1,18 @@
 #!/bin/sh
 set -eu
+# shellcheck source=_lib.sh
+. "$(dirname "$(readlink -f "$0")")/_lib.sh"
 
-version=$(curl -s https://api.github.com/repos/helm/helm/releases/latest | grep tag_name | cut -d '"' -f 4)
+# exclude alpha/beta/rc, and always get highest version number (as opposed to
+# most recent release by date)
+version=$(gh_tags helm/helm | grep -P '\d+\.\d+$' | sort -V | tail -1)
 
 if helm version --template '{{.Version}}' | grep -qFx "$version"; then
-    echo "Latest version ($version) already installed!"
-    exit 1
+	latest_already_installed
 fi
 
-cd ~/downloads
-wget -nv https://get.helm.sh/helm-$version-linux-amd64.tar.gz
-tar xf helm-$version-linux-amd64.tar.gz
-mv -f linux-amd64/helm $HOME/.local/bin/
+filename=$(download https://get.helm.sh/helm-$version-linux-amd64.tar.gz)
+tmpdir=$(mktemp -d)
+tar xf $filename -C $tmpdir
+install_bin $tmpdir/linux-amd64/helm
+rm -rf $tmpdir

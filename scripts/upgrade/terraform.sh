@@ -1,24 +1,16 @@
 #!/bin/sh
 set -eu
+# shellcheck source=_lib.sh
+. "$(dirname "$(readlink -f "$0")")/_lib.sh"
 
 url=$(curl -sSL https://www.terraform.io/downloads.html | grep -oP 'https://[A-z0-9/_.-]*_linux_amd64\.zip')
-file=$(basename $url)
 version=$(echo $url | sed -r 's/.*terraform_([0-9.]+)_linux_amd64.*/\1/')
 
-if command -v terraform >/dev/null 2>&1; then
-    installed_version=$(terraform --version | grep -oP '[\d.]+')
-	if [ "$version" = "$installed_version" ]; then
-	    echo "Latest version ($version) already installed!"
-	    exit
-	fi
+if terraform --version | grep -qxF "Terraform v$version"; then
+	latest_already_installed
 fi
 
-if [ -w /usr/local ]; then
-    DIR=/usr/local/bin
-else
-    DIR="$HOME/.local/bin"
-fi
-
-cd ~/downloads || exit 1
-wget -nv $url && unzip $file && mv ./terraform $DIR/
-rm -f $file
+filename=$(download $url)
+unzip $filename
+install_bin ./terraform
+rm -f $filename

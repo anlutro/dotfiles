@@ -1,35 +1,29 @@
 #!/bin/sh
 set -eu
+# shellcheck source=_lib.sh
+. "$(dirname "$(readlink -f "$0")")/_lib.sh"
 
 if [ $# -gt 0 ]; then
-    VERSION="$1"
-    URL="https://dl.google.com/go/go${VERSION}.linux-amd64.tar.gz"
-    FILENAME=$(basename $URL)
+    version="$1"
+    url="https://dl.google.com/go/go${version}.linux-amd64.tar.gz"
+    filename=$(basename $url)
 else
-    URL=$(
+    url=$(
         curl -s 'https://golang.org/dl/' | grep -F 'href=' \
         | grep -oP 'https?://[^"]+linux-amd64\.tar\.gz' | head -1
     )
-    FILENAME=$(basename $URL)
-    VERSION=$(echo $FILENAME | grep -oP '\d+(\.\d+)+')
+    filename=$(basename $url)
+    version=$(echo $filename | grep -oP '\d+(\.\d+)+')
 fi
 
 # `go version` can print to stderr or stdout
 # append a space to prevent 1.11beta2 from matching 1.11
-if command go version | grep -F "$VERSION " >/dev/null 2>&1; then
-    echo "Go already at the latest version ($VERSION)"
-    exit 1
+if command go version | grep -qF "$version " >/dev/null 2>&1; then
+    latest_already_installed
 fi
 
-if [ -w /usr/local ]; then
-    PRE_PREFIX="/usr/local"
-else
-    PRE_PREFIX="$HOME/.local"
-fi
-PREFIX="$PRE_PREFIX/share/go-$VERSION"
-
-cd ~/downloads
-wget -nv $URL
-mkdir -p $PREFIX
-tar xf $FILENAME -C $PREFIX --strip-components=1
-ln -sf $PREFIX/bin/go* $PRE_PREFIX/bin/
+filename=$(download $url)
+prefix=$(get_prefix go-$version)
+mkdir -p $prefix
+tar xf $filename -C $prefix --strip-components=1
+ln -sf $prefix/bin/go* $BIN_DIR/

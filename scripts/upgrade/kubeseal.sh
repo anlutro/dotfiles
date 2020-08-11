@@ -1,14 +1,13 @@
 #!/bin/sh
 set -eu
+# shellcheck source=_lib.sh
+. "$(dirname "$(readlink -f "$0")")/_lib.sh"
 
-version=$(curl -s https://api.github.com/repos/bitnami-labs/sealed-secrets/releases/latest | grep tag_name | cut -d '"' -f 4)
+version=$(gh_latest_tag bitnami-labs/sealed-secrets/releases/latest)
 
 if kubeseal --version | grep -qF "version: $version"; then
-    echo "Latest version ($version) already installed!"
-    exit 1
+	latest_already_installed
 fi
 
-cd ~/downloads || exit 1
-wget -nv https://github.com/bitnami-labs/sealed-secrets/releases/download/$version/kubeseal-linux-amd64
-mv -f kubeseal-linux-amd64 $HOME/.local/bin/kubeseal
-chmod 755 $HOME/.local/bin/kubeseal
+filename=$(download https://github.com/bitnami-labs/sealed-secrets/releases/download/$version/kubeseal-linux-amd64)
+install_bin $filename kubeseal

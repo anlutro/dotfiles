@@ -1,20 +1,13 @@
 #!/bin/sh
 set -eu
+# shellcheck source=_lib.sh
+. "$(dirname "$(readlink -f "$0")")/_lib.sh"
 
-version=$(curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | grep tag_name | cut -d '"' -f 4)
+version=$(gh_tags kubernetes/kops | head -1)
 
 if kops version | grep -qF "Version $version "; then
-    echo "Latest version ($version) already installed!"
-    exit 1
+	latest_already_installed
 fi
 
-if [ -w /usr/local ]; then
-    DIR=/usr/local/bin
-else
-    DIR="$HOME/bin"
-fi
-
-cd ~/downloads || exit 1
-wget -nv https://github.com/kubernetes/kops/releases/download/$version/kops-linux-amd64
-mv -f kops-linux-amd64 $DIR/kops
-chmod 755 $DIR/kops
+filename=$(download https://github.com/kubernetes/kops/releases/download/$version/kops-linux-amd64)
+install_bin $filename kops

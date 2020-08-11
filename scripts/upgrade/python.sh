@@ -1,55 +1,39 @@
 #!/bin/sh
 set -eu
+# shellcheck source=_lib.sh
+. "$(dirname "$(readlink -f "$0")")/_lib.sh"
 
 if [ $# -lt 1 ]; then
-    echo "Must provide version!"
-    exit 1
+    fail "Must provide version!"
 fi
 
-check_pkg() {
-    pattern="$1"
-    if ! dpkg -l | grep -q "$pattern"; then
-        echo "warning: package matching pattern '$pattern' not found!"
-        exit 1
-    fi
-}
-check_pkg 'libsqlite.*-dev'
-check_pkg 'libreadline.*-dev'
-check_pkg 'libssl.*-dev'
-check_pkg 'zlib.*-dev'
-check_pkg 'libncurses.*-dev'
-check_pkg 'libbz2.*-dev'
-check_pkg 'libffi.*-dev'
+check_apt_pkg 'libsqlite.*-dev'
+check_apt_pkg 'libreadline.*-dev'
+check_apt_pkg 'libssl.*-dev'
+check_apt_pkg 'zlib.*-dev'
+check_apt_pkg 'libncurses.*-dev'
+check_apt_pkg 'libbz2.*-dev'
+check_apt_pkg 'libffi.*-dev'
 
-VERSION="$1"
-NAME="Python-$VERSION"
-FILE="$NAME.tar.xz"
-DIR=$(echo $VERSION | grep -oP '^\d[\d\.]+')
-URL="https://www.python.org/ftp/python/$DIR/$FILE"
+version="$1"
+name="Python-$version"
+dir=$(echo $version | grep -oP '^\d[\d\.]+')
+url="https://www.python.org/ftp/python/$dir/$name.tar.xz"
 
-if [ -w /usr/local ]; then
-    PRE_PREFIX="/usr/local"
-else
-    PRE_PREFIX="$HOME/.local"
-fi
-PREFIX="$PRE_PREFIX/share/python-$VERSION"
+prefix=$(get_prefix python-$version)
+filename=$(download $url)
+tar xf $filename
+cd $name
 
-cd ~/downloads
-if [ ! -f $FILE ]; then
-    wget -nv $URL
-fi
-tar xf $FILE
-cd $NAME
-
-./configure --prefix=$PREFIX --enable-loadable-sqlite-extensions
+./configure --prefix=$prefix --enable-loadable-sqlite-extensions
 
 make
 
 make install
 
-ln -sf $PREFIX/bin/python?.? $PRE_PREFIX/bin/python$VERSION
+ln -sf $prefix/bin/python?.? $BIN_DIR/python$version
 
 # won't match alpha/beta/rc
-if echo $VERSION | grep -qxP '\d[\d\.]+'; then
-    ln -sf $PREFIX/bin/python?.? $PRE_PREFIX/bin/
+if echo $version | grep -qxP '\d[\d\.]+'; then
+    ln -sf $prefix/bin/python?.? $BIN_DIR/
 fi

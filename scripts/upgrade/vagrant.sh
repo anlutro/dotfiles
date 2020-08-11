@@ -1,21 +1,19 @@
 #!/bin/sh
 set -eu
+# shellcheck source=_lib.sh
+. "$(dirname "$(readlink -f "$0")")/_lib.sh"
 
-url=$(curl -sSL https://www.vagrantup.com/downloads.html | grep -o 'https://.*_x86_64\.deb')
+url=$(curl -sSL https://www.vagrantup.com/downloads.html | grep -oP 'https://[/A-z0-9._-]+_x86_64\.deb')
 version=$(echo $url | sed -r 's/.*vagrant_([0-9.]+)_x86_64.*/\1/')
-filename=$(echo $url | rev | cut -d/ -f 1 | rev)
 
 if [ -z "$url" ]; then
-    echo 'Could not find _x86_64.deb!'
-    exit 1
+    fail 'Could not find _x86_64.deb!'
 fi
 
 if dpkg -s vagrant | grep -q "Version: 1:$version"; then
-    echo "Latest version ($version) already installed!"
-    exit 0
+	latest_already_installed
 fi
 
-cd ~/downloads
-wget -nv $url
+filename=$(download $url)
 sudo dpkg -i $filename
 rm -f $filename

@@ -1,35 +1,29 @@
 #!/bin/sh
 set -eu
+# shellcheck source=_lib.sh
+. "$(dirname "$(readlink -f "$0")")/_lib.sh"
 
 if [ $# -lt 1 ];then
-	echo "Must provide version!"
-	exit 1
+	fail "Must provide version!"
 fi
 
-VERSION="$1"
-MINOR_VERSION=$(echo $VERSION | cut -d. -f1-2)
-DIR="php-$VERSION"
-FILE="$DIR.tar.xz"
-if [ -w /usr/local ]; then
-    PRE_PREFIX="/usr/local"
-else
-    PRE_PREFIX="$HOME/.local"
-fi
-PREFIX="$PRE_PREFIX/share/php-$VERSION"
+version="$1"
+minor_version=$(echo $version | cut -d. -f1-2)
+dir="php-$version"
+prefix=$(get_prefix php-$version)
 
-cd ~/downloads
-wget -nv https://www.php.net/distributions/$FILE
-tar xf $FILE && rm $FILE
-cd $DIR
+filename=$(download https://www.php.net/distributions/$dir.tar.xz)
+tar xf $filename && rm $filename
+cd $dir
 
-./configure --prefix=$PREFIX
+./configure --prefix=$prefix
 make
 make install
 
 # symlink the CLI SAPI only
-ln -sf $PREFIX/bin/php $PRE_PREFIX/bin/php$VERSION
+ln -sf $prefix/bin/php $BIN_DIR/php$version
 
 # won't match alpha/beta/rc
-if echo $VERSION | grep -qxP '\d[\d\.]+'; then
-    ln -sf $PREFIX/bin/php $PRE_PREFIX/bin/php$MINOR_VERSION
+if echo $version | grep -qxP '\d[\d\.]+'; then
+    ln -sf $prefix/bin/php $BIN_DIR/php$minor_version
 fi

@@ -1,23 +1,14 @@
 #!/bin/sh
 set -eu
+# shellcheck source=_lib.sh
+. "$(dirname "$(readlink -f "$0")")/_lib.sh"
 
-url=$(curl -s https://api.github.com/repos/docker/compose/releases | grep browser_download_url \
-    | grep Linux-x86_64 | grep -v -- '-rc' | head -1 | cut -d\" -f4)
-file=$(basename $url)
+url=$(gh_urls docker/compose | grep Linux-x86_64 | grep -v -- '-rc' | head -1)
 version=$(echo $url | sed -r 's|.*/download/([0-9.-]+)/.*|\1|')
 
-if docker-compose --version | grep -F "version $version,"; then
-    echo "Latest version ($version) already installed!"
-    exit 1
+if docker-compose --version | grep -qF "version $version,"; then
+	latest_already_installed
 fi
 
-if [ -w /usr/local ]; then
-    DIR=/usr/local/bin
-else
-    DIR="$HOME/.local/bin"
-fi
-
-cd ~/downloads || exit 1
-wget -nv $url
-mv -f $file $DIR/docker-compose
-chmod +x $DIR/docker-compose
+filename=$(download $url)
+install_bin $filename docker-compose
