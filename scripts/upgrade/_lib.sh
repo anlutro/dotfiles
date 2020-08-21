@@ -8,6 +8,15 @@ else
     SHARE_DIR=$HOME/.local/share
 fi
 
+confirm() {
+    echo -n "$* [Y/n] "
+    read REPLY
+    if [ -z "$REPLY" ] || [ "$REPLY" != "${REPLY#[Yy]}" ]; then
+        return 0
+    fi
+    return 1
+}
+
 install_bin() {
     src="$1"
     dest="$BIN_DIR/${2-$(basename $src)}"

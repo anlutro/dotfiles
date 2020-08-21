@@ -3,8 +3,18 @@ set -eu
 # shellcheck source=_lib.sh
 . "$(dirname "$(readlink -f "$0")")/_lib.sh"
 
-if [ $# -lt 1 ]; then
-    fail "Must provide version!"
+versions=$(gh_tags python/cpython | sed -r 's/^v//g' | grep -xP "\d+\.\d+\.\d+" | sort -V)
+if [ $# -gt 0 ]; then
+    versions=$(echo "$versions" | grep "^$1")
+    if [ -z "$versions" ]; then
+        fail "No versions found matching pattern: $1"
+    fi
+fi
+version=$(echo "$versions" | tail -1)
+prefix=$(get_prefix python-$version)
+
+if [ -e "$prefix" ]; then
+    confirm "$prefix exists, install anyway?" || exit 0
 fi
 
 check_apt_pkg 'libsqlite.*-dev'
@@ -15,15 +25,14 @@ check_apt_pkg 'libncurses.*-dev'
 check_apt_pkg 'libbz2.*-dev'
 check_apt_pkg 'libffi.*-dev'
 
-version="$1"
 name="Python-$version"
 dir=$(echo $version | grep -oP '^\d[\d\.]+')
 url="https://www.python.org/ftp/python/$dir/$name.tar.xz"
 
-prefix=$(get_prefix python-$version)
+builddir=$(mktemp -d)
 filename=$(download $url)
-tar xf $filename
-cd $name
+tar xf $filename -C $builddir
+cd $builddir/$name
 
 ./configure --prefix=$prefix --enable-loadable-sqlite-extensions
 
@@ -37,3 +46,5 @@ ln -sf $prefix/bin/python?.? $BIN_DIR/python$version
 if echo $version | grep -qxP '\d[\d\.]+'; then
     ln -sf $prefix/bin/python?.? $BIN_DIR/
 fi
+
+rm -rf $builddir/$name
