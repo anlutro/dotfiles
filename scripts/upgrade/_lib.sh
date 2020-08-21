@@ -35,7 +35,7 @@ download() {
     url="$1"
     filename="${2-$(basename $url)}"
     cd ~/downloads || exit 1
-    wget -nv "$1" -O "$filename"
+    wget "$1" -O "$filename"
     if [ -z "${2-}" ]; then
         readlink -f "$filename"
     fi
