@@ -71,7 +71,13 @@ gh_latest_urls() {
 
 gh_tags() {
     repo="$1"
-    curl -s "https://api.github.com/repos/$repo/releases" \
+    curl -s "https://api.github.com/repos/$repo/tags?per_page=100" \
+        | grep name | cut -d '"' -f 4
+}
+
+gh_releases() {
+    repo="$1"
+    curl -s "https://api.github.com/repos/$repo/releases?per_page=100" \
         | grep tag_name | cut -d '"' -f 4
 }
 
