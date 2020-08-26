@@ -27,11 +27,14 @@ else
     X_START_CMD="$*"
 fi
 
-# use dbus-launch to spawn the session if available. this enables X applications
-# to talk to dbus because it spawns a dbus session and sets some environment
-# variables (I think?)
-if command -v 'dbus-launch' >/dev/null 2>&1; then
-    X_START_CMD="dbus-launch --exit-with-session $X_START_CMD"
+# Debian quirks
+if [ "$(lsb_release -is)" = 'Debian' ]; then
+    # use dbus-launch to spawn the session if available. this enables X
+    # applications to talk to dbus because it spawns a dbus session and sets
+    # some environment variables (I think?)
+    if command -v 'dbus-launch' >/dev/null 2>&1; then
+        X_START_CMD="dbus-launch --exit-with-session $X_START_CMD"
+    fi
 fi
 
 # normally you'd prepend ssh-agent to X_START_CMD, which would set all the
