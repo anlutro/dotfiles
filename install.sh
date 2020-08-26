@@ -48,8 +48,10 @@ vendor_install() {
 }
 
 _install_fzf() {
-    vendor_install https://github.com/junegunn/fzf && $vendor/fzf/install --bin
-    ln -sf $vendor/fzf/bin/fzf $bindir
+    if [ ! -e /usr/bin/fzf ]; then
+        vendor_install https://github.com/junegunn/fzf && $vendor/fzf/install --bin
+        ln -sf $vendor/fzf/bin/fzf $bindir
+    fi
 }
 
 install_alacritty() {
