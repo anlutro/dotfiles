@@ -1,3 +1,4 @@
 {
-  "extensions_path": "~/.emmet"
+	"extensions_path": "~/.emmet",
+	"telemetry": false
 }
