@@ -6,6 +6,7 @@ alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 alias zgrep='zgrep --color=auto'
 
+# I always have to google this one
 alias grep-non-unicode='grep -P -n "[^\x00-\x7F]"'
 
 # ag doesn't have config files
@@ -42,23 +43,18 @@ alias mkvenv='venv create'
 alias rmvenv='venv destroy'
 
 # misc
-alias ap='ansible-playbook'
 alias cal='ncal -Mb3'
 alias dc='docker-compose'
-alias dm='docker-machine'
 alias gdiff='git diff --no-index'
 alias jn='jupyter-notebook'
 alias k='kubectl'
-alias lsofi='lsof -i -n -P'
 alias most-common='sort | uniq -c | sort -nr | head'
 alias pwgen-strong='pwgen -Bs'
 alias pwgen-weak='pwgen -ABn'
-alias s='sudo service'
 alias tf='terraform'
 alias tf-fmt-git='git diff --cached --name-only --diff-filter=ACM | grep -e '\.tf$' -e '\.tfvars$' | xargs -n1 terraform fmt'
 alias tg='terragrunt'
 alias tree='tree --dirsfirst'
-alias sz='sudo zypper'
 alias n='notes --new'
 alias nl='notes --list'
 alias ns='notes --search'
