@@ -4,11 +4,12 @@ dir="${BLOCK_INSTANCE:-$HOME}"
 df -h $dir | tail -n +2 | awk '{
     free=$4
     pct=$5
+    name=$6
     exit 0
 }
 END {
-    print free " (" pct ")"
-    print free " (" pct ")"
+    print name, free " (" pct ")"
+    print name, free " (" pct ")"
     gsub(/%$/, "", pct)
     pct = pct + 0
     if (pct > 95) {
