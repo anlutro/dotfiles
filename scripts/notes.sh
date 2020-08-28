@@ -58,7 +58,7 @@ note_new() {
                 find $NOTES_DIR -type f | sed -e "s|$NOTES_DIR/||" \
                 | grep -Px '[^.]+(|\.(md|txt))' \
                 | fzf --query "$*" --print-query --select-1
-            )
+            ) || true
             if [ -n "$match" ]; then
                 match="$(echo "$match" | tail -1)"
             fi
