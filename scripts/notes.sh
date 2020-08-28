@@ -109,6 +109,8 @@ note_list() {
 note_search() {
     if command -v ag >/dev/null 2>&1; then
         ag "$*" $NOTES_DIR
+    elif command -v rg >/dev/null 2>&1; then
+        rg "$*" $NOTES_DIR
     else
         grep -r "$*" $NOTES_DIR
     fi
