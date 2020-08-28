@@ -1,7 +1,12 @@
 #!/bin/sh
 set -eu
 
-: "${NOTES_DIR:=$HOME/Dropbox/shared-rw/notes}"
+: "${NOTES_DIR:=$HOME/notes}"
+
+if [ ! -d "$NOTES_DIR" ]; then
+    echo "NOTES_DIR ($NOTES_DIR) does not exist!" >&2
+    exit 1
+fi
 
 main() {
     if [ $# -lt 1 ]; then
