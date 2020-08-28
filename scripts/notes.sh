@@ -65,7 +65,7 @@ note_new() {
             if [ -f "$NOTES_DIR/$match" ]; then
                 file="$match"
             else
-                file="$(echo "$file" | sed -r s/\\s+/-/)"
+                file="$(echo "$match" | sed -r s/\\s+/-/)"
             fi
         else
             match=$(note_list "$@")
