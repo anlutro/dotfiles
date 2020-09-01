@@ -52,5 +52,8 @@ cursor:
   style: Block
 
 key_bindings:
-  - { key: C, mods: Alt, action: Copy }
-  - { key: V, mods: Alt, action: Paste }
+  - { mods: Alt, key: C, action: Copy }
+  - { mods: Alt, key: V, action: Paste }
+  - { mods: Alt, key: Subtract, action: DecreaseFontSize }
+  - { mods: Alt, key: Equals,   action: IncreaseFontSize }
+  - { mods: Alt, key: Key0,     action: ResetFontSize }
