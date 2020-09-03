@@ -53,7 +53,15 @@ cursor:
 
 key_bindings:
   - { mods: Alt, key: C, action: Copy }
-  - { mods: Alt, key: V, action: Paste }
+  - { mods: Alt, key: V, action: Paste, mode: ~vi }
+
+  # font size
   - { mods: Alt, key: Subtract, action: DecreaseFontSize }
   - { mods: Alt, key: Equals,   action: IncreaseFontSize }
-  - { mods: Alt, key: Key0,     action: ResetFontSize }
+  - { mods: Alt, key: Key0,     action: ResetFontSize    }
+
+  # search and other functionality
+  - { mods: Control, key: F, action: SearchForward }
+
+  # vi mode controls
+  - { mods: Control, key: Space, action: ToggleViMode }
