@@ -16,5 +16,7 @@ fi
 
 filename=$(download $url)
 unzip $filename
-install_bin ./terraform
+tf_versioned_bin=terraform$(echo "$version" | cut -d. -f-2)
+install_bin ./terraform $tf_versioned_bin
+ln -sf $tf_versioned_bin $BIN_DIR/terraform
 rm -f $filename

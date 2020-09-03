@@ -22,6 +22,7 @@ install_bin() {
     dest="$BIN_DIR/${2-$(basename $src)}"
     mv -f "$src" "$dest"
     chmod +x "$dest"
+    echo "$dest"
 }
 
 get_prefix() {
