@@ -1,6 +1,8 @@
 #!/usr/bin/env /home/andreas/code/dotfiles/.venv/bin/python
 
 import pulsectl
+import sys
+
 pulse = pulsectl.Pulse(__file__)
 
 
@@ -12,15 +14,24 @@ def get_all_card_profiles():
 
 def find_hdmi_card_profiles(card_profiles):
     for card, profile in card_profiles:
-        if profile.available == 0:
+        if any((
+            profile.available == 0,
+            'hdmi' not in profile.name,
+            # for some reason, connected hdmi cables don't have +input - maybe
+            # because hdmi *can* have audio input, but it doesn't actually
+            # exist in real life?
+            '+input' in profile.name,
+        )):
             continue
-        if 'hdmi' not in profile.name:
-            continue
-        # for some reason, connected hdmi cables don't have +input - maybe
-        # because hdmi *can* have audio input, but it doesn't actually exist
-        # in real life?
-        if '+input' in profile.name:
-            continue
+        if '--surround71' in sys.argv:
+            if 'surround71' not in profile.name:
+                continue
+        elif '--surround' in sys.argv:
+            if 'surround' not in profile.name:
+                continue
+        else:
+            if 'surround' in profile.name:
+                continue
         yield card, profile
 
 
@@ -33,8 +44,8 @@ def find_default_card_profiles(card_profiles):
             yield card, profile
 
 
-def first_or_none(lst):
-    for item in lst:
+def first_or_none(sequence):
+    for item in sequence:
         return item
     return None
 
