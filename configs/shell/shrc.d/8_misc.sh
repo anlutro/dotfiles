@@ -33,20 +33,13 @@ function apt-add-key {
 # by default, most WMs opening a new terminal will make it start in ~ instead of
 # the current terminal's PWD. this alias lets you open a new terminal in the PWD
 function t {
-    local args="";
-    if [ "$*" != "" ]; then
-        args="-e $*"
-    fi
-
-    args="-cd $PWD $args"
-
     if command -v i3-msg >/dev/null 2>&1; then
         # opening through i3 exec prevents weird/inconsistent ps trees
-        i3-msg "exec x-terminal-emulator $args" >/dev/null 2>&1
+        i3-msg "exec $HOME/code/dotfiles/scripts/term.sh -w $PWD $@" >/dev/null
     else
-        # fork in a subshell to make the commands indepentent,
-        # and to suppress all output.
-        ( x-terminal-emulator $args & )
+        # forking in subshell suppresses all output and keeps terminal open
+        # even if parent terminal is closed
+        ( $HOME/code/dotfiles/scripts/term.sh "$@" & )
     fi
 }
 
