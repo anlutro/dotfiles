@@ -64,4 +64,5 @@ key_bindings:
   - { mods: Control, key: F, action: SearchForward }
 
   # vi mode controls
+  - { key: Escape, action: ToggleViMode, mode: vi }
   - { mods: Control, key: Space, action: ToggleViMode }
