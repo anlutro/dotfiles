@@ -17,13 +17,24 @@ if [ -e "$prefix" ]; then
     confirm "$prefix exists, install anyway?" || exit 0
 fi
 
-check_apt_pkg 'libsqlite.*-dev'
-check_apt_pkg 'libreadline.*-dev'
-check_apt_pkg 'libssl.*-dev'
-check_apt_pkg 'zlib.*-dev'
-check_apt_pkg 'libncurses.*-dev'
-check_apt_pkg 'libbz2.*-dev'
-check_apt_pkg 'libffi.*-dev'
+header_files="
+bzlib.h
+ffi.h
+ncurses.h
+openssl/ssl.h
+readline/readline.h
+sqlite3.h
+zlib.h
+"
+for f in $header_files; do
+	if [ ! -e /usr/include/$f ]; then
+        echo "warning: missing $f"
+        header_missing=true
+    fi
+done
+if [ "$header_missing" = 'true' ]; then
+	confirm "continue anyway?" || exit 0
+fi
 
 name="Python-$version"
 dir=$(echo $version | grep -oP '^\d[\d\.]+')

@@ -87,15 +87,3 @@ gh_latest_tag() {
     curl -s "https://api.github.com/repos/$repo/releases/latest" \
         | grep tag_name | cut -d '"' -f 4
 }
-
-dpkg_l=""
-check_apt_pkg() {
-    pattern="$1"
-    if [ -z "$dpkg_l" ]; then
-        dpkg_l="$(dpkg -l)"
-    fi
-    if ! echo "$dpkg_l" | grep -q "$pattern"; then
-        echo "warning: package matching pattern '$pattern' not found!"
-        exit 1
-    fi
-}
