@@ -46,3 +46,6 @@ export QT_AUTO_SCREEN_SCALE_FACTOR=0
 
 # ansible
 export ANSIBLE_VAULT_PASSWORD_FILE=./.ansible-vault-password
+
+# rg / ripgrep
+export RIPGREP_CONFIG_PATH=~/.config/ripgreprc

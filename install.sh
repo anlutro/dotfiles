@@ -213,6 +213,10 @@ install_python() {
     vendor_install https://github.com/anlutro/venv.sh
 }
 
+install_rg() {
+    ln -sf $configs/ripgreprc $HOME/.config/ripgreprc
+}
+
 install_subl() {
     pkgdir=$HOME/.config/sublime-text-3/Packages
     userdir=$pkgdir/User
@@ -380,6 +384,7 @@ install mpv
 install mutt
 install nano
 install python
+install rg
 install subl
 install taskwarrior task
 install tmux
