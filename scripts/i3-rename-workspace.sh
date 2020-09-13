@@ -17,7 +17,9 @@ else
 	new_name=$(rofi -m -4 -dmenu -input /dev/null -lines 1 -p 'rename/renumber workspace to')
 fi
 
-if echo "$new_name" | grep -qP '^[0-9]+$'; then
+if [ "$cur_name" = "$cur_num" ]; then
+	new_name="$new_name"
+elif echo "$new_name" | grep -qP '^[0-9]+$'; then
 	new_name="$new_name:$cur_name"
 elif ! echo "$new_name" | grep -qP '^[0-9]+:'; then
 	new_name="$cur_num:$new_name"
