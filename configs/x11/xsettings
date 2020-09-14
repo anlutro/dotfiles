@@ -1,8 +1,17 @@
 #!/bin/sh
 
+cmd_exists() {
+    for cmd in "$@"; do
+        if ! command -v "$cmd" >/dev/null 2>&1; then
+            return 1
+        fi
+    done
+    return 0
+}
+
 # load .Xdefaults and .Xresources if they are present
 # note that system-wide files are ignored!
-if command -v xrdb >/dev/null 2>&1; then
+if cmd_exists xrdb; then
     if [ -e $HOME/.Xdefaults ]; then
         xrdb $HOME/.Xdefaults
     fi
@@ -12,45 +21,48 @@ if command -v xrdb >/dev/null 2>&1; then
 fi
 
 # update directories from ~/.config/user-dirs.dirs
-if command -v 'xdg-user-dirs-update' >/dev/null 2>&1; then
+if cmd_exists xdg-user-dirs-update; then
     xdg-user-dirs-update
 fi
 
-if command -v xset >/dev/null 2>&1; then
+# x settings
+if cmd_exists xset; then
     # turn on/off system beep
     xset b off
 
-    # mouse acceleration - accel ratio and threshold
-    xset m 1/1 0
-
     # keyboard repeat - delay (ms) and characters per second
     xset r rate 175 35
+
+    # mouse acceleration - accel ratio and threshold
+    xset m 1/1 0
 fi
 
 # keyboard mapping options
-if command -v setxkbmap >/dev/null 2>&1; then
+if cmd_exists setxkbmap; then
     # default options, applies to all currently connected keyboards
     setxkbmap -option compose:ralt -option caps:super
-
-    if command -v xinput >/dev/null 2>&1; then
-        # for apple keyboards, put the `~ key in the correct spot
-        apple_kbd_ids=$(xinput list | grep 'Apple Keyboard' | sed -r 's/.*id=([0-9]+).*/\1/')
-        for device_id in $apple_kbd_ids; do
-            setxkbmap -device $device_id -option apple:badmap
-        done
-
-        # disable middle click for touchpads
-        touchpad_ids=$(xinput list | grep 'Touchpad' | sed -r 's/.*id=([0-9]+).*/\1/')
-        for device_id in $touchpad_ids; do
-            xinput set-button-map $device_id 1 0 3 4 5 6 7
-        done
-    fi
 fi
 
 # touchpad settings
-if grep -Eiq 'synap|alps|etps' /proc/bus/input/devices && \
-    command -v synclient >/dev/null 2>&1
-then
+if cmd_exists xinput; then
+    touchpad_ids=$(xinput list | grep 'Touchpad' | sed -r 's/.*id=([0-9]+).*/\1/')
+    for device_id in $touchpad_ids; do
+        # disable middle click for touchpads
+        xinput set-button-map $device_id 1 0 3 4 5 6 7
+        xinput set-prop $device_id 'Synaptics Tap Action' 1 1 1 1 1 0 0
+        xinput set-prop $device_id 'Synaptics Tap Durations' 100 100 100
+    done
+fi
+
+# for apple keyboards, put the `~ key in the correct spot
+if cmd_exists setxkbmap xinput; then
+    apple_kbd_ids=$(xinput list | grep 'Apple Keyboard' | sed -r 's/.*id=([0-9]+).*/\1/')
+    for device_id in $apple_kbd_ids; do
+        setxkbmap -device $device_id -option apple:badmap
+    done
+fi
+
+if cmd_exists synclient && grep -Eiq 'synap|alps|etps' /proc/bus/input/devices; then
     synclient AccelFactor=0 MinSpeed=1.75 MaxSpeed=3.5
     # tapping the touchpad sends a mouse button 1 event
     synclient TapButton1=1
