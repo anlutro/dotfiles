@@ -30,7 +30,7 @@ apt-get install -y git vim tree curl irssi zip unzip fuse psmisc jq bc \
 
 usermod -a -G sudo,root,adm,staff,systemd-journal andreas
 
-if confirm "Install X11, i3 and utilities?"; then
+if confirm "Install Xorg, i3 and utilities?"; then
     apt-get install -y xserver-xorg-{core,input-{kbd,mouse,evdev}} x11-xserver-utils \
         dbus-x11 xclip rofi dunst libnotify-bin scrot imagemagick xdg-user-dirs \
         feh rxvt-unicode-256color i3-wm i3lock i3blocks xinit xautolock \

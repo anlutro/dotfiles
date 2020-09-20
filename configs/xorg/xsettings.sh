@@ -35,6 +35,12 @@ if cmd_exists xset; then
 
     # mouse acceleration - accel ratio and threshold
     xset m 1/1 0
+
+    # blank screen after 600 seconds
+    xset s 600 600
+
+    # standby/suspend/turn off screen after N seconds
+    xset dpms 900 1200 1800
 fi
 
 # keyboard mapping options

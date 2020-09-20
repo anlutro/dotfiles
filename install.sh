@@ -301,17 +301,23 @@ install_xdg() {
 }
 
 install_xorg() {
+    # startx uses xinitrc. tried using startxrc but it was wonky
     [ -L $HOME/.startxrc ] && rm $HOME/.startxrc
+    ln -sf $configs/xorg/xinitrc.sh $HOME/.xinitrc
+
+    xorg_cfg_dir=$HOME/.config/xorg
+    mkdir -p $xorg_cfg_dir
 
     # various scripts
-    ln -sf $configs/x11/xinitrc $HOME/.xinitrc
-    ln -sf $configs/x11/xautolock $HOME/.xautolock
-    ln -sf $configs/x11/xrandrinit $HOME/.xrandrinit
-    ln -sf $configs/x11/xsettings $HOME/.xsettings
+    ln -sf $configs/xorg/xrandrinit.sh $xorg_cfg_dir
+    ln -sf $configs/xorg/xsettings.sh $xorg_cfg_dir
+    ln -sf $configs/xorg/xprograms.sh $xorg_cfg_dir
     ln -sf $scripts/lockscreen.sh $bindir/lockscreen
+    [ -L $HOME/.xrandrinit ] && rm $HOME/.xrandrinit
+    [ -L $HOME/.xsettings ] && rm $HOME/.xsettings
 
     # xrdb stuff
-    ln -sf $configs/x11/xdefaults $HOME/.Xdefaults
+    ln -sf $configs/xorg/xdefaults $HOME/.Xdefaults
 
     # fontconfig
     FC_DIR=$HOME/.config/fontconfig/conf.d
