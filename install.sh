@@ -64,6 +64,7 @@ install_alacritty() {
 install_bash() {
     ln -sf $configs/shell/bashrc $HOME/.bashrc
     [ -f $HOME/.bash_aliases ] && rm $HOME/.bash_aliases
+    [ -f $HOME/.bash_profile ] && rm $HOME/.bash_profile
     [ -f $HOME/.bash_ps1 ] && rm $HOME/.bash_ps1
     ln -sf $configs/shell/logout $HOME/.bash_logout
     _install_fzf
