@@ -328,13 +328,6 @@ install_xorg() {
     rm -f $HOME/.config/fontconfig/local.conf
 }
 
-install_zsh() {
-    ln -sf $configs/shell/zshrc $HOME/.zshrc
-    ln -sf $configs/shell/profile $HOME/.zprofile
-    ln -sf $configs/shell/logout $HOME/.zlogout
-    _install_fzf
-}
-
 
 if [ ! -e $root/.venv ]; then
     echo "Setting up virtual environment ..."
@@ -399,7 +392,6 @@ install vim
 install nvim
 install xorg Xorg
 install xdg xdg-open
-install zsh
 echo
 
 
