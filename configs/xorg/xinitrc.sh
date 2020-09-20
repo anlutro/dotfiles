@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # redirect stdout/stderr from this script to a log file
-exec >> "$HOME/.xlog" 2>&1
+exec >> "$HOME/.local/share/xorg/xinit.log" 2>&1
 
 xorg_cfg_dir=$HOME/.config/xorg
 
