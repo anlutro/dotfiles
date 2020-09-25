@@ -10,7 +10,7 @@ xorg_cfg_dir=$HOME/.config/xorg
 # uses of xhost, this is safe since the kernel can check the actual owner of
 # the calling process.
 if command -v xhost >/dev/null 2>&1; then
-    xhost "+si:localuser:$(id -un)" || :
+    xhost "+si:localuser:$(id -un)" || true
 fi
 
 # copied from manjaro. no clue what practical effects this has
