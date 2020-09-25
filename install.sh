@@ -74,6 +74,12 @@ install_compton() {
     ln -sf $configs/compton.conf $HOME/.config/compton.conf
 }
 
+install_dropbox() {
+    mkdir -p $HOME/.config/systemd/user
+    ln -sf $configs/systemd/dropbox.service $HOME/.config/systemd/user
+    systemctl --user enable --now dropbox.service
+}
+
 install_dunst() {
     mkdir -p $HOME/.config/dunst
     ln -sf $configs/dunstrc $HOME/.config/dunst/dunstrc
@@ -393,6 +399,9 @@ install vim
 install nvim
 install xorg Xorg
 install xdg xdg-open
+
+[ -e ~/.dropbox-dist ] && install_dropbox
+
 echo
 
 

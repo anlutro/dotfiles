@@ -21,11 +21,6 @@ if [ -x $HOME/.fehbg ] && check_cmd compton; then
     compton -b &
 fi
 
-# dropbox should be self-explanatory
-if check_cmd dropbox; then
-    dropbox start &
-fi
-
 # network-manager applet, puts a network icon in the tray
 if check_cmd nm-applet; then
     nm-applet &

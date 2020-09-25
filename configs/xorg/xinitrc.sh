@@ -19,6 +19,11 @@ if command -v dbus-update-activation-environment >/dev/null 2>&1; then
     dbus-update-activation-environment DISPLAY XAUTHORITY
 fi
 
+# restart dropbox to let it know it should render the applet
+if systemctl --user is-active dropbox.service >/dev/null 2>&1; then
+    systemctl --user restart dropbox.service &
+fi
+
 # if no argument was passed, try and guess what command to start x with
 if [ -z "$*" ]; then
     if command -v 'x-session-manager' >/dev/null 2>&1; then

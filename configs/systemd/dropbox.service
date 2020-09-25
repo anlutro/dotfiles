@@ -1,0 +1,16 @@
+[Unit]
+Description=Dropbox
+After=local-fs.target network.target
+StartLimitBurst=3
+StartLimitIntervalSec=60
+
+[Service]
+Type=simple
+ExecStartPre=%h/code/dotfiles/scripts/upgrade/dropbox.sh
+ExecStart=%h/.dropbox-dist/dropboxd
+
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
