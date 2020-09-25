@@ -84,3 +84,5 @@ fi
 if command -v gpgconf >/dev/null 2>&1; then
     gpgconf --kill gpg-agent
 fi
+
+systemctl --user set-environment DISPLAY= XAUTHORITY=
