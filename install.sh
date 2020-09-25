@@ -156,10 +156,6 @@ install_gtk() {
 install_i3() {
     mkdir -p $HOME/.config/i3
     ln -sf $configs/i3/i3.conf $HOME/.config/i3/config
-
-    ln -sf $scripts/i3-get.py $bindir/i3-get
-    ln -sf $scripts/i3-switch.sh $bindir/i3-switch
-    ln -sf $scripts/i3-rename-workspace.sh $bindir/i3-rename-workspace
 }
 
 install_i3blocks() {
