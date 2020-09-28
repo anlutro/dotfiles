@@ -5,6 +5,7 @@ set -eu
 
 version=$(
 	curl -sSL https://releases.hashicorp.com/terraform/ \
+	| grep -vP -- '-(alpha|beta|rc)' \
 	| grep -oP 'terraform_[\d.]+' | sed 's/^terraform_//' \
 	| sort -V | uniq | grep "${1-.*}" | tail -1
 )
