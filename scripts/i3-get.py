@@ -11,12 +11,8 @@ Complete shell script to focus the next window:
 
     id=$(i3-msg -t get_tree | i3-get.py next)
     [ $? = 0 ] && [ "$id" ] && i3-msg [id="$id"] focus
-
-Add --all or -a to find the next/previous window in all workspaces, not just the
-active one.
 """
 
-import argparse
 import json
 import sys
 
@@ -55,8 +51,7 @@ def find_windows(tree_dict, window_list):
     return window_list
 
 
-def get_window(tree_fh, find="next", all_workspaces=False):
-    tree = json.load(tree_fh)
+def get_window(tree, find="next", all_workspaces=False):
     if not all_workspaces:
         tree = find_active_workspace(tree)
     window_list = find_windows(tree, [])
@@ -88,13 +83,8 @@ def get_window(tree_fh, find="next", all_workspaces=False):
 
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("direction", choices=("next", "prev"))
-    parser.add_argument("-a", "--all")
-    parser.add_argument("-f", "--file", type=argparse.FileType("r"), default=sys.stdin)
-    args = parser.parse_args()
-
-    print(get_window(args.file, args.direction, all_workspaces=args.all))
+    tree = json.loads(sys.stdin.read())
+    print(get_window(tree, sys.argv[1]))
 
 
 if __name__ == "__main__":
