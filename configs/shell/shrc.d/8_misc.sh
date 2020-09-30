@@ -192,3 +192,14 @@ function cd-git-root {
     root=$(git rev-parse --show-toplevel)
     [ $? = 0 ] && cd $root
 }
+
+function tf-fmt-git {
+    if [ $# -gt 1 ]; then
+        git_args=(diff-tree --no-commit-id --name-only -r "$1")
+    else
+        git_args=(diff --cached --name-only --diff-filter=ACM)
+    fi
+    git "${git_args[@]}" \
+    | awk -v root=$(git rev-parse --show-toplevel) '/\.tf(vars)?$/ { print root "/" $0 }' \
+    | xargs -n1 terraform fmt
+}
