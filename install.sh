@@ -364,7 +364,8 @@ echo "done"
 printf "Linking various bin scripts... "
 ln -sf $scripts/set-brightness.sh $bindir/set-brightness
 ln -sf $scripts/init-project.py $bindir/init-project
-ln -sf $scripts/journal.sh $bindir/journal
+[ -L $bindir/journal ] && rm $bindir/journal
+ln -sf $scripts/diary.sh $bindir/diary
 ln -sf $scripts/notes.sh $bindir/notes
 vendor_install https://github.com/ap/rename
 ln -sf $vendor/rename/rename $bindir/
