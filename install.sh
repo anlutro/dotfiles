@@ -104,6 +104,7 @@ install_git() {
         mkdir -p $conf_path
         ln -sf $configs/git/config $conf_path/config
         ln -sf $configs/git/ignore_global $conf_path/ignore
+        ln -sf $configs/git/attributes_global $conf_path/attributes
         local_conf=$conf_path/config.local
     fi
 

@@ -36,6 +36,7 @@ ui = true
 
 [core]
 autocrlf = input
+attributesfile = ~/.config/git/attributes
 
 [credential]
 helper = cache --timeout=600
