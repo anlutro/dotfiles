@@ -32,7 +32,7 @@ for f in $header_files; do
         header_missing=true
     fi
 done
-if [ "$header_missing" = 'true' ]; then
+if [ "${header_missing-}" = 'true' ]; then
 	confirm "continue anyway?" || exit 0
 fi
 
