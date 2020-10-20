@@ -195,11 +195,13 @@ function cd-git-root {
 
 function tf-fmt-git {
     if [ $# -gt 1 ]; then
-        git_args=(diff-tree --no-commit-id --name-only -r "$1")
+        git_diff_args=(diff-tree --no-commit-id --name-only -r "$1")
     else
-        git_args=(diff --cached --name-only --diff-filter=ACM)
+        git_diff_args=(diff --name-only --diff-filter=ACM)
     fi
-    git "${git_args[@]}" \
+    # need two commands - one for existing files, one for new/untracked files
+    { git "${git_diff_args[@]}"; git ls-files --other --exclude-standard; } \
+    | sort | uniq \
     | awk -v root=$(git rev-parse --show-toplevel) '/\.tf(vars)?$/ { print root "/" $0 }' \
     | xargs -n1 terraform fmt
 }
