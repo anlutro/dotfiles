@@ -1,6 +1,8 @@
 #!/bin/sh
 set -eu
 
+rm -rf $HOME/.dropbox-dist-old-*
+
 echo "Checking for Dropbox updates ..." >&2
 url=$(curl -ILs -o /dev/null -w '%{url_effective}' 'https://www.dropbox.com/download?plat=lnx.x86_64')
 latest_version=$(echo "$url" | sed -r 's/.*-([0-9\.]+)\.tar\.gz/\1/')
