@@ -16,7 +16,7 @@ $HOME/.local/bin
 $HOME/bin
 "
 for path in $paths; do
-    if [ -d "$path" ]; then
+    if [ -d "$path" ] && [ ! -L "$path" ]; then
         PATH="$path:$PATH"
     fi
 done
