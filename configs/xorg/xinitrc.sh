@@ -20,7 +20,7 @@ if command -v dbus-update-activation-environment >/dev/null 2>&1; then
 fi
 
 # restart dropbox to let it know it should render the applet
-if systemctl --user is-active dropbox.service >/dev/null 2>&1; then
+if systemctl --user cat dropbox.service >/dev/null 2>&1; then
     systemctl --user restart dropbox.service &
 fi
 
