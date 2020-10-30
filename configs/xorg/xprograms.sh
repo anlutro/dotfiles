@@ -15,12 +15,6 @@ if check_cmd redshift; then
     redshift -t 6500:2900 &
 fi
 
-# compton is a composition manager, allowing window transparency.
-# if there's no desktop background, there's no point in running it.
-if [ -x $HOME/.fehbg ] && check_cmd compton; then
-    compton -b &
-fi
-
 # network-manager applet, puts a network icon in the tray
 if check_cmd nm-applet; then
     nm-applet &

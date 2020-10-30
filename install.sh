@@ -70,10 +70,6 @@ install_bash() {
     _install_fzf
 }
 
-install_compton() {
-    ln -sf $configs/compton.conf $HOME/.config/compton.conf
-}
-
 install_dropbox() {
     mkdir -p $HOME/.config/systemd/user
     ln -sf $configs/systemd/dropbox.service $HOME/.config/systemd/user
