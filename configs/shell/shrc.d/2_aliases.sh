@@ -16,10 +16,14 @@ fi
 
 # some ls aliases
 alias ls='ls --time-style=long-iso --group-directories-first --color=auto -Fh'
-alias l='ls -l'
-alias la='l -A'
-alias lt='l -tr'
-alias l1='ls -1'
+if which exa >/dev/null 2>&1; then
+    alias exa='exa --group-directories-first'
+    alias l='exa --long'
+    alias la='exa --long --all'
+else
+    alias l='ls -l'
+    alias la='l -A'
+fi
 
 # file and dir stuff
 alias ..='cd ..'
