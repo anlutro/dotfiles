@@ -15,7 +15,7 @@ if which ag >/dev/null 2>&1; then
 fi
 
 # some ls aliases
-alias ls='ls --time-style=long-iso --group-directories-first --color=auto -Fh'
+alias ls='ls --group-directories-first --color=auto --classify --human-readable'
 if which exa >/dev/null 2>&1; then
     alias exa='exa --group-directories-first'
     alias l='exa --long'
