@@ -20,9 +20,11 @@ if which exa >/dev/null 2>&1; then
     alias exa='exa --group-directories-first'
     alias l='exa --long'
     alias la='exa --long --all'
+    alias lt='exa --long --sort=new'
 else
     alias l='ls -l'
     alias la='l -A'
+    alias lt='l -tr'
 fi
 
 # file and dir stuff
