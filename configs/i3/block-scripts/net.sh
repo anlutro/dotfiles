@@ -5,7 +5,7 @@ if [ -n "$1" ]; then
 else
 	# explicitly exclude wifi by only finding devices that begin with "e".
 	# wifi is covered by another block/script
-    iface_name=$(ip route | grep ^default | grep -v linkdown | grep -oP 'dev e[\w\d]+' | cut -d' ' -f2)
+    iface_name=$(ip route | grep ^default | grep -v linkdown | grep -oP 'dev e[\w\d]+' | cut -d' ' -f2 | sort | uniq)
     if [ -z "$iface_name" ]; then
         exit
     fi
@@ -18,11 +18,10 @@ else
 fi
 
 ip_addr=$(ip addr show $iface_name | grep "$addr_name" | cut -d ' ' -f 6 | cut -d '/' -f 1)
-text="$iface_name $ip_addr"
 
 # long/short text
-echo "$text"
-echo "$text"
+echo "$iface_name $ip_addr"
+echo "$iface_name $ip_addr"
 
 if [ "$ip_addr" = 'down' ]; then
     echo "#ff3333"
