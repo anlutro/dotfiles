@@ -1,10 +1,13 @@
 #!/bin/sh
 
-dir="${BLOCK_INSTANCE:-$HOME}"
-df -h $dir | tail -n +2 | awk '{
-    free=$4
-    pct=$5
-    name=$6
+out=$(findmnt --df --noheadings "${BLOCK_INSTANCE:-/}")
+if [ -z "$out" ]; then
+    exit 1
+fi
+echo "$out" | awk '{
+    free=$5
+    pct=$6
+    name=$7
     exit 0
 }
 END {
