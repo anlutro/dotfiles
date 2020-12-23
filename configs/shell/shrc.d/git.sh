@@ -15,3 +15,12 @@ function tf-fmt-git {
     | awk -v root=$(git rev-parse --show-toplevel) '/\.tf(vars)?$/ { print root "/" $0 }' \
     | xargs -n1 terraform fmt
 }
+
+# git pull or push based on context
+function gp {
+    if git status -sb | head -1 | grep -q -F '[ahead'; then
+        git push
+    else
+        git pull
+    fi
+}
