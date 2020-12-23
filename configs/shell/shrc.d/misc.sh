@@ -5,34 +5,10 @@ function md {
     mkdir -p "$@" && cd "$_" || return 1;
 }
 
-function apt-everything {
-    for cmd in update dist-upgrade autoremove clean; do
-        sudo apt $cmd
-    done
-    purge_pkgs=$(dpkg -l | grep '^rc' | awk '{ print $2 }')
-    sudo apt purge $purge_pkgs
-    if command -v apt-file >/dev/null 2>&1; then
-        sudo apt-file update
-    fi
-}
-
-# apt-key add is meh
-function apt-add-key {
-    url="$1"
-    if [ -n "$2" ]; then
-        file="$2"
-    else
-        file="$(basename $url)"
-    fi
-    file="${file%.*}.gpg"
-    curl -sSL "$1" | gpg --dearmor > $file
-    sudo chown root:root $file
-    sudo mv $file /etc/apt/trusted.gpg.d/
-}
-
 # by default, most WMs opening a new terminal will make it start in ~ instead of
 # the current terminal's PWD. this alias lets you open a new terminal in the PWD
 function t {
+    history -a
     if command -v i3-msg >/dev/null 2>&1; then
         # opening through i3 exec prevents weird/inconsistent ps trees
         i3-msg "exec $HOME/code/dotfiles/scripts/term.sh -w $PWD $@" >/dev/null
@@ -186,22 +162,4 @@ function f {
 function whatsmyip {
     curl -sSL https://canihazip.com/s
     echo
-}
-
-function cd-git-root {
-    root=$(git rev-parse --show-toplevel)
-    [ $? = 0 ] && cd $root
-}
-
-function tf-fmt-git {
-    if [ $# -gt 1 ]; then
-        git_diff_args=(diff-tree --no-commit-id --name-only -r "$1")
-    else
-        git_diff_args=(diff --name-only --diff-filter=ACM)
-    fi
-    # need two commands - one for existing files, one for new/untracked files
-    { git "${git_diff_args[@]}"; git ls-files --other --exclude-standard; } \
-    | sort | uniq \
-    | awk -v root=$(git rev-parse --show-toplevel) '/\.tf(vars)?$/ { print root "/" $0 }' \
-    | xargs -n1 terraform fmt
 }
