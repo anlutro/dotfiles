@@ -7,11 +7,11 @@ shopt -s extglob
 workdir="$PWD"
 while [ $# -gt 0 ]; do
     case "$1" in
-        --term?(=)* )
+        --term?(=*) )
             [[ "$1" = *=* ]] || shift
             term=$(echo "$1" | cut -d= -f2)
             ;;
-        -w?(=)*|--working-directory?(=)* )
+        -w?(=*)|--working-directory?(=*) )
             [[ "$1" = *=* ]] || shift
             workdir=$(echo "$1" | cut -d= -f2)
             ;;
