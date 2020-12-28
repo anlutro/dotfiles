@@ -13,7 +13,7 @@ def get_all_card_profiles():
             yield card, profile
 
 
-def find_hdmi_card_profiles(card_profiles, surround=False, surround71=False):
+def find_hdmi_card_profiles(card_profiles, bluetooth=False, surround=False, surround71=False):
     for card, profile in card_profiles:
         if any((
             profile.available == 0,
@@ -24,7 +24,10 @@ def find_hdmi_card_profiles(card_profiles, surround=False, surround71=False):
             '+input' in profile.name,
         )):
             continue
-        if surround71:
+        if bluetooth:
+            if 'bluez' not in profile.name:
+                continue
+        elif surround71:
             if 'surround71' not in profile.name:
                 continue
         elif surround:
@@ -73,9 +76,9 @@ def find_preferred_port(resources, search_for):
     return preferred_resource, preferred_port
 
 
-def switch_source():
+def switch_source(bluetooth=False):
     pa_sources = pulse.source_list()
-    source, port = find_preferred_port(pa_sources, "headset-mic")
+    source, port = find_preferred_port(pa_sources, "bluez" if bluetooth else "headset-mic")
     if source and port:
         print("switching source %s to port %s" % (source.name, port.name))
         pulse.source_port_set(source.index, port.name)
@@ -102,12 +105,13 @@ def main():
     p.add_argument('--hdmi', action='store_true', help='use HDMI audio')
     p.add_argument('--surround', action='store_true', help='prefer surround over stereo')
     p.add_argument('--surround71', action='store_true', help='prefer 7.1 surround over stereo')
+    p.add_argument('--bluetooth', action='store_true', help='prefer bluetooth devices')
     args = p.parse_args()
 
     all_profiles = sorted(get_all_card_profiles(), key=lambda x: x[1].priority)
 
     if args.hdmi:
-        cards = list(find_hdmi_card_profiles(all_profiles, surround=args.surround, surround71=args.surround71))
+        cards = list(find_hdmi_card_profiles(all_profiles, bluetooth=args.bluetooth, surround=args.surround, surround71=args.surround71))
         if not cards:
             print('no active HDMI outputs found!')
             return 1
@@ -119,9 +123,12 @@ def main():
     print('setting profile:', profile)
     pulse.card_profile_set(card, profile)
 
-    if not args.hdmi:
+    if not args.hdmi and not args.bluetooth:
+        switch_source(bluetooth=args.bluetooth)
+
+    # TODO: bluetooth causes pulsectl.pulsectl.PulseOperationFailed: 3
+    if not args.hdmi and not args.bluetooth:
         switch_sink()
-        switch_source()
 
 
 if __name__ == '__main__':
