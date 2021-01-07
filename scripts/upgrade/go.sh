@@ -10,7 +10,7 @@ if [ $# -gt 0 ]; then
 else
     url=$(
         curl -s 'https://golang.org/dl/' | grep -F 'href=' \
-        | grep -oP 'https?://[^"]+linux-amd64\.tar\.gz' | head -1
+        | grep -oP '\/dl\/[^"]+linux-amd64\.tar\.gz' | head -1
     )
     filename=$(basename $url)
     version=$(echo $filename | grep -oP '\d+(\.\d+)+')
