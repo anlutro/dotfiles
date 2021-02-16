@@ -18,7 +18,12 @@ function tf-fmt-git {
 
 # git pull or push based on context
 function gp {
-    if git status -sb | head -1 | grep -q -F '[ahead'; then
+    git_status=$(git status -sb | head -1)
+    # no upstream defined means we can't pull anyway
+    if ! echo "$git_status" | grep -qF '...'; then
+        git push
+    # upstream is defined and we are ahead
+    elif echo "$git_status" | grep -qF '[ahead'; then
         git push
     else
         git pull
