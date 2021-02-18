@@ -4,8 +4,8 @@ function cd-git-root {
 }
 
 function tf-fmt-git {
-    if [ $# -gt 1 ]; then
-        git_diff_args=(diff-tree --no-commit-id --name-only -r "$1")
+    if [ $# -gt 0 ]; then
+        git_diff_args=(diff-tree --no-commit-id --name-only -r "$@")
     else
         git_diff_args=(diff --name-only --diff-filter=ACM)
     fi
