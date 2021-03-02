@@ -10,4 +10,4 @@ if terragrunt --version | grep -qF "version $version"; then
 fi
 
 filename=$(download https://github.com/gruntwork-io/terragrunt/releases/download/$version/terragrunt_linux_amd64)
-install_bin $filename
+install_bin $filename terragrunt
