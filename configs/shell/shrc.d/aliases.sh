@@ -9,8 +9,11 @@ alias zgrep='zgrep --color=auto'
 # I always have to google this one
 alias grep-non-unicode='grep -P -n "[^\x00-\x7F]"'
 
-# ag doesn't have config files
-if which ag >/dev/null 2>&1; then
+if which rg >/dev/null 2>&1; then
+	# bad for muscle memory maybe but whatever
+	alias ag=rg
+elif which ag >/dev/null 2>&1; then
+	# ag doesn't have config files
     alias ag="ag --color-path='0;37' --color-line-number='0;33' --color-match='1;34'"
 fi
 
