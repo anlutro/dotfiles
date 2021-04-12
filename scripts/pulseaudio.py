@@ -84,6 +84,7 @@ def switch_source(bluetooth=False):
         pulse.source_port_set(source.index, port.name)
         print("setting default source %s" % (source.name,))
         pulse.default_set(source)
+        return source
     else:
         print("no source ports found!")
 
@@ -96,8 +97,18 @@ def switch_sink():
         pulse.sink_port_set(sink.index, port.name)
         print("setting default sink %s" % (sink.name,))
         pulse.default_set(sink)
+        return sink
     else:
         print("no sink ports found!")
+
+
+def arg_to_float(arg):
+    if ',' in arg:
+        arg = arg.replace(',', '.')
+    if '.' in arg:
+        return float(arg)
+    if arg.endswith('%'):
+        return float(arg[:-1]) / 100
 
 
 def main():
@@ -106,6 +117,7 @@ def main():
     p.add_argument('--surround', action='store_true', help='prefer surround over stereo')
     p.add_argument('--surround71', action='store_true', help='prefer 7.1 surround over stereo')
     p.add_argument('--bluetooth', action='store_true', help='prefer bluetooth devices')
+    p.add_argument('--source-volume', type=arg_to_float, help='set source volume')
     args = p.parse_args()
 
     all_profiles = sorted(get_all_card_profiles(), key=lambda x: x[1].priority)
@@ -123,8 +135,12 @@ def main():
     print('setting profile:', profile)
     pulse.card_profile_set(card, profile)
 
+    source = None
     if not args.hdmi and not args.bluetooth:
-        switch_source(bluetooth=args.bluetooth)
+        source = switch_source(bluetooth=args.bluetooth)
+    if source and args.source_volume:
+        print('setting source volume to', args.source_volume)
+        pulse.volume_set_all_chans(source, args.source_volume)
 
     # TODO: bluetooth causes pulsectl.pulsectl.PulseOperationFailed: 3
     if not args.hdmi and not args.bluetooth:
