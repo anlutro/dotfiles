@@ -27,7 +27,7 @@ sqlite3.h
 zlib.h
 "
 for f in $header_files; do
-	if [ ! -e /usr/include/$f ]; then
+	if [ ! -e /usr/include/$f ] && [ ! -e /usr/include/x86_64-linux-gnu/$f ]; then
         echo "warning: missing $f"
         header_missing=true
     fi
