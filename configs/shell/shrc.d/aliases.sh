@@ -2,8 +2,8 @@
 
 # enable colors for grep
 alias grep='grep --color=auto'
-alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
 alias zgrep='zgrep --color=auto'
 
 # I always have to google this one
@@ -32,15 +32,15 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
-alias rm='rm -I --preserve-root'
-alias chown='chown --preserve-root'
-alias chmod='chmod --preserve-root'
 alias chgrp='chgrp --preserve-root'
+alias chmod='chmod --preserve-root'
+alias chown='chown --preserve-root'
+alias rm='rm -I --preserve-root'
 
 # i3 shortcuts
 alias i3exec='i3-msg exec'
-alias i3rename='i3-msg rename workspace to'
 alias i3mv='i3-msg move workspace to output'
+alias i3rename='i3-msg rename workspace to'
 
 # venv.sh
 alias av='venv activate'
@@ -56,13 +56,13 @@ alias gdiff='git diff --no-index'
 alias jn='jupyter-notebook'
 alias k='kubectl'
 alias most-common='sort | uniq -c | sort -nr | head'
+alias n='notes --new'
+alias nl='notes --list'
+alias nrm='notes --remove'
+alias ns='notes --search'
 alias pwgen-strong='pwgen -Bs'
 alias pwgen-weak='pwgen -ABn'
 alias tf='terraform'
 alias tg='terragrunt'
 alias tree='tree --dirsfirst'
-alias n='notes --new'
-alias nl='notes --list'
-alias ns='notes --search'
-alias nrm='notes --remove'
 alias v='vagrant'
