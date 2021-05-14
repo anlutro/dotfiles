@@ -49,6 +49,7 @@ alias mkvenv='venv create'
 alias rmvenv='venv destroy'
 
 # misc
+alias ap='ansible-playbook'
 alias cal='ncal -Mb3'
 alias dc='docker-compose'
 alias gdiff='git diff --no-index'
