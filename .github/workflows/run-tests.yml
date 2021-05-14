@@ -13,7 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: koalaman/shellcheck-alpine:stable
-      options: -v /__w/anlutro/dotfiles:/mnt:ro
     steps:
       - uses: actions/checkout@v2
       - run: ./shellcheck.sh
