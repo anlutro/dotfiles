@@ -12,6 +12,7 @@ unalias -a
 # environment variables, aliases and functions
 if [ -d "$HOME/.shrc.d" ]; then
     for f in $HOME/.shrc.d/*.sh; do
+        # shellcheck source=/dev/null
         . "$f"
     done
 fi
@@ -123,9 +124,10 @@ _set_ps1() {
     fi
 
     if command -v __git_ps1 >/dev/null 2>&1; then
+        # shellcheck disable=SC2034
+        GIT_PS1_SHOWUPSTREAM="auto"
         # GIT_PS1_SHOWDIRTYSTATE=true
         # GIT_PS1_SHOWUNTRACKEDFILES=true
-        GIT_PS1_SHOWUPSTREAM="auto"
         # GIT_PS1_SHOWCOLORHINTS=true
         PS1+='$(__git_ps1 "  \[\033[01;37m\]%s\[\033[00m\]")'
     fi

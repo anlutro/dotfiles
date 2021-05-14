@@ -11,7 +11,7 @@ function t {
     history -a
     if command -v i3-msg >/dev/null 2>&1; then
         # opening through i3 exec prevents weird/inconsistent ps trees
-        i3-msg "exec $HOME/code/dotfiles/scripts/term.sh -w $PWD $@" >/dev/null
+        i3-msg exec "$HOME/code/dotfiles/scripts/term.sh" -w "$PWD" "$@" >/dev/null
     else
         # forking in subshell suppresses all output and keeps terminal open
         # even if parent terminal is closed

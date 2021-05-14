@@ -1,6 +1,8 @@
 function cd-git-root {
     root=$(git rev-parse --show-toplevel)
-    [ $? = 0 ] && cd $root
+    if [ -n "$root" ]; then
+        cd $root || return 1
+    fi
 }
 
 function tf-fmt-git {
@@ -12,7 +14,7 @@ function tf-fmt-git {
     # need two commands - one for existing files, one for new/untracked files
     { git "${git_diff_args[@]}"; git ls-files --other --exclude-standard; } \
     | sort | uniq \
-    | awk -v root=$(git rev-parse --show-toplevel) '/\.tf(vars)?$/ { print root "/" $0 }' \
+    | awk -v root="$(git rev-parse --show-toplevel)" '/\.tf(vars)?$/ { print root "/" $0 }' \
     | xargs -n1 terraform fmt
 }
 

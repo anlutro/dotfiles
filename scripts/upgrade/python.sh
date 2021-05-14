@@ -58,4 +58,4 @@ if echo $version | grep -qxP '\d[\d\.]+'; then
     ln -sf $prefix/bin/python?.? $BIN_DIR/
 fi
 
-rm -rf $builddir/$name
+rm -rf ${builddir:?}/$name

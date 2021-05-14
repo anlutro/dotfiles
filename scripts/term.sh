@@ -25,7 +25,8 @@ while [ $# -gt 0 ]; do
             ;;
         * )
             if [ -z "${command-}" ]; then
-                command="$@"
+                command=("$@")
+                break
             fi
             ;;
     esac
@@ -53,9 +54,9 @@ elif [ $term = rxvt-unicode ] || [ $term = urxvt ]; then
     [ -n "$x11_instance" ] && args+=(-name "$x11_instance")
     [ -n "$workdir" ] && args+=(-cd "$workdir")
 fi
-# alacritty expects this to be the final command
-if [ -n "$command" ]; then
-    args+=(-e $command)
+# alacritty expects this to be the final cli flag
+if [ -n "${command-}" ]; then
+    args+=(-e "${command[@]}")
 fi
 
 # echo $term "${args[@]}" >&2
