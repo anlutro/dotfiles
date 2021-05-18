@@ -15,5 +15,5 @@ if dpkg -s vagrant | grep -q "Version: 1:$version"; then
 fi
 
 filename=$(download $url)
-sudo dpkg -i $filename
+sudo apt install $filename
 rm -f $filename
