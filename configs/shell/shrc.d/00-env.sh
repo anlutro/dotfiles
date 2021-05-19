@@ -6,8 +6,8 @@ export HISTCONTROL=ignoreboth
 # history size in memory
 export HISTSIZE=5000
 # history size in history file
-export SAVEHIST=50000
-export HISTFILESIZE=50000
+export SAVEHIST=100000
+export HISTFILESIZE=100000
 export HISTFILE=~/.history
 
 # always limit man to 80 characters wide
