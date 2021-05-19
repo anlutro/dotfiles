@@ -3,6 +3,9 @@
 # don't put duplicate lines or lines starting with space in the history.
 export HISTCONTROL=ignoreboth
 
+# prepend timestamp to the history
+export HISTTIMEFORMAT="%y-%m-%d %T "
+
 # history size in memory
 export HISTSIZE=5000
 # history size in history file
