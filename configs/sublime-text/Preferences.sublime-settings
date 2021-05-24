@@ -99,7 +99,7 @@
 	[
 		"C#",
 		"Rust",
-		"Vintage"
+		"Vintage",
 	],
 	"indent_guide_options":
 	[
@@ -130,5 +130,5 @@
 	"update_check": false,
 	"vintage_start_in_command_mode": true,
 	"word_separators": "./\\()\"'-:,.;<>~`!?@#$%^&*|+=[]{}",
-	"word_wrap": true
+	"word_wrap": true,
 }
