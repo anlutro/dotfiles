@@ -76,11 +76,28 @@ for output in "${!outputs[@]}"; do
     xrandr_args="$xrandr_args --output $output ${outputs[$output]}"
 done
 
+i3_msgs=()
+if [ ${#externals[@]} -eq 1 ] && command -v i3-msg >/dev/null && command -v jq >/dev/null; then
+    i3_output=$primary_output
+    for ws_num in $(i3-msg -t get_workspaces | jq '.[] | .num'); do
+        if [ $ws_num -gt 2 ]; then
+            i3_output=${externals[0]}
+        fi
+        i3_msgs+=("[workspace=$ws_num:] move workspace to output $i3_output")
+    done
+fi
+
 if [ "$DRYRUN" = 'yes' ]; then
     echo xrandr $xrandr_args
     xrandr --dryrun $xrandr_args
+    for i3_msg in "${i3_msgs[@]}"; do
+        echo i3-msg \'$i3_msg\'
+    done
 else
     xrandr $xrandr_args
+    for i3_msg in "${i3_msgs[@]}"; do
+        i3-msg "$i3_msg"
+    done
 
     # if screen size changed, need to re-set the desktop background
     if [ -x $HOME/.fehbg ]; then
