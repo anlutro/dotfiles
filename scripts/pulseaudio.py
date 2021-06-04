@@ -13,7 +13,7 @@ def get_all_card_profiles():
             yield card, profile
 
 
-def find_hdmi_card_profiles(card_profiles, bluetooth=False, surround=False, surround71=False):
+def find_hdmi_card_profiles(card_profiles, surround=False, surround71=False):
     for card, profile in card_profiles:
         if any((
             profile.available == 0,
@@ -24,9 +24,6 @@ def find_hdmi_card_profiles(card_profiles, bluetooth=False, surround=False, surr
             '+input' in profile.name,
         )):
             continue
-        if bluetooth:
-            if 'bluez' not in profile.name:
-                continue
         elif surround71:
             if 'surround71' not in profile.name:
                 continue
@@ -39,6 +36,12 @@ def find_hdmi_card_profiles(card_profiles, bluetooth=False, surround=False, surr
         yield card, profile
 
 
+def find_bluetooth_card_profiles(card_profiles):
+    for card, profile in card_profiles:
+        if 'bluez' in card.name:
+            yield card, profile
+
+
 def find_default_card_profiles(card_profiles):
     for card, profile in card_profiles:
         if profile.name == 'output:analog-stereo+input:analog-stereo':
@@ -48,6 +51,12 @@ def find_default_card_profiles(card_profiles):
             yield card, profile
 
 
+class EmptyPort:
+    name = 'empty-port'
+    available = 'yes'
+    priority = 0
+
+
 def find_preferred_port(resources, search_for):
     if isinstance(search_for, str):
         search_for = (search_for,)
@@ -55,6 +64,9 @@ def find_preferred_port(resources, search_for):
     # flatten the resources->ports structure to simplify iterating/filtering
     resources_ports = []
     for resource in resources:
+        # bluetooth devices don't seem to have a port
+        if not resource.port_list:
+            resource.port_list = [EmptyPort()]
         for port in resource.port_list:
             if port.available == 'no':
                 continue
@@ -64,10 +76,12 @@ def find_preferred_port(resources, search_for):
     # the top one. if no matches, just pick the highest priority one.
     searched_resources = []
     for resource, port in resources_ports:
-        if any(s in port.name for s in search_for):
+        if any(s in resource.name for s in search_for) or any(s in port.name for s in search_for):
             searched_resources.append((resource, port))
     if searched_resources:
         resources_ports = searched_resources
+    else:
+        print(f'WARNING: no resources matched {search_for=!r} - will just pick first available default resource')
 
     preferred_resource, preferred_port = None, None
     for resource, port in resources_ports:
@@ -80,8 +94,9 @@ def switch_source(bluetooth=False):
     pa_sources = pulse.source_list()
     source, port = find_preferred_port(pa_sources, "bluez" if bluetooth else "headset-mic")
     if source and port:
-        print("switching source %s to port %s" % (source.name, port.name))
-        pulse.source_port_set(source.index, port.name)
+        if not isinstance(port, EmptyPort):
+            print("switching source %s to port %s" % (source.name, port.name))
+            pulse.source_port_set(source.index, port.name)
         print("setting default source %s" % (source.name,))
         pulse.default_set(source)
         return source
@@ -89,12 +104,16 @@ def switch_source(bluetooth=False):
         print("no source ports found!")
 
 
-def switch_sink():
+def switch_sink(bluetooth=False):
     pa_sinks = pulse.sink_list()
-    sink, port = find_preferred_port(pa_sinks, ("headset", "headphone"))
+    search_for = "bluez" if bluetooth else ("headset", "headphone")
+    sink, port = find_preferred_port(pa_sinks, search_for)
     if sink and port:
-        print("switching sink %s to port %s" % (sink.name, port.name))
-        pulse.sink_port_set(sink.index, port.name)
+        # conditional here shouldn't be necessary but switching sink ports on
+        # bluetooth crashes
+        if sink.port_active.name != port.name:
+            print("switching sink %s to port %s" % (sink.name, port.name))
+            pulse.sink_port_set(sink.index, port.name)
         print("setting default sink %s" % (sink.name,))
         pulse.default_set(sink)
         return sink
@@ -120,12 +139,17 @@ def main():
     p.add_argument('--source-volume', type=arg_to_float, help='set source volume')
     args = p.parse_args()
 
-    all_profiles = sorted(get_all_card_profiles(), key=lambda x: x[1].priority)
+    all_profiles = sorted(get_all_card_profiles(), key=lambda x: -x[1].priority)
 
     if args.hdmi:
-        cards = list(find_hdmi_card_profiles(all_profiles, bluetooth=args.bluetooth, surround=args.surround, surround71=args.surround71))
+        cards = list(find_hdmi_card_profiles(all_profiles, surround=args.surround, surround71=args.surround71))
         if not cards:
             print('no active HDMI outputs found!')
+            return 1
+    elif args.bluetooth:
+        cards = list(find_bluetooth_card_profiles(all_profiles))
+        if not cards:
+            print('no active Bluetooth devices found!')
             return 1
     else:
         cards = list(find_default_card_profiles(all_profiles))
@@ -136,15 +160,17 @@ def main():
     pulse.card_profile_set(card, profile)
 
     source = None
-    if not args.hdmi and not args.bluetooth:
+    # TODO: why not args.hdmi?
+    if not args.hdmi:
         source = switch_source(bluetooth=args.bluetooth)
     if source and args.source_volume:
         print('setting source volume to', args.source_volume)
         pulse.volume_set_all_chans(source, args.source_volume)
 
+    # TODO: why not args.hdmi?
     # TODO: bluetooth causes pulsectl.pulsectl.PulseOperationFailed: 3
-    if not args.hdmi and not args.bluetooth:
-        switch_sink()
+    if not args.hdmi:
+        switch_sink(args.bluetooth)
 
 
 if __name__ == '__main__':
