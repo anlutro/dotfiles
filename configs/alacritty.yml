@@ -49,16 +49,18 @@ colors:
     white:   '#ffffff'
 
 cursor:
-  style: Block
+  style:
+    blinking: Always
+  blink_interval: 500
 
 key_bindings:
   - { mods: Alt, key: C, action: Copy }
   - { mods: Alt, key: V, action: Paste, mode: ~vi }
 
   # font size
-  - { mods: Alt, key: Subtract, action: DecreaseFontSize }
-  - { mods: Alt, key: Equals,   action: IncreaseFontSize }
-  - { mods: Alt, key: Key0,     action: ResetFontSize    }
+  - { mods: Alt, key: Minus,  action: DecreaseFontSize }
+  - { mods: Alt, key: Equals, action: IncreaseFontSize }
+  - { mods: Alt, key: Key0,   action: ResetFontSize    }
 
   # search and other functionality
   - { mods: Control, key: F, action: SearchForward }

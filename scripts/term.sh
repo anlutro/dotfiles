@@ -34,7 +34,7 @@ while [ $# -gt 0 ]; do
 done
 
 if [ -z "$term" ]; then
-    for try_term in rxvt-unicode urxvt alacritty; do
+    for try_term in alacritty rxvt-unicode urxvt; do
         if which $try_term >/dev/null 2>&1; then
             term="$try_term"
             break
