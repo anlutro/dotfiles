@@ -2,5 +2,4 @@
 	"extensions": ["yml", "yaml", "eyaml"],
 	"detect_indentation": false,
 	"tab_size": 2,
-	"translate_tabs_to_spaces": true
 }

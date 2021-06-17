@@ -125,7 +125,7 @@
 	"show_tab_close_buttons": false,
 	"tab_size": 4,
 	"theme": "Adaptive.sublime-theme",
-	"translate_tabs_to_spaces": true,
+	"translate_tabs_to_spaces": false,
 	"tree_animation_enabled": false,
 	"update_check": false,
 	"vintage_start_in_command_mode": true,
