@@ -2,10 +2,10 @@
 Xft.dpi: 110
 
 !! colors
-URxvt*.background: rgba:0000/0000/0000/e000
-URxvt*.foreground: #dddddd
-URxvt*.cursorColor: #657b83
-URxvt*.highlightColor: #444444
+URxvt.background: rgba:0000/0000/0000/e000
+URxvt.foreground: #dddddd
+URxvt.cursorColor: #657b83
+URxvt.highlightColor: #444444
 
 ! black dark/light
 *color0:  #111111
@@ -38,66 +38,66 @@ URxvt*.highlightColor: #444444
 
 
 !! rxvt/urxvt settings
-URxvt*.termName: xterm-256color
-URxvt*.depth: 32
-URxvt*.fading: 30
-URxvt*.loginShell: false
-URxvt*.saveLines: 5000
-URxvt*.internalBorder: 7
-URxvt*.lineSpace: 3
-URxvt*.urgentOnBell: true
-URxvt*.visualBell: false
+URxvt.termName: xterm-256color
+URxvt.depth: 32
+URxvt.fading: 30
+URxvt.loginShell: false
+URxvt.saveLines: 5000
+URxvt.internalBorder: 7
+URxvt.lineSpace: 3
+URxvt.urgentOnBell: true
+URxvt.visualBell: false
 
 ! fonts
-URxvt*.font: xft:Source Code Pro:size=10, xft:Symbola
-URxvt*.boldFont: xft:Source Code Pro:semibold:size=10, xft:Symbola
-URxvt*.intensityStyles: true
-URxvt*.letterSpace: -1
-URxvt*.skipBuiltinGlyphs: false
+URxvt.font: xft:Source Code Pro:size=10, xft:Symbola
+URxvt.boldFont: xft:Source Code Pro:semibold:size=10, xft:Symbola
+URxvt.intensityStyles: true
+URxvt.letterSpace: -1
+URxvt.skipBuiltinGlyphs: false
 
 ! scrolling
-URxvt*.scrollStyle: rxvt
-URxvt*.scrollBar: false
-URxvt*.scrollTtyOutput: false
-URxvt*.scrollTtyKeypress: true
-URxvt*.scrollWithBuffer: true
+URxvt.scrollStyle: rxvt
+URxvt.scrollBar: false
+URxvt.scrollTtyOutput: false
+URxvt.scrollTtyKeypress: true
+URxvt.scrollWithBuffer: true
 
 ! cursor
-URxvt*.cursorBlink: true
-URxvt*.cursorUnderline: false
+URxvt.cursorBlink: true
+URxvt.cursorUnderline: false
 
 ! remove the mouse cursor on activity
-URxvt*.pointerBlank: true
+URxvt.pointerBlank: true
 
 ! disable stupid image keycap thingy
-URxvt*.iso14755: false
-URxvt*.iso14755_52: false
+URxvt.iso14755: false
+URxvt.iso14755_52: false
 
 
 !! urxvt perl extensions
-URxvt*.perl-ext: default,url-select,clipboard,keyboard-select,font-size
+URxvt.perl-ext: default,url-select,clipboard,keyboard-select,font-size
 
-URxvt*.keysym.M-u: perl:url-select:select_next
-URxvt*.url-select.launcher: /usr/bin/xdg-open
-URxvt*.url-select.underline: false
+URxvt.keysym.M-u: perl:url-select:select_next
+URxvt.url-select.launcher: /usr/bin/xdg-open
+URxvt.url-select.underline: false
 
-URxvt*.keysym.M-c: perl:clipboard:copy
-URxvt*.keysym.M-v: perl:clipboard:paste
-URxvt*.clipboard.copycmd:  xclip -i -selection clipboard
-URxvt*.clipboard.pastecmd: xclip -o -selection clipboard
+URxvt.keysym.M-c: perl:clipboard:copy
+URxvt.keysym.M-v: perl:clipboard:paste
+URxvt.clipboard.copycmd:  xclip -i -selection clipboard
+URxvt.clipboard.pastecmd: xclip -o -selection clipboard
 
-URxvt*.keysym.M-Escape: perl:keyboard-select:activate
+URxvt.keysym.M-Escape: perl:keyboard-select:activate
 
-URxvt*.keysym.M-equal: perl:font-size:increase
-URxvt*.keysym.M-minus: perl:font-size:decrease
-URxvt*.keysym.C-A-0: perl:font-size:reset
+URxvt.keysym.M-equal: perl:font-size:increase
+URxvt.keysym.M-minus: perl:font-size:decrease
+URxvt.keysym.C-A-0: perl:font-size:reset
 
 ! emulate xterm escape codes for old system compatibility
-URxvt*.keysym.Home:    \033[1~
-URxvt*.keysym.KP_Home: \033[1~
-URxvt*.keysym.End:     \033[4~
-URxvt*.keysym.KP_End:  \033[4~
-URxvt*.keysym.C-Up:    \033[1;5A
-URxvt*.keysym.C-Down:  \033[1;5B
-URxvt*.keysym.C-Right: \033[1;5C
-URxvt*.keysym.C-Left:  \033[1;5D
+URxvt.keysym.Home:    \033[1~
+URxvt.keysym.KP_Home: \033[1~
+URxvt.keysym.End:     \033[4~
+URxvt.keysym.KP_End:  \033[4~
+URxvt.keysym.C-Up:    \033[1;5A
+URxvt.keysym.C-Down:  \033[1;5B
+URxvt.keysym.C-Right: \033[1;5C
+URxvt.keysym.C-Left:  \033[1;5D
