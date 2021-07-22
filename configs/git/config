@@ -46,6 +46,7 @@ algorithm = patience
 
 [diff "ansible-vault"]
 textconv = ansible-vault view
+cachetextconv = false
 
 [diff "json"]
 textconv = jq .
