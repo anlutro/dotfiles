@@ -135,7 +135,7 @@ def main():
     p.add_argument('--hdmi', action='store_true', help='use HDMI audio')
     p.add_argument('--surround', action='store_true', help='prefer surround over stereo')
     p.add_argument('--surround71', action='store_true', help='prefer 7.1 surround over stereo')
-    p.add_argument('--bluetooth', action='store_true', help='prefer bluetooth devices')
+    p.add_argument('-bt', '--bluetooth', action='store_true', help='prefer bluetooth devices')
     p.add_argument('--source-volume', type=arg_to_float, help='set source volume')
     args = p.parse_args()
 
