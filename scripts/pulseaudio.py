@@ -90,9 +90,9 @@ def find_preferred_port(resources, search_for):
     return preferred_resource, preferred_port
 
 
-def switch_source(bluetooth=False):
+def switch_source(preferred_patterns):
     pa_sources = pulse.source_list()
-    source, port = find_preferred_port(pa_sources, "bluez" if bluetooth else "headset-mic")
+    source, port = find_preferred_port(pa_sources, preferred_patterns)
     if source and port:
         if not isinstance(port, EmptyPort):
             print("switching source %s to port %s" % (source.name, port.name))
@@ -104,10 +104,9 @@ def switch_source(bluetooth=False):
         print("no source ports found!")
 
 
-def switch_sink(bluetooth=False):
+def switch_sink(preferred_patterns):
     pa_sinks = pulse.sink_list()
-    search_for = "bluez" if bluetooth else ("headset", "headphone")
-    sink, port = find_preferred_port(pa_sinks, search_for)
+    sink, port = find_preferred_port(pa_sinks, preferred_patterns)
     if sink and port:
         # conditional here shouldn't be necessary but switching sink ports on
         # bluetooth crashes
@@ -137,6 +136,8 @@ def main():
     p.add_argument('--surround71', action='store_true', help='prefer 7.1 surround over stereo')
     p.add_argument('-bt', '--bluetooth', action='store_true', help='prefer bluetooth devices')
     p.add_argument('--source-volume', type=arg_to_float, help='set source volume')
+    p.add_argument('--preferred-sink')
+    p.add_argument('--preferred-source')
     args = p.parse_args()
 
     all_profiles = sorted(get_all_card_profiles(), key=lambda x: -x[1].priority)
@@ -162,7 +163,9 @@ def main():
     source = None
     # TODO: why not args.hdmi?
     if not args.hdmi:
-        source = switch_source(bluetooth=args.bluetooth)
+        if not args.preferred_source:
+            args.preferred_source = ("bluez", "bluetooth") if args.bluetooth else ("headset-mic")
+        source = switch_source(args.preferred_source)
     if source and args.source_volume:
         print('setting source volume to', args.source_volume)
         pulse.volume_set_all_chans(source, args.source_volume)
@@ -170,7 +173,9 @@ def main():
     # TODO: why not args.hdmi?
     # TODO: bluetooth causes pulsectl.pulsectl.PulseOperationFailed: 3
     if not args.hdmi:
-        switch_sink(args.bluetooth)
+        if not args.preferred_sink:
+            args.preferred_sink = ("bluez", "bluetooth") if args.bluetooth else ("headphone")
+        switch_sink(args.preferred_sink)
 
 
 if __name__ == '__main__':
