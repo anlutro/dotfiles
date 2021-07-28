@@ -12,6 +12,7 @@
 	[
 		"Anaconda",
 		"Dockerfile Syntax Highlighting",
+		"Earthly Earthfile",
 		"Elixir",
 		"InsertDate",
 		"Jinja2",
@@ -23,6 +24,6 @@
 		"Sass",
 		"sql-formatter",
 		"Terraform",
-		"Text Pastry"
+		"Text Pastry",
 	],
 }
