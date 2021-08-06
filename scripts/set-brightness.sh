@@ -1,13 +1,25 @@
 #!/bin/sh
 set -eu
 
-smart_modifier=
+pidfile=$HOME/.local/share/set-brightness.pid
+if [ -e $pidfile ]; then
+    pid=$(cat $pidfile)
+    if grep -q set-brightness /proc/$(cat $pidfile)/cmdline; then
+        exit 0
+    fi
+fi
+echo -n $$ > $pidfile
+cleanup() {
+    rm -f $pidfile
+}
+trap cleanup EXIT
 
 if [ "$(find /sys/class/backlight/ -mindepth 1 -maxdepth 1 | wc -l)" -lt 1 ]; then
     echo "Couldn't find anything in /sys/class/backlight!"
     exit 1
 fi
 
+smart_modifier=
 if [ "$1" = 'up' ] || [ "$1" = 'down' ]; then
     smart_modifier="$1"
 else
