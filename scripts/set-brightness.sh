@@ -54,7 +54,7 @@ for dir in $(find /sys/class/backlight/ -mindepth 1 -maxdepth 1); do
     name=$(basename "$dir")
     old_brightness=$(cat "$dir/brightness")
     max_brightness=$(cat "$dir/max_brightness")
-    max_mod=$(( max_brightness / 7 ))
+    max_mod=$(( max_brightness / 9 ))
     min_mod=$(( max_brightness / 100 ))
 
     if [ "$smart_modifier" = 'up' ]; then
