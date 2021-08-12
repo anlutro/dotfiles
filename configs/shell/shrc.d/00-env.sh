@@ -3,6 +3,9 @@
 # don't put duplicate lines or lines starting with space in the history.
 export HISTCONTROL=ignoreboth
 
+# exclude certain commands from history
+export HISTIGNORE="l:l *:ls: ls *"
+
 # prepend timestamp to the history
 export HISTTIMEFORMAT="%y-%m-%d %T "
 
