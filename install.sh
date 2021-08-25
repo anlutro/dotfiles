@@ -127,6 +127,15 @@ install_git() {
     ln -sf $scripts/git-all-my-logs.sh $bindir/git-all-my-logs
 }
 
+_install_gtk_theme() {
+    if [ -e "$1" ]; then
+        ln -sfT "$1" "$HOME/.themes/$(basename "$1")"
+        ln -sfT "$1" "$HOME/.local/share/themes/$(basename "$1")"
+    else
+        echo >&2 "gtk theme directory does not exit: $1"
+    fi
+}
+
 install_gtk() {
     ln -sf $configs/gtk/gtk2-rc $HOME/.gtkrc-2.0
 
@@ -134,16 +143,13 @@ install_gtk() {
     mkdir -p $HOME/.local/share/themes
 
     vendor_install https://github.com/lassekongo83/zuki-themes
-    ln -sfT $vendor/zuki-themes/Zukiwi $HOME/.themes/Zukiwi
-    ln -sfT $vendor/zuki-themes/Zukiwi $HOME/.local/share/themes/Zukiwi
-    ln -sfT $vendor/zuki-themes/Zukitwo $HOME/.themes/Zukitwo
-    ln -sfT $vendor/zuki-themes/Zukitwo $HOME/.local/share/themes/Zukitwo
-    ln -sfT $vendor/zuki-themes/Zukitre $HOME/.themes/Zukitre
-    ln -sfT $vendor/zuki-themes/Zukitre $HOME/.local/share/themes/Zukitre
+    _install_gtk_theme $vendor/zuki-themes/gtk/src/Zukitwo
+    _install_gtk_theme $vendor/zuki-themes/gtk/src/Zukitwo-dark
+    _install_gtk_theme $vendor/zuki-themes/gtk/src/Zukitre
+    _install_gtk_theme $vendor/zuki-themes/gtk/src/Zukitre-dark
 
     vendor_install https://github.com/snwh/paper-gtk-theme
-    ln -sfT $vendor/paper-gtk-theme/Paper $HOME/.themes/Paper
-    ln -sfT $vendor/paper-gtk-theme/Paper $HOME/.local/share/themes/Paper
+    _install_gtk_theme $vendor/paper-gtk-theme/Paper
 
     if [ -d $HOME/.config/gtk-3.0 ]; then
         ln -sf $configs/gtk/gtk3-settings.ini $HOME/.config/gtk-3.0/settings.ini
@@ -404,3 +410,4 @@ echo "Looking for broken symlinks..."
 find $configs -xtype l
 find $scripts -xtype l
 find $bindir -xtype l
+[ -d $HOME/.themes ] && find $HOME/.themes -xtype l
