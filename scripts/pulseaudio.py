@@ -136,8 +136,8 @@ def main():
     p.add_argument('--surround71', action='store_true', help='prefer 7.1 surround over stereo')
     p.add_argument('-bt', '--bluetooth', action='store_true', help='prefer bluetooth devices')
     p.add_argument('--source-volume', type=arg_to_float, help='set source volume')
-    p.add_argument('--preferred-sink')
-    p.add_argument('--preferred-source')
+    p.add_argument('--preferred-sink', nargs='*')
+    p.add_argument('--preferred-source', nargs='*')
     args = p.parse_args()
 
     all_profiles = sorted(get_all_card_profiles(), key=lambda x: -x[1].priority)
