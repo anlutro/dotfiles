@@ -3,7 +3,7 @@ set -eu
 # shellcheck source=_lib.sh
 . "$(dirname "$(readlink -f "$0")")/_lib.sh"
 
-version=$(gh_latest_tag gruntwork-io/terragrunt)
+version="${1-$(gh_latest_tag gruntwork-io/terragrunt)}"
 
 if terragrunt --version | grep -qF "version $version"; then
 	latest_already_installed
