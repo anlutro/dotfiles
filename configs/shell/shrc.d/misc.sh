@@ -29,12 +29,6 @@ function psgrep {
     ps auxf | grep "$@" | grep -v grep;
 }
 
-# set the keyboard map
-function kb {
-    setxkbmap -v -option compose:ralt -option caps:super $1 \
-        && xset r rate 175 35
-}
-
 # livestreamer/streamlink
 function sl {
     args=""
@@ -107,7 +101,7 @@ function gh-fetch-pr {
     if [ -n "$remote" ]; then
         git fetch $remote "pull/$1/head:pr-$1"
     else
-        echo "No github remote found!"
+        echo >&2 "No github remote found!"
         return 1
     fi
 }
@@ -155,6 +149,7 @@ function lsn {
     sudo lsof $args
 }
 
+# print field
 function f {
     awk "{ print \$$1 }"
 }
