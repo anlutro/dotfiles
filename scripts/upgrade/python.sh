@@ -51,11 +51,15 @@ make
 
 make install
 
-ln -sf $prefix/bin/python?.? $BIN_DIR/python$version
+python_bin=$(find $prefix/bin -regex '.*\/python[0-9]\.[0-9]+$')
 
-# won't match alpha/beta/rc
+# always create a symlink with the full 3-digit version
+ln -sf $python_bin $BIN_DIR/python$version
+
+# if it's not an alpha/beta/rc release, also create a symlink for the minor
+# version (2 version digits only)
 if echo $version | grep -qxP '\d[\d\.]+'; then
-    ln -sf $prefix/bin/python?.? $BIN_DIR/
+    ln -sf $python_bin $BIN_DIR/
 fi
 
 rm -rf ${builddir:?}/$name
