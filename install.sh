@@ -148,9 +148,6 @@ install_gtk() {
     _install_gtk_theme $vendor/zuki-themes/gtk/src/Zukitre
     _install_gtk_theme $vendor/zuki-themes/gtk/src/Zukitre-dark
 
-    vendor_install https://github.com/snwh/paper-gtk-theme
-    _install_gtk_theme $vendor/paper-gtk-theme/Paper
-
     if [ -d $HOME/.config/gtk-3.0 ]; then
         ln -sf $configs/gtk/gtk3-settings.ini $HOME/.config/gtk-3.0/settings.ini
     fi
