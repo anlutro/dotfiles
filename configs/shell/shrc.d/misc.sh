@@ -65,7 +65,7 @@ function dphp {
         --volume $PWD:$PWD --workdir $PWD \
         --user "$(id -u):$(id -g)" \
         --network host \
-        php:7-cli-alpine php "$@"
+        php:${php_version-8}-cli-alpine php "$@"
 }
 
 # composer in docker
@@ -79,7 +79,7 @@ function dcomposer {
         --user "$(id -u):$(id -g)" \
         --volume $SSH_AUTH_SOCK:/ssh-auth.sock \
         --env SSH_AUTH_SOCK=/ssh-auth.sock \
-        composer "$@"
+        composer:${composer_version-2} "$@"
 }
 
 # find and remove pycache files
