@@ -8,11 +8,12 @@ if [ $# -gt 0 ]; then
     url="https://dl.google.com/go/go${version}.linux-amd64.tar.gz"
     filename=$(basename $url)
 else
-    url=$(
+    path=$(
         curl -s 'https://golang.org/dl/' | grep -F 'href=' \
         | grep -oP '\/dl\/[^"]+linux-amd64\.tar\.gz' | head -1
     )
-    filename=$(basename $url)
+    url="https://golang.org${path}"
+    filename=$(basename $path)
     version=$(echo $filename | grep -oP '\d+(\.\d+)+')
 fi
 
