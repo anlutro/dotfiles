@@ -46,7 +46,7 @@ main() {
         shift
     done
 
-    eval "note_$func" "$@"
+    "note_$func" "$@"
 }
 
 note_new() {
