@@ -2,3 +2,4 @@ github3.py
 tweepy
 pyusb
 pulsectl
+python-dateutil
