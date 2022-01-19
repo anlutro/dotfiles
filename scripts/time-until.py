@@ -19,7 +19,7 @@ def get_time_until(dt, unit=None):
         elif unit[0] == "h":
             delta = str(int((delta.days * 24) + (delta.seconds / 3600))) + " hours"
         elif unit in ("mins", "minutes"):
-            delta = str(int((delta.days * 24) + (delta.seconds / 60))) + " minutes"
+            delta = str(int((delta.days * 24 * 60) + (delta.seconds / 60))) + " minutes"
     return delta
 
 
