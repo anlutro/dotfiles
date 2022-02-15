@@ -5,7 +5,7 @@ search='Battery 0: '
 full_text=$(acpi -b | grep "^$search" | cut -d: -f2-)
 status=$(echo "$full_text" | cut -d, -f1 | tr -d '[:space:]')
 pct=$(echo "$full_text" | cut -d, -f2 | sed s/%// | tr -d '[:space:]')
-if ! echo "$full_text" | grep -qF 'rate information unavailable'; then
+if ! echo "$full_text" | grep -qF -e 'rate information unavailable' -e 'zero rate'; then
     remaining=$(echo "$full_text" | cut -d, -f3 | cut -d' ' -f2)
 fi
 
