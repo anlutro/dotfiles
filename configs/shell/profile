@@ -10,6 +10,7 @@ _paths=(
 /sbin
 /usr/sbin
 /usr/local/opt/*/libexec/gnubin
+"/Applications/Sublime Text.app/Contents/SharedSupport/bin"
 "$HOME/Library/Python/*/bin"
 "$HOME/.cargo/bin"
 "$HOME/.npm/bin"
