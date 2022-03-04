@@ -6,21 +6,22 @@ umask 022
 
 # add paths to $PATH. these should be listed in order of
 # least precedence first, highest precedence last
-paths="
+_paths=(
 /sbin
 /usr/sbin
-$HOME/Library/Python/*/bin
-$HOME/.cargo/bin
-$HOME/.npm/bin
-$HOME/.local/bin
-$HOME/bin
-"
-for path in $paths; do
-    if [ -d "$path" ] && [ ! -L "$path" ]; then
-        PATH="$path:$PATH"
+/usr/local/opt/*/libexec/gnubin
+"$HOME/Library/Python/*/bin"
+"$HOME/.cargo/bin"
+"$HOME/.npm/bin"
+"$HOME/.local/bin"
+"$HOME/bin"
+)
+for _path in "${_paths[@]}"; do
+    if [ -d "$_path" ] && [ ! -L "$_path" ]; then
+        PATH="$_path:$PATH"
     fi
 done
-unset path paths
+unset _path _paths
 
 # bashrc doesn't execute itself
 if [ -n "$BASH_VERSION" ]; then
