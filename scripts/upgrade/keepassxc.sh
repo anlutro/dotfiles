@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 # shellcheck source=_lib.sh
-. "$(dirname "$(readlink -f "$0")")/_lib.sh"
+. "$(dirname "$(realpath "$0")")/_lib.sh"
 
 # grep for digits removes alpha/beta/rc releases
 url=$(gh_urls keepassxreboot/keepassxc | grep -P '\/[\d\.]+\/' | grep '\.AppImage$' | head -1)

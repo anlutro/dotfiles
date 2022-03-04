@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 # shellcheck source=_lib.sh
-. "$(dirname "$(readlink -f "$0")")/_lib.sh"
+. "$(dirname "$(realpath "$0")")/_lib.sh"
 
 # exclude alpha/beta/rc, and always get highest version number (as opposed to
 # most recent release by date)

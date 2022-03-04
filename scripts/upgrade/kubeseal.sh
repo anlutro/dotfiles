@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 # shellcheck source=_lib.sh
-. "$(dirname "$(readlink -f "$0")")/_lib.sh"
+. "$(dirname "$(realpath "$0")")/_lib.sh"
 
 version=$(gh_latest_tag bitnami-labs/sealed-secrets/releases/latest)
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-root=$(dirname "$(readlink -f "$0")")
+root=$(dirname "$(realpath "$0")")
 
 update_fzf() {
     ./install --bin

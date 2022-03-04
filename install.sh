@@ -13,7 +13,7 @@ if [ ! -d $HOME/.local/bin ]; then
     mkdir -p $HOME/.local/bin
 fi
 bindir=$HOME/.local/bin
-root=$(dirname "$(readlink -f "$0")")
+root=$(dirname "$(realpath "$0")")
 configs=$root/configs
 scripts=$root/scripts
 vendor=$root/vendor
@@ -172,7 +172,7 @@ install_i3blocks() {
     ln -sf $vendor/i3blocks-contrib/volume/volume $conf_path/scripts/
 
     for f in $configs/i3/block-scripts/*; do
-        filepath=$(readlink -f $f)
+        filepath=$(realpath $f)
         filename=$(basename $f)
         ln -sf $filepath $conf_path/scripts/$filename
     done

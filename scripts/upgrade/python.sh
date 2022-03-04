@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 # shellcheck source=_lib.sh
-. "$(dirname "$(readlink -f "$0")")/_lib.sh"
+. "$(dirname "$(realpath "$0")")/_lib.sh"
 
 versions=$(gh_tags python/cpython | sed -r 's/^v//g' | grep -xP "\d+\.\d+\.\d+" | sort -V)
 if [ $# -gt 0 ]; then
