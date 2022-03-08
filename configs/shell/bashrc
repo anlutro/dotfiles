@@ -79,8 +79,12 @@ fi
 #   |__/       \______/ |______/
 
 # on some systems this is not sourced automatically
-if [ -e /usr/share/git/completion/git-prompt.sh ] && ! command -v __git_ps1 >/dev/null 2>&1; then
-    . /usr/share/git/completion/git-prompt.sh
+if ! command -v __git_ps1 >/dev/null 2>&1; then
+    if [ -e /usr/share/git/completion/git-prompt.sh ]; then
+        . /usr/share/git/completion/git-prompt.sh
+    elif [ -e /usr/local/etc/bash_completion.d/git-prompt.sh ]; then
+        . /usr/local/etc/bash_completion.d/git-prompt.sh
+    fi
 fi
 
 # wrap in a function to allow local variables
