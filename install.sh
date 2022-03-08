@@ -221,14 +221,21 @@ install_rg() {
 }
 
 install_subl() {
-    pkgdir=$HOME/.config/sublime-text-3/Packages
-    userdir=$pkgdir/User
-    mkdir -p $pkgdir
-    if [ -d $userdir ] && [ ! -L $userdir ]; then
-        mv $userdir $userdir.bak
+    if [ -d $HOME/.config/sublime-text-3/Packages ]; then
+        pkgdir=$HOME/.config/sublime-text-3/Packages
+    elif [ -d "$HOME/Library/Application Support/Sublime Text/Packages" ]; then
+        pkgdir="$HOME/Library/Application Support/Sublime Text/Packages"
+    else
+        echo "Sublime Text Packages directory not found!"
+        return
     fi
-    ln -sfT $configs/sublime-text $userdir
-    ln -sf $scripts/sublp.sh $bindir/sublp
+    userdir="$pkgdir/User"
+    mkdir -p "$pkgdir"
+    if [ -d "$userdir" ] && [ ! -L "$userdir" ]; then
+        mv "$userdir" "$userdir.bak"
+    fi
+    ln -sfT "$configs/sublime-text" "$userdir"
+    ln -sf "$scripts/sublp.sh" "$bindir/sublp"
 }
 
 install_taskwarrior() {
