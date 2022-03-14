@@ -374,7 +374,6 @@ echo "done"
 
 install alacritty
 install bash
-install compton
 install dunst
 install git
 install gtk gtk-update-icon-cache
