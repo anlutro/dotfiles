@@ -17,7 +17,7 @@ defaults write -g com.apple.scrollwheel.scaling -int -1
 defaults write -g com.apple.swipescrolldirection -int 0
 
 # I don't like homebrew but there are no good alternatives
-if ! command -v brew 2>&1 >/dev/null && confirm "Install Homebrew?"; then
+if ! command -v brew >/dev/null 2>&1 && confirm "Install Homebrew?"; then
 	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 	# gnu utils to replace horribly out of date bsd grep/awk etc.
