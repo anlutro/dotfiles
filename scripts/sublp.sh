@@ -36,4 +36,4 @@ fi
 ~/code/dotfiles/scripts/i3-rename-workspace.sh --dir "$dir"
 
 # open sublime text
-subl -n "$sp"
+subl "$sp"
