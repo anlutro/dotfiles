@@ -1,4 +1,4 @@
-#!/usr/bin/env /home/andreas/code/dotfiles/.venv/bin/python
+#!/usr/bin/env -S ${HOME}/code/dotfiles/.venv/bin/python
 
 import re
 import textwrap

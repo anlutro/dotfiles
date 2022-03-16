@@ -1,4 +1,4 @@
-#!/usr/bin/env /home/andreas/code/dotfiles/.venv/bin/python
+#!/usr/bin/env -S ${HOME}/code/dotfiles/.venv/bin/python
 
 from __future__ import print_function
 from collections import defaultdict
