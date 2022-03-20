@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 # shellcheck source=_lib.sh
-. "$(dirname "$(readlink -f "$0")")/_lib.sh"
+. "$(dirname "$(realpath "$0")")/_lib.sh"
 
 url=$(gh_url JetBrains/kotlin | grep -F linux-x64 | head -1)
 version=$(basename $url | grep -oP '\d+(\.\d+)+')

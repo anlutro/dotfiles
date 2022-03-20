@@ -13,7 +13,7 @@ if [ ! -d $HOME/.local/bin ]; then
     mkdir -p $HOME/.local/bin
 fi
 bindir=$HOME/.local/bin
-root=$(dirname "$(readlink -f "$0")")
+root=$(dirname "$(realpath "$0")")
 configs=$root/configs
 scripts=$root/scripts
 vendor=$root/vendor
@@ -172,7 +172,7 @@ install_i3blocks() {
     ln -sf $vendor/i3blocks-contrib/volume/volume $conf_path/scripts/
 
     for f in $configs/i3/block-scripts/*; do
-        filepath=$(readlink -f $f)
+        filepath=$(realpath $f)
         filename=$(basename $f)
         ln -sf $filepath $conf_path/scripts/$filename
     done
@@ -221,14 +221,21 @@ install_rg() {
 }
 
 install_subl() {
-    pkgdir=$HOME/.config/sublime-text-3/Packages
-    userdir=$pkgdir/User
-    mkdir -p $pkgdir
-    if [ -d $userdir ] && [ ! -L $userdir ]; then
-        mv $userdir $userdir.bak
+    if [ -d $HOME/.config/sublime-text-3/Packages ]; then
+        pkgdir=$HOME/.config/sublime-text-3/Packages
+    elif [ -d "$HOME/Library/Application Support/Sublime Text/Packages" ]; then
+        pkgdir="$HOME/Library/Application Support/Sublime Text/Packages"
+    else
+        echo "Sublime Text Packages directory not found!"
+        return
     fi
-    ln -sfT $configs/sublime-text $userdir
-    ln -sf $scripts/sublp.sh $bindir/sublp
+    userdir="$pkgdir/User"
+    mkdir -p "$pkgdir"
+    if [ -d "$userdir" ] && [ ! -L "$userdir" ]; then
+        mv "$userdir" "$userdir.bak"
+    fi
+    ln -sfT "$configs/sublime-text" "$userdir"
+    ln -sf "$scripts/sublp.sh" "$bindir/sublp"
 }
 
 install_taskwarrior() {
@@ -331,6 +338,13 @@ install_xorg() {
     rm -f $HOME/.config/fontconfig/local.conf
 }
 
+install_zsh() {
+    ln -sf $configs/shell/zshrc $HOME/.zshrc
+    ln -sf $configs/shell/profile $HOME/.zprofile
+    ln -sf $configs/shell/logout $HOME/.zlogout
+    _install_fzf
+}
+
 
 if [ ! -e $root/.venv ]; then
     echo "Setting up virtual environment ..."
@@ -395,6 +409,7 @@ install vim
 install nvim
 install xorg Xorg
 install xdg xdg-open
+install zsh
 
 [ -e ~/.dropbox-dist ] && install_dropbox
 

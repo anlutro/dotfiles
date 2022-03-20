@@ -6,7 +6,7 @@ if ! command -v subl >/dev/null 2>&1; then
     exit 1
 fi
 
-dir=$(readlink -f "${1-$PWD}")
+dir=$(realpath "${1-$PWD}")
 cd $dir || exit 1
 
 find_sublime_project_file() {
@@ -24,7 +24,7 @@ done
 if [ -z "$sp" ]; then
     echo "No sublime-project found, running init-project ..."
     init-project --noninteractive --allow-no-type
-    dir=$(readlink -f "${1-$PWD}")
+    dir=$(realpath "${1-$PWD}")
     sp="$(find_sublime_project_file "$dir")"
 fi
 if [ -z "$sp" ]; then

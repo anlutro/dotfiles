@@ -35,7 +35,7 @@ fail() {
 }
 
 latest_already_installed() {
-    script="$(basename "$(readlink -f "$0")")"
+    script="$(basename "$(realpath "$0")")"
     name="${script%%.*}"
     echo "Latest version of $name ($version) is already installed!" >&2
     exit 0
@@ -47,7 +47,7 @@ download() {
     cd ~/downloads || exit 1
     wget "$1" -O "$filename"
     if [ -z "${2-}" ]; then
-        readlink -f "$filename"
+        realpath "$filename"
     fi
 }
 
