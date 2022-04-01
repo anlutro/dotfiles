@@ -155,6 +155,10 @@ def main():
     else:
         cards = list(find_default_card_profiles(all_profiles))
 
+    if not cards:
+        print('no cards/profiles found!')
+        return
+
     card, profile = cards[0]
     print('setting card:', card)
     print('setting profile:', profile)
