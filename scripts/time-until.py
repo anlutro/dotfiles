@@ -12,15 +12,27 @@ def parse_dt(val):
 def get_time_until(dt, unit=None):
     now = datetime.datetime.now(dt.tzinfo)
     delta = dt - now
+    delta_parts = []
     if unit is not None:
         unit = unit.strip().lower()
-        if unit[0] == "d":
-            return f"{delta.days} days"
-        elif unit[0] == "h":
-            delta = str(int((delta.days * 24) + (delta.seconds / 3600))) + " hours"
-        elif unit in ("mins", "minutes"):
-            delta = str(int((delta.days * 24 * 60) + (delta.seconds / 60))) + " minutes"
-    return delta
+    if not unit or unit[0] == "d":
+        delta_parts.append(f"{delta.days} days")
+        delta = delta - datetime.timedelta(days=delta.days)
+    if not unit or unit[0] == "h":
+        hours = int(delta.seconds / 3600)
+        if hours > 0 or (unit and unit[0] == "h"):
+            delta_parts.append(
+                str(int((delta.days * 24) + hours)) + " hours"
+            )
+            delta = delta - datetime.timedelta(hours=hours)
+    if not unit or unit[0] == "m":
+        minutes = int(delta.seconds / 60)
+        if minutes > 0 or (unit and unit[0] == "m"):
+            delta_parts.append(
+                str(int((delta.days * 24 * 60) + minutes)) + " minutes"
+            )
+            delta = delta - datetime.timedelta(minutes=minutes)
+    return ", ".join(delta_parts)
 
 
 def main():
