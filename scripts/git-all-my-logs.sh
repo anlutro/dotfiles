@@ -12,8 +12,8 @@ are git repositories. Extra args are passed to git log. Example:
   git all-my-logs --since=yesterday
 "
 
-. /usr/lib/git-core/git-sh-setup
-. /usr/lib/git-core/git-sh-i18n
+. ${GIT_EXEC_PATH}/git-sh-setup
+. ${GIT_EXEC_PATH}/git-sh-i18n
 # require_work_tree
 # cd_to_toplevel
 
