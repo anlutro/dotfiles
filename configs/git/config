@@ -96,3 +96,6 @@ required = true
 
 [init]
 defaultBranch = main
+
+[merge]
+conflictstyle = zdiff3
