@@ -3,6 +3,7 @@
 import argparse
 import datetime
 import dateutil.parser
+import dateutil.tz
 
 
 def parse_dt(val):
@@ -38,9 +39,14 @@ def get_time_until(dt, unit=None):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-u", "--unit")
+    parser.add_argument("-z", "--timezone")
     parser.add_argument("-t", "--template", default="Time until {time}: {remaining}")
     parser.add_argument("datetime", type=parse_dt)
+
     args = parser.parse_args()
+    if args.timezone:
+        args.datetime = args.datetime.replace(tzinfo=dateutil.tz.gettz(args.timezone))
+
     print(
         args.template.format(
             time=args.datetime,
