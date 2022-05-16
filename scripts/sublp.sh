@@ -32,8 +32,9 @@ if [ -z "$sp" ]; then
     sp=$dir
 fi
 
-# rename i3 workspace
-~/code/dotfiles/scripts/i3-rename-workspace.sh --dir "$dir"
+if command -v i3-msg >/dev/null 2>&1; then
+    ~/code/dotfiles/scripts/i3-rename-workspace.sh --dir "$dir"
+fi
 
 # open sublime text
 subl "$sp"
