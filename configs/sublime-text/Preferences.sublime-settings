@@ -112,6 +112,7 @@
 	"overlay_scroll_bars": "enabled",
 	"python_interpreter": "python3",
 	"remember_open_files": false,
+	"remember_workspace": false,
 	"rulers":
 	[
 		78,

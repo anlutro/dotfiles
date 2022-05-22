@@ -34,7 +34,7 @@ fi
 
 if command -v i3-msg >/dev/null 2>&1; then
     ~/code/dotfiles/scripts/i3-rename-workspace.sh --dir "$dir"
+    i3-msg exec subl "$sp"
+else
+    subl "$sp"
 fi
-
-# open sublime text
-subl "$sp"
