@@ -27,13 +27,12 @@ if confirm "install xorg/desktop programs?"; then
     pacman -Sy \
         xorg-{xserver-xinit,xrandr,xsetroot,xset,setxkbmap,xinput} \
         i3-wm i3lock i3blocks xclip rofi dunst scrot feh \
-        rxvt-unicode redshift pulseaudio \
+        rxvt-unicode redshift pipewire-pulse pamixer \
         adobe-source-code-pro-fonts ttf-droid
     systemctl disable --now geoclue
-    sudo -u andreas systemctl enable --now pulseaudio
 
     if confirm "install bluetooth tools?"; then
-        pacman -Sy pulseaudio-bluetooth bluez bluez-utils
+        pacman -Sy bluez bluez-utils
     fi
 
     if confirm "install sublime text?"; then
