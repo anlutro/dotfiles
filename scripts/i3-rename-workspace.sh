@@ -27,5 +27,5 @@ fi
 
 if [ -n "$new_name" ]; then
     echo "Renaming workspace to $new_name"
-    i3-msg rename workspace to "$new_name"
+    i3-msg --quiet rename workspace to "$new_name"
 fi
