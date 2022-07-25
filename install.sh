@@ -318,10 +318,11 @@ install_xorg() {
     xorg_cfg_dir=$HOME/.config/xorg
     mkdir -p $xorg_cfg_dir
 
-    # various scripts
+    # various scripts and configs
     ln -sf $configs/xorg/xrandrinit.sh $xorg_cfg_dir
     ln -sf $configs/xorg/xsettings.sh $xorg_cfg_dir
     ln -sf $configs/xorg/xprograms.sh $xorg_cfg_dir
+    ln -sf $configs/xorg/xcompose $HOME/.XCompose
     ln -sf $scripts/lockscreen.sh $bindir/lockscreen
     [ -L $HOME/.xrandrinit ] && rm $HOME/.xrandrinit
     [ -L $HOME/.xsettings ] && rm $HOME/.xsettings
