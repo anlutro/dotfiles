@@ -9,7 +9,9 @@ version=$(
 	| grep -oP 'terraform_[\d.]+' | sed 's/^terraform_//' \
 	| sort -V | uniq | grep "${1-.*}" | tail -1
 )
-url="https://releases.hashicorp.com/terraform/${version}/terraform_${version}_linux_amd64.zip"
+# TODO: support arm64 somehow
+platform=$(uname --kernel-name | tr '[:upper:]' '[:lower:]')_amd64
+url="https://releases.hashicorp.com/terraform/${version}/terraform_${version}_${platform}.zip"
 
 if terraform --version | grep -qxF "Terraform v$version"; then
 	latest_already_installed
