@@ -49,3 +49,6 @@ export QT_AUTO_SCREEN_SCALE_FACTOR=0
 
 # rg / ripgrep
 export RIPGREP_CONFIG_PATH=~/.config/ripgreprc
+
+# cloud, k8s
+export USE_GKE_GCLOUD_AUTH_PLUGIN=True
