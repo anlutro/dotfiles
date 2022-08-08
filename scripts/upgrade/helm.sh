@@ -11,8 +11,10 @@ if helm version --template '{{.Version}}' | grep -qFx "$version"; then
 	latest_already_installed
 fi
 
-filename=$(download https://get.helm.sh/helm-$version-linux-amd64.tar.gz)
+# TODO: support arm64 somehow
+platform=$(uname --kernel-name | tr '[:upper:]' '[:lower:]')-amd64
+filename=$(download https://get.helm.sh/helm-$version-$platform.tar.gz)
 tmpdir=$(mktemp -d)
 tar xf $filename -C $tmpdir
-install_bin $tmpdir/linux-amd64/helm
+install_bin $tmpdir/$platform/helm
 rm -rf $tmpdir
