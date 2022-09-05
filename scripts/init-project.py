@@ -7,6 +7,7 @@ import os.path
 import subprocess
 import sys
 import readline
+import textwrap
 
 
 is_interactive = sys.__stdin__.isatty
@@ -145,18 +146,28 @@ def is_hook_file_managed(path):
     return file_overwrite_confirm(path)
 
 
+BLACK_HOOK = """
+py_files=$(git diff --cached --name-only --diff-filter=AM | grep '\\.py$')
+if [ -n "$py_files" ]; then
+    echo $py_files | xargs black
+    git add $py_files
+fi
+"""
+
+
 def write_git_hooks(hooks_path, project_types):
     write_paths = {}
     if "python" in project_types:
-        write_paths[os.path.join(hooks_path, "pre-commit")] = [
-            "git diff --cached --name-only --diff-filter=AM | grep '\\.py$' | xargs -r black"
-        ]
+        write_paths[os.path.join(hooks_path, "pre-commit")] = BLACK_HOOK
     for path, lines in write_paths.items():
         if not is_hook_file_managed(path):
             continue
         with open(path, "wt") as fh:
             fh.write("#!/bin/sh\n" + GIT_HOOK_SIGNATURE + "\n\n")
-            fh.write("\n".join(lines))
+            if isinstance(lines, (str, bytes)):
+                fh.write(textwrap.dedent(lines))
+            else:
+                fh.write("\n".join(lines))
             fh.write("\n")
         os.chmod(path, 0o755)
 
