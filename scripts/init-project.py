@@ -14,9 +14,20 @@ is_interactive = sys.__stdin__.isatty
 
 def confirm(prompt, default=False):
     if is_interactive():
-        prompt += " [%s/%s] " % ("Y" if default else "y", "n" if default else "N",)
+        prompt += " [%s/%s] " % (
+            "Y" if default else "y",
+            "n" if default else "N",
+        )
         return input(prompt).lower().startswith("y")
     return default
+
+
+def file_overwrite_confirm(path, default=False):
+    if not os.path.exists(path):
+        return True
+    end = "!" if is_interactive() else "- not overwriting"
+    print(path, "already exists", end)
+    return confirm("overwrite?", default=default)
 
 
 def input_with_prefill(prompt, text):
@@ -121,6 +132,35 @@ def write_gitignore(path, project_types):
         print("Wrote", path)
 
 
+GIT_HOOK_SIGNATURE = "###managed by init-project###"
+
+
+def is_hook_file_managed(path):
+    if not os.path.exists(path):
+        return True
+    with open(path, "rt") as fh:
+        for line in fh:
+            if line.strip() == GIT_HOOK_SIGNATURE:
+                return True
+    return file_overwrite_confirm(path)
+
+
+def write_git_hooks(hooks_path, project_types):
+    write_paths = {}
+    if "python" in project_types:
+        write_paths[os.path.join(hooks_path, "pre-commit")] = [
+            "git diff --cached --name-only --diff-filter=AM | grep '\\.py$' | xargs -r black"
+        ]
+    for path, lines in write_paths.items():
+        if not is_hook_file_managed(path):
+            continue
+        with open(path, "wt") as fh:
+            fh.write("#!/bin/sh\n" + GIT_HOOK_SIGNATURE + "\n\n")
+            fh.write("\n".join(lines))
+            fh.write("\n")
+        os.chmod(path, 0o755)
+
+
 python_files = {
     "setup.py",
     "setup.cfg",
@@ -182,14 +222,9 @@ def main():
         (project_name + ".sublime-project", write_sublime_project),
         (".gitignore", write_gitignore),
     )
-    file_exists_msg = "already exists" + (
-        "!" if is_interactive() else ", not overwriting"
-    )
     for filename, func in file_funcs:
-        if os.path.exists(filename):
-            print(filename, file_exists_msg)
-            if not confirm("overwrite?"):
-                continue
+        if not file_overwrite_confirm(filename):
+            continue
         func(filename, project_types)
 
     for project_type in project_types:
@@ -198,6 +233,8 @@ def main():
             "copy files from %s if they don't already exist?" % skel_path
         ):
             subprocess.run(["rsync", "-rv", "--ignore-existing", skel_path, "."])
+
+    write_git_hooks(".git/hooks", project_types)
 
 
 if __name__ == "__main__":
