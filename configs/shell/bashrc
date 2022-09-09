@@ -97,28 +97,25 @@ fi
 # wrap in a function to allow local variables
 _set_ps1() {
     export PROMPT_DIRTRIM=5
-    local user_color='32' # green
-    local host_color='32' # green
+    local user_color='01;32m' # green
+    local host_color='01;32m' # green
     local host_str='\h'
 
     if [ $USER = 'vagrant' ]; then
-        user_color='34' # blue
+        user_color='01;34m' # blue
     elif [ $USER = 'root' ]; then
-        user_color='31' # red
+        user_color='01;31m' # red
     elif [ $USER != 'andreas' ]; then
-        user_color='33' # yellow
+        user_color='01;33m' # yellow
     fi
 
     if [ -n "$SSH_CLIENT" ]; then
-        host_str=$(hostname -f 2>/dev/null || hostname)
-        if [[ $host_str == *vagrant* ]]; then
-            host_color='34' # blue
-        else
-            host_color='33' # yellow
-        fi
+        host_color='01;33m' # yellow
     fi
 
-    PS1='\[\033[01;'$user_color'm\]\u\[\033[0;37m\]@\[\033[01;'$host_color'm\]'$host_str'\[\033[00m\] \w'
+    PS1='\[\033['
+    PS1+='$(test -z "$HISTFILE" && echo "02;37m\u@\h" || echo "'$user_color'\]\u\[\033[0;37m\]@\[\033['$host_color'\]\h")'
+    PS1+='\[\033[00m\] \w'
 
     if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
         debian_chroot=$(cat /etc/debian_chroot)
