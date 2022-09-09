@@ -99,7 +99,6 @@ _set_ps1() {
     export PROMPT_DIRTRIM=5
     local user_color='01;32m' # green
     local host_color='01;32m' # green
-    local host_str='\h'
 
     if [ $USER = 'vagrant' ]; then
         user_color='01;34m' # blue
