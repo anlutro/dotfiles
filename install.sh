@@ -367,7 +367,7 @@ ln -sf $configs/shell/inputrc $HOME/.inputrc
 [ -L $HOME/.shell_aliases ] && rm $HOME/.shell_aliases
 [ -L $HOME/.shell_vars ] && rm $HOME/.shell_vars
 [ -L $HOME/.shrc ] && rm $HOME/.shrc
-ln -sfT $configs/shell/shrc.d $HOME/.shrc.d
+[ -L $HOME/.shrc.d ] && rm $HOME/.shrc.d
 if [ ! -d $HOME/.ssh ]; then
     mkdir -p $HOME/.ssh
     chmod 700 $HOME/.ssh

@@ -10,8 +10,8 @@ esac
 unalias -a
 
 # environment variables, aliases and functions
-if [ -d "$HOME/.shrc.d" ]; then
-    for f in $HOME/.shrc.d/*.sh; do
+if [ -d "$HOME/code/dotfiles" ]; then
+    for f in $HOME/code/dotfiles/configs/shell/shrc.d/*.sh; do
         # shellcheck source=/dev/null
         . "$f"
     done
