@@ -1,6 +1,6 @@
 #!/bin/sh
 
-warn_state_file=/tmp/.battery-warning-sent
+warn_state_file=/tmp/.battery-warning-notification-id
 search='Battery 0: '
 full_text=$(acpi -b | grep "^$search" | cut -d: -f2-)
 status=$(echo "$full_text" | cut -d, -f1 | sed -e 's/^[[:space:]]*//')
@@ -29,7 +29,11 @@ if [ "$status" = 'Charging' ]; then
         hexchar=$(printf '%02x' $hexint 2> /dev/null)
         echo "#${hexchar}ff${hexchar}"
     fi
-    rm -f $warn_state_file
+    if [ -s $warn_state_file ]; then
+        notify-send --replace-id=$(cat $warn_state_file) --urgency=low --expire-time=15000 \
+            'Battery warning - OK' 'Battery was low but is now charging'
+        rm $warn_state_file
+    fi
 else
     # percentage-based coloring
     if [ $pct -gt 66 ]; then
@@ -69,12 +73,12 @@ else
 
     if command -v notify-send >/dev/null 2>&1; then
         if [ $pct -lt 5 ]; then
-            if [ ! -e $warn_state_file ]; then
-                notify-send --urgency=critical 'Battery warning' "Battery level: $pct%"
-                touch $warn_state_file
+            if [ -e $warn_state_file ]; then
+                notify_send_args="--replace-id=$(cat $warn_state_file)"
             fi
-        elif [ $pct -gt 10 ]; then
-            rm -f $warn_state_file
+            notify-send ${notify_send_args-} --print-id --urgency=critical \
+                'Battery warning' "Battery level: $pct%" \
+                > $warn_state_file
         fi
     fi
 fi
