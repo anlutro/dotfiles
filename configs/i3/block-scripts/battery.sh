@@ -30,7 +30,7 @@ if [ "$status" = 'Charging' ]; then
         echo "#${hexchar}ff${hexchar}"
     fi
     if [ -s $warn_state_file ]; then
-        notify-send --replace-id=$(cat $warn_state_file) --urgency=low --expire-time=15000 \
+        notify-send --replace-id="$(cat $warn_state_file)" --urgency=low --expire-time=15000 \
             'Battery warning - OK' 'Battery was low but is now charging'
         rm $warn_state_file
     fi
@@ -73,10 +73,12 @@ else
 
     if command -v notify-send >/dev/null 2>&1; then
         if [ $pct -lt 5 ]; then
-            if [ -e $warn_state_file ]; then
-                notify_send_args="--replace-id=$(cat $warn_state_file)"
+            if [ -s $warn_state_file ]; then
+                replace_id="$(cat $warn_state_file)"
+            else
+                replace_id=0
             fi
-            notify-send ${notify_send_args-} --print-id --urgency=critical \
+            notify-send --replace-id="$replace_id" --print-id --urgency=critical \
                 'Battery warning' "Battery level: $pct%" \
                 > $warn_state_file
         fi
