@@ -13,47 +13,53 @@ def get_all_card_profiles():
             yield card, profile
 
 
+# NOTE: only useful with pulesaudio, not pipewire
 def find_hdmi_card_profiles(card_profiles, surround=False, surround71=False):
     for card, profile in card_profiles:
-        if any((
-            profile.available == 0,
-            'hdmi' not in profile.name,
-            # for some reason, connected hdmi cables don't have +input - maybe
-            # because hdmi *can* have audio input, but it doesn't actually
-            # exist in real life?
-            '+input' in profile.name,
-        )):
+        if any(
+            (
+                profile.available == 0,
+                "hdmi" not in profile.name,
+                # for some reason, connected hdmi cables don't have +input - maybe
+                # because hdmi *can* have audio input, but it doesn't actually
+                # exist in real life?
+                "+input" in profile.name,
+            )
+        ):
             continue
         elif surround71:
-            if 'surround71' not in profile.name:
+            if "surround71" not in profile.name:
                 continue
         elif surround:
-            if 'surround' not in profile.name:
+            if "surround" not in profile.name:
                 continue
         else:
-            if 'surround' in profile.name:
+            if "surround" in profile.name:
                 continue
         yield card, profile
 
 
 def find_bluetooth_card_profiles(card_profiles):
     for card, profile in card_profiles:
-        if 'bluez' in card.name:
+        if "bluez" in card.name:
             yield card, profile
 
 
 def find_default_card_profiles(card_profiles):
-    for card, profile in card_profiles:
-        if profile.name == 'output:analog-stereo+input:analog-stereo':
-            yield card, profile
-    for card, profile in card_profiles:
-        if profile.name == 'output:analog-stereo':
-            yield card, profile
+    preferences = (
+        "HiFi",
+        "output:analog-stereo+input:analog-stereo",
+        "output:analog-stereo",
+    )
+    for preference in preferences:
+        for card, profile in card_profiles:
+            if profile.name == preference:
+                yield card, profile
 
 
 class EmptyPort:
-    name = 'empty-port'
-    available = 'yes'
+    name = "empty-port"
+    available = "yes"
     priority = 0
 
 
@@ -68,7 +74,7 @@ def find_preferred_port(resources, search_for):
         if not resource.port_list:
             resource.port_list = [EmptyPort()]
         for port in resource.port_list:
-            if port.available == 'no':
+            if port.available == "no":
                 continue
             resources_ports.append((resource, port))
 
@@ -76,12 +82,16 @@ def find_preferred_port(resources, search_for):
     # the top one. if no matches, just pick the highest priority one.
     searched_resources = []
     for resource, port in resources_ports:
-        if any(s in resource.name for s in search_for) or any(s in port.name for s in search_for):
+        if any(s in resource.name for s in search_for) or any(
+            s in port.name for s in search_for
+        ):
             searched_resources.append((resource, port))
     if searched_resources:
         resources_ports = searched_resources
     else:
-        print(f'WARNING: no resources matched {search_for=!r} - will just pick first available default resource')
+        print(
+            f"WARNING: no resources matched {search_for=!r} - will just pick first available default resource"
+        )
 
     preferred_resource, preferred_port = None, None
     for resource, port in resources_ports:
@@ -94,10 +104,15 @@ def switch_source(preferred_patterns):
     pa_sources = pulse.source_list()
     source, port = find_preferred_port(pa_sources, preferred_patterns)
     if source and port:
-        if not isinstance(port, EmptyPort):
-            print("switching source %s to port %s" % (source.name, port.name))
+        if source.port_active.name == port.name:
+            print(
+                "source %r already set to port %r, not doing anything"
+                % (source.name, port.name)
+            )
+        elif not isinstance(port, EmptyPort):
+            print("switching source %r to port %r" % (source.name, port.name))
             pulse.source_port_set(source.index, port.name)
-        print("setting default source %s" % (source.name,))
+        print("setting default source %r" % (source.name,))
         pulse.default_set(source)
         return source
     else:
@@ -110,10 +125,15 @@ def switch_sink(preferred_patterns):
     if sink and port:
         # conditional here shouldn't be necessary but switching sink ports on
         # bluetooth crashes
-        if sink.port_active.name != port.name:
-            print("switching sink %s to port %s" % (sink.name, port.name))
+        if sink.port_active.name == port.name:
+            print(
+                "sink %r already set to port %r, not doing anything"
+                % (sink.name, port.name)
+            )
+        else:
+            print("switching sink %r to port %r" % (sink.name, port.name))
             pulse.sink_port_set(sink.index, port.name)
-        print("setting default sink %s" % (sink.name,))
+        print("setting default sink %r" % (sink.name,))
         pulse.default_set(sink)
         return sink
     else:
@@ -121,66 +141,73 @@ def switch_sink(preferred_patterns):
 
 
 def arg_to_float(arg):
-    if ',' in arg:
-        arg = arg.replace(',', '.')
-    if '.' in arg:
+    if "," in arg:
+        arg = arg.replace(",", ".")
+    if "." in arg:
         return float(arg)
-    if arg.endswith('%'):
+    if arg.endswith("%"):
         return float(arg[:-1]) / 100
 
 
 def main():
     p = argparse.ArgumentParser()
-    p.add_argument('--hdmi', action='store_true', help='use HDMI audio')
-    p.add_argument('--surround', action='store_true', help='prefer surround over stereo')
-    p.add_argument('--surround71', action='store_true', help='prefer 7.1 surround over stereo')
-    p.add_argument('-bt', '--bluetooth', action='store_true', help='prefer bluetooth devices')
-    p.add_argument('--source-volume', type=arg_to_float, help='set source volume')
-    p.add_argument('--preferred-sink', nargs='*')
-    p.add_argument('--preferred-source', nargs='*')
+    p.add_argument("--hdmi", action="store_true", help="use HDMI audio")
+    p.add_argument(
+        "--surround", action="store_true", help="prefer surround over stereo"
+    )
+    p.add_argument(
+        "--surround71", action="store_true", help="prefer 7.1 surround over stereo"
+    )
+    p.add_argument(
+        "-bt", "--bluetooth", action="store_true", help="prefer bluetooth devices"
+    )
+    p.add_argument("--source-volume", type=arg_to_float, help="set source volume")
+    p.add_argument("--preferred-sink", nargs="*")
+    p.add_argument("--preferred-source", nargs="*")
     args = p.parse_args()
 
     all_profiles = sorted(get_all_card_profiles(), key=lambda x: -x[1].priority)
 
-    if args.hdmi:
-        cards = list(find_hdmi_card_profiles(all_profiles, surround=args.surround, surround71=args.surround71))
-        if not cards:
-            print('no active HDMI outputs found!')
-            return 1
-    elif args.bluetooth:
+    if args.bluetooth:
         cards = list(find_bluetooth_card_profiles(all_profiles))
         if not cards:
-            print('no active Bluetooth devices found!')
+            print("no active Bluetooth devices found!")
             return 1
     else:
         cards = list(find_default_card_profiles(all_profiles))
 
     if not cards:
-        print('no cards/profiles found!')
+        print("no cards/profiles found!")
         return
 
     card, profile = cards[0]
-    print('setting card:', card)
-    print('setting profile:', profile)
+    print("setting card:", card)
+    print("setting profile:", profile)
     pulse.card_profile_set(card, profile)
 
-    source = None
-    # TODO: why not args.hdmi?
-    if not args.hdmi:
-        if not args.preferred_source:
-            args.preferred_source = ("bluez", "bluetooth") if args.bluetooth else ("headset-mic")
-        source = switch_source(args.preferred_source)
+    if args.preferred_source:
+        preferred_source = args.preferred_source
+    elif args.bluetooth:
+        preferred_source = ("bluez", "bluetooth")
+    else:
+        preferred_source = ("headset-mic",)
+    source = switch_source(preferred_source)
+
     if source and args.source_volume:
-        print('setting source volume to', args.source_volume)
+        print("setting source volume to", args.source_volume)
         pulse.volume_set_all_chans(source, args.source_volume)
 
-    # TODO: why not args.hdmi?
     # TODO: bluetooth causes pulsectl.pulsectl.PulseOperationFailed: 3
-    if not args.hdmi:
-        if not args.preferred_sink:
-            args.preferred_sink = ("bluez", "bluetooth") if args.bluetooth else ("headphone")
-        switch_sink(args.preferred_sink)
+    if args.preferred_sink:
+        preferred_sink = args.preferred_sink
+    elif args.hdmi:
+        preferred_sink = "HDMI"
+    elif args.bluetooth:
+        preferred_sink = ("bluez", "bluetooth")
+    else:
+        preferred_sink = ("headphone",)
+    switch_sink(preferred_sink)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     sys.exit(main())
