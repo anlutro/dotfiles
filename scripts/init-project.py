@@ -155,10 +155,14 @@ fi
 """
 
 
-def write_git_hooks(hooks_path, project_types):
+def write_git_hooks(hooks_dir, project_types):
+    if not os.path.exists(hooks_dir):
+        print(hooks_dir, "does not exist, skipping")
+        return
+
     write_paths = {}
     if "python" in project_types:
-        write_paths[os.path.join(hooks_path, "pre-commit")] = BLACK_HOOK
+        write_paths[os.path.join(hooks_dir, "pre-commit")] = BLACK_HOOK
     for path, lines in write_paths.items():
         if not is_hook_file_managed(path):
             continue
@@ -170,6 +174,7 @@ def write_git_hooks(hooks_path, project_types):
                 fh.write("\n".join(lines))
             fh.write("\n")
         os.chmod(path, 0o755)
+        print("Wrote to", path)
 
 
 python_files = {
