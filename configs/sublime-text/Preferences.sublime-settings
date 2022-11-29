@@ -80,6 +80,7 @@
 		".git",
 		".hg",
 		".idea",
+		".mypy_cache",
 		".svn",
 		".task",
 		".tox",
