@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>author</key>
-	<string>Michael Sheets</string>
+	<string>Andreas Lutro</string>
 	<key>name</key>
 	<string>Twilight</string>
 	<key>settings</key>
@@ -92,7 +92,7 @@
 			<key>name</key>
 			<string>String</string>
 			<key>scope</key>
-			<string>string, meta.embedded string</string>
+			<string>string, meta.embedded string, string.quoted</string>
 			<key>settings</key>
 			<dict>
 				<key>fontStyle</key>
@@ -351,7 +351,7 @@
 			<key>name</key>
 			<string>✘ Meta.tag.inline</string>
 			<key>scope</key>
-			<string>declaration.tag.inline, declaration.tag.inline entity, source entity.name.tag, source entity.other.attribute-name, meta.tag.inline, meta.tag.inline entity</string>
+			<string>declaration.tag.inline, declaration.tag.inline entity, source entity.name.tag, source entity.other.attribute-name, meta.tag.inline, meta.tag.inline entity, meta.mapping.key string</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
