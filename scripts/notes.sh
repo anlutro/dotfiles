@@ -55,7 +55,7 @@ note_new() {
     if [ ! -f "$NOTES_DIR/$file" ]; then
         if command -v fzf >/dev/null 2>&1; then
             match=$(
-                find $NOTES_DIR -type f | sed -e "s|$NOTES_DIR/||" \
+                find $NOTES_DIR/ -type f | sed -e "s|$NOTES_DIR/*||" \
                 | grep -Px '[^.]+(|\.(md|txt))' \
                 | fzf --query "$*" --print-query --select-1
             ) || true
