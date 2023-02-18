@@ -306,6 +306,10 @@ install_nvim() {
     done
 }
 
+install_wireplumber() {
+    ln -sfT $configs/wireplumber $HOME/.config/wireplumber
+}
+
 install_xdg() {
     ln -sf $configs/user-dirs.dirs $HOME/.config/user-dirs.dirs
 }
@@ -408,6 +412,7 @@ install tmux
 install urxvt
 install vim
 install nvim
+install wireplumber
 install xorg Xorg
 install xdg xdg-open
 install zsh
