@@ -24,6 +24,6 @@ find_bin() {
 bin=$(find_bin)
 
 exec $bin \
-	--high-dpi-support=1 \
-	--force-device-scale-factor=1 \
-	"$@"
+    --high-dpi-support=1 \
+    --force-device-scale-factor=1 \
+    "$@"
