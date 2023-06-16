@@ -160,5 +160,7 @@ function whatsmyip {
 
 # check ssl dates
 function ssl-dates {
-    echo | openssl s_client -connect "${1}:${2-443}" -servername "$1" 2>/dev/null | openssl x509 -noout -dates
+    cmd="echo -n Q | openssl s_client -connect \"${1}:${2-443}\" -servername \"$1\" 2>/dev/null | openssl x509 -noout -subject -ext subjectAltName -dates"
+    echo "$cmd"
+    eval "$cmd"
 }
