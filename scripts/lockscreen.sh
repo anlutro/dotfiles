@@ -7,7 +7,7 @@ set -eu
 cmd='true'
 
 # delete keys from ssh agent if it is running
-if [ -n "$SSH_AGENT_PID" ]; then
+if [ -n "${SSH_AGENT_PID-}" ]; then
     cmd="$cmd && ssh-add -D"
 fi
 
