@@ -407,7 +407,7 @@ install moc mocp
 install mpv
 install mutt
 install nano
-install python
+install python python3
 install rg
 install subl
 install taskwarrior task
