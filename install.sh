@@ -220,6 +220,10 @@ install_rg() {
     ln -sf $configs/ripgreprc $HOME/.config/ripgreprc
 }
 
+install_rofi() {
+    vendor_install https://github.com/davatorium/rofi-scripts
+}
+
 install_subl() {
     ln -sf "$scripts/sublp.sh" "$bindir/sublp"
 
@@ -409,6 +413,7 @@ install mutt
 install nano
 install python python3
 install rg
+install rofi
 install subl
 install taskwarrior task
 install tmux
