@@ -361,12 +361,12 @@ install_zsh() {
 if [ ! -e $root/.venv ]; then
     echo "Setting up virtual environment ..."
     python3 -m venv $root/.venv
-    $root/.venv/bin/pip install --upgrade setuptools pip
+    $root/.venv/bin/pip install --quiet --upgrade setuptools pip
     echo
 fi
 if [ -e $root/requirements.txt ]; then
     echo "Installing Python requirements ..."
-    $root/.venv/bin/pip install --upgrade -r $root/requirements.txt
+    $root/.venv/bin/pip install --quiet --upgrade -r $root/requirements.txt
     echo
 fi
 
@@ -425,12 +425,12 @@ install xorg Xorg
 install xdg xdg-open
 install zsh
 
+# dropbox doesn't have a specific binary we can look for in $PATH
 [ -e ~/.dropbox-dist ] && install_dropbox
 
 echo
 
 
-# look for broken symlinks
 echo "Looking for broken symlinks..."
 find $configs -xtype l
 find $scripts -xtype l
