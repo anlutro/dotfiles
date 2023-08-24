@@ -19,7 +19,7 @@ def find_code_dirs(root_dir, max_depth=3):
 
 
 def rofi_pick_from_options(options, prompt=None):
-    cmd = ["rofi", "-dmenu"]
+    cmd = ["rofi", "-dmenu", "-matching", "fuzzy"]
     if prompt:
         cmd += ["-p", prompt]
     result = subprocess.run(
