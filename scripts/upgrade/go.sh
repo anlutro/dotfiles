@@ -9,7 +9,7 @@ if [ $# -gt 0 ]; then
     filename=$(basename $url)
 else
     path=$(
-        curl -s 'https://golang.org/dl/' | grep -F 'href=' \
+        curl -sSL 'https://golang.org/dl/' | grep -F 'href=' \
         | grep -oP '\/dl\/[^"]+linux-amd64\.tar\.gz' | head -1
     )
     url="https://golang.org${path}"

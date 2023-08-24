@@ -8,6 +8,15 @@ else
     SHARE_DIR=$HOME/.local/share
 fi
 
+cmd_exists() {
+    for cmd in "$@"; do
+        if ! command -v "$cmd" >/dev/null 2>&1; then
+            return 1
+        fi
+    done
+    return 0
+}
+
 confirm() {
     echo -n "$* [Y/n] "
     read REPLY
