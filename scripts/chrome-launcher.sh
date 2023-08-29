@@ -21,9 +21,17 @@ find_bin() {
     exit 1
 }
 
-bin=$(find_bin)
+CHROMIUM_FLAGS=""
+if [ -d /etc/chromium.d ]; then
+    for f in /etc/chromium.d/*; do
+        . "$f"
+    done
+fi
+if [ -d $HOME/.config/chromium.d ]; then
+    for f in $HOME/.config/chromium.d/*; do
+        . "$f"
+    done
+fi
 
-exec $bin \
-    --high-dpi-support=1 \
-    --force-device-scale-factor=1 \
-    "$@"
+# we assume chromium flags will also work for google-chrome
+exec $(find_bin) $CHROMIUM_FLAGS "$@"
