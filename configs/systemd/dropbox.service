@@ -10,6 +10,3 @@ ExecStartPre=%h/code/dotfiles/scripts/upgrade/dropbox.sh
 ExecStart=%h/.dropbox-dist/dropboxd
 Restart=always
 RestartSec=60
-
-[Install]
-WantedBy=multi-user.target
