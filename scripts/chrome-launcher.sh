@@ -24,14 +24,18 @@ find_bin() {
 CHROMIUM_FLAGS=""
 if [ -d /etc/chromium.d ]; then
     for f in /etc/chromium.d/*; do
-        # shellcheck source=/dev/null
-        . "$f"
+        if [ -f "$f" ]; then
+            # shellcheck source=/dev/null
+            . "$f"
+        fi
     done
 fi
 if [ -d $HOME/.config/chromium.d ]; then
     for f in $HOME/.config/chromium.d/*; do
-        # shellcheck source=/dev/null
-        . "$f"
+        if [ -f "$f" ]; then
+            # shellcheck source=/dev/null
+            . "$f"
+        fi
     done
 fi
 
