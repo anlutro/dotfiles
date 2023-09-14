@@ -4,8 +4,13 @@ set -eu
 . "$(dirname "$(realpath "$0")")/_lib.sh"
 
 repo=helmfile/helmfile
-version=$(gh_latest_tag $repo)
-version_num=$(echo "$version" | sed 's/^v//')
+if [ -z "$1" ]; then
+    version=$(gh_latest_tag $repo)
+    version_num=$(echo "$version" | sed 's/^v//')
+else
+    version_num=$(echo "$1" | sed 's/^v//')
+    version="v${version_num}"
+fi
 
 if helmfile --version | grep -qF "version $version_num"; then
     latest_already_installed
