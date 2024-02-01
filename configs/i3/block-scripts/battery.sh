@@ -8,6 +8,7 @@ pct=$(echo "$full_text" | cut -d, -f2 | sed s/%// | tr -d '[:space:]')
 if ! echo "$full_text" | grep -qF -e 'rate information unavailable' -e 'zero rate'; then
     remaining=$(echo "$full_text" | cut -d, -f3 | cut -d' ' -f2)
 fi
+max=$(cat /sys/class/power_supply/BAT0/charge_control_end_threshold)
 
 if [ "$status" = 'Unknown' ]; then
     status="Full"
@@ -15,6 +16,9 @@ fi
 text="$status $pct%"
 if [ -n "${remaining-}" ]; then
     text="$text $remaining"
+fi
+if [ "${max:-100}" -lt 100 ]; then
+    text="$text (max:$max%)"
 fi
 
 # long/short text
