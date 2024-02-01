@@ -20,13 +20,20 @@ fi
 # the result is that the computer won't suspend through xautolock if
 # the machine has been manually locked (but not suspended) before.
 if ! pidof i3lock > /dev/null; then
-    if command -v scrot >/dev/null 2>&1 && command -v convert >/dev/null 2>&1; then
-        # blurring
-        # scrot /tmp/lock.bmp && convert /tmp/lock.bmp -blur 0x5 /tmp/lock.png
+    rm -f /tmp/lock.png
+    # we need `convert` to blur or pixelize screenshots
+    if ! command -v convert >/dev/null 2>&1; then
+        true  # do nothing
+    elif command -v maim >/dev/null 2>&1; then
+        maim /tmp/lock.bmp
+    elif command -v scrot >/dev/null 2>&1; then
+        scrot /tmp/lock.bmp
+    fi
 
-        # pixelization
-        scrot /tmp/lock.bmp && convert /tmp/lock.bmp -scale 10% -scale 1000% /tmp/lock.png
-
+    if [ -e /tmp/lock.bmp ]; then
+        convert /tmp/lock.bmp -scale 10% -scale 1000% /tmp/lock.png  # pixelization
+        # convert /tmp/lock.bmp -blur 0x5 /tmp/lock.png  # blurring
+        rm /tmp/lock.bmp
         cmd="$cmd && i3lock -i /tmp/lock.png && rm /tmp/lock.*"
     else
         cmd="$cmd && i3lock -c 000000"
