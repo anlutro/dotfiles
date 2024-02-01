@@ -158,9 +158,25 @@ function whatsmyip {
     dig -4 TXT +short o-o.myaddr.l.google.com @ns1.google.com
 }
 
-# check ssl dates
+# openssl convenience wrappers
+function ssl-connect {
+    host=$(echo "$1" | cut -d: -f1)
+    port=$(echo "$1" | grep -F : | cut -d: -f2)
+    cmd="echo -n Q | openssl s_client -connect \"${host}:${port:-443}\" -servername \"$host\""
+    echo "$cmd"
+    eval "$cmd"
+}
+function ssl-cert {
+    host=$(echo "$1" | cut -d: -f1)
+    port=$(echo "$1" | grep -F : | cut -d: -f2)
+    cmd="echo -n Q | openssl s_client -connect \"${host}:${port:-443}\" -servername \"$host\" 2>/dev/null | openssl x509"
+    echo "$cmd"
+    eval "$cmd"
+}
 function ssl-dates {
-    cmd="echo -n Q | openssl s_client -connect \"${1}:${2-443}\" -servername \"$1\" 2>/dev/null | openssl x509 -noout -subject -ext subjectAltName -dates"
+    host=$(echo "$1" | cut -d: -f1)
+    port=$(echo "$1" | grep -F : | cut -d: -f2)
+    cmd="echo -n Q | openssl s_client -connect \"${host}:${port:-443}\" -servername \"$host\" 2>/dev/null | openssl x509 -noout -subject -ext subjectAltName -dates"
     echo "$cmd"
     eval "$cmd"
 }
