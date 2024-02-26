@@ -28,7 +28,7 @@ done
 declare -A outputs
 declare -a externals
 
-xrandr_query=$(xrandr -q)
+xrandr_query=$(xrandr -q | grep -v '^\s')
 xrandr_connected_outputs=$(echo "$xrandr_query" | grep ' connected ' | cut -d' ' -f1 | sort)
 xrandr_disconnected_outputs=$(echo "$xrandr_query" | grep ' disconnected ' | cut -d' ' -f1 | sort)
 for output in $(echo "$xrandr_connected_outputs" | grep '^e'); do
@@ -47,11 +47,10 @@ if [ ${#externals[@]} -eq 1 ]; then
     if [ "$DUPLICATE" = 'yes' ]; then
         outputs[$external]="--same-as $primary_output"
     else
-        outputs[$primary_output]="--auto"
         if [ "$DIRECTION" = 'right' ]; then
-            outputs[$external]="--auto --primary --right-of $primary_output"
+            outputs[$external]="--auto --right-of $primary_output"
         elif [ "$DIRECTION" = 'left' ]; then
-            outputs[$external]="--auto --primary --left-of $primary_output"
+            outputs[$external]="--auto --left-of $primary_output"
         else
             echo "Unknown DIRECTION value: $DIRECTION"
             exit 1
