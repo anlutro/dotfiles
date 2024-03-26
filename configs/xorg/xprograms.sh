@@ -25,6 +25,16 @@ if check_cmd unclutter; then
     unclutter -idle 3 -root &
 fi
 
+# blocks "paste" with middle mouse
+if check_cmd xmousepasteblock; then
+    xmousepasteblock &
+fi
+
+# honestly no idea
+if check_cmd /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1; then
+    /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
+fi
+
 # auto lock/suspend after inactivity
 # if command -v xidlehook >/dev/null 2>&1; then
 #     xidlehook --not-when-fullscreen --not-when-audio --timer 300 'lockscreen' '' --timer 1800 'lockscreen --suspend' '' &
