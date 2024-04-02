@@ -99,3 +99,6 @@ defaultBranch = main
 
 [merge]
 conflictstyle = zdiff3
+
+[gpg]
+format = ssh
