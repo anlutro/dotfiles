@@ -40,14 +40,12 @@ else
     X_START_CMD="$*"
 fi
 
-# Debian quirks
-if [ "$(lsb_release -is)" = 'Debian' ]; then
-    # use dbus-launch to spawn the session if available. this enables X
-    # applications to talk to dbus because it spawns a dbus session and sets
-    # some environment variables (I think?)
-    if command -v 'dbus-launch' >/dev/null 2>&1; then
-        X_START_CMD="dbus-launch --exit-with-session $X_START_CMD"
-    fi
+# TODO: is this only necessary in debian/ubuntu?
+# use dbus-launch to spawn the session if available. this enables X
+# applications to talk to dbus because it spawns a dbus session and sets
+# some environment variables (I think?)
+if command -v 'dbus-launch' >/dev/null 2>&1; then
+    X_START_CMD="dbus-launch --exit-with-session $X_START_CMD"
 fi
 
 # normally you'd prepend ssh-agent to X_START_CMD, which would set all the
@@ -60,19 +58,14 @@ if command -v 'ssh-agent' >/dev/null 2>&1; then
     eval "$(ssh-agent -s)"
 fi
 
-# configure displays
-$xorg_cfg_dir/xrandrinit.sh
-
-# sometimes I want to restart X-related applications, so split those into its
-# own file
-$xorg_cfg_dir/xprograms.sh
-
-# I want to be able to re-run commands that set settings like mouse sensitivity,
-# keyboard repeat rate etc., so split that up into its own file
-$xorg_cfg_dir/xsettings.sh
+# these scripts have been extracted because for various reasons, at various
+# times, I want to re-run them manually after login.
+$xorg_cfg_dir/xrandrinit.sh  # configure displays
+$xorg_cfg_dir/xprograms.sh   # daemons
+$xorg_cfg_dir/xsettings.sh   # keyboard repeat rate, mouse sensitivity...
 
 # start the window manager. this is a blocking command. normally you'd want to
-# exec this, but that would prevent the cleanup commands blelow from running
+# exec this, but that would prevent the cleanup commands below from running
 $X_START_CMD
 
 # when the window manager command quits, we can also kill the ssh-agent
