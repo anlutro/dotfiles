@@ -3,8 +3,6 @@
 # redirect stdout/stderr from this script to a log file
 exec >> "$HOME/.local/share/xorg/xinit.log" 2>&1
 
-xorg_cfg_dir=$HOME/.config/xorg
-
 # copied from debian. if xhost is installed, use it to give access to the X
 # server to any process from the same user on the local host. unlike other
 # uses of xhost, this is safe since the kernel can check the actual owner of
@@ -24,8 +22,12 @@ if systemctl --user cat dropbox.service >/dev/null 2>&1; then
     systemctl --user restart dropbox.service &
 fi
 
+# allow passing the wm/sm/dm command as args to startx
+# TODO: this doesn't actually work!!
+X_START_CMD="$*"
+
 # if no argument was passed, try and guess what command to start x with
-if [ -z "$*" ]; then
+if [ -z "$X_START_CMD" ]; then
     if command -v 'x-session-manager' >/dev/null 2>&1; then
         X_START_CMD='x-session-manager'
     elif command -v 'x-window-manager' >/dev/null 2>&1; then
@@ -36,16 +38,6 @@ if [ -z "$*" ]; then
         echo "No appropriate X start command found!"
         exit 1
     fi
-else
-    X_START_CMD="$*"
-fi
-
-# TODO: is this only necessary in debian/ubuntu?
-# use dbus-launch to spawn the session if available. this enables X
-# applications to talk to dbus because it spawns a dbus session and sets
-# some environment variables (I think?)
-if command -v 'dbus-launch' >/dev/null 2>&1; then
-    X_START_CMD="dbus-launch --exit-with-session $X_START_CMD"
 fi
 
 # normally you'd prepend ssh-agent to X_START_CMD, which would set all the
@@ -60,9 +52,9 @@ fi
 
 # these scripts have been extracted because for various reasons, at various
 # times, I want to re-run them manually after login.
-$xorg_cfg_dir/xrandrinit.sh  # configure displays
-$xorg_cfg_dir/xprograms.sh   # daemons
-$xorg_cfg_dir/xsettings.sh   # keyboard repeat rate, mouse sensitivity...
+$HOME/.config/xorg/xrandrinit.sh  # configure displays
+$HOME/.config/xorg/xprograms.sh   # daemons
+$HOME/.config/xorg/xsettings.sh   # keyboard repeat rate, mouse sensitivity...
 
 # start the window manager. this is a blocking command. normally you'd want to
 # exec this, but that would prevent the cleanup commands below from running
@@ -78,4 +70,7 @@ if command -v gpgconf >/dev/null 2>&1; then
     gpgconf --kill gpg-agent
 fi
 
-systemctl --user set-environment DISPLAY= XAUTHORITY=
+# prevent programs from trying to communicate with xorg (I think)
+if command -v systemctl >/dev/null 2>&1; then
+    systemctl --user set-environment DISPLAY= XAUTHORITY=
+fi
