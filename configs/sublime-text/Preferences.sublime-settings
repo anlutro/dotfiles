@@ -133,4 +133,5 @@
 	"vintage_start_in_command_mode": true,
 	"word_separators": "./\\()\"'-:,.;<>~`!?@#$%^&*|+=[]{}",
 	"word_wrap": true,
+	"index_files": true,
 }
