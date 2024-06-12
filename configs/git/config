@@ -56,7 +56,7 @@ decorate = true
 
 [push]
 default = current
-followTags = true
+#followTags = true
 
 [pull]
 ff = only
