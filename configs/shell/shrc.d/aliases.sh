@@ -58,6 +58,7 @@ alias rmvenv='venv destroy'
 # misc
 alias ap='ansible-playbook'
 alias dc='docker-compose'
+alias diff='diff --color --unified'
 alias gdiff='git diff --no-index'
 alias jn='jupyter-notebook'
 alias most-common='sort | uniq -c | sort -nr | head'
