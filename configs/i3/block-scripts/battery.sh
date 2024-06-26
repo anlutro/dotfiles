@@ -83,7 +83,7 @@ else
                 replace_id=0
             fi
             notify-send --replace-id="$replace_id" --print-id --urgency=critical \
-                'Battery warning' "Battery level: $pct%" \
+                'Battery warning' "Battery level: $pct% - $remaining left" \
                 > $warn_state_file
         fi
     fi
