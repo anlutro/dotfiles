@@ -2,7 +2,7 @@
 set -eu
 
 if [ -z "${DIARY_FILE-}" ]; then
-    DIARY_FILE=~/Dropbox/diary
+    DIARY_FILE=~/Dropbox/diary.md
 fi
 
 if [ ! -e "$DIARY_FILE" ]; then
@@ -10,20 +10,23 @@ if [ ! -e "$DIARY_FILE" ]; then
     exit 1
 fi
 
-tmpfile=$DIARY_FILE.draft
+draftfile=$DIARY_FILE.draft
+tmpfile=$DIARY_FILE.swap
 
-vim -c 'setlocal tw=79' $tmpfile
+vim -c 'setlocal tw=79' $draftfile
 
-if [ -e $tmpfile ] && [ -s $tmpfile ]; then
+if [ -e $draftfile ] && [ -s $draftfile ]; then
     dt=$(date -R)
-    if [ -s "$DIARY_FILE" ]; then
-        printf "\n\n" >> "$DIARY_FILE"
-    fi
-    echo "=====  $dt  =====" >> "$DIARY_FILE"
-    cat $tmpfile >> "$DIARY_FILE"
-    echo "Appended entry to $DIARY_FILE ($dt)"
+    { echo "# $dt"
+      cat "$draftfile"
+      printf "\n\n"
+      cat "$DIARY_FILE"
+    } >> "$tmpfile"
+
+    mv "$tmpfile" "$DIARY_FILE"
+    echo "Prepended entry to $DIARY_FILE ($dt)"
 else
     echo "Entry file empty, not doing anything"
 fi
 
-rm -f $tmpfile
+rm -f $draftfile $tmpfile
