@@ -1,0 +1,26 @@
+// Settings in here override those in "LSP-pylsp/LSP-pylsp.sublime-settings"
+
+{
+	"settings": {
+		// --- Linters --------------------------------------------------------
+    // Configuration is computed first from user configuration (in home directory),
+    // overridden by configuration passed in by the language client,
+    // and then overridden by configuration discovered in the workspace.
+    //
+    // The default configuration source is pycodestyle, because the default
+    // linter is pycodestyle. If instead you want to use flake8, you must
+    // change "pylsp.configurationSources" to ["flake8"], and you must
+    // enable the flake8 plugin (see below), and you must disable the
+    // pycodestyle plugin (see below).
+    // By default, pycodestyle is enabled
+    "pylsp.configurationSources": ["pycodestyle"],
+    "pylsp.plugins.flake8.enabled": true,
+    "pylsp.plugins.pycodestyle.enabled": false,
+    "pylsp.plugins.pydocstyle.enabled": false,
+    "pylsp.plugins.pyflakes.enabled": true,
+    "pylsp.plugins.pylint.enabled": true,
+    "pylsp.plugins.pylsp_mypy.enabled": false,
+    // When enabling, it's recommended to disable `flake8`, `pycodestyle`, `pyflakes`, `mccabe` and `pyls_isort` plugins.
+    "pylsp.plugins.ruff.enabled": false,
+	}
+}

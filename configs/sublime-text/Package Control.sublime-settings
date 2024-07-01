@@ -10,12 +10,13 @@
 	],
 	"installed_packages":
 	[
-		"Anaconda",
 		"Dockerfile Syntax Highlighting",
 		"Earthly Earthfile",
 		"Elixir",
 		"InsertDate",
 		"Jinja2",
+		"LSP",
+		"LSP-pylsp",
 		"Package Control",
 		"Rust Enhanced",
 		"Terraform",
