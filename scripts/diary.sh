@@ -13,7 +13,7 @@ fi
 draftfile=$DIARY_FILE.draft
 tmpfile=$DIARY_FILE.swap
 
-vim -c 'setlocal tw=79' $draftfile
+vim $draftfile
 
 if [ -e $draftfile ] && [ -s $draftfile ]; then
     dt=$(date -R)
