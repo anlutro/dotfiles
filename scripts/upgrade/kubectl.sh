@@ -3,7 +3,11 @@ set -eu
 # shellcheck source=_lib.sh
 . "$(dirname "$(realpath "$0")")/_lib.sh"
 
-version=$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)
+if [ -n "${1-}" ]; then
+    version=$1
+else
+    version=$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)
+fi
 
 if kubectl version --client --short | grep -q "$version\$"; then
 	latest_already_installed

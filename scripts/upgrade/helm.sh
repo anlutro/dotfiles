@@ -4,12 +4,14 @@ set -eu
 . "$(dirname "$(realpath "$0")")/_lib.sh"
 
 repo=helm/helm
-version="$1"
+version="${1-}"
 if [ -z "$version" ]; then
 	# exclude alpha/beta/rc, and always get highest version number (as opposed to
 	# most recent release by date)
 	version=$(gh_tags $repo | grep -P '\d+\.\d+$' | sort -V | tail -1)
 fi
+# strip "v" prefix
+version=$(echo "$version" | grep -oP '\d+\.\d+')
 
 if helm version --template '{{.Version}}' | grep -qFx "$version"; then
 	latest_already_installed
