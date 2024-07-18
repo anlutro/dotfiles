@@ -22,8 +22,7 @@ def find_requirements_files(project_dir):
         files.append(req_file)
     req_dir = os.path.join(project_dir, "requirements")
     if os.path.exists(req_dir) and os.path.isdir(req_dir):
-        isfile = lambda *p: os.path.isfile(os.path.join(req_dir, *p))
-        req_dir_files = [f for f in os.listdir(req_dir) if isfile(f)]
+        req_dir_files = [f for f in os.listdir(req_dir) if os.path.isfile(os.path.join(req_dir, *f))]
         for req_file in req_dir_files:
             if req_file.startswith(("dev", "test")):
                 continue
@@ -126,10 +125,10 @@ def find_project_dirs(path=None):
 
         if not os.path.isdir(path_dir):
             continue
-        exists = lambda *p: os.path.exists(os.path.join(path_dir, *p))
-        if not any(map(exists, ("requirements", "requirements.txt", "setup.py"))):
-            continue
-        python_dirs.append(path_dir)
+        def exists(p): return os.path.exists(os.path.join(path_dir, *p))
+        if any(map(exists, ("requirements", "requirements.txt", "setup.py"))):
+            python_dirs.append(path_dir)
+
     return python_dirs
 
 

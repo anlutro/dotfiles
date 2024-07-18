@@ -91,11 +91,20 @@ def write_sublime_project(path, project_types):
         data["settings"]["tab_size"] = int(spaces)
 
     if any(ptype.startswith("python") for ptype in project_types):
-        python_path = None
+        pylsp_settings = (
+            data["settings"]
+            .setdefault("LSP", {})
+            .setdefault("LSP-pylsp", {})
+            .setdefault("settings", {})
+        )
         if "VIRTUAL_ENV" in os.environ:
-            python_path = os.environ["VIRTUAL_ENV"] + "/bin/python"
-        if python_path:
-            data["settings"]["python_interpreter"] = python_path
+            bin_path = os.environ["VIRTUAL_ENV"]
+            data["settings"]["python_interpreter"] = bin_path + "/python"
+            pylsp_settings["pylsp.python_binary"] = bin_path + "/python"
+            pylsp_settings["pylsp.plugins.jedi.environment"] = os.environ["VIRTUAL_ENV"]
+            if os.path.exists(bin_path + "/pylint"):
+                pylsp_settings["pylsp.plugins.pylint.enabled"] = True
+                pylsp_settings["pylsp.plugins.pylint.executable"] = bin_path + "/pylint"
 
     with open(path, "w+") as f:
         f.write(json.dumps(data, indent=2) + "\n")
