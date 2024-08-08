@@ -60,11 +60,11 @@ if cmd_exists xinput; then
     done
 fi
 
-# for apple keyboards, put the `~ key in the correct spot
+# for apple keyboards, put the ~ key in the correct spot, and swap alt with super
 if cmd_exists setxkbmap xinput; then
-    apple_kbd_ids=$(xinput list | grep 'Apple Keyboard' | sed -r 's/.*id=([0-9]+).*/\1/')
+    apple_kbd_ids=$(xinput list | grep 'Apple.*Keyboard' | sed -r 's/.*id=([0-9]+).*/\1/')
     for device_id in $apple_kbd_ids; do
-        setxkbmap -device $device_id -option apple:badmap
+        setxkbmap -device $device_id -option apple:badmap -option altwin:swap_alt_win
     done
 fi
 
