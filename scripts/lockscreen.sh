@@ -21,8 +21,15 @@ fi
 # the machine has been manually locked (but not suspended) before.
 if ! pidof i3lock > /dev/null; then
     rm -f /tmp/lock.png
-    # we need `magick` to blur or pixelize screenshots
-    if ! command -v magick >/dev/null 2>&1; then
+
+    # we need `convert` to blur or pixelize screenshots
+    if command -v magick >/dev/null 2>&1; then
+        imagick_cmd=magick
+    elif command -v convert >/dev/null 2>&1; then
+        imagick_cmd=convert
+    fi
+
+    if [ -z "${imagick_cmd-}" ]; then
         true  # do nothing
     elif command -v maim >/dev/null 2>&1; then
         maim /tmp/lock.bmp
@@ -30,9 +37,9 @@ if ! pidof i3lock > /dev/null; then
         scrot /tmp/lock.bmp
     fi
 
-    if [ -e /tmp/lock.bmp ]; then
-        magick /tmp/lock.bmp -scale 10% -scale 1000% /tmp/lock.png  # pixelization
-        # magick /tmp/lock.bmp -blur 0x5 /tmp/lock.png  # blurring
+    if [ -n "${imagick_cmd}" ] && [ -e '/tmp/lock.bmp' ]; then
+        $imagick_cmd /tmp/lock.bmp -scale 10% -scale 1000% /tmp/lock.png  # pixelization
+        # $imagick_cmd /tmp/lock.bmp -blur 0x5 /tmp/lock.png  # blurring
         rm /tmp/lock.bmp
         cmd="$cmd && i3lock -i /tmp/lock.png && rm /tmp/lock.*"
     else
