@@ -4,7 +4,7 @@ set -eu
 . "$(dirname "$(realpath "$0")")/_lib.sh"
 
 repo=helmfile/helmfile
-if [ -z "$1" ]; then
+if [ -z "${1-}" ]; then
     version=$(gh_latest_tag $repo)
     version_num=$(echo "$version" | sed 's/^v//')
 else
