@@ -1,8 +1,7 @@
 #!/bin/sh
 
 warn_state_file=/tmp/.battery-warning-notification-id
-search='Battery 0: '
-full_text=$(acpi -b | grep "^$search" | cut -d: -f2-)
+full_text=$(acpi -b | grep -vF 'rate information unavailable' | head -1 | cut -d: -f2-)
 status=$(echo "$full_text" | cut -d, -f1 | sed -e 's/^[[:space:]]*//')
 pct=$(echo "$full_text" | cut -d, -f2 | sed s/%// | tr -d '[:space:]')
 if ! echo "$full_text" | grep -qF -e 'rate information unavailable' -e 'zero rate'; then
