@@ -8,7 +8,7 @@ version="${1-}"
 if [ -z "$version" ]; then
 	# exclude alpha/beta/rc, and always get highest version number (as opposed to
 	# most recent release by date)
-	version=$(gh_tags $repo | grep -P '\d+(\.\d+)*$' | sort -V | tail -1)
+	version=$(gh_tags $repo | grep -vF rc | grep -P '\d+(\.\d+)*$' | sort -V | tail -1)
 fi
 # strip "v" prefix
 version=$(echo "$version" | grep -oP '\d+(\.\d+)*')
