@@ -180,3 +180,10 @@ function ssl-dates {
     echo "$cmd"
     eval "$cmd"
 }
+
+# bluetooth start+connect
+function btc {
+    systemctl is-active bluetooth.service > /dev/null || sudo systemctl start bluetooth.service && sleep 1
+    bluetoothctl power on
+    bluetoothctl connect "$@"
+}
