@@ -75,7 +75,7 @@ else
     # fi
 
     if command -v notify-send >/dev/null 2>&1; then
-        if [ $pct -lt 5 ]; then
+        if [ $pct -lt 6 ]; then
             if [ -s $warn_state_file ]; then
                 replace_id="$(cat $warn_state_file)"
             else
