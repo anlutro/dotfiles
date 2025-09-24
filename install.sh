@@ -357,6 +357,10 @@ install_zsh() {
     _install_fzf
 }
 
+install_streamlink() {
+    ln -sfT $configs/streamlink $HOME/.config/streamlink
+}
+
 
 if [ ! -e $root/.venv ]; then
     echo "Setting up virtual environment ..."
@@ -414,6 +418,7 @@ install nano
 install python python3
 install rg
 install rofi
+install streamlink
 install subl
 install taskwarrior task
 install tmux
