@@ -29,34 +29,6 @@ function psgrep {
     ps auxf | grep "$@" | grep -v grep;
 }
 
-# livestreamer/streamlink
-function sl {
-    args=""
-    stream=""
-    quality=""
-    for arg in "$@"; do
-        case $arg in
-            -* )
-                args="$args $arg"
-                ;;
-            * )
-                if [ -z "$stream" ]; then
-                    stream="$arg"
-                elif [ -z "$quality" ]; then
-                    quality="$arg"
-                else
-                    args="$args $arg"
-                fi
-                ;;
-        esac
-        shift
-    done
-    if [ -z "$quality" ]; then
-        quality=best
-    fi
-    streamlink $stream $quality $args
-}
-
 # php in docker
 function dphp {
     local tty_arg
