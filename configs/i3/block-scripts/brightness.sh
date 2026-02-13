@@ -1,6 +1,6 @@
 #!/bin/sh
 
-for try_dir in intel_backlight amdgpu_bl0; do
+for try_dir in intel_backlight acpi_video0 amdgpu_bl0; do
     if [ -e "/sys/class/backlight/$try_dir" ]; then
         dir="/sys/class/backlight/$try_dir"
         break
