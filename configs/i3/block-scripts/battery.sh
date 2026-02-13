@@ -16,7 +16,7 @@ text="$status $pct%"
 if [ -n "${remaining-}" ]; then
     text="$text $remaining"
 fi
-if [ $max -lt 100 ]; then
+if [ "$status" != 'Discharging' ] && [ $max -lt 100 ]; then
     text="$text (max:$max%)"
 fi
 
