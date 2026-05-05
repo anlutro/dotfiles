@@ -64,7 +64,7 @@ def i3_create_workspace(code_dir):
 
 
 def main():
-    code_dirs = find_code_dirs("/home/andreas/code")
+    code_dirs = find_code_dirs(os.getenv("HOME") + "/code")
     code_dir = rofi_pick_from_options(code_dirs, prompt="select code dir")
     if not code_dir:
         print("no code dir selected")

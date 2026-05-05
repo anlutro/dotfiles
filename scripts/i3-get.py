@@ -1,4 +1,4 @@
-#!/usr/bin/env -S /home/andreas/code/dotfiles/.venv/bin/python -S
+#!/usr/bin/env -S ${HOME}/code/dotfiles/.venv/bin/python -S
 """
 Get the window ID of the next or previous window in the current workspace.
 

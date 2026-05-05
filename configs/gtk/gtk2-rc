@@ -1,4 +1,4 @@
-include "/home/andreas/.themes/Zukitwo/gtk-2.0/gtkrc"
+include "~/.themes/Zukitwo/gtk-2.0/gtkrc"
 
 gtk-theme-name = "Zukitwo-dark"
 gtk-cursor-theme-name = "DMZ"
