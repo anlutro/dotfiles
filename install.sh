@@ -313,6 +313,10 @@ install_nvim() {
     done
 }
 
+install_vscode() {
+    ln -sf $configs/vscode/settings.json $HOME/.config/Code/User/settings.json
+}
+
 install_wireplumber() {
     ln -sfT $configs/wireplumber $HOME/.config/wireplumber
 }
@@ -425,6 +429,7 @@ install tmux
 install urxvt
 install vim
 install nvim
+install vscode code
 install wireplumber
 install xorg Xorg
 install xdg xdg-open
