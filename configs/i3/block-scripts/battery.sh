@@ -84,6 +84,7 @@ else
             notify-send --replace-id="$replace_id" --print-id --urgency=critical \
                 'Battery warning' "Battery level: $pct% - $remaining left" \
                 > $warn_state_file
+            chmod 666 $warn_state_file
         fi
     fi
     if [ $pct -lt 2 ]; then
