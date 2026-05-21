@@ -86,4 +86,7 @@ else
                 > $warn_state_file
         fi
     fi
+    if [ $pct -lt 2 ]; then
+        systemctl suspend
+    fi
 fi
