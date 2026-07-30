@@ -315,6 +315,7 @@ install_nvim() {
 
 install_vscode() {
     ln -sf $configs/vscode/settings.json $HOME/.config/Code/User/settings.json
+    ln -sf "$scripts/vsc.sh" "$bindir/vsc"
 }
 
 install_wireplumber() {
