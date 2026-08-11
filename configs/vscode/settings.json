@@ -3,5 +3,12 @@
     "chat.editor.wordWrap": "on",
     "python.analysis.typeCheckingMode": "standard",
     "go.toolsManagement.autoUpdate": true,
-    "workbench.editor.empty.hint": "hidden"
+    "workbench.editor.empty.hint": "hidden",
+    "editor.acceptSuggestionOnEnter": "off",
+    "editor.detectIndentation": true,
+    "editor.dragAndDrop": false,
+    "editor.fontFamily": "Source Code Pro",
+    "editor.fontSize": 14,
+    "files.hotExit": "off",
+    "window.title": "${activeEditorShort}${separator}${rootName}"
 }
