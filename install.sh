@@ -211,9 +211,6 @@ install_nano() {
 
 install_python() {
     ln -sf $scripts/templ.py $bindir/templ
-    vendor_install https://github.com/anlutro/psm
-    ln -sf $vendor/psm/psm.sh $bindir/psm
-    vendor_install https://github.com/anlutro/venv.sh
 }
 
 install_rg() {
@@ -314,6 +311,7 @@ install_nvim() {
 }
 
 install_vscode() {
+    mkdir -p $HOME/.config/Code/User
     ln -sf $configs/vscode/settings.json $HOME/.config/Code/User/settings.json
     ln -sf "$scripts/vsc.sh" "$bindir/vsc"
 }
@@ -367,15 +365,12 @@ install_streamlink() {
 }
 
 
-if [ ! -e $root/.venv ]; then
-    echo "Setting up virtual environment ..."
-    python3 -m venv $root/.venv
-    $root/.venv/bin/pip install --quiet --upgrade setuptools pip
+if [ ! -e "$root/.venv" ] || [ ! -e "$root/.venv/bin/python" ]; then
+    uv venv --clear --seed .venv
     echo
 fi
 if [ -e $root/requirements.txt ]; then
-    echo "Installing Python requirements ..."
-    $root/.venv/bin/pip install --quiet --upgrade -r $root/requirements.txt
+    uv --quiet pip install -r requirements.txt
     echo
 fi
 
