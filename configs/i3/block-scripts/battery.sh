@@ -22,6 +22,16 @@ fi
 
 text="$status_emoji $pct%"
 if [ -n "${remaining-}" ]; then
+    if echo "$remaining" | grep -qP '\d+:\d+:\d+'; then
+        hours=$(echo "$remaining" | cut -d: -f1 | sed 's/^0*//')
+        minutes=$(echo "$remaining" | cut -d: -f2 | sed 's/^0*//')
+        seconds=$(echo "$remaining" | cut -d: -f3 | sed 's/^0*//')
+        if [ "$hours" -gt 0 ]; then
+            remaining="${hours}h${minutes}m"
+        else
+            remaining="${minutes}m${seconds}s"
+        fi
+    fi
     text="$text $remaining"
 fi
 if [ "$status" != 'Discharging' ] && [ $max -lt 100 ]; then
