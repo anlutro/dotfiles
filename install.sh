@@ -159,17 +159,12 @@ install_i3() {
 }
 
 install_i3blocks() {
-    vendor_install https://github.com/vivien/i3blocks-contrib
-
     local conf_path=$HOME/.config/i3blocks
     mkdir -p $conf_path
     ln -sf $configs/i3/i3blocks.conf $conf_path/config
 
     [ -L $conf_path/scripts ] && rm $conf_path/scripts
     [ ! -d $conf_path/scripts ] && mkdir -p $conf_path/scripts
-
-    ln -sf $vendor/i3blocks-contrib/memory/memory $conf_path/scripts/
-    ln -sf $vendor/i3blocks-contrib/volume/volume $conf_path/scripts/
 
     for f in $configs/i3/block-scripts/*; do
         filepath=$(realpath $f)
