@@ -12,7 +12,15 @@ max=$(cat /sys/class/power_supply/BAT0/charge_control_end_threshold || echo 100)
 if [ "$status" = 'Unknown' ]; then
     status="Full"
 fi
-text="$status $pct%"
+if [ "$status" = 'Charging' ]; then
+    status_emoji="⚡️"
+elif [ $pct -lt 25 ]; then
+    status_emoji="🪫"
+else
+    status_emoji="🔋"
+fi
+
+text="$status_emoji $pct%"
 if [ -n "${remaining-}" ]; then
     text="$text $remaining"
 fi
