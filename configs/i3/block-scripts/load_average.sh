@@ -1,13 +1,22 @@
 #!/bin/sh
 
 loadavg="$(cut -d ' ' -f1 /proc/loadavg)"
+loadavg_int=$(printf "%d" $loadavg)
 cpus="$(nproc)"
 
+for i in $(seq 1 $((cpus / 2))); do
+    if [ $loadavg_int -gt $i ]; then
+        pbar="${pbar}▰"
+    else
+        pbar="${pbar}▱"
+    fi
+done
+
 # full text
-echo "Load $loadavg"
+echo "Load $pbar $loadavg"
 
 # short text
-echo "Load $loadavg"
+echo "Load $pbar $loadavg"
 
 # color if load is too high
 awk -v cpus=$cpus -v loadavg=$loadavg 'BEGIN {

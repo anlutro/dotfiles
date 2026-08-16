@@ -1,49 +1,35 @@
 #!/bin/bash
+meminfo=$(cat /proc/meminfo | grep ^Mem)
+mem_total=$(echo "$meminfo" | grep MemTotal | awk '{print $2}')
+mem_available=$(echo "$meminfo" | grep MemAvailable | awk '{print $2}')
+mem_available_gb=$(echo "scale=1; $mem_available / 1024 / 1024" | bc -l)
+pct="$(echo "($mem_total - $mem_available) / $mem_total * 100" | bc -l)"
+pct_int=$(printf "%d" $pct)
 
-awk '
-/^MemTotal:/ {
-    mem_total=$2
-}
-/^MemFree:/ {
-    mem_free=$2
-}
-/^Buffers:/ {
-    mem_free+=$2
-}
-/^Cached:/ {
-    mem_free+=$2
-}
-END {
-    free=mem_free/1024/1024
-    used=(mem_total-mem_free)/1024/1024
-    total=mem_total/1024/1024
+if [ $pct_int -lt 20 ]; then
+    pbar="▱▱▱▱"
+elif [ $pct_int -lt 40 ]; then
+    pbar="▰▱▱▱"
+elif [ $pct_int -lt 60 ]; then
+    pbar="▰▰▱▱"
+elif [ $pct_int -lt 80 ]; then
+    pbar="▰▰▰▱"
+else
+    pbar="▰▰▰▰"
+fi
 
-    pct=0
-    if (total > 0) {
-        pct=used/total*100
-    }
-
-    # full text
-    printf("Memory %.1fG/%.1fG (%.f%%)\n", used, total, pct)
-    # short text
-    printf("%.f%%\n", pct)
-
-    # color
-    if (pct > 95) {
-        print "#ff0000"
-    }
-    else if (pct > 85) {
-        # yellow -> red -- ffff00 -> ff0000
-        hexint = 255 - (pct - 85) / 10 * 255
-        printf "#ff%02x00\n", hexint
-    }
-    else if (pct > 75) {
-        # white -> yellow -- ffffff -> ffff00
-        hexint = 255 - (pct - 75) / 10 * 255
-        printf "#ffff%02x\n", hexint
-    }
-    else {
-        print "#ffffff"
-    }
-}
-' /proc/meminfo
+echo "Memory ${pbar} ${mem_available_gb}G"
+echo "Memory ${pbar} ${mem_available_gb}G $pct_int%"
+if [ $pct_int -gt 80 ]; then
+    # yellow -> red --  ffff00 -> ff0000
+    hexint=$(echo "(100 - $pct_int) / 20 * 255" | bc -l)
+    hexchar=$(printf '%02x' $hexint 2> /dev/null)
+    echo "#ff${hexchar}00"
+elif [ $pct_int -gt 60 ]; then
+    # white -> yellow -- ffffff -> ffff00
+    hexint=$(echo "(80 - $pct_int) / 20 * 255" | bc -l)
+    hexchar=$(printf '%02x' $hexint 2> /dev/null)
+    echo "#ffff${hexchar}"
+else
+    echo "#ffffff"
+fi
