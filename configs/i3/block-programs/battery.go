@@ -73,15 +73,6 @@ func main() {
 		}
 	}
 
-	max := 100.0
-	if b, err := ioutil.ReadFile("/sys/class/power_supply/BAT0/charge_control_end_threshold"); err == nil {
-		if s := strings.TrimSpace(string(b)); s != "" {
-			if n, err := strconv.ParseFloat(s, 64); err == nil {
-				max = n
-			}
-		}
-	}
-
 	if status == "Unknown" {
 		status = "Full"
 	}
@@ -97,23 +88,45 @@ func main() {
 
 	text := fmt.Sprintf("%s %.0f%%", statusEmoji, pct)
 
+	// max := 100.0
+	// if b, err := ioutil.ReadFile("/sys/class/power_supply/BAT0/charge_control_end_threshold"); err == nil {
+	// 	if s := strings.TrimSpace(string(b)); s != "" {
+	// 		if n, err := strconv.ParseFloat(s, 64); err == nil {
+	// 			max = n
+	// 		}
+	// 	}
+	// }
+	// if status != "Discharging" && max < 100 {
+	// 	text += fmt.Sprintf(" (max:%.0f%%)", max)
+	// }
+
+	bar := ""
+	for i := range 4 {
+		// 10 / 35 / 60 / 85
+		if pct > float64(i)*25+10 {
+			bar += "▰"
+		} else {
+			bar += "▱"
+		}
+	}
+	text += " " + bar
+
 	if remaining != "" {
 		// if remaining looks like H:M:S transform it
 		if m := remainingRegex.FindStringSubmatch(remaining); m != nil {
 			hours, _ := strconv.Atoi(strings.TrimLeft(m[1], "0"))
 			minutes, _ := strconv.Atoi(strings.TrimLeft(m[2], "0"))
-			seconds, _ := strconv.Atoi(strings.TrimLeft(m[3], "0"))
-			if hours > 0 {
+			if hours > 1 {
+				remaining = fmt.Sprintf("%dh", hours)
+			} else if hours > 0 {
 				remaining = fmt.Sprintf("%dh%dm", hours, minutes)
 			} else {
-				remaining = fmt.Sprintf("%dm%ds", minutes, seconds)
+				remaining = fmt.Sprintf("%dm", minutes)
 			}
 		}
-		text = text + " " + remaining
-	}
-
-	if status != "Discharging" && max < 100 {
-		text = fmt.Sprintf("%s (max:%.0f%%)", text, max)
+		text += " " + remaining
+	} else if status == "Not charging" {
+		text += " max"
 	}
 
 	// long/short text
@@ -122,9 +135,8 @@ func main() {
 
 	// color handling
 	if status == "Charging" {
-		if pct > 90 {
-			// hexint = 255 - (pct - 90) / 10 * 255
-			f := 255 - (float64(pct)-90.0)/10.0*255.0
+		if pct > 85 {
+			f := 255 - (pct-90.0)/10.0*255.0
 			hexchar := floatToHexChar(f)
 			fmt.Printf("#%sff%s\n", hexchar, hexchar)
 		}
@@ -153,7 +165,7 @@ func main() {
 			fmt.Printf("#ff%s00\n", hexchar)
 		}
 
-		// low battery notifications & suspend
+		// low battery notifications
 		if pct < 6 {
 			if _, err := exec.LookPath("notify-send"); err == nil {
 				replaceID := "0"
@@ -171,6 +183,8 @@ func main() {
 				}
 			}
 		}
+
+		// suspend if battery is critically low
 		if pct < 2 {
 			exec.Command("systemctl", "suspend").Run()
 		}

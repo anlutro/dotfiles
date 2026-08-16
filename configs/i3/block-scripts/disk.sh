@@ -11,8 +11,8 @@ echo "$out" | awk '{
     exit 0
 }
 END {
-    print name, free " (" pct ")"
-    print name, free " (" pct ")"
+    print name " " free "  " pct
+    print name " " free "  " pct
     gsub(/%$/, "", pct)
     pct = pct + 0
     if (pct > 95) {
