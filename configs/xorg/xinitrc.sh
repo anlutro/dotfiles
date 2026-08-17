@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# simple log rotation
+[ -f "$HOME/.local/share/xorg/xinit.log" ] && mv "$HOME/.local/share/xorg/xinit.log" "$HOME/.local/share/xorg/xinit.log.old"
+
 # redirect stdout/stderr from this script to a log file
 exec >> "$HOME/.local/share/xorg/xinit.log" 2>&1
 
