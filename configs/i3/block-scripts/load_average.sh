@@ -1,7 +1,7 @@
 #!/bin/sh
 
 loadavg="$(cut -d ' ' -f1 /proc/loadavg)"
-loadavg_int=$(printf "%d" $loadavg)
+loadavg_int=$(printf "%.0f" $loadavg)
 cpus="$(nproc)"
 
 for i in $(seq 1 2 $cpus); do

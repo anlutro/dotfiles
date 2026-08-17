@@ -12,7 +12,7 @@ emoji="🔆"
 cur="$(cat "$dir/actual_brightness")"
 max="$(cat "$dir/max_brightness")"
 pct="$(echo "$cur / $max * 100" | bc -l)"
-pct_int=$(printf "%d" $pct)
+pct_int=$(printf "%.0f" $pct)
 if echo "$pct" | grep -qP '^0?.0\d+$'; then
     pct=0.1
 fi

@@ -4,7 +4,7 @@ mem_total=$(echo "$meminfo" | grep MemTotal | awk '{print $2}')
 mem_available=$(echo "$meminfo" | grep MemAvailable | awk '{print $2}')
 mem_available_gb=$(echo "scale=1; $mem_available / 1024 / 1024" | bc -l)
 pct="$(echo "($mem_total - $mem_available) / $mem_total * 100" | bc -l)"
-pct_int=$(printf "%d" $pct)
+pct_int=$(printf "%.0f" $pct)
 
 if [ $pct_int -lt 20 ]; then
     pbar="▱▱▱▱"
