@@ -33,7 +33,7 @@ fi
 
 # long/short text
 echo "$text $pbar"
-echo "$text $pct_int%"
+echo "$text $quality%"
 
 # color - green/yellow/red based on percentage
 if [ "$ip_addr" = 'down' ]; then
