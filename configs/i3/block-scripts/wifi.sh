@@ -20,12 +20,20 @@ text="$iface_name $ip_addr"
 
 quality=$(grep $iface_name /proc/net/wireless | awk '{ print int($3 * 100 / 70) }')
 if [ -n "$quality" ]; then
-    text="$text ($quality%)"
+    if [ $pct_int -lt 25 ]; then
+        pbar="▱▱▱"
+    elif [ $pct_int -lt 50 ]; then
+        pbar="▰▱▱"
+    elif [ $pct_int -lt 75 ]; then
+        pbar="▰▰▱"
+    else
+        pbar="▰▰▰"
+    fi
 fi
 
 # long/short text
-echo "$text"
-echo "$text"
+echo "$text $pbar"
+echo "$text $pct_int%"
 
 # color - green/yellow/red based on percentage
 if [ "$ip_addr" = 'down' ]; then
