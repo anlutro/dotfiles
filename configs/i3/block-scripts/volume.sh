@@ -1,14 +1,22 @@
 #!/bin/sh
 
 if command -v wpctl >/dev/null 2>&1; then
-    sink_volume=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print $2}')
-    sink_pct=$(echo "$sink_volume * 100 / 1" | bc)
-    src_volume=$(wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | awk '{print $2}')
-    src_pct=$(echo "$src_volume * 100 / 1" | bc)
-else
-    exit 1
+    wpctl_sink=$(wpctl get-volume @DEFAULT_AUDIO_SINK@)
+    if echo "$wpctl_sink" | grep -q "MUTE"; then
+        sink="mute"
+    else
+        sink_volume=$(echo "$wpctl_sink" | awk '{print $2}')
+        sink="$(echo "$sink_volume * 100 / 1" | bc)%"
+    fi
+    wpctl_source=$(wpctl get-volume @DEFAULT_AUDIO_SOURCE@)
+    if echo "$wpctl_source" | grep -q "MUTE"; then
+        src="mute"
+    else
+        src_volume=$(echo "$wpctl_source" | awk '{print $2}')
+        src="$(echo "$src_volume * 100 / 1" | bc)%"
+    fi
 fi
 
-echo "🔊 ${sink_pct}%  🎤 ${src_pct}%"
-echo "🔊 ${sink_pct}%  🎤 ${src_pct}%"
+echo "🔊 ${sink}  🎤 ${src}"
+echo "🔊 ${sink}  🎤 ${src}"
 echo "#ffffff"
